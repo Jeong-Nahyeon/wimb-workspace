@@ -91,7 +91,7 @@
             <button id="searchBtn" onclick=""><i class="fas fa-search"></i></button>  
         </div>
         <div class="logo-area">
-            <a href=""><img src="../resources/images/LOGO.png"></a>
+            <a href=""><img src="<%= contextPath %>/resources/images/LOGO.png"></a>
         </div>
         <div class="mypage-area">
             <!-- 로그인 전 -->
