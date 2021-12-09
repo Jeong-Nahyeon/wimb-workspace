@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://kit.fontawesome.com/10f565a9d5.js" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -19,8 +18,8 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
-    /* 주문|배송조회 전체영역 */
-    .orderPostList {
+    /* 교환|환불조회 전체영역 */
+    .cancelList {
         margin-left: 18px;
         margin-top: 50px;
     }
@@ -37,37 +36,37 @@
         background-color: white;
         border: 1px solid lightgrey;
         height: 35px;
-        width: 55px
+        width: 55px;
     }
     button:hover {
-        cursor: pointer; 
+        cursor: pointer;
         background-color: rgb(155, 213, 189);
     }
     input {
         height: 35px;
-        width:120px;
+        width: 120px;
         margin-left: 5px;
     }
     input:hover {cursor: pointer;}
     #submit {
-        background-color : rgb(155, 213, 189); 
-        border:0px;
+        background-color: rgb(155, 213, 189);
+        border: 0px;
         color: white;
         width: 90px;
         float: right;
     }
-    /* 주문|배송 내역 리스트 영역 */
+    /* 교환|환불 내역 리스트 영역 */
     .orderList th {
         border-top: 2px solid rgba(133, 136, 139, 0.548);
         border-bottom: 1px solid rgba(179, 174, 174, 0.384);
-        padding: 8px 0px 8px 0px;
+        padding: 10px 0px 10px 0px;
         font-size: 12px;
         background-color: rgba(240, 239, 233, 0.445);
     }
     .orderList td {
         border-bottom: 2px solid rgba(133, 136, 139, 0.548);
         padding: 18px 0px 18px 0px;
-        font-size: 13px;;
+        font-size: 13px;
     }
     .orderList {
         width: 700px;
@@ -79,7 +78,6 @@
     .orderList button {
         display: block;
         margin:auto;
-        margin-bottom: 5px;
         background-color: white;
         border: 1px solid lightgrey;
         height: 25px;
@@ -93,13 +91,17 @@
         text-decoration: none;
         color:black;
     }
+
 </style>
+
 </head>
 <body>
 
-    <div class="orderPostList">
+    <%@ include file="../mypage/myPageMain.jsp" %>
 
-        <label style="font-size: 18px;"><b>주문목록/배송조회</b></label>
+    <div class="cancelList">
+
+        <label style="font-size: 18px;"><b>취소/환불내역</b></label>
         <div>
             <form action="" method="get" class="selectDate">
                 <p style="margin-bottom: 5px; font-size: 15px;"><b>조회기간</b></p>
@@ -120,96 +122,84 @@
                 <button type="submit" id="submit" namd="submit">조회&nbsp;<i class="fas fa-search"></i></button>
             </form>
 
-            <label style="font-size: 13px;"><b>주문/배송내역 조회 총 1건</b></label>
+            <label style="font-size: 13px;"><b>취소/환불내역 조회 총 3건</b></label>
             <div class="listView">
                     <table class="orderList">
-                         <!--case1. 최근 주문내역이 없을 때-->
+                         <!--case1. 취소/환불내역이 없을 때-->
                         <tr>
                             <th width="130">주문일자<br>[주문번호]</th>
-                            <th>상품명</th>
+                            <th colspan="2">상품명</th>
                             <th width="100">상품금액/수량</th>
-                            <th width="80">주문상태</th>
-                            <th width="80">확인/리뷰</th>
+                            <th width="80">진행상태</th>
+                            <th width="80">처리일자</th>
                         </tr>
                         <tr>
-                            <td colspan="5" height="180">최근 주문 정보가 없습니다.</td>
+                            <td colspan="6" height="180">조회 내역이 없습니다.</td>
                         </tr>
                     </table>
                     <table class="orderList">
-                       <!--case2. 최근 주문내역이 있을 때 (if(sysdate-30일))-->
+                       <!--case2. 취소/환불내역이 있을 때 (if(취소상태 == 처리X))-->
                         <tr>
                             <th width="130">주문일자<br>[주문번호]</th>
                             <th>상품명</th>
                             <th width="100">상품금액/수량</th>
-                            <th width="80">주문상태</th>
-                            <th width="80">확인/리뷰</th>
+                            <th width="80">진행상태</th>
+                            <th width="80">처리일자</th>
                         </tr>
                      
                         <tr>
                             <td>2021-11-15<br>[20211115131234]</td>
                             <td><a href="상품상세페이지">닭가슴살 샐러드</a></td>
                             <td>7,900원/1개</td>
-                            <td><a href="주문목록/배송조회 이동">배송중</a></td>
-                            <td>
-                                <!--주문상태가 결제완료, 상품준비중일 때만 가능-->
-                                <button type="button" data-toggle="modal" data-target="#cancelModal">
-                                즉시취소
-                                </button>
-                            </td>
+                            <td>취소/환불<br>진행중</td>
+                            <td>-</td>
                         </tr>
                     </table>
                     <table class="orderList">
-                        <!--case2. 최근 주문내역이 있을 때 (if(sysdate-30일))-->
+                         <!--case2. 취소/환불내역이 있을 때 (if(취소상태 == 처리O))-->
                          <tr>
                             <th width="130">주문일자<br>[주문번호]</th>
                             <th>상품명</th>
                             <th width="100">상품금액/수량</th>
-                            <th width="80">주문상태</th>
-                            <th width="80">확인/리뷰</th>
+                            <th width="80">진행상태</th>
+                            <th width="80">처리일자</th>
                          </tr>
                         <tr>
                             <td>2021-11-15<br>[20211115131234]</td>
                             <td><a href="상품상세페이지">닭가슴살 샐러드</a></td>
                             <td>7,900원/1개</td>
-                            <td><a href="주문목록/배송조회 이동">배송중</a></td>
-                            <td>
-                                <!--주문상태가 배송중일 때만 가능-->
-                                <button>배송조회</button>
-                            </td>
+                            <td>취소/환불<br>완료</td>
+                            <td>2021-11-17</td>
                         </tr>
                     </table>
                     <table class="orderList">
-                        <!--case2. 최근 주문내역이 있을 때 (if(sysdate-30일))-->
+                        <!--case2. 주문내역이 있을 때 (if(sysdate-30일))-->
                          <tr>
                             <th width="130">주문일자<br>[주문번호]</th>
                             <th>상품명</th>
                             <th width="100">상품금액/수량</th>
-                            <th width="80">주문상태</th>
-                            <th width="80">확인/리뷰</th>
+                            <th width="80">진행상태</th>
+                            <th width="80">처리일자</th>
                          </tr>
                         <tr>
                             <td>2021-11-15<br>[20211115131234]</td>
                             <td><a href="상품상세페이지">닭가슴살 샐러드</a></td>
                             <td>7,900원/1개</td>
-                            <td><a href="주문목록/배송조회 이동">배송중</a></td>
-                            <td>
-                                <!--주문상태가 배송완료일 때만 가능-->
-                                <button type="button" data-toggle="modal" data-target="#myModal">
-                                리뷰작성
-                                </button>
-                                <button>
-                                환불요청
-                                </button>
-                            </td>
+                            <td>취소/환불<br>완료</td>
+                            <td>2021-11-17</td>
                         </tr>
                     </table>   
+                   
+            </div>
+
+
         </div>
+
+
+
 
     </div>
 
-    
-    <!-- 각 모달창 만들기 -->
-    
   
 </body>
 </html>
