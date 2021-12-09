@@ -1,0 +1,139 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+</head>
+<style>
+    body{
+        margin: 0px;
+        width: 100%;
+    }
+
+    img{
+        width: 80px;
+        padding-left: 50px;
+    }
+
+    #menubar-top{
+        width: 100%;
+        border-bottom: 1px solid grey;
+    
+    }
+    
+    #menubar-top a{
+    	text-decoration: none;
+    	color: black;
+    }
+    
+    #adminWithIcon{position: relative;}
+    
+    #adminIcon{
+        position: absolute;
+        color:gray;
+        left: -33px;
+        top: 30px;
+        font-size: 30px;
+    }
+
+    #menubar-left{
+        background-color: lightgrey;
+        width: 190px;   
+        float: left;
+    }
+
+    ul{
+        list-style-type: none;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+    }
+
+    li a{
+        display: block;
+        text-decoration: none;
+        color: grey;
+    }
+
+    .menubar-left-title{
+        font-size: 20px;
+        border-bottom: 1px solid;
+        padding: 10px;
+        font-weight: 600;
+    }
+
+    .menubar-left-text{
+        font-size: 13px;
+        margin: 5px;
+    }
+   
+   
+</style>
+<body>
+    <table id="menubar-top">
+            <tr>
+                <td style="width: 10%;">
+                    <img src="../admin/image/logo.png">
+                </td>
+                <td style="width: 74%;">
+                    <h1>Admin</h1>
+                </td>
+                <td style="width: 6%;" id="adminWithIcon">
+                    <i class="fas fa-user-circle" id="adminIcon"></i>
+                    <span ><b>관리자01</b>님</span>
+                </td>
+                <td style="width: 5%;">
+                	<a href=""><h4>로그아웃</h4></a>
+                </td>
+                <td style="width: 5%;">
+                    <a href=""><h4>홈페이지</h4></a>
+                </td>
+            </tr>
+    </table>
+
+    <div id="menubar-left">
+
+        <ul>
+            <li class="menubar-left-title">회원관리</li>
+            <li class="menubar-left-text"><a href="">회원 정보 관리</a></li>
+            <li class="menubar-left-text"><a href="">신고내역</a></li>
+            <li class="menubar-left-text"><a href="">블랙리스트</a></li>
+            <li class="menubar-left-text"><a href="">적립금 관리</a></li>
+        </ul>
+    
+        <ul>
+            <li class="menubar-left-title">상품관리</li>
+            <li class="menubar-left-text"><a href="">상품 등록</a></li>
+            <li class="menubar-left-text"><a href="">상품 수정 / 삭제</a></li>
+            <li class="menubar-left-text"><a href="">상품 배송관리</a></li>
+            <li class="menubar-left-text"><a href="">리뷰 관리</a></li>
+            <li class="menubar-left-text"><a href="">상품문의 관리</a></li>
+        </ul>
+    
+        <ul>
+            <li class="menubar-left-title">홈페이지관리</li>
+            <li class="menubar-left-text"><a href="">이용관리</a></li>
+            <li class="menubar-left-text"><a href="">배너</a></li>
+        </ul>
+    
+        <ul>
+            <li class="menubar-left-title">고객센터관리</li>
+            <li class="menubar-left-text"><a href="">공지사항</a></li>
+            <li class="menubar-left-text"><a href="">1대1 문의</a></li>
+            <li class="menubar-left-text"><a href="">자주묻는 질문</a></li>
+        </ul>
+    
+        <ul>
+            <li class="menubar-left-title">통계</li>
+            <li class="menubar-left-text"><a href="">회원 수 통계</a></li>
+            <li class="menubar-left-text"><a href="">상품 수 통계</a></li>
+            <li class="menubar-left-text"><a href="">판매량 통계</a></li>
+        </ul>
+    </div>
+
+
+</body>
+</html>
