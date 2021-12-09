@@ -13,9 +13,9 @@
 <style>
     .outer{
         /* border:1px solid red; */
-        margin-top:200px;
-        margin-left:210px;
-        width:800px;
+        margin:auto;
+        margin-top:100px;
+        width:1000px;
         height:1000px;
     }
     #menu-title h2{
@@ -26,7 +26,7 @@
     #product-custom-button{
         box-sizing: border-box;
         /* border:1px solid red;  */
-        width:750px;
+        width:1000px;
         height:50px;
         margin:auto;
         margin-top:20px;
@@ -64,7 +64,7 @@
     #list{
         box-sizing: border-box;
         /* border:1px solid red; */
-        width:750px;
+        width:1000px;
         margin:auto; 
     }
 
@@ -235,24 +235,24 @@
                 </div>
                 <!-- 상품등록 버튼 -->
                 <div align="right">
-                    <button type="button" id="insert-product" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);" data-toggle="modal" data-target="#myModal">상품등록</button>
+                    <button type="button" id="insert-product" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">상품등록</button>
                 </div>
             </div>
 
 
             <!-- 완제품 리스트 -->
-            <table id="product-list" width="750px" height="300px"class="table">
+            <table id="product-list" height="300px" class="table table-hover">
                 <thead>
                     <tr>
                         <th></th>
-                        <th width="55px">번호</th>
-                        <th width="100px">상품번호</th>
-                        <th width="150px">상품명</th>
-                        <th width="100px">업체명</th>
-                        <th width="95px">공급가(원)</th>
-                        <th width="95px">판매가(원)</th>
-                        <th width="55px">재고</th>
-                        <th width="85px">노출여부</th>
+                        <th width="5%">번호</th>
+                        <th width="15%">상품번호</th>
+                        <th width="20%">상품명</th>
+                        <th width="15%">업체명</th>
+                        <th width="10%">공급가(원)</th>
+                        <th width="10%">판매가(원)</th>
+                        <th width="10%">재고</th>
+                        <th width="10%">노출여부</th>
                     </tr>
                 </thead>
                 <tbody >
