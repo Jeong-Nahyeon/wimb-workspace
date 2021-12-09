@@ -14,19 +14,20 @@
     }
 
     img{
-        width: 80px;
+        width: 130px;
         padding-left: 50px;
     }
 
     #menubar-top{
         width: 100%;
         border-bottom: 1px solid grey;
-    
+        height: 100px;
     }
     
     #menubar-top a{
     	text-decoration: none;
     	color: black;
+    	
     }
     
     #adminWithIcon{position: relative;}
@@ -35,7 +36,7 @@
         position: absolute;
         color:gray;
         left: -33px;
-        top: 30px;
+        top: 35px;
         font-size: 30px;
     }
 
@@ -58,6 +59,12 @@
         color: grey;
     }
 
+    li a:hover{
+        color: black;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
     .menubar-left-title{
         font-size: 20px;
         border-bottom: 1px solid;
@@ -72,24 +79,31 @@
    
    
 </style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <body>
     <table id="menubar-top">
             <tr>
                 <td style="width: 10%;">
                     <img src="../admin/image/logo.png">
                 </td>
-                <td style="width: 74%;">
-                    <h1>Admin</h1>
+                <td style="width: 68%;">
+                    <h1 style="font-weight:700;">Admin</h1>
                 </td>
-                <td style="width: 6%;" id="adminWithIcon">
+                <td style="width: 8%;" id="adminWithIcon">
                     <i class="fas fa-user-circle" id="adminIcon"></i>
-                    <span ><b>관리자01</b>님</span>
+                    <span><b style="font-size: 20px;">관리자01</b>님</span>
                 </td>
-                <td style="width: 5%;">
-                	<a href=""><h4>로그아웃</h4></a>
+                <td style="width: 7%;">
+                	<a href=""><b style="font-size: 20px;">로그아웃</b></a>
                 </td>
-                <td style="width: 5%;">
-                    <a href=""><h4>홈페이지</h4></a>
+                <td style="width: 7%;">
+                    <a href=""><b style="font-size: 20px;">홈페이지</b></a>
                 </td>
             </tr>
     </table>

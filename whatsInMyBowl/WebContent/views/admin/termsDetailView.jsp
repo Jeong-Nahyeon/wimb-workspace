@@ -12,6 +12,9 @@
     }
     #mainTitle>h2 {
         display: inline;
+        font-size: 27px;
+        font-weight: 700;
+        
     }
 
     #mainTitle{margin-bottom: 60px;}
@@ -24,7 +27,7 @@
     }
 
     input{
-        width: 883px;
+        width: 881px;
         padding: 11px 12px 10px;
         margin-bottom: 20px;
     }
@@ -45,6 +48,13 @@
     }
 
 </style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
     <%@ include file="../common/adminBar.jsp"%>
@@ -61,13 +71,13 @@
                 <table id="termsTable">
                     <tr>
                         <th id="termsTable-Title">제목</th>
-                        <td><input type="text" placeholder="제목을 입력해주세요." required></td>
+                        <td><input type="text" placeholder="제목을 입력해주세요." required style="margin-bottom: 20px;"></td>
                     </tr>
 
                     <tr id="contentOuter">
                         <th id="termsTable-Content">내용</th>
                         <td>
-                            <textarea name="" id="" cols="124" rows="26" style="resize: none;" required>내용을 입력해주세요.</textarea>
+                            <textarea name="" id="" cols="114" rows="20" style="resize: none;" required>내용을 입력해주세요.</textarea>
                         </td>
                     </tr>
                 </table>
