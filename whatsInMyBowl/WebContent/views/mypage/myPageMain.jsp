@@ -7,7 +7,19 @@
 <title>Insert title here</title>
 <script src="https://kit.fontawesome.com/10f565a9d5.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
+    /* 지은 */
     /*마이페이지 메인 > 최근주문정보 전체 영역*/
     .nearestOrder {
         margin-top: 50px;
@@ -20,8 +32,8 @@
         color: rgba(19, 19, 19, 0.753);
         margin-bottom: 20px;
         text-align: center;
-        padding: 30px;
         border: 1px solid #ebebeb;
+        padding: 20px;
     }
     #plus {
         float: right;
@@ -32,14 +44,14 @@
     /*최근주문정보 리스트 영역*/
     .orderList th {
         border-bottom: 1px solid rgba(182, 178, 178, 0.719);
-        padding:8px 45px 8px 45px;
         font-size: 12px;
         background-color: rgba(240, 239, 233, 0.445);
+        padding: 10px 3px;
     }
     .orderList td {
         border-bottom: 1px solid rgba(179, 174, 174, 0.384);
         font-size: 13px;
-        padding: 13px;
+        padding: 15px 5px 15px 5px;
     }
     .orderList {
         width: 700px;
@@ -48,6 +60,8 @@
         text-align: center;
         border-spacing: 0px;
     }
+
+    /* 은지 */
     .outer{
         width: 1000px;
         height: 550px;
@@ -141,7 +155,6 @@
         text-decoration: none;
         color:black;
     }
-    
 </style>
 </head>
 <body>
@@ -239,7 +252,7 @@
 
         <div class="nearestOrder">
             <div style="margin-bottom: 8px; width: 700px;">
-                <span style="font-size: 10pt;"><b>최근 주문 정보</b></span>
+                <span style="font-size: 12pt;"><b>최근 주문 정보</b></span>
                 <span style="font-size: 8pt; color: gray;"> 최근 30일 내에 주문하신 내역입니다.</span>
                 <!--더보기 클릭시 주문목록/배송조회페이지 이동-->
                 <span id="plus"><a href="주문목록/배송조회 이동"><i class="fas fa-plus-square">&nbsp;더보기</i></a></span>
@@ -247,8 +260,8 @@
 
             
             <table class="orderStatus" align="center">
-                <tr>
-                    <th rowspan="2" >0</th>
+                <tr >
+                    <th rowspan="2">0</th>
                     <th rowspan="2"></th>
                     <th rowspan="2">0</th>
                     <th rowspan="2"></th>
@@ -260,14 +273,14 @@
                 </tr>
                 <tr>
                 </tr>
-                <tr style="height: 40px;">
+                <tr>
                     <th>결제대기</th>
                     <th>></th>
                     <th>결제완료</th>
                     <th>></th>
                     <th>배송준비</th>
                     <th>></th>
-                    <th width="100">배송중</th>
+                    <th>배송중</th>
                     <th>></th>
                     <th>배송완료</th>
                 </tr>
@@ -277,8 +290,8 @@
                 <tr>
                     <th style="width:110px;">주문일자/주문번호</th>
                     <th>상품명</th>
-                    <th style="width:80px;">상품금액/수량</th>
-                    <th style="width:50px;">주문상태</th>
+                    <th style="width:110px;">상품금액/수량</th>
+                    <th style="width:80px;">주문상태</th>
                 </tr>
                 </thead>
 
