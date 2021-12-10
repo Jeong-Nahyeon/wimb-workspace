@@ -38,6 +38,7 @@
         }
         .menu_categoty h2{
             display:inline;
+            font-size: 25px;
         }
         .custom_admin{
             width: 750px;
@@ -52,6 +53,41 @@
             height: 30px;
             margin: 20px 0 5px 0;
             border: 1px solid purple;
+        }
+        /* 완제품, 커스텀 버튼*/
+        #product_category{
+            box-sizing: border-box;
+            /* border:1px solid red;  */
+            width:1000px;
+            height:50px;
+            margin:auto;
+            margin-top:20px;
+        }
+        #left, #right{
+            box-sizing: border-box;
+            /* border:1px solid red;  */
+            width:50%;
+            height:100%;
+            float:left;
+        }
+        #product-button, #custom-button{
+            box-sizing: border-box;
+            width:99%;
+            height:100%;
+            border:1px solid lightgray;
+            border-bottom:none;
+            background-color:rgb(245, 245, 245);
+            line-height:50px;
+            text-align: center;
+        }
+
+        #product-button>a, #custom-button>a{
+            display: block;
+            /* border:1px solid red; */
+            width:100%;
+            height:100%;
+            color:black;
+            text-decoration-line:none;
         }
         /*custom 총 개수, 등록 버튼*/
         .custom_manage{
@@ -132,7 +168,16 @@
         <div class="custom_admin">
             <!-- 완제품 / 커스텀 버튼 -->
             <div class="product_category">
-
+                <div id="left">
+                    <div id="product-button">
+                        <a href=""><b>완제품</b></a>
+                    </div>
+                </div>
+                <div id="right" align="right">
+                    <div id="custom-button">
+                        <a href=""><b>커스텀</b></a>
+                    </div>
+                </div>
             </div>
 
             <!-- 카테고리 선택 -->
