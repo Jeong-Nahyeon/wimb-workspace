@@ -47,31 +47,37 @@
         text-decoration-line: none;
     }
 
-    .noticeDetail{
+    .FAQList{
         margin-left: 230px;
         text-align: center;
-        position: relative;
     }
 
-    .noticeDetail table tr td{
-        padding: 10px;
+    input[id*="answer"]{
+        display: none;
     }
-
-    input{width: 600px;}
-    #list-btn button{ 
-        color: rgb(155, 213, 189);
-        padding: 5px;
-        border: none;
-        border: 1px solid rgb(155, 213, 189);
+    input[id*="answer"] + label {
+        display: block;
+        padding: 20px;
+        border: 1px solid white;
+        border-bottom: 0;
+        color: black;
+        font-weight: 900;
         background-color: white;
-        border-radius: 5px;
-        font-size: 15px;
-        position: absolute;
-        right: 10%;
+        cursor: pointer;
     }
+    input[id*="answer"] + label + div {
+        max-height: 0;
+        transition: all .35s;
+        overflow: hidden;
+        background-color: white;
+        font-size: 15px;
+    }
+    input[id*="answer"] + label + div p{
+        display: inline-block;
+        padding: 20px;
+    }
+    input[id*="answer"]:checked + label + div{max-height: 100px;}
 
-    p{position: relative;}
-    
 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -83,7 +89,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-
     <%@ include file="../common/menubar.jsp" %>
 
     <div class="outer">
@@ -118,46 +123,55 @@
 
         </div>
 
-        <div class="noticeDetail">
-            <h3 style="font-weight: 800; margin-bottom: 30px;">공지사항</h3>
-            <table style="padding: 10px;">
-                <tr style="border-top: 2px solid gray">
-                    <th>제목</th>
-                    <td colspan="3">
-                        <input type="text" name="title" required value="공지사항41">
-                    </td>
-                </tr>
-                <tr style="border-top: 1px solid gray">
-                    <th style="width: 90px;">작성일</th>
-                    <td style="text-align: left;">2021.11.14</td>
-                    <th style="width: 90px;">조회수</th>
-                    <td style="text-align: left;">100</td>
-                </tr>
-                <tr style="border-top: 1px solid gray">
-                    <td colspan="4" style="padding: 0;">
-                        <p style="height: 150px; border-bottom: 2px solid gray; height: auto; padding: 20px 20px; text-align: left;">
-                            찾아다녀도 목숨이 있는 때까지 방황하여도 보이는 것은 거친 모래뿐일 것이다<br>
-                            이상의 꽃이 없으면 쓸쓸한 인간에 남는 것은 영락과 부패 뿐이다 <br>
-                            낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴?<br>
+        <div class="FAQList">
+            <h1>자주 묻는 질문</h1>
 
-                            찾아다녀도 목숨이 있는 때까지 방황하여도 보이는 것은 거친 모래뿐일 것이다 <br>
-                            이상의 꽃이 없으면 쓸쓸한 인간에 남는 것은 영락과 부패 뿐이다 <br>
-                            낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴?<br>
+            <div class="research_question_box">
+                <div class="research_question_box_left">
+                    <h3>질문검색</h3>
+                    <input type="text">
+                    <button type="submit"></button>
+                </div>
 
-                            찾아다녀도 목숨이 있는 때까지 방황하여도 보이는 것은 거친 모래뿐일 것이다 <br>
-                            이상의 꽃이 없으면 쓸쓸한 인간에 남는 것은 영락과 부패 뿐이다 <br>
-                            낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴?<br>
-                        </p>
-                    </td>
-                </tr>
+                <div class="research_question_box_right">
+                    <h6>찾는 질문이 없다면?</h6>
+                    <button type="submit">1:1문의</button>
+                </div>
+            </div>
 
-            </table>
-            <div id="list-btn" align="center">
-                <button style="font-weight: 900;">목록가기</button>
+            <div class="FAQ_Category">
+                <h6>전체</h6>
+                <h6>배송</h6>
+                <h6>적립금</h6>
+                <h6>주문/결제</h6>
+                <h6>취소/환불</h6>
+                <h6>상품</h6>
+                <h6>이용 및 기타</h6>
+            </div>
+
+            <div class="accordion">
+                <input type="checkbox" id="answer01">
+                <label for="answer01">질문입니다.</label>
+                <div><p>내용입니다.</p></div>
+
+                <input type="checkbox" id="answer02">
+                <label for="answer02">질문입니다.</label>
+                <div><p>내용입니다.</p></div>
+
+                <input type="checkbox" id="answer03">
+                <label for="answer03">질문입니다.</label>
+                <div><p>내용입니다.</p></div>
+
+                <input type="checkbox" id="answer04">
+                <label for="answer04">질문입니다.</label>
+                <div><p>내용입니다.</p></div>
             </div>
 
 
+        </div>
+
 
     </div>
+
 </body>
 </html>
