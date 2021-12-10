@@ -47,18 +47,18 @@
         text-decoration-line: none;
     }
 
-    .FAQList{
+    .FAQ{
         margin-left: 230px;
         text-align: center;
     }
-
     input[id*="answer"]{
         display: none;
     }
     input[id*="answer"] + label {
         display: block;
         padding: 20px;
-        border: 1px solid white;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
         border-bottom: 0;
         color: black;
         font-weight: 900;
@@ -123,7 +123,7 @@
 
         </div>
 
-        <div class="FAQList">
+        <div class="FAQ">
             <h1>자주 묻는 질문</h1>
 
             <div class="research_question_box">
@@ -166,6 +166,7 @@
                 <label for="answer04">질문입니다.</label>
                 <div><p>내용입니다.</p></div>
             </div>
+
 
 
         </div>
