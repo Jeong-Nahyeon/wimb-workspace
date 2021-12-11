@@ -163,8 +163,73 @@
             </script>
             
         </div> 
+        <br><br><br><br><br>
 
-        .
+        <button data-toggle="modal" data-target="#costom_insert_Modal">테스트버튼</button>
+        
+        <!-- 상품등록 모달-->
+        <!-- The Modal -->
+            <div class="modal" id="costom_insert_Modal">
+                <div class="modal-dialog">
+                <div class="modal-content">
+            
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">커스텀 재료 등록</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="">
+                            <table>
+                                <tr>
+                                    <td colspan="2">
+                                        <select name="" id="">
+                                            <option>재료 구분</option>
+                                            <option value="">채소</option>
+                                            <option value="">메인토핑</option>
+                                            <option value="">사이드토핑</option>
+                                            <option value="">드레싱</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>재료명</td>
+                                    <td><input type="text" name="" required></td>
+                                </tr>
+                                <tr>
+                                    <td>판매금액</td>
+                                    <td><input type="number" name="" required></td>
+                                </tr>
+                                <tr>
+                                    <td>업체명</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>공급가</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>재고</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>노출여부</td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+            
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+            
+                </div>
+                </div>
+            </div>
     </div>
 </body>
 </html>
