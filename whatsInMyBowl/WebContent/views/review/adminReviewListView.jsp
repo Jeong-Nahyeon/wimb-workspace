@@ -86,10 +86,10 @@
 
     <div class="outer">
 
-            <div id="menu-title">
-                <h2 style="color:gray; font-weight: bold;">상품관리</h2>
-                <h2 style="font-weight: bold;">&gt; 리뷰관리</h2>
-            </div>
+        <div id="menu-title">
+            <h2 style="color:gray; font-weight: bold;">상품관리</h2>
+            <h2 style="font-weight: bold;">&gt; 리뷰관리</h2>
+        </div>
 
         <div id="list" align="center">    
             <div id="list-1">
@@ -97,19 +97,19 @@
                 <div align="left">
                     총 <span style="color:orange; font-weight:bold;">20</span> 건
                 </div>
-                <!-- 상품등록 버튼 -->
+                <!-- 리뷰삭제 버튼 -->
                 <div align="right">
                     <button type="button" id="insert-product" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);" data-toggle="modal" data-target="#insert-modal" data-backdrop="static" data-keyboard="false">선택삭제</button>
                 </div>
             </div>
 
             <!-- 상품 리뷰 목록 -->
-            <table id="review-list" height="400px" class="table table-hover">
+            <table id="review-list" height="500px" class="table table-hover">
                 <thead>
                     <tr>
                         <th></th>
                         <th>번호</th>
-                        <th>ID</th>
+                        <th>작성자</th>
                         <th>구매 상품</th>
                         <th>최종등록일</th>
                         <th>리뷰 제목</th>
@@ -119,7 +119,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="8">등록된 리뷰가 업습니다.</td>
+                        <td colspan="8">등록된 리뷰가 없습니다.</td>
                     </tr>
                     <tr>
                         <td>
@@ -302,12 +302,12 @@
             </div>
             <br>
 
-            <!-- 상품 검색 -->
+            <!-- 회원아이디로 리뷰 검색 -->
             <form id="select-form" action="" method="get">
                 <table id="product-search">
                     <tr>
                         <td>
-                            <span>상품명</span>
+                            <span>회원ID</span>
                         </td>
                         <td>
                             <input type="search">
