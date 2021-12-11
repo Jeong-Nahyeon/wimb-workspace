@@ -121,6 +121,21 @@
             margin-top: 20px;
             background-color: rgb(247,223,125);
         }
+        /*재료 등록 폼*/
+        .modal-body{height: auto;}
+        .modal-body table{
+            margin: auto; 
+            border-collapse: separate; 
+            border-spacing: 10px; 
+        }
+        #custom_insertTable th{
+            width: 100px;
+            padding-left: 10px;
+        }
+        #custom_insertTable input, #custom_insertTable select{
+            border: 1px solid lightgrey;
+        }
+        
     </style>
 </head>
 <body>
@@ -181,8 +196,8 @@
             
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="">
-                            <table>
+                        <form action="" >
+                            <table id="custom_insertTable">
                                 <tr>
                                     <td colspan="2">
                                         <select name="" id="">
@@ -195,28 +210,33 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>재료명</td>
-                                    <td><input type="text" name="" required></td>
+                                    <th><span>재료명</span></th>
+                                    <td><input type="text" name="" ></td>
                                 </tr>
                                 <tr>
-                                    <td>판매금액</td>
-                                    <td><input type="number" name="" required></td>
+                                    <th>판매금액</th>
+                                    <td><input type="number" name="" ></td>
                                 </tr>
                                 <tr>
-                                    <td>업체명</td>
-                                    <td></td>
+                                    <th>업체명</th>
+                                    <td><input type="text" name="" ></td>
                                 </tr>
                                 <tr>
-                                    <td>공급가</td>
-                                    <td></td>
+                                    <th>공급가</th>
+                                    <td><input type="number" name="" ></td>
                                 </tr>
                                 <tr>
-                                    <td>재고</td>
-                                    <td></td>
+                                    <th>입고수량</th>
+                                    <td><input type="number" name=""></td>
                                 </tr>
                                 <tr>
-                                    <td>노출여부</td>
-                                    <td></td>
+                                    <th>노출여부</th>
+                                    <td>
+                                        <select name="">
+                                            <option value="">Y</option>
+                                            <option value="">N</option>
+                                        </select>
+                                    </td>
                                 </tr>
                             </table>
                         </form>
@@ -224,7 +244,12 @@
             
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <div id="insert_btn_left">
+                            <button type="reset" class="btn btn-sm btn-outline-secondary" >취소</button>
+                        </div>
+                        <div id="insert_btn_right">
+                            <button type="submit" class="btn btn-sm btn btn-outline-warning">등록</button>
+                        </div>
                     </div>
             
                 </div>

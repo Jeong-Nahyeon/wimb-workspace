@@ -89,7 +89,7 @@
             color:black;
             text-decoration-line:none;
         }
-        /*custom 총 개수, 등록 버튼*/
+        /*custom 총 개수, 선택삭제 버튼*/
         .custom_manage{
             border: 1px solid green;
             width: 100%;
@@ -121,6 +121,11 @@
         #custom_table th, #custom_table td{
             text-align: center;
         }
+        #custom_table a:hover{
+            color: red;
+        }
+        /*.customIG_name{color: black;}*/
+        /*.customIG_name:hover{color: red;}*/
         /*페이징 바*/
         .paging_area{
             border: 1px solid coral;
@@ -182,60 +187,19 @@
             background-color: rgb(247,223,125);
             border-radius: 5%;
         }
-
-        /* 대표 이미지 관리*/
-        .image_manage{
-            width: 400px;
-            height: 300px;
-            padding: 10px 20px;
+        /*재료 등록 폼*/
+        .modal-body{height: auto;}
+        .modal-body table{
+            margin: auto; 
+            border-collapse: separate; 
+            border-spacing: 10px; 
         }
-        .image_manage>form>span{font-size: 13px; margin-right: 5px;}
-        .image_manage input[type="file"]{
-            position: absolute;
-            width: 0; height: 0; padding: 0; border: 0;
-            overflow: hidden; 
+        #custom_insertTable th{
+            width: 100px;
+            padding-left: 10px;
         }
-        .image_manage .upload_name{
-            display: inline-block;
-            padding: 0 10px;
-            vertical-align: middle;
-            border: 1px solid #dddddd;
-            width: 60%;
-            height: 30px;
-            font-size: 13px;
-            color: #999999;
-        }
-        .image_manage label{
-            padding: 5px 10px;
-            color: #fff;
-            vertical-align: middle;
-            background-color: #999999;
-            cursor: pointer;
-            height: 30px; font-size: 13px;
-            margin: 0 0 0 10px;
-        }
-        #image_example{
-            text-align: center;
-        }
-        #image_example span{
-            display: block;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        #image_example img{
-            border: 1px solid gray;
-            width: 130px;
-            height: 130px;
-        }
-        .image_manage button{
-            border: none; border-radius: 5%;
-            display: block;
-            margin: auto; margin-top: 25px;
-            width: 50px; height: 30px; font-size: 13px;
-            background-color: rgb(247,223,125);
-        }
-        #titleImg_button{
-            width: 400px;
+        #custom_insertTable input, #custom_insertTable select{
+            border: 1px solid lightgrey;
         }
     </style>
 </head>
@@ -280,8 +244,8 @@
                     <span>건</span>
                 </div>
                 <div class="custom_btn" align="right">
-                    <button type="button" style="margin-right: 10px;" data-toggle="modal" data-target="#title_img_Modal">대표 이미지 관리</button>
-                    <button>재료 등록</button>
+                    <!--<button type="button" style="margin-right: 10px;" data-toggle="modal" data-target="#title_img_Modal">대표 이미지 관리</button>-->
+                    <button type="button" data-toggle="modal" data-target="#costom_insert_Modal">선택 삭제</button>
                 </div>
             </div>
 
@@ -306,7 +270,9 @@
                         </td>
                         <td>12</td>
                         <td>DDD234</td>
-                        <td>양상추</td>
+                        <td> 
+                            <a href="" class="customIG_name" data-toggle="modal" data-target="#costom_update_Modal">양상추</a>
+                        </td>
                         <td>대박야채</td>
                         <td>1800</td>
                         <td>1600</td>
@@ -389,43 +355,78 @@
                 </div>
             </div>
 
-            <!-- 대표이미지 관리 모달-->
-            <div class="modal" id="title_img_Modal">
-                <div class="modal-dialog ">
+            <!-- 재료 수정 모달-->
+            <div class="modal fade" id="costom_update_Modal">
+                <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div style="padding: 5px 5px;">
+            
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">커스텀 재료 등록</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
+            
                     <!-- Modal body -->
-                    <div class="modal-body" style="margin: auto;">
-                        <div class="image_manage">
-                            <form action="">
-                                <span>첨부파일</span>
-                                <input class="upload_name" value="">
-                                <label for="file">파일찾기</label>
-                                <input type="file" name="" id="file"> 
-                
-                                <div id="image_example">
-                                    <span>대표 이미지 예시</span>
-                                    <div>
-                                        <img src="" id="title_img">
-                                    </div>
-                                </div>
-                                <button type="submit">등록</button>
-                            </form>
-                            <script>
-                                $("#file").on('change',function(){
-                                    var fileName = $("#file").val();
-                                    $(".upload_name").val(fileName);
-                                });
-                            </script>
-                        </div> 
+                    <div class="modal-body">
+                        <form action="" >
+                            <table id="custom_insertTable">
+                                <tr>
+                                    <td colspan="2">
+                                        <select name="" id="">
+                                            <option>재료 구분</option>
+                                            <option value="">채소</option>
+                                            <option value="">메인토핑</option>
+                                            <option value="">사이드토핑</option>
+                                            <option value="">드레싱</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><span>재료명</span></th>
+                                    <td><input type="text" name="" ></td>
+                                </tr>
+                                <tr>
+                                    <th>판매금액</th>
+                                    <td><input type="number" name="" ></td>
+                                </tr>
+                                <tr>
+                                    <th>업체명</th>
+                                    <td><input type="text" name="" ></td>
+                                </tr>
+                                <tr>
+                                    <th>공급가</th>
+                                    <td><input type="number" name="" ></td>
+                                </tr>
+                                <tr>
+                                    <th>입고수량</th>
+                                    <td><input type="number" name=""></td>
+                                </tr>
+                                <tr>
+                                    <th>노출여부</th>
+                                    <td>
+                                        <select name="">
+                                            <option value="">Y</option>
+                                            <option value="">N</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
                     </div>
+            
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <div id="insert_btn_right">
+                            <button type="submit" class="btn btn-sm btn btn-outline-warning">등록</button>
+                        </div>
+                    </div>
+            
                 </div>
                 </div>
             </div>
 
-            <!-- 재료등록 모달-->
+            <!-- 재료 삭제 모달-->
+            <!-- Option test 참고-->
 
         </div>
         
