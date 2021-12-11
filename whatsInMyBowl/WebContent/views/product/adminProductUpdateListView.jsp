@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품 수정/삭제</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -235,13 +235,13 @@
                 </div>
                 <!-- 상품등록 버튼 -->
                 <div align="right">
-                    <button type="button" id="delete-product" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);" >상품 삭제</button>
+                    <button type="button" id="delete-product" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);" >상품삭제</button>
                 </div>
             </div>
 
 
-            <!-- 완제품 리스트 -->
-            <table id="product-list" height="300px" class="table table-hover">
+            <!-- 완제품 목록 -->
+            <table id="product-list" height="500px" class="table table-hover">
                 <thead>
                     <tr>
                         <th></th>
@@ -269,6 +269,19 @@
                         <td>10</td>
                         <td>PM0001</td>
                         <td><a>닭가슴살샐러드</a></td>
+                        <td>업체명</td>
+                        <td>3000</td>
+                        <td>6000</td>
+                        <td>155</td>
+                        <td>Y</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="" id="">
+                        </td>
+                        <td>10</td>
+                        <td>PM0001</td>
+                        <td>닭가슴살샐러드</td>
                         <td>업체명</td>
                         <td>3000</td>
                         <td>6000</td>
