@@ -196,7 +196,7 @@
                         <td colspan="3" style="text-align: left;">자동으로 비밀글로 작성됩니다.</td>
                     </tr>
                     <tr>
-                        <td colspan="4"><textarea name="content" id="" cols="90" rows="10" required>내용을 입력해주세요.</textarea></td>
+                        <td colspan="4"><textarea name="content" id="" cols="90" rows="10" required style="resize: none;">내용을 입력해주세요.</textarea></td>
                     </tr>
                     <tr>
                         <td colspan="4" style="font-size: 13px; text-align: left; padding-left:10px; font-weight: bold; padding-bottom: 5px;">
@@ -212,8 +212,8 @@
 
                                 <div class="fileBox_second" style="padding-left: 116px;">
                                     <input type="text" class="fileName" readonly="readonly">
-                                    <label for="uploadBtn" class="btn_file" style="vertical-align: middle;">추가</label>
-                                    <input type="file" id="uploadBtn" class="uploadBtn">
+                                    <label for="uploadBtn2" class="btn_file" style="vertical-align: middle;">추가</label>
+                                    <input type="file" id="uploadBtn2" class="uploadBtn">
                                 </div>
 
                             </div>
@@ -234,6 +234,28 @@
 
 
     </div>
+
+    <script>
+        var uploadFile = $('.fileBox .uploadBtn');
+        uploadFile.on('change', function(){
+            if(window.FileReader){
+                var filename = $(this)[0].files[0].name;
+            } else {
+                var filename = $(this).val().split('/').pop().split('\\').pop();
+            }
+            $(this).siblings('.fileName').val(filename);
+        });
+
+        var uploadFile = $('.fileBox .uploadBtn2');
+        uploadFile.on('change', function(){
+            if(window.FileReader){
+                var filename = $(this)[0].files[0].name;
+            } else {
+                var filename = $(this).val().split('/').pop().split('\\').pop();
+            }
+            $(this).siblings('.fileName').val(filename);
+        });
+    </script>
 
 </body>
 </html>
