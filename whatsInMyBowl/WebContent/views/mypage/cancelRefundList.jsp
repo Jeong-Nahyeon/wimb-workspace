@@ -128,10 +128,11 @@
                          <!--case1. 취소/환불내역이 없을 때-->
                         <tr>
                             <th width="130">주문일자<br>[주문번호]</th>
-                            <th colspan="2">상품명</th>
+                            <th>상품명</th>
                             <th width="100">상품금액/수량</th>
                             <th width="80">진행상태</th>
                             <th width="80">처리일자</th>
+                            <th width="80">상세보기</th>
                         </tr>
                         <tr>
                             <td colspan="6" height="180">조회 내역이 없습니다.</td>
@@ -145,6 +146,7 @@
                             <th width="100">상품금액/수량</th>
                             <th width="80">진행상태</th>
                             <th width="80">처리일자</th>
+                            <th width="80">상세보기</th>
                         </tr>
                      
                         <tr>
@@ -153,6 +155,7 @@
                             <td>7,900원/1개</td>
                             <td>취소/환불<br>진행중</td>
                             <td>-</td>
+                            <td><button>상세보기</button></td>
                         </tr>
                     </table>
                     <table class="orderList">
@@ -163,13 +166,15 @@
                             <th width="100">상품금액/수량</th>
                             <th width="80">진행상태</th>
                             <th width="80">처리일자</th>
+                            <th width="80">상세보기</th>
                          </tr>
                         <tr>
                             <td>2021-11-15<br>[20211115131234]</td>
                             <td><a href="상품상세페이지">닭가슴살 샐러드</a></td>
                             <td>7,900원/1개</td>
-                            <td>취소/환불<br>완료</td>
-                            <td>2021-11-17</td>
+                            <td>취소/환불<br>진행중</td>
+                            <td>-</td>
+                            <td><button>상세보기</button></td>
                         </tr>
                     </table>
                     <table class="orderList">
@@ -180,13 +185,15 @@
                             <th width="100">상품금액/수량</th>
                             <th width="80">진행상태</th>
                             <th width="80">처리일자</th>
+                            <th width="80">상세보기</th>
                          </tr>
                         <tr>
                             <td>2021-11-15<br>[20211115131234]</td>
                             <td><a href="상품상세페이지">닭가슴살 샐러드</a></td>
                             <td>7,900원/1개</td>
-                            <td>취소/환불<br>완료</td>
-                            <td>2021-11-17</td>
+                            <td>취소/환불<br>진행중</td>
+                            <td>-</td>
+                            <td><button>상세보기</button></td>
                         </tr>
                     </table>   
                    

@@ -39,10 +39,7 @@
         height: 35px;
         width: 55px
     }
-    button:hover {
-        cursor: pointer; 
-        background-color: rgb(155, 213, 189);
-    }
+    button:hover {background-color: rgb(155, 213, 189);}
     input {
         height: 35px;
         width:120px;
@@ -84,11 +81,7 @@
         border: 1px solid lightgrey;
         height: 25px;
     }
-    .orderList button:hover{
-        cursor: pointer; 
-        background-color: rgb(155, 213, 189);
-
-    }
+    .orderList button:hover{background-color: rgb(155, 213, 189);}
     a {
         text-decoration: none;
         color:black;
