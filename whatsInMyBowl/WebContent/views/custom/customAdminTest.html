@@ -156,6 +156,87 @@
             background-color:white;
         }
         #product-list>thead th{background:lightgray}
+
+        /*노출 여부 영역*/
+        .status{
+            margin: auto;
+            margin-top: 15px;
+            width: 120px;
+            height: 140px;
+            padding-top: 10px;
+            text-align: center;
+        }
+        .status>span{font-weight: 700;}
+        .status select{
+            display: block;
+            margin: auto;
+            margin-top: 20px;
+            width: 50px;
+        }
+        .status button{
+            margin-top: 25px;
+            padding: 5px 5px;
+            width: 50px; height: 25px;
+            font-size: 13px; vertical-align: middle;
+            border: none;
+            background-color: rgb(247,223,125);
+            border-radius: 5%;
+        }
+
+        /* 대표 이미지 관리*/
+        .image_manage{
+            width: 400px;
+            height: 300px;
+            padding: 10px 20px;
+        }
+        .image_manage>form>span{font-size: 13px; margin-right: 5px;}
+        .image_manage input[type="file"]{
+            position: absolute;
+            width: 0; height: 0; padding: 0; border: 0;
+            overflow: hidden; 
+        }
+        .image_manage .upload_name{
+            display: inline-block;
+            padding: 0 10px;
+            vertical-align: middle;
+            border: 1px solid #dddddd;
+            width: 60%;
+            height: 30px;
+            font-size: 13px;
+            color: #999999;
+        }
+        .image_manage label{
+            padding: 5px 10px;
+            color: #fff;
+            vertical-align: middle;
+            background-color: #999999;
+            cursor: pointer;
+            height: 30px; font-size: 13px;
+            margin: 0 0 0 10px;
+        }
+        #image_example{
+            text-align: center;
+        }
+        #image_example span{
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        #image_example img{
+            border: 1px solid gray;
+            width: 130px;
+            height: 130px;
+        }
+        .image_manage button{
+            border: none; border-radius: 5%;
+            display: block;
+            margin: auto; margin-top: 25px;
+            width: 50px; height: 30px; font-size: 13px;
+            background-color: rgb(247,223,125);
+        }
+        #titleImg_button{
+            width: 400px;
+        }
     </style>
 </head>
 <body>
@@ -199,7 +280,7 @@
                     <span>건</span>
                 </div>
                 <div class="custom_btn" align="right">
-                    <button type="button" style="margin-right: 10px;">대표 이미지 관리</button>
+                    <button type="button" style="margin-right: 10px;" data-toggle="modal" data-target="#title_img_Modal">대표 이미지 관리</button>
                     <button>재료 등록</button>
                 </div>
             </div>
@@ -230,7 +311,7 @@
                         <td>1800</td>
                         <td>1600</td>
                         <td>132</td>
-                        <td>Y</td>
+                        <td><a href="showModal" data-toggle="modal" data-target="#showModal">Y</a></td>
                     </tr>
                     <tr>
                         <td>
@@ -285,9 +366,64 @@
                 </form>
             </div>
 
+            <!-- 노출 여부 Modal -->
+            <div class="modal" id="showModal">
+                <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <div class="status">
+                            <span>노출 여부</span>
+                            <form action="" class="status_form">
+                                <select name="status" id="status_select">
+                                    <option>Y</option>
+                                    <option>N</option>
+                                </select>
+                                <button type="submit">수정</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
 
-
-
+            <!-- 대표이미지 관리 모달-->
+            <div class="modal" id="title_img_Modal">
+                <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div style="padding: 5px 5px;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body" style="margin: auto;">
+                        <div class="image_manage">
+                            <form action="">
+                                <span>첨부파일</span>
+                                <input class="upload_name" value="">
+                                <label for="file">파일찾기</label>
+                                <input type="file" name="" id="file"> 
+                
+                                <div id="image_example">
+                                    <span>대표 이미지 예시</span>
+                                    <div>
+                                        <img src="" id="title_img">
+                                    </div>
+                                </div>
+                                <button type="submit">등록</button>
+                            </form>
+                            <script>
+                                $("#file").on('change',function(){
+                                    var fileName = $("#file").val();
+                                    $(".upload_name").val(fileName);
+                                });
+                            </script>
+                        </div> 
+                    </div>
+                </div>
+                </div>
+            </div>
 
 
         </div>
