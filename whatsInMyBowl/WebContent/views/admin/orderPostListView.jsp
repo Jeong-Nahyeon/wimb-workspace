@@ -288,7 +288,7 @@
                         <td>11</td>
                         <td>2021121112345</td>
                         <td>김말똥말똥</td>
-                        <td><label data-toggle="modal" data-target="#myModal"><u>닭가슴살 샐러드 외 1개</u></label></td>
+                        <td><label data-toggle="modal" data-target="#orderPostModal"><u>닭가슴살 샐러드 외 1개</u></label></td>
                         <td>100,000원</td>
                         <td>99,000원</td>
                         <td>3000원</td>
@@ -338,7 +338,7 @@
 
 
         <!-- The Modal -->
-        <div class="modal" id="myModal">
+        <div class="modal" id="orderPostModal">
             <div class="modal-dialog">
                 <div class="modal-content">
             
@@ -398,7 +398,7 @@
                     </div>
             
                     <!-- Modal body -->
-                    <div class="modal-body">
+                    <div class="modal-body" >
                         <table>
                             <tr>
                                 <th>택배사</th>

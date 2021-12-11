@@ -71,7 +71,7 @@
         text-align: center;
         border-spacing: 0px;
         box-sizing: border-box;
-        margin-bottom:30px;
+        margin-bottom:15px;
     }
     .orderList button {
         display: block;
@@ -86,6 +86,45 @@
         text-decoration: none;
         color:black;
     }
+    .cancelList th {
+        width: 160px;
+        text-align: center;
+        font-size: 13px;
+        border-top: 2px solid rgba(133, 136, 139, 0.548);
+        border-bottom: 1px solid rgba(179, 174, 174, 0.384);
+    }
+    .cancelList td {
+        text-align: center;
+        font-size: 13px;
+        padding: 14px 0px;
+        border-bottom: 2px solid rgba(133, 136, 139, 0.548);
+    }
+    .cancelReason button {
+        width: 210px;
+        border: 1px solid rgba(133, 136, 139, 0.548);
+        background-color: white;
+        padding: 8px;
+        border-radius: 5px;
+    }
+    .cancelReason td {padding: 8px;}
+    .cancelReason button:hover {background-color: rgb(155, 213, 189);}
+    .modal-footer {
+        height: 80px;
+        margin-right: 100px;
+    }
+    .modal-footer button {
+        border: 0px;
+        border-radius: 4px;
+        width: 120px;
+        height: 40px;
+        margin-right: 10px;
+        font-size: smaller;
+    }
+    .modal-body p {
+        font-size: 13px; 
+        text-align: center;
+        color: red;
+    }
 </style>
 </head>
 <body>
@@ -94,7 +133,7 @@
 
         <label style="font-size: 18px;"><b>주문목록/배송조회</b></label>
         <div>
-            <form action="" method="get" class="selectDate">
+            <form action="<%= contextPath %>/" method="get" class="selectDate">
                 <p style="margin-bottom: 5px; font-size: 15px;"><b>조회기간</b></p>
                 <div class="selectBtn" style="display: inline-block;">
                     <div>
@@ -106,9 +145,9 @@
                     </div>
                 </div>
                 <div class="selectCalendar" style="display: inline-block;">
-                    <input type="date">
+                    <input type="date" name="startDate">
                     <label>~</label>
-                    <input type="date">
+                    <input type="date" name="endDate">
                 </div>
                 <button type="submit" id="submit" namd="submit">조회&nbsp;<i class="fas fa-search"></i></button>
             </form>
@@ -142,10 +181,10 @@
                             <td>2021-11-15<br>[20211115131234]</td>
                             <td><a href="상품상세페이지">닭가슴살 샐러드</a></td>
                             <td>7,900원/1개</td>
-                            <td><a href="주문목록/배송조회 이동">배송중</a></td>
+                            <td><a href="주문목록/배송조회 이동">상품준비중</a></td>
                             <td>
                                 <!--주문상태가 결제완료, 상품준비중일 때만 가능-->
-                                <button type="button" data-toggle="modal" data-target="#cancelModal">
+                                <button type="button" onclick="cancelAlert()">
                                 즉시취소
                                 </button>
                             </td>
@@ -184,13 +223,13 @@
                             <td>2021-11-15<br>[20211115131234]</td>
                             <td><a href="상품상세페이지">닭가슴살 샐러드</a></td>
                             <td>7,900원/1개</td>
-                            <td><a href="주문목록/배송조회 이동">배송중</a></td>
+                            <td><a href="주문목록/배송조회 이동">배송완료</a></td>
                             <td>
                                 <!--주문상태가 배송완료일 때만 가능-->
-                                <button type="button" data-toggle="modal" data-target="#myModal">
+                                <button type="button"  onclick="location.href='리뷰작성페이지이동'">
                                 리뷰작성
                                 </button>
-                                <button>
+                                <button type="button" data-toggle="modal" data-target="#refundModal">
                                 환불요청
                                 </button>
                             </td>
@@ -199,10 +238,77 @@
         </div>
 
     </div>
+	
+    <!-- 취소요청 모달창 -->
+	<script>
+		function cancelAlert() {
+			 const cancelResult = confirm("해당 상품 주문을 취소하시겠습니까?");
+			 
+			 if(result) {
+				// 상품주문 취소O
+				
+				// 주문 취소 테이블 insert
+			 }else {
+				// 상품주문 취소 X 
+			 }
+			 
+		}
+	</script>
+    
+    <!-- 환불요청 모달창 -->
+    <div class="modal" id="refundModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+        
+                <!-- Modal Header -->
+                <div class="modal-header" style="font-size:large; background-color: rgba(240, 239, 233, 0.445);">
+                    <div>
+                        <b>취소 요청</b>
+                    </div>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body" style="height: 330px;">
+                   
+                    <table class="cancelList" style="margin-bottom: 20px;"> 
+                        <tr>
+                            <th>주문일자<br>주문번호</th>
+                            <th>상품명</th>
+                            <th>주문수량</th>
+                        </tr>
+                        <tr>
+                            <td>2021-11-15<br>[20211115131234]</td>
+                            <td>닭가슴살 샐러드</td>
+                            <td>1개</td>
+                        </tr>
+                    </table>
 
-    
-    <!-- 각 모달창 만들기 -->
-    
+                    <div>
+                        <table class="cancelReason">
+                            <tr>
+                                <td><button type="button" name="cancelReason">단순변심</button></td>
+                                <td><button type="button" name="cancelReason">상품불량</button></td>
+                            </tr>
+                            <tr>
+                                <td><button type="button" name="cancelReason">상품오배송</button></td>
+                                <td><button type="button" name="cancelReason">사이트 불만족</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr>
+                    <p>* 취소완료 후에는 철회가 불가능합니다.</p>
+                </div>
+                
+        \
+                <!-- Modal footer -->
+                <div class="modal-footer" style="border:0px;">
+                    <button type="submit" data-dismiss="modal">환불요청</button>
+                    <button type="reset" data-dismiss="modal">취소</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
   
 </body>
 </html>

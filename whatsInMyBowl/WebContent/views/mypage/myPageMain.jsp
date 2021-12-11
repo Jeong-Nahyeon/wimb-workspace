@@ -27,13 +27,12 @@
     /*최근주문정보 배송상태 영역*/
     .orderStatus {
         width:700px; 
-        height: 150px;
+        height: 130px;
         background-color: rgb(155, 213, 189);
         color: rgba(19, 19, 19, 0.753);
         margin-bottom: 20px;
         text-align: center;
         border: 1px solid #ebebeb;
-        padding: 20px;
     }
     #plus {
         float: right;
@@ -255,7 +254,7 @@
                 <span style="font-size: 12pt;"><b>최근 주문 정보</b></span>
                 <span style="font-size: 8pt; color: gray;"> 최근 30일 내에 주문하신 내역입니다.</span>
                 <!--더보기 클릭시 주문목록/배송조회페이지 이동-->
-                <span id="plus"><a href="주문목록/배송조회 이동"><i class="fas fa-plus-square">&nbsp;더보기</i></a></span>
+                <span id="plus"><a href="<%= contextPath %>/"><i class="fas fa-plus-square">&nbsp;더보기</i></a></span>
             </div>
 
             
@@ -280,7 +279,7 @@
                     <th>></th>
                     <th>배송준비</th>
                     <th>></th>
-                    <th>배송중</th>
+                    <th width="110">배송중</th>
                     <th>></th>
                     <th>배송완료</th>
                 </tr>
