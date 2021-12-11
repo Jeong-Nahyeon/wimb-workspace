@@ -20,7 +20,7 @@
     }
 
     .noticeSideBar{
-        position: fixed;
+        float: left;
         width: 200px;
     }
 
