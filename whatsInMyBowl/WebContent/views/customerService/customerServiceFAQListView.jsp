@@ -13,6 +13,7 @@
         text-decoration: none;
     }
     .outer{
+        height: 800px;
         width: 1000px;
         box-sizing: border-box;
         margin: auto;
@@ -102,7 +103,6 @@
         font-weight: 600;
     }
     input{width: 330px;}
-
     .FAQ_Category{
         width: 700px;
         margin: 20px 0px;
@@ -116,18 +116,11 @@
         display: inline-block;
         padding: 5px 29px;
     }
-
     #Accordion_wrap{
         margin-left: 230px;
         box-sizing: border-box;
         margin-left: 230px;
     }
-
-    /*
-    .que:first-child{
-    border-top: 1px solid black;
-    }
-    */
     #FAQ_List{
         margin-left: 230px;
         width: 700px;
