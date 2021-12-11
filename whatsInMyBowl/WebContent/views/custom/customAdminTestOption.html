@@ -135,7 +135,21 @@
         #custom_insertTable input, #custom_insertTable select{
             border: 1px solid lightgrey;
         }
-        
+        /*재료 삭제 모달*/
+        .delete_text{
+            text-align: center;
+        }
+        .delete_text span{
+            display: block;
+            margin: 10px 0;
+        }
+        .delete_btn{
+            margin: 40px 5px 5px 5px;
+            text-align: center;
+        }
+        .delete_btn button{
+            margin: 0 10px;
+        }
     </style>
 </head>
 <body>
@@ -181,6 +195,7 @@
         <br><br><br><br><br>
 
         <button data-toggle="modal" data-target="#costom_insert_Modal">테스트버튼</button>
+        <button data-toggle="modal" data-target="#costom_delete_Modal">삭제테스트</button>
         
         <!-- 상품등록 모달-->
         <!-- The Modal -->
@@ -252,6 +267,30 @@
                         </div>
                     </div>
             
+                </div>
+                </div>
+            </div>
+
+            <!-- 상품삭제 모달-->
+            <!-- The Modal -->
+            <div class="modal" id="costom_delete_Modal">
+                <div class="modal-dialog">
+                <div class="modal-content">
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="" >
+                            <div class="delete_text">
+                                <span>선택하신 재료를 삭제합니다.</span>
+                                <span>정말 삭제하시겠습니까?</span>
+                                <span>(삭제 후 복구불가)</span>
+                            </div>
+                            <div class="delete_btn">
+                                <button type="submit" class="btn btn-sm btn btn-outline-warning">삭제</button>
+                                <button type="reset" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">취소</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 </div>
             </div>
