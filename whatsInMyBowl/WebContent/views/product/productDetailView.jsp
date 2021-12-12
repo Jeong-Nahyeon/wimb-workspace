@@ -15,28 +15,24 @@
 		box-sizing: border-box;
 		border:1px solid red;
 		margin:auto;
-		margin-top:50px;
+		margin-top:20px;
 		width:1000px;
 		height:auto;
 	}
 
-	.main, .btns, .detail, .review, .delivery-info, .product-QnA{
+	/* 상품 상세 메인  */
+	.main{
 		box-sizing: border-box;
 		border:1px solid red;
 		margin:auto;
 		margin-bottom: 20px;
 		width:90%;
-	}
-	/* 상품 상세 메인  */
-	.main{
-		box-sizing: border-box;
-		border:1px solid red;
 		height:500px;
 	}
 	
 	.main-left, .main-right{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		width:50%;
 		height:100%;
 		float:left;
@@ -63,7 +59,7 @@
 
 	.main-right>.main-content{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		width:400px;
 		height:400px;
 		position:absolute;
@@ -72,38 +68,80 @@
 		bottom:0;
 		left:0;
 		right:0;
+		
 	}
 
-	.title, .price, .delivery-charge, .total-price, .main-btns{
+	.content, .amount,.total-price, .main-btns{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		width:100%;
 	}
 
-	.title{
-		height:10%;
+	.content{
+		border-bottom:2px solid lightgray;
+		height:50%;
 		margin-bottom:10px;
 	}
+
+	.amount{
+		border-bottom:2px solid lightgray;
+		height:15%;
+		margin-bottom:10px;
+		padding-top: 10px;
+	}
+
+	.total-price{
+		height:15%;
+		margin-bottom:10px;
+		padding-top: 10px;
+	}
+	
+	.main-btns{
+		height:13%;
+	}
+	
+	.main-btns *{
+		margin-top:10px;
+	}
+
 
 	/* 상세설명, 리뷰, 배송정보, 상품문의 이동 버튼 */
 	.btns{
 		box-sizing: border-box;
 		border:1px solid red;
+		margin:auto;
+		margin-bottom: 20px;
+		width:90%;
 		height:50px;
 	}
 	.btn-detail, .btn-review, .btn-delivery, .btn-QnA{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		width:25%;
 		height:100%;
 		float:left;
+	}
+
+	.btns a{
+		box-sizing: border-box;
+		border:1px solid lightgray;
+		text-decoration: none !important;
+		display:block;
+		width:100%;
+		height:100%;
+		color:black;
+		text-align: center;
+		line-height: 40px;
 	}
 
 	/* 상품 상세 설명 */
 	.detail{
 		box-sizing: border-box;
 		border:1px solid red;
-		height:2200px; /* auto로 고치기 */
+		margin:auto;
+		margin-bottom: 20px;
+		width:90%;
+		height:2200px;
 	}
 
 	.detail-content, .detail-img{
@@ -114,68 +152,23 @@
 
 	.detail-content{
 		height:20%;
+		padding:10px;
 	}
 
 	.detail-img{
 		height:80%;
 	}
 
-	/* 리뷰 */
-
-	.review{
-		box-sizing: border-box;
-		border:1px solid red;
-		height:800px;
-	}
-
-	.review-title, .review-btn1, .review-content, .review-btn2{
-		box-sizing: border-box;
-		border:1px solid red;
-		width:100%;
-	}
-
-	.review-title{
-		height:5%;
-		margin-bottom:10px;
-	}
-
-	.review-btn1, .review-btn2{
-		height:5%;
-		margin-bottom:20px;
-	}
-
-	.review-btn1-left, .review-btn1-right, .review-btn2-left, .review-btn2-right{
-		box-sizing: border-box;
-		border:1px solid red;
-		width:50%;
-		height:100%;
-		float:left;
-	}
-	
-	.review-content{
-		height:24%;
-		margin-bottom:20px;
-	}
-
-	.review-content-left{
-		box-sizing: border-box;
-		border:1px solid red;
-		width:20%;
-		height:100%;
-		float:left;
-	}
-
-	.review-content-right{
-		box-sizing: border-box;
-		border:1px solid red;
-		width:80%;
-		height:100%;
-		float:left;
-	}
+	/* 리뷰 페이지는 따로 파일 합침 */
 
 	/* 배송 정보 */
 	
 	.delivery-info{
+		box-sizing: border-box;
+		border:1px solid red;
+		margin:auto;
+		margin-bottom: 20px;
+		width:90%;
 		height:300px;
 	}
 
@@ -184,16 +177,23 @@
 		border:1px solid red;
 		height:13%;
 		margin-bottom: 10px;
+		border-bottom: 2px solid lightgray;
 	}
 
 	.delivery-info-content{
 		box-sizing: border-box;
 		border:1px solid red;
 		height:84%;
+		padding:10px;
 	}
 
 		/* 상품 문의 */
 	.product-QnA{
+		box-sizing: border-box;
+		border:1px solid red;
+		margin:auto;
+		margin-bottom: 20px;
+		width:90%;
 		height:500px;
 	}
 
@@ -217,31 +217,65 @@
 						<h2 style="font-weight: bolder;">닭가슴살 샐러드</h2>
 						<br>
 						<h5 style="font-weight: bolder;">4900원</h5>
+						<br>
 						<span style="font-size: 12px;">
 							배송정보 3,000원 / 주문 시 결제 (선결제)
 						</span>
-						<button type="button" class="btn btn-sm " style="margin-left:58px; font-size:12px; border:1px solid lightgray;">지역별 배송비 추가</button>
+						<button type="button" class="btn btn-sm " style="margin-left:55px; font-size:12px; border:1px solid lightgray;">지역별 배송비 추가</button>
 						<br>
 						<span style="font-size: 12px;">
 							전체 결제 금액의 1% 적립 (배송비 제외)
 						</span>
 					</div>
+					
 					<div class="amount">
-
+						<span>닭가슴살 샐러드</span>
+						<span style="margin-left:175px;">
+							<i class="fas fa-minus" onclick='count("minus")' value="-" style="cursor:pointer"></i>
+							<input type="text" id="result" name="amount" value="1" readonly style="width:50px; height:25px; text-align:center; border:1px solid lightgray; margin:0 5px;">
+							<i class="fas fa-plus" onclick='count("plus")' value="+" style="cursor:pointer"></i>
+						</span>
 					</div>
-					<div class="total-price">
+					<script>
+						function count(type)  {
+							// 결과를 표시할 element
+							const result = document.getElementById('result');
+							
+							// 현재 화면에 표시된 값
+							let number = result.value;
+							
+							// 더하기/빼기
+							if(type === 'plus') {
+								number = parseInt(number) + 1;
+							}else if(type === 'minus')  {
+								if(number != '0'){
+									number = parseInt(number) - 1;
+								} else{
+									number = 0;
+								}
+								
+							}
+							
+							// 결과 출력
+							result.value = number;
+						}
+					</script>
 
+					<div class="total-price" align="right">
+						<span style="font-size:20px; font-weight: bolder;">총 합계 금액</span>
+						<span style="color:#9BD5BD; font-size:30px; font-weight: bolder; margin-left:30px;">4900원</span>
 					</div>
+
 					<table class="main-btns">
 						<tr>
-							<td class="like-btn">
-
+							<td class="like-btn" width="20%" align="center">
+								<i class="far fa-heart fa-2x" style="color:#9BD5BD;"></i>
 							</td>
-							<td class="buy-btn">
-
+							<td class="buy-btn" width="40%">
+								<button class="btn" style="background:#9BD5BD; color:white; font-weight: bolder; width:100%;">바로구매</button>
 							</td>
-							<td class="cart-btn">
-
+							<td class="cart-btn" width="40%">
+								<button class="btn" style="border:1px solid #9BD5BD; color:#9BD5BD; font-weight: bolder; bolder; width:100%;">장바구니</button>
 							</td>
 						</tr>
 					</table>
@@ -252,92 +286,45 @@
 		<!-- 상세설명, 리뷰, 배송정보, 상품문의 이동 버튼 -->
 		<div class="btns">
 			<div class="btn-detail">
-
+				<a href="#detail">상세설명</a>
 			</div>
 			<div class="btn-review">
-
+				<a href="#review">상품후기 (110)</a>
 			</div>
 			<div class="btn-delivery">
-
+				<a href="#delivery-info">배송정보</a>
 			</div>
 			<div class="btn-QnA">
-
+				<a href="#product-QnA">상품문의</a>
 			</div>
 		</div>
 
 		<!-- 상품 상세 설명 -->
-		<div class="detail">
-			<div class="detail-content">
-
+		<div id="detail" class="detail">
+			<div class="detail-content" align="center">
+				<p>상품상세설명내용</p>
 			</div>
 			<div class="detail-img">
-
+				<img src="" width="100%" height="100%">
 			</div>
 		</div>
 
-		<!-- [고려사항] 
-			review 페이지 따로 만들어서 include로 합쳐야 할 듯
-		 -->
 		<!-- 리뷰 -->
-		<div class="review">
-			<div class="review-title">
-
-			</div>
-			<div class="review-btn1">
-				<div class="review-btn1-left">
-
-				</div>
-				<div class="review-btn1-right">
-
-				</div>
-			</div>
-			<div class="review-content">
-				<div class="review-content-left">
-
-				</div>
-				<div class="review-content-right">
-					
-				</div>
-			</div>
-			<div class="review-content">
-				<div class="review-content-left">
-
-				</div>
-				<div class="review-content-right">
-					
-				</div>
-			</div>
-			<div class="review-content">
-				<div class="review-content-left">
-
-				</div>
-				<div class="review-content-right">
-					
-				</div>
-			</div>
-			<div class="review-btn2">
-				<div class="review-btn2-left">
-
-				</div>
-				<div class="review-btn2-right">
-					
-				</div>
-			</div>
-		</div>
+		<%@ include file="../review/reviewListView.jsp" %>
 
 		<!-- 배송 정보 -->
-		<div class="delivery-info">
+		<div id="delivery-info" class="delivery-info">
 			<div class="delivery-info-title">
-
+				<h4 style="font-weight: bolder;">배송정보</h4>
 			</div>
 			<div class="delivery-info-content">
-
+				<p>배송정보내용</p>
 			</div>
 		</div>
 
-		<!-- 나경님 영역 -->
+		<!-- 나경님 영역 => include로 합치기 -->
 		<!-- 상품 문의 -->
-		<div class="product-QnA">
+		<div id="product-QnA" class="product-QnA">
 			상품문의영역
 			<!-- 
 			<div class="product-QnA-title"></div>
