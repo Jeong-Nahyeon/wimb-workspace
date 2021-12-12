@@ -96,7 +96,7 @@
                         <td>
                             <input type="checkbox">
                         </td>
-                        <td>닭가슴살샐러드1</td>
+                        <td><img src="">닭가슴살샐러드1</td>
                         <td>7,900원</td>
                         <td>
                             <button type="button" class="cart" onclick="클릭메소드">장바구니</button>
@@ -107,7 +107,7 @@
                         <td>
                             <input type="checkbox">
                         </td>
-                        <td>닭가슴살샐러드1</td>
+                        <td><img src="">닭가슴살샐러드1</td>
                         <td>7,900원</td>
                         <td>
                             <button type="button" class="cart" onclick="클릭메소드">장바구니</button>
@@ -118,7 +118,7 @@
                         <td>
                             <input type="checkbox">
                         </td>
-                        <td>닭가슴살샐러드1</td>
+                        <td><img src="">닭가슴살샐러드1</td>
                         <td>7,900원</td>
                         <td>
                             <button type="button" class="cart" onclick="클릭메소드">장바구니</button>
@@ -129,7 +129,7 @@
                         <td>
                             <input type="checkbox">
                         </td>
-                        <td>닭가슴살샐러드1</td>
+                        <td><img src="">닭가슴살샐러드1</td>
                         <td>7,900원</td>
                         <td>
                             <button type="button" class="cart" onclick="클릭메소드">장바구니</button>
