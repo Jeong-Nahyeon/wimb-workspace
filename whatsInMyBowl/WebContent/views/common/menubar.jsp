@@ -24,7 +24,8 @@
         height:300px; 
         box-sizing: border-box; 
         margin:auto; 
-        min-height:100%}
+        min-height:100%;
+        z-index: 10000;}
         .wrap>div{box-sizing: border-box; float:left;}
         .search-area{width: 350px; height:200px;}
         .search-area>*{margin-top: 160px;}
@@ -123,6 +124,7 @@
             width: 1000px;
             text-align: center;
             display: none;
+            z-index: 10000;
         }
          
         #searchBtn{
@@ -274,10 +276,12 @@
         $("#whole, #wholeMenu").mouseover(function(e){
             e.preventDefault();
             $("#wholeMenu").slideDown("slow");
+            $('.wrap').css('margin-bottom','300px');
         });
         $("#wholeMenu").mouseleave(function(e){
             e.preventDefault();
             $("#wholeMenu").slideUp();
+            $('.wrap').css('margin-bottom','0');
         });
 
         var floatPosition = parseInt($(".sidebarWrap").css('top'));
