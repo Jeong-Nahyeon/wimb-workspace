@@ -19,7 +19,12 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
-        .wrap{width: 1000px; height:800px; box-sizing: border-box; margin:auto; margin-bottom: -200px;}
+        .wrap{
+        width: 1000px; 
+        height:300px; 
+        box-sizing: border-box; 
+        margin:auto; 
+        min-height:100%}
         .wrap>div{box-sizing: border-box; float:left;}
         .search-area{width: 350px; height:200px;}
         .search-area>*{margin-top: 160px;}
@@ -167,46 +172,11 @@
         .sidebar a:hover{
             color: rgb(189, 216, 205);
         }
-        #footer{
-            width: 1000px;
-            height: 200px;
-            bottom: 0;
-            margin: auto;
-            background: rgb(245, 243, 243);
-        }
-        #footerUpside{
-            width:100%;
-            height: 50px;
-        }
-        #footer ul>li{
-            float: left;
-            list-style-type: none;
-            margin-left: 5px;
-            margin-right: 10px;
-            line-height: 50px;
-        }
-        #footerUpside li>a{
-            color: black;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        #footerUpside li>a:hover{
-            color: grey;
-        }
-        #footerDownside{
-            width: 100%;
-            height: 150px;
-            margin: auto;
-            padding: 15px 35px;
-        }
-        #footerDownside p{
-            font-size: small;
-            line-height: 20px;
-        }
+        
         
     </style>
 </head>
-<body>
+<body style="height:100%">
     <div class="wrap" id="wrap" align="center">
         <div class="search-area">           
             <input type="text" name="search" id="search">  
@@ -219,7 +189,7 @@
             <!-- 로그인 전 -->
             <div class="login-area"> 
                 <a href="">회원가입</a> 
-                <a href="">로그인</a>
+                <a href="<%= contextPath %>/views/member/loginForm.jsp">로그인</a>
                 <a href="">마이페이지</a>
                 <a href="">고객센터</a>
                 <a href="">장바구니</a>
@@ -295,31 +265,10 @@
                     <a href="#footer"><i class="fas fa-chevron-down"></i></a>
                 </div>
             </div>
-        </div>
+        </div>     
     </div>
     
-    <div id="footer">
-        <div id="footerUpside">
-            <ul>
-                <li><a href="">고객센터</a></li>
-                <li>|</li>
-                <li><a href="">이용약관</a></li>
-                <li>|</li>
-                <li><a href="">이용안내</a></li>
-                <li>|</li>
-                <li><a href="">개인정보 처리방침</a></li>
-            </ul>
-        </div>
-        <div id="footerDownside" >
-            <p>법인명(상호): (주)왓츠인마이볼 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 대표: 홍길동<br>
-            	주소: 서울특별시 강남구 테헤란로 14길 6 남도빌딩 2층<br>
-            	전화번호: 02-1111-2222 <br>
-            	fax: 02-3333-4444<br>
-            	email: whatsinmybowlTeam@gmail.com<br>
-            	사업자 등록번호: 2021-0000-1111
-            </p>
-        </div>
-    </div>
+    
     <script>      
         $("#whole, #wholeMenu").mouseover(function(e){
             e.preventDefault();

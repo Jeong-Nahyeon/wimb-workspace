@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="menubar.jsp"%>
+<%@ include file="../common/menubar.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +9,11 @@
 <title>Insert title here</title>
 <style>
     div{box-sizing: border-box;}
-    #loginForm{      
+    #loginForm{    
         width: 400px;
         height: 300px;
     }
-    .wrap{border: 1px solid lightgrey; width: 500px; height:400px; margin: auto; margin-top: 50px;}
+    .loginWrap{border: 1px solid lightgrey; width: 500px; height:400px; margin: auto; margin-top: 100px;}
         
     .logintap>ul>li{
         list-style: none;
@@ -81,7 +82,7 @@
 </head>
 </head>
 <body>
-	 <div class="wrap" align="center">
+	 <div class="loginWrap" align="center">
 
         <div class="logintap">
             <ul align="center">
@@ -142,6 +143,10 @@
                 }
             </script>            
         </form>
+        
     </div>
+    <footer>
+    	<%@ include file="../common/footer.jsp" %>
+    </footer>
 </body>
 </html>
