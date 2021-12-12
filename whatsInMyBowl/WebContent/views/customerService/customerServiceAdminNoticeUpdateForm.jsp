@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관리자-고객센터 등록</title>
+<title>Insert title here</title>
 <style>
     .outer{
         margin-top: 100px;
@@ -37,10 +37,7 @@
         margin-top: 50px;
     }
     .two_btn button:focus{outline: none;}
-    #insert{
-        margin-left: 10px;
-        padding:3px 23px;
-    }
+    #insert{margin-left: 10px;}
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -54,10 +51,9 @@
     <%@ include file="../common/adminBar.jsp" %>
 
     <div class="outer">
-
         <div id="mainTitle">
             <h2 id="mainTitle1">고객센터관리 > 공지사항</h2>
-            <h2>> 공지사항 등록</h2>
+            <h2>> 공지사항 수정</h2>
         </div>
 
         <table>
@@ -77,8 +73,10 @@
 
         <div class="two_btn" align="center">
             <button type="button">목록으로</button>
-            <button type="submit" id="insert">등록</button>
+            <button type="submit" id="insert">수정하기</button>
         </div>
+    </div>
+
     </div>
 </body>
 </html>

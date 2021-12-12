@@ -219,7 +219,7 @@
                 <div class="research_question_box">
                     <div class="research_question_box_left">
                         <h3 style="width: 70px;">질문검색</h3>
-                        <input type="text"" value="궁금한 내용을 입력하세요.">
+                        <input type="text" value="궁금한 내용을 입력하세요.">
                         <span><i class="fas fa-search"></i></span>
                     </div>
     
@@ -238,7 +238,7 @@
                 <div class="FAQ_Category_box" style="border-left: 1px solid gray;">주문/결제</div>
                 <div class="FAQ_Category_box" style="border-left: 1px solid gray;"> 취소/환불</div>
                 <div class="FAQ_Category_box" style="border-left: 1px solid gray;">상품</div>
-                <div class="FAQ_Category_box" style="border-left: 1px solid gray;">이용 및 기타</div>
+                <div class="FAQ_Category_box" style="border-left: 1px solid gray;">이용/기타</div>
             </div>
 
             <div id="FAQ_List">
