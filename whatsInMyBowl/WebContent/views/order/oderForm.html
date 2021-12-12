@@ -22,7 +22,8 @@
 <script src="https://kit.fontawesome.com/fca98d1848.js" crossorigin="anonymous"></script>
 
 <!-- 주소 API -->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- https: 붙이니까 팝업창은 뜬다..! 정확한 테스트는 서버 구동 후 가능 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <style>
     * {font-family: 'Noto Sans KR', sans-serif;}
@@ -93,6 +94,11 @@
     /*기본 배송지 불러오기*/
     #get-address-input, #get-address{
         vertical-align: middle;
+    }
+    /*적립금 설명*/
+    .point-sub span{
+        display: block;
+        font-size: 10px;
     }
 </style>
 </head>
@@ -212,53 +218,53 @@
                         </th>
                         <td>
                             <input type="number" name="">
-                            <button>모두사용</button>
+                            <button class="btn btn-sm btn-secondary">모두사용</button>
                         </td>
                     </tr>
                     <tr>
                         <th></th>
                         <td>
                             <div class="point-sub">
-                                <span>
-                                    보유적립금 : 3,000원
-                                </span>
+                                <span style="font-size: 13px; margin-bottom: 7px;">보유적립금 : 3,000원</span>
+                                <span>* 보유적립금 1천원 이상부터 사용가능</span>
+                                <span>* 적립금내역 : 마이페이지 - 적립금조회</span>
                             </div>
                         </td>
                     </tr>
                 </table>
-                
             </form>
-            <!-- script -->
-            <!-- 다음 주소 API 스크립트 -->
+
             
-            <script>
-                function addressSearch(){
-                    new daum.Postcode({
-                    oncomplete: function(data) {
-                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-                        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
-                        var addr = '';
-
-                        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                            addr = data.roadAddress;
-                        } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                            addr = data.jibunAddress;
-                        }
-
-                        document.getElementById('address-code').value = data.zonecode;
-                        document.getElementById('address-main').value = addr;
-
-                        // 커서를 상세주소 필드로 이동
-                        document.getElementById("address-sub").focus();
-                    }
-                    }).open();
-                }
-
-            </script>
         </div>
     </div>
 
+    <!-- script -->
+    <!-- 다음 주소 API 스크립트 -->
+    <script>
+        function addressSearch(){
+            new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+                // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+                var addr = '';
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                document.getElementById('address-code').value = data.zonecode;
+                document.getElementById('address-main').value = addr;
+
+                // 커서를 상세주소 필드로 이동
+                document.getElementById("address-sub").focus();
+            }
+            }).open();
+        }
+
+    </script>
     
 </body>
 </html>
