@@ -139,6 +139,7 @@
             border: none;
             border-bottom: 1px solid black;
             outline-style: none;
+            width: 170px;
         }
         #user-area{letter-spacing: 1px; font-size:x-large;}
         
