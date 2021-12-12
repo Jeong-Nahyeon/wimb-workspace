@@ -139,7 +139,7 @@
             <script>
                 function enrollPage(){
                    
-                    location.href = "<%=contextPath%>/enrollForm.me";
+                    location.href = "<%=contextPath%>/memberEnrollForm.me";
                 }
             </script>            
         </form>
