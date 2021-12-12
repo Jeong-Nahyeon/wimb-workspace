@@ -155,6 +155,8 @@
             width: 30px;
             height: 40px;   
             top: 20px;
+            margin-top:-5px;
+            margin-bottom:7px;
             text-align: center;
         }
         .sidebar a{
@@ -205,7 +207,7 @@
     </style>
 </head>
 <body>
-    <div class="wrap" align="center">
+    <div class="wrap" id="wrap" align="center">
         <div class="search-area">           
             <input type="text" name="search" id="search">  
             <button id="searchBtn" onclick=""><i class="fas fa-search"></i></button>  
@@ -287,10 +289,10 @@
                     <a href=""><i class="fas fa-cart-plus"></i></a>
                 </div>
                 <div style="border-bottom:1px solid lightgrey">
-                    <a href=""><i class="fas fa-chevron-up"></i></a>
+                    <a href="#wrap"><i class="fas fa-chevron-up"></i></a>
                 </div>
                 <div>
-                    <a href=""><i class="fas fa-chevron-down"></i></a>
+                    <a href="#footer"><i class="fas fa-chevron-down"></i></a>
                 </div>
             </div>
         </div>
