@@ -11,6 +11,7 @@
     body{
         margin: 0px;
         width: 100%;
+        height: 100%;
     }
 
     img{
@@ -41,9 +42,10 @@
     }
 
     #menubar-left{
-        background-color: lightgrey;
+        height: auto;
         width: 190px;   
         float: left;
+        background-color: lightgrey;
     }
 
     ul{
@@ -136,7 +138,7 @@
         <ul>
             <li class="menubar-left-title">고객센터관리</li>
             <li class="menubar-left-text"><a href="">공지사항</a></li>
-            <li class="menubar-left-text"><a href="">1대1 문의</a></li>
+            <li class="menubar-left-text"><a href="">1:1 문의</a></li>
             <li class="menubar-left-text"><a href="">자주묻는 질문</a></li>
         </ul>
     

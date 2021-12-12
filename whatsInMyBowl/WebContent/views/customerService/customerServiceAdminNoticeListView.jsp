@@ -9,9 +9,7 @@
     .outer{
         margin-top: 100px;
         margin-left: 25%;
-    }
-    button:focus{
-        outline: 0;
+        height: auto;
     }
     .outer h2 {
         display: inline;

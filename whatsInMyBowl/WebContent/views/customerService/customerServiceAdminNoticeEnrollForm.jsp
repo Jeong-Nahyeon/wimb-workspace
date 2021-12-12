@@ -79,6 +79,45 @@
             <button type="button">목록으로</button>
             <button type="submit" id="insert">등록</button>
         </div>
+
+        <script>
+            const search_Form = document.querySelector('.search_Form')
+            const searchBox = document.querySelector('.search_category_input')
+            const searchHistory = document.querySelector('search_btn')
+
+            function createSearchHistoryList(){
+                if(searchHistoryListIndex < searchHistoryList.length){
+                    var a = document.createElement('a');
+                    const aText = searchHistoryList[searchHistoryListIndex];
+                    searchHistory.appendChild(a);
+                    a.outerHTML = '<a href="http://google.com/search?q=${aText}">${aText}</a><br>'
+                    searchHistoryListIndex++;
+                    createSearchHistoryList();
+                }
+            }
+            function handleSearch(event){
+                event.preventDefault();
+                const sValue = searchBox.value;
+                searchOnInput(sValue);
+            }
+            function search(){
+                search_Form.addEventListener("submit", handleSearch)
+            }
+            function searchOnInput(sValue){
+                loaction.href='http://google.com/search?q=${sValue}';
+            }
+            function init(){
+                search()
+                createSearchHistoryList()
+            }
+            init()
+
+
+            $(document).ready(function(){
+                $(":button")
+            });
+        </script>
+
     </div>
 </body>
 </html>
