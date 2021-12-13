@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	String contextPath = request.getContextPath();
+
+	//Member loginUser = session.getAttripute("loginUser");
+	// 로그인한 관리자 회원의 정보가 담겨있는 Member 객체
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
