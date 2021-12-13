@@ -1,0 +1,203 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>완제품 목록</title>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+	.outer{
+		box-sizing: border-box;
+		border:1px solid red;
+		margin:auto;
+		margin-top:50px;
+		width:1000px;
+		height:auto;
+	}
+
+	/* 타이틀 영역 */
+	.product-list-area{
+		box-sizing: border-box;
+		border:1px solid red;
+		margin:auto;
+		width:90%;
+	}
+
+	.title-area{
+		box-sizing: border-box;
+		/* border:1px solid red; */
+		border-bottom:2px solid lightgray;
+		margin:auto;
+		margin-bottom: 20px;
+		width:100%;
+		height:50px;
+		line-height: 50px;
+	}
+
+	.title-area>h4{
+		font-weight: bolder;
+		display:inline-block;
+		margin-right:40px;
+	}
+
+	.title-area>a{
+		margin-right:10px;
+		color:black;
+
+	}
+
+	/* 상품 정렬 목록 */
+	.sort-list-area{
+		box-sizing: border-box;
+		border:1px solid red;
+		margin:auto;
+		margin-bottom: 20px;
+		width:100%;
+		height:50px;
+		line-height: 50px;
+	}
+
+	/* 상품 목록 */
+
+	.product-area{
+		box-sizing: border-box;
+		border:1px solid red;
+		margin:auto;
+		width:100%;
+	}
+
+	.product{
+		box-sizing: border-box;
+		border:1px solid red;
+		width:200px;
+		height:260px;
+		display: inline-block;
+		margin-top: 15px;
+		margin-right: 10px;
+		margin-left: 10px;
+		margin-bottom: 15px;
+	}
+
+	.product-img{
+		box-sizing: border-box;
+		border:1px solid red;
+		width:200px;
+		height:200px;
+		position: relative;
+	}
+
+	.product-img>img{
+		box-sizing: border-box;
+		/* border:1px solid red; */
+		width:200px;
+		height:200px;
+	}
+
+	.heart-btn{
+		position: absolute;
+		left:10px;
+		bottom:10px;
+		color:#9BD5BD;
+		
+	}
+
+	.cart-btn{
+		position: absolute;
+		right:10px;
+		bottom:10px;
+		color:#9BD5BD;
+	}
+
+	.product h5{
+		/* border:1px solid red; */
+		font-weight: bolder;
+		display:inline-block;
+	}
+
+
+
+</style>
+</head>
+<body>
+	
+	<%@ include file="../common/menubar.jsp" %>
+	
+	<div class="outer">
+		<div class="product-list-area">
+
+			<div class="title-area">
+				<h4>샐러드</h4>
+				<a href="">전체상품</a>
+				<a href="">비건샐러드</a>
+				<a href="">육류샐러드</a>
+				<a href="">해산물샐러드</a>
+			</div>
+
+			<div class="sort-list-area" align="right">
+				<select class="selectpicker" name="select-sort">
+					<option value="">신상품순</option>
+					<option value="">인기상품순</option>
+					<option value="">낮은가격순</option>
+					<option value="">높은가격순</option>
+				</select>
+			</div>
+
+			<div class="product-area">
+
+				<div class="product">
+					<div class="product-img">
+						<img src="">
+						<i class="far fa-heart fa-2x heart-btn"></i>
+						<i class="fas fa-cart-plus fa-2x cart-btn"></i>
+					</div>
+					<h5>닭가슴살 샐러드</h5>
+					<h5>4900원</h5>
+				</div>
+				<div class="product">
+					<div class="product-img">
+						<img src="">
+						<i class="far fa-heart fa-2x heart-btn"></i>
+						<i class="fas fa-cart-plus fa-2x cart-btn"></i>
+					</div>
+					<h5>닭가슴살 샐러드</h5>
+					<h5>4900원</h5>
+				</div>
+				<div class="product">
+					<div class="product-img">
+						<img src="">
+						<i class="far fa-heart fa-2x heart-btn"></i>
+						<i class="fas fa-cart-plus fa-2x cart-btn"></i>
+					</div>
+					<h5>닭가슴살 샐러드</h5>
+					<h5>4900원</h5>
+				</div>
+				<div class="product">
+					<div class="product-img">
+						<img src="">
+						<i class="far fa-heart fa-2x heart-btn"></i>
+						<i class="fas fa-cart-plus fa-2x cart-btn"></i>
+					</div>
+					<h5>닭가슴살 샐러드</h5>
+					<h5>4900원</h5>
+				</div>
+			</div>
+
+			<!-- 페이징바 -->
+            <div id="paging-bar" align="center">
+                <a href="">&lt;</a>
+                <a href="">1</a>
+                <a href="">&gt;</a>
+            </div>
+
+		</div>
+	</div>
+	
+	<%@ include file="../common/footer.jsp" %>
+
+</body>
+</html>
