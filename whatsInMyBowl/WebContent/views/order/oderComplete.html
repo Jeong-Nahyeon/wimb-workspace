@@ -39,6 +39,36 @@
     }
     #order-process span{font-size: 10px;}
     #order-header h3{font-weight: 800; padding-left: 15px;}
+    
+    /*주문완료 정보 영역*/
+    .orderComplete-area{
+        border: 1px solid red;
+        width: 500px;
+        height: 800px;
+        margin: auto;
+    }
+    #orderComplete-header{
+        text-align: center;
+        margin: 40px 0 60px 0;
+    }
+    #orderComplete-header i{
+        font-size: 50px;
+        color: rgb(155,213,189);
+        margin-bottom: 20px;
+    }
+    #orderComplete-info table{
+        margin: auto;
+        margin-top: 20px;
+    
+    }
+    #orderComplete-info th{width: 100px; vertical-align: top;}
+    #orderComplete-info td{width: 350px;}
+    #orderComplete-info span{
+        font-size: 13px;
+    }
+    .order-product span{
+        display: block;
+    }
 </style>
 </head>
 <body>
@@ -54,6 +84,85 @@
         </div>
 
         <!-- 주문완료 정보 영역 -->
+        <div class="orderComplete-area">
+            <div id="orderComplete-header">
+                <i class="far fa-check-circle"></i>
+                <!-- 카드, 무통장 출력문구 다름-->
+                <!--<h4 style="font-weight: 800;">입금 확인 후 구매가 확정됩니다.</h4>-->
+                <h4 style="font-weight: 800;">주문이 완료되었습니다.</h4>
+            </div>
+
+            <!-- 주문 정보 -->
+            <div id="orderComplete-info">
+                <span style="font-size: 15px; font-weight: 800;">주문정보</span>
+                <hr style="margin-top: 5px;">
+
+                <table>
+                    <tr>
+                        <th>주문번호</th>
+                        <td><span>1234567891234</span></td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr>
+                        <th rowspan="4">배송정보</th>
+                        <td>
+                            <span>홍길동 / 010-2345-6789</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>77766</span>
+                            <span>서울특별시 강남구 테헤란로 14길 6 남도빌딩</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>배송요청메세지 : </span>
+                            <span>샬라샬라샬라</span>
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr>
+                        <th rowspan="4">결제수단</th>
+                        <td><span>신용카드</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>결제금액 : </span>
+                            <span>32,000</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>할부 : </span>
+                            <span>일시불</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>결제자 : </span>
+                            <span>홍길동</span>
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr>
+                        <th>주문상품</th>
+                        <td>
+                            <div class="order-product">
+                                <span>왓츠인마이볼_상품명1</span>
+                                <span>왓츠인마이볼_상품명1_옵션</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </body>
 </html>
