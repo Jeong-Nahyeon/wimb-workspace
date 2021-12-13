@@ -217,7 +217,11 @@
 					<div class="content">
 						<h2 style="font-weight: bolder;">닭가슴살 샐러드</h2>
 						<br>
-						<h5 style="font-weight: bolder;">4900원</h5>
+						<!-- case1. 원가 -->
+						<h5 style="font-weight: bolder; ">4900원</h5>
+						<!-- case2. 할인가 -->
+						<!-- <h5 style="font-weight: bolder; text-decoration: line-through; color:lightgray; display: inline-block;">4900원</h5>
+						<h3 style="font-weight: bolder; color:salmon; display: inline-block;">4410원</h3> -->
 						<br>
 						<span style="font-size: 12px;">
 							배송정보 3,000원 / 주문 시 결제 (선결제)
@@ -265,13 +269,19 @@
 
 					<div class="total-price" align="right">
 						<span style="font-size:20px; font-weight: bolder;">총 합계 금액</span>
+						<!-- case1. 원가 총합 -->
 						<span style="color:#9BD5BD; font-size:30px; font-weight: bolder; margin-left:30px;">4900원</span>
+						<!-- case2. 할인가 총합 -->
+						<!-- <span style="color:#9BD5BD; font-size:30px; font-weight: bolder; margin-left:30px;">4410원</span> -->
 					</div>
 
 					<table class="main-btns">
 						<tr>
 							<td class="like-btn" width="20%" align="center">
+								<!-- case1. 찜 안 했을 경우 -->
 								<i class="far fa-heart fa-2x" style="color:#9BD5BD;"></i>
+								<!-- case2. 찜 했을 경우 -->
+								<!-- <i class="fas fa-heart fa-2x" style="color:#9BD5BD;"></i> -->
 							</td>
 							<td class="buy-btn" width="40%">
 								<button class="btn" style="background:#9BD5BD; color:white; font-weight: bolder; width:100%;">바로구매</button>

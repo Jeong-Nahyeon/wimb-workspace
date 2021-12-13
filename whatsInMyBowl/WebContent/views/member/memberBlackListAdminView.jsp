@@ -123,10 +123,10 @@
                             <input type="checkbox" name="" id="" value="">
                         </td>
                         <td>10</td>
-                        <td>21-12-11 18:45</td>
                         <td>user10</td>
                         <td>김트롤</td>
                         <td>user01</td>
+                        <td>010-1234-1234</td>
                         <td>회원비방</td>
                         <td>15회</td>
                     </tr>
@@ -135,10 +135,10 @@
                             <input type="checkbox" name="" id="" value="">
                         </td>
                         <td>10</td>
-                        <td>21-12-11 18:45</td>
                         <td>user10</td>
                         <td>김트롤</td>
                         <td>user01</td>
+                        <td>010-1234-1234</td>
                         <td>회원비방</td>
                         <td>15회</td>
                     </tr>
@@ -147,10 +147,10 @@
                             <input type="checkbox" name="" id="" value="">
                         </td>
                         <td>10</td>
-                        <td>21-12-11 18:45</td>
                         <td>user10</td>
                         <td>김트롤</td>
                         <td>user01</td>
+                        <td>010-1234-1234</td>
                         <td>회원비방</td>
                         <td>15회</td>
                     </tr>
@@ -159,10 +159,10 @@
                             <input type="checkbox" name="" id="" value="">
                         </td>
                         <td>10</td>
-                        <td>21-12-11 18:45</td>
                         <td>user10</td>
                         <td>김트롤</td>
                         <td>user01</td>
+                        <td>010-1234-1234</td>
                         <td>회원비방</td>
                         <td>15회</td>
                     </tr>
@@ -171,10 +171,10 @@
                             <input type="checkbox" name="" id="" value="">
                         </td>
                         <td>10</td>
-                        <td>21-12-11 18:45</td>
                         <td>user10</td>
                         <td>김트롤</td>
                         <td>user01</td>
+                        <td>010-1234-1234</td>
                         <td>회원비방</td>
                         <td>15회</td>
                     </tr>
@@ -183,10 +183,10 @@
                             <input type="checkbox" name="" id="" value="">
                         </td>
                         <td>10</td>
-                        <td>21-12-11 18:45</td>
                         <td>user10</td>
                         <td>김트롤</td>
                         <td>user01</td>
+                        <td>010-1234-1234</td>
                         <td>회원비방</td>
                         <td>15회</td>
                     </tr>
@@ -195,10 +195,10 @@
                             <input type="checkbox" name="" id="" value="">
                         </td>
                         <td>10</td>
-                        <td>21-12-11 18:45</td>
                         <td>user10</td>
                         <td>김트롤</td>
                         <td>user01</td>
+                        <td>010-1234-1234</td>
                         <td>회원비방</td>
                         <td>15회</td>
                     </tr>
@@ -207,10 +207,10 @@
                             <input type="checkbox" name="" id="" value="">
                         </td>
                         <td>10</td>
-                        <td>21-12-11 18:45</td>
                         <td>user10</td>
                         <td>김트롤</td>
                         <td>user01</td>
+                        <td>010-1234-1234</td>
                         <td>회원비방</td>
                         <td>15회</td>
                     </tr>
@@ -219,10 +219,10 @@
                             <input type="checkbox" name="" id="" value="">
                         </td>
                         <td>10</td>
-                        <td>21-12-11 18:45</td>
                         <td>user10</td>
                         <td>김트롤</td>
                         <td>user01</td>
+                        <td>010-1234-1234</td>
                         <td>회원비방</td>
                         <td>15회</td>
                     </tr>
@@ -231,10 +231,10 @@
                             <input type="checkbox" name="" id="" value="">
                         </td>
                         <td>10</td>
-                        <td>21-12-11 18:45</td>
                         <td>user10</td>
                         <td>김트롤</td>
                         <td>user01</td>
+                        <td>010-1234-1234</td>
                         <td>회원비방</td>
                         <td>15회</td>
                     </tr>
