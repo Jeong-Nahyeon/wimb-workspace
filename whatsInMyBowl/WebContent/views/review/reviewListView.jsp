@@ -16,7 +16,7 @@
 		border:1px solid red;
 		margin:auto;
 		margin-bottom: 20px;
-		width:90%;
+		width:900px;
 		height:800px;
 	}
 
@@ -148,7 +148,7 @@
                     <a href="">신고</a>
                 </span>
                 <!-- [고려사항]
-                    상품후기내용 => 글자수 제한해서 영역 범위 넘어가지 않도록 해야할 듯....
+                    상품후기내용 => 입력 받을 때 글자수 제한해서 영역 범위 넘어가지 않도록 해야할 듯....
                 -->
                 <p>
                     <br>

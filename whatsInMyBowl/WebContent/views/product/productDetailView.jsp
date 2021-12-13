@@ -141,7 +141,7 @@
 		margin:auto;
 		margin-bottom: 20px;
 		width:90%;
-		height:2200px;
+		height:auto;
 	}
 
 	.detail-content, .detail-img{
@@ -151,12 +151,12 @@
 	}
 
 	.detail-content{
-		height:20%;
+		height:auto;
 		padding:10px;
 	}
 
 	.detail-img{
-		height:80%;
+		height:auto;
 	}
 
 	/* 리뷰 페이지는 따로 파일 합침 */
@@ -187,14 +187,15 @@
 		padding:10px;
 	}
 
+		/* 나경님 파일 합치면 삭제 */
 		/* 상품 문의 */
 	.product-QnA{
 		box-sizing: border-box;
 		border:1px solid red;
 		margin:auto;
 		margin-bottom: 20px;
-		width:90%;
-		height:500px;
+		width:900px;
+		height:600px;
 	}
 
 
@@ -236,6 +237,7 @@
 							<i class="fas fa-plus" onclick='count("plus")' value="+" style="cursor:pointer"></i>
 						</span>
 					</div>
+					<!-- 수량 표시 영역 기능 -->
 					<script>
 						function count(type)  {
 							// 결과를 표시할 element
@@ -248,10 +250,10 @@
 							if(type === 'plus') {
 								number = parseInt(number) + 1;
 							}else if(type === 'minus')  {
-								if(number != '0'){
+								if(number != '1'){
 									number = parseInt(number) - 1;
 								} else{
-									number = 0;
+									number = 1;
 								}
 								
 							}
@@ -300,12 +302,13 @@
 		</div>
 
 		<!-- 상품 상세 설명 -->
-		<div id="detail" class="detail">
-			<div class="detail-content" align="center">
+		<div id="detail" class="detail" align="center">
+			<div class="detail-content">
 				<p>상품상세설명내용</p>
 			</div>
 			<div class="detail-img">
-				<img src="" width="100%" height="100%">
+				상품상세설명이미지
+				<img src="">
 			</div>
 		</div>
 
