@@ -29,14 +29,14 @@
     * {font-family: 'Noto Sans KR', sans-serif;}
     div{box-sizing: border-box;}
     .wrap{
-        border: 1px solid red;
+        /*border: 1px solid red;*/
         width: 1000px;
         padding-top: 20px;
         margin: auto;
     }
     /*가장 상단, 과정(작은글씨)*/
     #order-process{
-        border: 1px solid blue;
+        /*border: 1px solid blue;*/
         width: 100%;
         padding-right: 30px;
         text-align: right;
@@ -89,6 +89,17 @@
         border: 1px solid lightgray;
         border-radius: 5%;
     }
+    #order-form input[type="text"]{
+        width: 220px;
+        height: 28px;
+        line-height: 24px;
+        font-size: 13px;
+    }
+    #order-form input::placeholder{font-size: 10px;}
+    /*input요소 focus시 placeholder 안보이게*/
+    #order-form input:focus::-webkit-input-placeholder{color: transparent;}
+    /*input 요소 클릭시 박스 제거*/
+    #order-form input:focus{outline: none;}
     .order-address{margin-bottom: 3px;}
     
     /*기본 배송지 불러오기*/
@@ -99,6 +110,68 @@
     .point-sub span{
         display: block;
         font-size: 10px;
+    }
+    /*결제수단 영역*/
+    .pay-area{overflow: hidden; margin-top: 30px;}
+    .pay-area i{
+        display: block;
+        font-size: 40px;
+        color: gray;
+        margin-left: 13px;
+    }
+    .pay-area label{font-size: 13px;}
+    #credit, #cash{margin: 10px 25px;}
+    #credit{float: left;}
+    #cash{
+        float: left;
+        text-align: center;
+    }
+    /*총 금액*/
+    #total-payment{
+        border: 1px solid lightgray;
+        width: 800px;
+        height: 100px;
+        margin: auto; margin-top: 70px;
+        text-align: center; 
+    }
+    #total-payment span{
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 100px;
+    }
+    /*약관동의*/
+    #terms{
+        margin: auto;
+        text-align: center;
+    }
+    #terms label{
+        font-size: 10px;
+        vertical-align: middle;
+    }
+    /*결제버튼*/
+    #submit-but{
+        display: block;
+        background:rgb(155,213,189);
+        width: 150px; height: 40px;
+        font-size: 13px; 
+        color: gray;
+        margin: auto; margin-top: 30px;
+    }
+    /*무통장 입금*/
+    #cash-area{
+        border-top: 1px solid lightgray;
+        margin: 50px 0 30px 0;
+        padding: 20px 20px;
+    }
+    #cash-area div{margin: 10px 0;}
+    #cash-area label{
+        font-size: 13px;
+        margin-right: 15px;
+    }
+    #cash-area select{
+        border: 1px solid lightgray;
+        width: 220px; height: 28px; 
+        font-size: 13px;
     }
 </style>
 </head>
@@ -145,11 +218,11 @@
                     </tr>
                     <tr>
                         <th>전화번호</th>
-                        <td><input type="number" name=""></td>
+                        <td><input type="text" name=""></td>
                     </tr>
                     <tr>
                         <th>휴대폰 <span style="color: red; vertical-align: middle;">*</span></th>
-                        <td><input type="number" placeholder="숫자만 입력해주세요." ></td>
+                        <td><input type="text" placeholder="숫자만 입력해주세요." ></td>
                     </tr>
                     <tr>
                         <th>이메일 <span style="color: red; vertical-align: middle;">*</span></th>
@@ -157,6 +230,7 @@
                     </tr>
                 </table>
 
+                <!-- 배송지 정보 영역-->
                 <span style="font-size: 15px; font-weight: 800; margin-right: 15px;">배송지 정보</span>
                 <input type="checkbox" name="" id="get-address-input"> 
                 <span  id="get-address" style="font-size: 10px;">기본 배송지 불러오기</span> 
@@ -193,7 +267,7 @@
                         <th>
                             휴대폰<span style="color: red; vertical-align: middle;">*</span>
                         </th>
-                        <td><input type="number" placeholder="숫자만 입력해주세요." ></td>
+                        <td><input type="text" placeholder="숫자만 입력해주세요." ></td>
                     </tr>
                     <tr>
                         <th>이메일 <span style="color: red; vertical-align: middle;">*</span></th>
@@ -209,9 +283,10 @@
                     </tr>
                 </table>
 
-                <span style="font-size: 13px; font-weight: 800;">적립금 사용</span>
+                <!-- 적립금 영역 -->
+                <span style="font-size: 15px; font-weight: 800;">적립금 사용</span>
                 <hr style="margin-top: 5px;">
-                <table>
+                <table id="point-table">
                     <tr>
                         <th>
                             적립금 사용
@@ -232,6 +307,51 @@
                         </td>
                     </tr>
                 </table>
+
+                <!-- 결제수단 영역 -->
+                <div class="pay-area">
+                    <span style="font-size: 15px; font-weight: 800;">결제 수단</span>
+                    <hr style="margin-top: 5px;">
+                    <div id="credit">
+                        <i class="far fa-credit-card"></i>
+                        <input type="radio" name="payment" id="credit-check"> <label for="credit-check">신용카드</label> 
+                    </div>
+                    <div id="cash">
+                        <i class="fas fa-wallet"></i>
+                        <input type="radio" name="payment" id="cash-check"> <label for="cash-check">무통장입금</label> 
+                    </div>
+                </div>
+
+                <!-- 무통장입금 선택시 보여질 영역 -->
+                <div id="cash-area">
+                    <div>
+                        <label>입금자명</label> 
+                        <input type="text" name="">
+                    </div>
+                    <div>
+                        <label>입금은행</label>
+                        <select name="" id="">
+                            <option>은행선택</option>
+                            <option value="">국민은행 11122223334445 wimb</option>
+                            <option value="">신한은행 11122223334445 wimb</option>
+                        </select>
+                    </div>   
+                </div>
+
+
+
+                <!-- 총 금액, 약관동의 -->
+                <div id="total-payment">
+                    <span>최종 결제금액 :</span>
+                    <span>32,000</span>
+                </div>
+                <div id="terms">
+                    <input type="checkbox" id="terms-check">
+                    <label for="terms-check" style="color: red;">(필수)</label>
+                    <label for="terms-check">구매하실 상품의 결제정보를 확인하였으며, 구매진행에 동의합니다.</label>
+                </div>
+
+                <button type="submit" class="btn" id="submit-but">결제하기</button>
             </form>
 
             
