@@ -86,12 +86,12 @@ public class Member {
 		this.mPwd = mPwd;
 	}
 
-	public String getMPhone() {
+	public String getmPhone() {
 		return mPhone;
 	}
 
-	public void setMPhone(String mPhone) {
-		mPhone = mPhone;
+	public void setmPhone(String mPhone) {
+		this.mPhone = mPhone;
 	}
 
 	public String getmBirth() {
@@ -216,14 +216,14 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [mCode=" + mCode + ", mName=" + mName + ", mId=" + mId + ", mPwd=" + mPwd + ", MPhone=" + MPhone
+		return "Member [mCode=" + mCode + ", mName=" + mName + ", mId=" + mId + ", mPwd=" + mPwd + ", mPhone=" + mPhone
 				+ ", mBirth=" + mBirth + ", mGender=" + mGender + ", mAddress=" + mAddress + ", subAddress="
 				+ subAddress + ", postcode=" + postcode + ", mEmail=" + mEmail + ", enrollDate=" + enrollDate
 				+ ", introducer=" + introducer + ", status=" + status + ", quitReason=" + quitReason + ", quitDate="
 				+ quitDate + ", mAd=" + mAd + ", mBlackDate=" + mBlackDate + ", mBlackReason=" + mBlackReason
 				+ ", mPoint=" + mPoint + "]";
 	}
-	
+
 	
 	
 
