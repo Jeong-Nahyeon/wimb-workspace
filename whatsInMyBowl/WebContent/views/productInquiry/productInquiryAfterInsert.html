@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script src="https://kit.fontawesome.com/fca98d1848.js" crossorigin="anonymous"></script>   
+
+<style>
+    #check-icon, #check-text, #check-btn{
+        margin: auto;
+        text-align: center;
+    }
+    #check-icon{
+        margin: auto;
+        margin-top: 40px; margin-bottom: 20px;
+        text-align: center;
+    }
+    #check-icon i{
+        font-size: 50px;
+        color: rgb(155,213,189);
+    }
+    #check-text span{
+        display: block;
+    }
+    #check-btn{
+        margin-top: 30px; margin-bottom: 20px;
+    }
+    #check-btn button{
+        width: 100px;
+        height: 30px;
+        padding: 0; margin: 0;
+        border: 1px solid rgb(155,213,189);
+    }
+    #mypageGo{
+        background-color: rgb(155,213,189);
+    }
+    #check-btn span{
+        display: inline-block;
+        line-height: 28px;
+        font-size: 13px;
+        vertical-align: top;
+    }
+</style>
+</head>
+<body>
+    <!-- Button to Open the Modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        Open modal
+    </button>
+    
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">상품문의 등록 완료</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div id="check-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div id="check-text">
+                    <span style="font-size: 15px; font-weight: 700;">
+                        상품에 대한 문의가 등록되었습니다.
+                    </span>
+                    <span style="font-size: 13px;">
+                        마이페이지에서 확인하시겠습니까?
+                    </span>
+                </div>
+                <div id="check-btn">
+                    <button type="button" class="btn" data-dismiss="modal">
+                        <span>취소</span>
+                    </button>
+                    <button type="button" id="mypageGo" class="btn">
+                        <span>확인</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+</body>
+</html>
