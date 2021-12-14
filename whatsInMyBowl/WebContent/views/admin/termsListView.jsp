@@ -65,6 +65,17 @@
         <div id="content">
             <form action="test.do" method="post">
                 <table>
+                    	<!-- case1. 이용약관이 없을 경우 -->
+                    	<!-- 
+                    	
+                    	<tr>
+                    		<td colspan="2">존재하는 이용약관이 없습니다.</td>
+                    	</tr>
+                    	
+                    	 -->
+                    	
+                    	
+                		<!-- case2. 이용약관이 있을 경우 -->
                         <tr class="title-btn">
                             <td class="termsTitle">제 1조(목적)</td>
                             <td><button type="submit" class="termsUpdateBtn btnColor">수정</button></td> <!-- 기존에 있던 이용약관 수정하는 버튼-->
@@ -88,7 +99,7 @@
                                 ④ ‘비회원’이라 함은 회원에 가입하지 않고 “몰”이 제공하는 서비스를 이용하는 자를 말합니다.<br>
                             </td>
                         </tr>
-                    
+                    	
                 </table>
     
                 <div>

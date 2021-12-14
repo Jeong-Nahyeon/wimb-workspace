@@ -42,11 +42,17 @@ public class AdminLoginController extends HttpServlet {
 			request.setAttribute("errorMsg", "로그인 실패");
 			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response); 
 			
-		} else {
+		} else if(loginUser.getStatus().equals("Y")) { // 사용자 로그인 => 사용자 홈페이지로 이동
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
-	
-			request.getRequestDispatcher("views/commob/adminBar.jsp").forward(request, response);
+			
+			response.sendRedirect("/wimb");
+		
+		} else if(loginUser.getStatus().equals("A")) { // 관리자 로그인 => 관리자 홈페이지로 이동
+			HttpSession session = request.getSession();
+			session.setAttribute("loginUser", loginUser);
+			
+			
 			
 		}
 		

@@ -97,7 +97,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <body>
     
-    <% if (loginUser != null) { %>
+    
     <table id="menubar-top">
         <tr>
             <td style="width: 10%;">
@@ -108,7 +108,7 @@
             </td>
             <td style="width: 8%;" id="adminWithIcon">
                 <i class="fas fa-user-circle" id="adminIcon"></i>
-                <span><b style="font-size: 20px;"><%= loginUser.getmName() %></b>님</span>
+                <span><b style="font-size: 20px;">관리자</b>님</span>
             </td>
             <td style="width: 7%;">
                 <a href=""><b style="font-size: 20px;">로그아웃</b></a>
@@ -118,7 +118,7 @@
             </td>
         </tr>
     </table>
-	<% } %>
+	
     <div id="menubar-left">
 
         <ul>
@@ -140,7 +140,7 @@
     
         <ul>
             <li class="menubar-left-title">홈페이지관리</li>
-            <li class="menubar-left-text"><a href="">이용관리</a></li>
+            <li class="menubar-left-text"><a href="<%= contextPath %>/list.terms">이용관리</a></li>
             <li class="menubar-left-text"><a href="">배너</a></li>
         </ul>
     
