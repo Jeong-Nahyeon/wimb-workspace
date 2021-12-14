@@ -338,6 +338,8 @@
 </head>
 <body style="height:100%">
 
+	<%@ include file="../common/menubar.jsp" %>
+
     <div class="outer">
 
         <div class="wrap" id="wrap" align="center">
@@ -531,7 +533,7 @@
                 <span style="font-size: 12pt;"><b>최근 주문 정보</b></span>
                 <span style="font-size: 8pt; color: gray;"> 최근 30일 내에 주문하신 내역입니다.</span>
                 <!--더보기 클릭시 주문목록/배송조회페이지 이동-->
-                <span id="plus"><a href="<%= contextPath %>/"><i class="fas fa-plus-square">&nbsp;더보기</i></a></span>
+                <span id="plus"><a href="<%= contextPath %>/orderList.my"><i class="fas fa-plus-square">&nbsp;더보기</i></a></span>
             </div>
 
             
