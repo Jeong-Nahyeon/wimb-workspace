@@ -13,7 +13,7 @@
 <style>
 	.outer{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		margin:auto;
 		margin-top:50px;
 		width:1000px;
@@ -23,7 +23,7 @@
 	/* 타이틀 영역 */
 	.product-list-area{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		margin:auto;
 		width:90%;
 	}
@@ -60,7 +60,7 @@
 	/* 상품 정렬 목록 */
 	.sort-list-area{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		margin:auto;
 		margin-bottom: 20px;
 		width:100%;
@@ -172,7 +172,7 @@
 
 	.cart-product-content{
 		/* border:1px solid red; */
-		width:314px; 
+		width:264px; 
 		height:200px; 
 		float:left; 
 		padding:20px; 
@@ -199,6 +199,19 @@
 		background:white;
 		border:1px solid lightgray;
 		margin:0px 5px;
+	}
+
+
+	/* 모달창 배경 스타일 */
+
+	.modal-backdrop {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1040;
+		width: 100vw;
+		height: 100vh;
+		background-color: white !important;
 	}
 
 </style>
@@ -296,12 +309,12 @@
 
 	<!-- 장바구니 모달창 -->
     <div class="modal fade" id="cart-modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content cart-modal-content" style="width:550px; height:350px;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content cart-modal-content" style="width:500px; height:350px;">
                 
                 <!-- Modal Header -->
                 <div class="modal-header cart-title-area">
-                    <h6 class="modal-title" style="margin-left:210px;">장바구니 담기</h6>
+                    <h6 class="modal-title">장바구니 담기</h6>
                     <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>
                 
@@ -320,7 +333,7 @@
 								<h4 style="font-weight:bolder; margin-bottom: 30px;" align="left">닭가슴살 샐러드</h4>
 								
 								<span>수량 선택</span>
-								<span style="margin-left:95px;">
+								<span style="margin-left:50px;">
 									<i class="fas fa-minus" onclick='count("minus")' value="-" style="cursor:pointer" style="color:lightgray;"></i>
 									<input type="text" id="amount" name="amount" value="1" readonly>
 									<i class="fas fa-plus" onclick='count("plus")' value="+" style="cursor:pointer"></i>
@@ -335,10 +348,10 @@
 							<script>
 								function count(type)  {
 									// 결과를 표시할 element
-									const result = document.getElementById('result');
+									const amount = document.getElementById('amount');
 									
 									// 현재 화면에 표시된 값
-									let number = result.value;
+									let number = amount.value;
 									
 									// 더하기/빼기
 									if(type === 'plus') {
@@ -353,7 +366,7 @@
 									}
 									
 									// 결과 출력
-									result.value = number;
+									amount.value = number;
 								}
 							</script>
 
@@ -378,8 +391,8 @@
 
 		    <!-- 장바구니 담기 성공 모달창 -->
 			<div class="modal fade" id="cart-success-modal">
-				<div class="modal-dialog modal-sm" role="document">
-					<div class="modal-content success-cart-modal" style="width:400px; height:350px;">
+				<div class="modal-dialog modal-dialog-centered" role="document" style="width:500px; height:350px;">
+					<div class="modal-content success-cart-modal">
 						
 						<!-- Modal Header -->
 						<div class="modal-header title-area">

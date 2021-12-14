@@ -199,6 +199,18 @@
 	}
 
 
+	/* 모달창 배경 스타일 */
+
+	.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: white !important;
+	}
+
 </style>
 </head>
 <body>
@@ -214,7 +226,17 @@
 			</div>
 			<div class="main-right">
 				<div class="main-content">
-					<div class="content">
+
+					<!-- 지역별 추가 배송비 창 => 기본 안 보이게 설정 -->
+					<div class="extra-fee" style="border:2px solid lightgray; background:white; width:250px; height:100px; padding:5px; position:relative; z-index:2; top:260px; left:145px; display: none;">
+						<i class="far fa-times-circle" style="margin-left: 215px; color:lightgray;"></i>
+						
+						<ul style="font-size:13px; font-weight: bolder; padding-left:30px; margin-top:10px;">
+							<li>제주특별자치도 서귀포시 3000원</li>
+							<li>제주특별자치도 제주시 3000원</li>
+						</ul>
+					</div>
+					<div class="content" style="position:relative; z-index:1;">
 						<h2 style="font-weight: bolder;">닭가슴살 샐러드</h2>
 						<br>
 						<!-- case1. 원가 -->
@@ -237,7 +259,7 @@
 						<span>닭가슴살 샐러드</span>
 						<span style="margin-left:175px;">
 							<i class="fas fa-minus" onclick='count("minus")' value="-" style="cursor:pointer" style="color:lightgray;"></i>
-							<input type="text" id="result" name="amount" value="1" readonly style="width:50px; height:25px; text-align:center; border:1px solid lightgray; margin:0 5px;">
+							<input type="text" id="amount" name="amount" value="1" readonly style="width:50px; height:25px; text-align:center; border:1px solid lightgray; margin:0 5px;">
 							<i class="fas fa-plus" onclick='count("plus")' value="+" style="cursor:pointer"></i>
 						</span>
 					</div>
@@ -245,10 +267,10 @@
 					<script>
 						function count(type)  {
 							// 결과를 표시할 element
-							const result = document.getElementById('result');
+							const amount = document.getElementById('amount');
 							
 							// 현재 화면에 표시된 값
-							let number = result.value;
+							let number = amount.value;
 							
 							// 더하기/빼기
 							if(type === 'plus') {
@@ -263,7 +285,7 @@
 							}
 							
 							// 결과 출력
-							result.value = number;
+							amount.value = number;
 						}
 					</script>
 
@@ -352,9 +374,9 @@
 	<%@ include file="../common/footer.jsp" %>
 
 	<!-- 장바구니 담기 성공 모달창 -->
-	<div class="modal fade" id="cart-success-modal">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content success-cart-modal" style="width:400px; height:350px;">
+	<div class="modal fade" id="cart-success-modal" style="opacity: 100%;">
+		<div class="modal-dialog modal-dialog-centered " role="document" style="width:500px; height:350px;">
+			<div class="modal-content success-cart-modal">
 				
 				<!-- Modal Header -->
 				<div class="modal-header title-area">
