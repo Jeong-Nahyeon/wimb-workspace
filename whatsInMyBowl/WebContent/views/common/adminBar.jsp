@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.wimb.member.model.vo.Member"%>
 <%
 	String contextPath = request.getContextPath();
 
-	//Member loginUser = session.getAttripute("loginUser");
+	Member loginUser = (Member)session.getAttribute("loginUser");
 	// 로그인한 관리자 회원의 정보가 담겨있는 Member 객체
 %>
 
@@ -96,27 +96,29 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <body>
+    
+    <% if (loginUser != null) { %>
     <table id="menubar-top">
-            <tr>
-                <td style="width: 10%;">
-                    <img src="../admin/image/logo.png">
-                </td>
-                <td style="width: 68%;">
-                    <h1 style="font-weight:700;">Admin</h1>
-                </td>
-                <td style="width: 8%;" id="adminWithIcon">
-                    <i class="fas fa-user-circle" id="adminIcon"></i>
-                    <span><b style="font-size: 20px;">관리자01</b>님</span>
-                </td>
-                <td style="width: 7%;">
-                	<a href=""><b style="font-size: 20px;">로그아웃</b></a>
-                </td>
-                <td style="width: 7%;">
-                    <a href=""><b style="font-size: 20px;">홈페이지</b></a>
-                </td>
-            </tr>
+        <tr>
+            <td style="width: 10%;">
+                <img src="../admin/image/logo.png">
+            </td>
+            <td style="width: 68%;">
+                <h1 style="font-weight:700;">Admin</h1>
+            </td>
+            <td style="width: 8%;" id="adminWithIcon">
+                <i class="fas fa-user-circle" id="adminIcon"></i>
+                <span><b style="font-size: 20px;"><%= loginUser.getmName() %></b>님</span>
+            </td>
+            <td style="width: 7%;">
+                <a href=""><b style="font-size: 20px;">로그아웃</b></a>
+            </td>
+            <td style="width: 7%;">
+                <a href=""><b style="font-size: 20px;">홈페이지</b></a>
+            </td>
+        </tr>
     </table>
-
+	<% } %>
     <div id="menubar-left">
 
         <ul>

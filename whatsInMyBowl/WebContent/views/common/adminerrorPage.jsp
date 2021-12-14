@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<%@ include file="adminBar.jsp" %>
+	
+	<br><br>
+	
+	<h1 align="center"><%= request.getAttribute("errorMsg") %></h1>
+	
 </body>
 </html>

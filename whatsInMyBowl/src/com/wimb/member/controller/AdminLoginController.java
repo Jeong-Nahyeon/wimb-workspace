@@ -40,14 +40,13 @@ public class AdminLoginController extends HttpServlet {
 		
 		if(loginUser == null) {
 			request.setAttribute("errorMsg", "로그인 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response); // 아직 안만듬
+			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response); 
 			
 		} else {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
-			
-			// 회원쪽에 연결해야하지만 우선 이용약관리스트페이지에 연결!
-			request.getRequestDispatcher("views/admin/termsListView").forward(request, response);
+	
+			request.getRequestDispatcher("views/commob/adminBar.jsp").forward(request, response);
 			
 		}
 		
