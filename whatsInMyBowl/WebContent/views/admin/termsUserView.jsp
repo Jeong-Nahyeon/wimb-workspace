@@ -10,6 +10,7 @@
     main{
         margin-top: 100px;
         margin-left: 25%;
+
     }
 
     #mainTitle{margin-bottom: 60px;}
