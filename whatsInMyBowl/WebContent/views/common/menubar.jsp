@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.wimb.member.model.vo.Member" %>
 <%
 	String contextPath = request.getContextPath();
+
+	Member loginUser = (Member)session.getAttribute("loginUser");
+	String alertMsg = (String)session.getAttribute("alertMsg");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -186,13 +190,13 @@
             <button id="searchBtn" onclick=""><i class="fas fa-search"></i></button>  
         </div>
         <div class="logo-area">
-            <a href=""><img src="<%= contextPath %>/resources/images/LOGO.png"></a>
+            <a href="<%= contextPath %>"><img src="<%= contextPath %>/resources/images/LOGO.png"></a>
         </div>
         <div class="mypage-area">
             <!-- 로그인 전 -->
             <div class="login-area"> 
-                <a href="">회원가입</a> 
-                <a href="<%= contextPath %>/views/member/loginForm.jsp">로그인</a>
+                <a href="<%=contextPath%>/views/member/memberEnrollTerms.jsp">회원가입</a> 
+                <a href="<%= contextPath %>/login.me">로그인</a>
                 <a href="">마이페이지</a>
                 <a href="">고객센터</a>
                 <a href="">장바구니</a>
