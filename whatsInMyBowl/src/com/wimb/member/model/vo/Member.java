@@ -36,7 +36,7 @@ public class Member {
 		this.mName = mName;
 		this.mId = mId;
 		this.mPwd = mPwd;
-		MPhone = mPhone;
+		this.mPhone = mPhone;
 		this.mBirth = mBirth;
 		this.mGender = mGender;
 		this.mAddress = mAddress;
@@ -87,11 +87,11 @@ public class Member {
 	}
 
 	public String getMPhone() {
-		return MPhone;
+		return mPhone;
 	}
 
 	public void setMPhone(String mPhone) {
-		MPhone = mPhone;
+		mPhone = mPhone;
 	}
 
 	public String getmBirth() {
