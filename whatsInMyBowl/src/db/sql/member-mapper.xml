@@ -2,7 +2,35 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
-
+	<!-- 관리자 로그인 시 필요한 sql문 -->
+	<entry key="loginAdmin">
+	SELECT 
+	       M_CODE
+	     , M_NAME
+	     , M_ID
+	     , M_PWD
+	     , M_PHONE
+	     , M_BIRTH
+	     , M_GENDER
+	     , M_ADDRESS
+	     , M_SUBADDRESS
+	     , M_POSTCODE
+	     , M_EMAIL
+	     , M_ENROLLDATE
+	     , M_INTRODUCER
+	     , M_STATUS
+	     , M_QUITREASON
+	     , M_QUITDATE
+	     , M_AD
+	     , M_BLACKDATE
+	     , M_BLACKREASON
+	     , M_POINT
+	 FROM MEMBER
+	WHERE M_ID = ?
+	  AND M_PWD = ?
+	  AND M_STATUS = 'A'
+	
+	</entry>
 
 
 

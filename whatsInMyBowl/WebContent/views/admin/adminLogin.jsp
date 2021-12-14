@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.wimb.member.model.vo.Member"%>
 <%
 	String contextPath = request.getContextPath();
 
-	//Member loginUser = session.getAttripute("loginUser");
+	Member loginUser = (Member)session.getAttribute("loginUser");
 	// 로그인한 관리자 회원의 정보가 담겨있는 Member 객체
 %>
 <!DOCTYPE html>
@@ -56,7 +56,7 @@
 </style>
 </head>
 <body>
-    <form action="test.do" method="post"> 
+    <form action="<%= contextPath %>/adminlogin.me" method="post"> 
         <table align="center">
             <tr>
                 <td><img src="image/logo.png"></td>
@@ -65,14 +65,14 @@
     
             <tr>
                 <td colspan="2"  class="inputWithIcon">
-                    <input type="text" id="loginId" class="input" required>
+                    <input type="text" id="userId" class="input" required>
                     <i class="fas fa-user"></i>
                 </td>
             </tr>
         
             <tr>
                 <td colspan="2"  class="inputWithIcon">
-                    <input type="password" id="loginPwd" class="input" required>
+                    <input type="password" id="userPwd" class="input" required>
                     <i class="fas fa-key"></i>
                 </td>
         
