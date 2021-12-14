@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
+<%@
+	page import="com.wimb.mypage.model.vo.MyOrders, java.util.ArrayList"
+%>
+    
+<%
+	ArrayList<MyOrders> list = (ArrayList<MyOrders>)session.getAttribute("list");
+ %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -133,7 +140,7 @@
 
         <label style="font-size: 18px;"><b>주문목록/배송조회</b></label>
         <div>
-            <form action="<%= contextPath %>/" method="get" class="selectDate">
+            <form action="" method="get" class="selectDate">
                 <p style="margin-bottom: 5px; font-size: 15px;"><b>조회기간</b></p>
                 <div class="selectBtn" style="display: inline-block;">
                     <div>
@@ -155,7 +162,9 @@
             <label style="font-size: 13px;"><b>주문/배송내역 조회 총 1건</b></label>
             <div class="listView">
                     <table class="orderList">
-                         <!--case1. 최근 주문내역이 없을 때-->
+                    	
+                    	<% if(list.isEmpty()) { %>
+                        <!--case1. 최근 주문내역이 없을 때-->
                         <tr>
                             <th width="130">주문일자<br>[주문번호]</th>
                             <th>상품명</th>
@@ -166,6 +175,7 @@
                         <tr>
                             <td colspan="5" height="180">최근 주문 정보가 없습니다.</td>
                         </tr>
+                        <% }else { %>
                     </table>
                     <table class="orderList">
                        <!--case2. 최근 주문내역이 있을 때 (if(sysdate-30일))-->
@@ -176,20 +186,31 @@
                             <th width="80">주문상태</th>
                             <th width="80">확인/리뷰</th>
                         </tr>
+                        
+                        	<% for(MyOrders od : list) { %>
                      
                         <tr>
-                            <td>2021-11-15<br>[20211115131234]</td>
-                            <td><a href="상품상세페이지"><img src="">닭가슴살 샐러드</a></td>
+                            <td><%= od.getOrderDate() %><br>[<%= od.getOrderCode() %>]</td>
+                            <td><a href="상품상세페이지"><img src=""><%= od.get %></a></td>
                             <td>7,900원/1개</td>
                             <td><a href="주문목록/배송조회 이동">상품준비중</a></td>
                             <td>
+                            	<% if(Orders.orderStatus) %>
                                 <!--주문상태가 결제완료, 상품준비중일 때만 가능-->
                                 <button type="button" onclick="cancelAlert()">
                                 즉시취소
                                 </button>
                             </td>
                         </tr>
+                        	<% } // for문 괄호 %>
                     </table>
+                    	<% } // else문 괄호 %>
+                    	
+                    	
+                    	
+                    	
+                    	
+                    	
                     <table class="orderList">
                         <!--case2. 최근 주문내역이 있을 때 (if(sysdate-30일))-->
                          <tr>

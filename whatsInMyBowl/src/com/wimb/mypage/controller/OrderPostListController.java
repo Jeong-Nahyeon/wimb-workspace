@@ -32,8 +32,16 @@ public class OrderPostListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
+		// 전달값 기록
+		int mCode = Integer.parseInt(request.getParameter("mCode"));
+		
+		// 요청처리
 		ArrayList<MyOrders> list = new MyPageService().selectOrderList(mCode);
 		
+		// 응답뷰
+		request.getSession().setAttribute("list", list);
+		request.getRequestDispatcher("views/mypage/orderPostList.jsp").forward(request, response);
 		
 		
 	}
