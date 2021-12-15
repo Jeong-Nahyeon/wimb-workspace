@@ -197,7 +197,7 @@
             <div class="login-area"> 
                 <a href="<%=contextPath%>/views/member/memberEnrollTerms.jsp">회원가입</a> 
                 <a href="<%= contextPath %>/login.me">로그인</a>
-                <a href="">마이페이지</a>
+                <a href="<%= contextPath %>/myPage.my">마이페이지</a>
                 <a href="">고객센터</a>
                 <a href="">장바구니</a>
             </div> 
