@@ -139,7 +139,7 @@
 <body style="height:100%">
 
 	<%@ include file="../common/menubar.jsp" %>
-    <%@ include file="../common/footer/jsp" %>
+    <%@ include file="../common/footer.jsp" %>
 
         <!-- 사용자 적립금/찜하기 테이블 시작-->
         <table id="usertable"  width="700" height="100">
@@ -199,7 +199,7 @@
                     <th>나의 게시글관리</th>
                 </tr>
                 <tr>
-                    <td><a href="<%=contextPath%>/inquiryList.me">1:1문의</a></td>
+                    <td><a href="<%=contextPath%>/inquiryList.my">1:1문의</a></td>
                 </tr>
                 <tr>
                     <td><a href="">상품문의</a></td>
