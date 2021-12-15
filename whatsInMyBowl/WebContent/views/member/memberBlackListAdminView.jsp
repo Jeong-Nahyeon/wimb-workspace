@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>블랙리스트 관리</title>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -96,7 +97,7 @@
                 </div>
                 <!-- 블랙리스트 삭제 버튼 -->
                 <div align="right">
-                    <button type="button" id="delete-blackList" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);" data-toggle="modal" data-target="#insert-modal" data-backdrop="static" data-keyboard="false">블랙리스트 해제</button>
+                    <button type="button" id="delete-blackList-btn" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);">블랙리스트 삭제</button>
                 </div>
             </div>
 
@@ -267,6 +268,78 @@
             </form>
         </div>    
     </div>
+
+    <!-- 테스트용 -->
+    <button id="delete-success-btn">블랙리스트 삭제 성공창 테스트</button>
+
+
+    <!-- 블랙리스트 삭제 모달창 -->
+
+    <div class="modal fade" id="delete-blackList-modal">
+		<div class="modal-dialog modal-dialog-centered" role="document" >
+			<div class="modal-content blackList-delete-modal" style="width:500px; height:200px; border-radius: 0;">
+				
+				<!-- Modal body -->
+				<div class="modal-body content-area" style="height:100%;">
+                    <div align="center" style="height:100%; line-height:200px;">
+                        <b>선택한 회원을 블랙리스트에서 삭제하시겠습니까?</b>
+                    </div>
+				</div>
+				
+				<!-- Modal footer -->
+				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
+					<div align="center" style="width:100%;">
+						<button type="submit" class="btn" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
+						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">삭제</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>		
+	<script>
+		$(document).ready(function(){
+			$("#delete-blackList-btn").click(function(){
+			$("#delete-blackList-modal").modal({backdrop: "static"});
+			});
+		});
+	</script>
+
+
+    <!-- 블랙리스트 삭제 성공 모달창 -->
+
+	<div class="modal fade" id="delete-success-modal">
+		<div class="modal-dialog modal-dialog-centered" role="document" >
+			<div class="modal-content success-delete-modal" style="width:500px; height:200px; border-radius: 0;">
+				
+				<!-- Modal body -->
+				<div class="modal-body content-area" style="height:100%;">
+					<div class="delete-success-img" align="center" style=" height:60%; line-height:150px;">
+                        <i class="fas fa-check fa-4x" style="color:rgb(255, 225, 90);"></i>
+                    </div>
+
+                    <div align="center" style="height:40%; line-height:60px;">
+                        <b>성공적으로 삭제를 완료했습니다.</b>
+                    </div>
+				</div>
+				
+				<!-- Modal footer -->
+				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
+					<div align="center" style="width:100%;">
+						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">확인</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>		
+	<script>
+		$(document).ready(function(){
+			$("#delete-success-btn").click(function(){
+			$("#delete-success-modal").modal({backdrop: "static"});
+			});
+		});
+	</script>
 
 </body>
 </html>

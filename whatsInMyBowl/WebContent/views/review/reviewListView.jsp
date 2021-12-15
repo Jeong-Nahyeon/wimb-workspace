@@ -227,7 +227,7 @@
                 <img src="">
             </div>
             <div class="review-content-right">
-                <!-- 후기신고 성공 모달창 테스트용 임시 아이디 부여 -->
+                <!-- 리뷰신고 성공 모달창 테스트용 임시 아이디 부여 -->
                 <b id="report-success-btn">홍길동</b> <span>&nbsp;&#124;&nbsp;</span><span> 2021.12.11</span>
                 <span style="margin-left:400px;">
                     <a id="review-update-btn">수정</a>
@@ -276,7 +276,7 @@
     </div>
 
 
-    <!-- 후기등록 모달창 -->
+    <!-- 리뷰등록 모달창 -->
 
     <div class="modal fade" id="review-insert-modal">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -345,7 +345,7 @@
 	</script>
 
 
-	<!-- 후기수정 모달창 -->
+	<!-- 리뷰수정 모달창 -->
 
     <div class="modal fade" id="review-update-modal">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -414,7 +414,7 @@
 	</script>
 
 
-	<!-- 후기등록/수정 성공 모달창 -->
+	<!-- 리뷰등록/수정 성공 모달창 -->
 
 	<div class="modal fade" id="review-success-modal">
 		<div class="modal-dialog modal-dialog-centered" role="document" style="width:500px; height:350px;">
@@ -460,7 +460,7 @@
 	</script>
 
 
-	<!-- 후기 삭제 성공 모달창 -->
+	<!-- 리뷰 삭제 성공 모달창 -->
 
 	<div class="modal fade" id="review-delete-success-modal">
 		<div class="modal-dialog modal-dialog-centered" role="document" style="width:500px; height:350px;">
@@ -506,7 +506,7 @@
 
 
 
-    <!-- 후기신고 모달창 -->
+    <!-- 리뷰신고 모달창 -->
 
     <div class="modal fade" id="report-review-modal">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -539,13 +539,14 @@
                                <tr>
                                     <th>신고사유</th>
                                     <td>
-                                        <select name="reportCategory">
+                                        <input type="text" name="reportCategory" placeholder="직접입력" list="report-category">
+                                        <datalist id="report-category">
                                             <option>욕설</option>
                                             <option>도배</option>
                                             <option>음란/청소년 유해</option>
                                             <option>티회원 비방</option>
                                             <option>타사 홍보</option>
-                                        </select>
+                                        </datalist>>
                                     </td>
                                </tr>
                                 <tr>
@@ -583,7 +584,7 @@
 	</script>
 
 
-    <!-- 후기신고 성공 모달창 -->
+    <!-- 리뷰신고 성공 모달창 -->
 
 	<div class="modal fade" id="report-success-modal">
 		<div class="modal-dialog modal-dialog-centered" role="document" style="width:500px; height:350px;">
@@ -603,7 +604,7 @@
 
                     <div class="report-success-content" align="center" style=" height:60%;">
                         <br>
-                        <b>후기가 신고되었습니다.</b>
+                        <b>성공적으로 신고되었습니다.</b>
                         <br>
                     </div>
 				</div>
