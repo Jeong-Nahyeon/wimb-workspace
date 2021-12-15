@@ -217,7 +217,7 @@
 
 			<div class="title-area">
 				<h4>샐러드</h4>
-				<a href="">전체상품</a>
+				<a href="<%= contextPath %>/list.pr?pno=1">전체상품</a>
 				<a href="">비건샐러드</a>
 				<a href="">육류샐러드</a>
 				<a href="">해산물샐러드</a>
@@ -287,9 +287,13 @@
 
 			<!-- 페이징바 -->
             <div id="paging-bar" align="center">
-                <a href="">&lt;</a>
-                <a href="">1</a>
-                <a href="">&gt;</a>
+            	<ul class="pagination">
+				    <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+				    <li class="page-item"><a class="page-link" href="#">1</a></li>
+				    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+				    <li class="page-item"><a class="page-link" href="#">3</a></li>
+				    <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+			    </ul>
             </div>
 		</div>
 	</div>

@@ -229,7 +229,7 @@
                     <li><a href="">Best메뉴</a></li>
                     <li><a href="">세일</a></li>
                     <li><a href="">커스텀</a></li>
-                    <li><a href="">샐러드</a>
+                    <li><a href="<%= contextPath %>/list.pr?cpage=1">샐러드</a>
                         <ul>
                             <li><a href="">비건샐러드</a></li>
                             <li><a href="">육류샐러드</a></li>
