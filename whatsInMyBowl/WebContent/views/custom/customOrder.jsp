@@ -419,13 +419,17 @@
 		                                    <div class="custom_pro">
 		                                        <div class="pro_subject"><%= i.getCiName() %></div>
 		                                        <div class="pro_btn" >
-		                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
+		                                            <button class="pro_btn_up vagetable-up">
+		                                            	<i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i>
+		                                            </button>
 		                                            <input type="text" name="" class="count_text" value="0" readonly>
                                                     <input class="ci_name" type="hidden" value="<%= i.getCiName() %>">
                                                     <input class="ci_price" type="hidden" value="<%= i.getCiPrice() %>">
                                                     <input class="ci_code" type="hidden" value="<%= i.getCiCode()%>">
                                                     <input class="ci_category" type="hidden" value="<%= i.getCiCategory() %>">
-		                                            <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
+		                                            <button class="pro_btn_down vagetable-down">
+		                                            	<i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i>
+		                                            </button>
 		                                        </div>
 		                                    </div>
 		                                </li>
@@ -449,9 +453,9 @@
 		                                    <div class="custom_pro">
 		                                        <div class="pro_subject"><%= i.getCiName() %></div>
 		                                        <div class="pro_btn" >
-		                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
+		                                            <button class="main_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
 		                                            <input type="text" name="" class="count_text" value="0">
-		                                            <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
+		                                            <button class="main_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
 		                                        </div>
 		                                    </div>
 		                                </li>
@@ -475,9 +479,9 @@
 		                                    <div class="custom_pro">
 		                                        <div class="pro_subject"><%= i.getCiName() %></div>
 		                                        <div class="pro_btn" >
-		                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
+		                                            <button class="side_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
 		                                            <input type="text" name="" class="count_text" value="0">
-		                                            <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
+		                                            <button class="side_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
 		                                        </div>
 		                                    </div>
 		                                </li>
@@ -501,7 +505,7 @@
 		                                    <div class="custom_pro">
 		                                        <div class="pro_subject"><%= i.getCiName() %></div>
 		                                        <div class="dressing_btn">
-		                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
+		                                            <button class="dressing_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
 		                                        </div>
 		                                    </div>
 		                                </li>
@@ -517,20 +521,21 @@
                 <script>
                     $(".pro_btn_up").click(function(){
                         //console.log("플러스클릭됨");
-                        setCustomlist($(this), ".pro_btn_up");
+                        var itemClass = "." + $(this).attr("class").substring(11,);
+                        setCustomlist($(this), ".pro_btn_up", itemClass);
                     });
 
                     $(".pro_btn_down").click(function(){
                         //console.log("마이너스클릭됨");
-                        setCustomlist($(this), ".pro_btn_down");
+                        var itemClass = "." + $(this).attr("class").substring(13,);
+                        setCustomlist($(this), ".pro_btn_down", itemClass);
                     });
 
-                    function setCustomlist(obj, action){
+                    function setCustomlist(obj, action, action2){
                         var count = 0;
                         var itemNameStr = "";
                         var itemNamePrice = "";
                         itemTotalPrice = 0;
-                        
 
                         // 재료 수량버튼 클릭 시 input태그안의 수량 증감
                         if(action == ".pro_btn_up"){
@@ -547,21 +552,24 @@
                         }
 
                         // 재료 정보
+                        
                         if(obj.siblings(".ci_category").val() == "채소"){
-                            console.log("앗싸");
-                            $(action).each(function(){
+                            //console.log("앗싸");
+                            console.log(action2);
+                            $(action2).each(function(){
+                                console.log("each실행");
                                 if($(this).siblings(".count_text").val() != "0"){
                                     itemTotalPrice += parseInt($(this).siblings(".count_text").val()) * parseInt($(this).siblings(".setPrice").val());
                                     
                                     itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>";
                                     itemNamePrice += "<span>" + itemTotalPrice + "</span>";
-                        
+                                    //console.log($(this).val);
                                 }
-                
+                                
                             });
+                            
                             $("#vagetable_name").html(itemNameStr);
                             $("#vagetable_price").html(itemNamePrice);
-
                         }
                         
                         
