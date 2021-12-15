@@ -66,7 +66,7 @@ public class MyPageDao {
 		
 	}
 	
-	// 2. inquiry 목록조회
+	// inquiry 목록조회
 		public ArrayList<Inquiry> selectInquiryList(Connection conn) {
 			// 여러행 ArrayList<Inquiry>객체
 			ArrayList<Inquiry> list = new ArrayList<>(); // 텅빈리스트
@@ -82,7 +82,7 @@ public class MyPageDao {
 				
 				while(rset.next()) {
 					list.add(new Inquiry(rset.getInt("i_code"),
-										 rset.getInt("m_code"),
+										 rset.getString("m_name"),
 										 rset.getString("i_category"),
 										 rset.getString("i_title"),
 										 rset.getString("i_answer"),
