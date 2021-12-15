@@ -193,31 +193,34 @@
             <a href="<%= contextPath %>"><img src="<%= contextPath %>/resources/images/LOGO.png"></a>
         </div>
         <div class="mypage-area">
+        	
+        	<% if(loginUser == null){ %>
             <!-- 로그인 전 -->
             <div class="login-area"> 
-                <a href="<%=contextPath%>/views/member/memberEnrollTerms.jsp">회원가입</a> 
-                <a href="<%= contextPath %>/login.me">로그인</a>
+                
+                <a href="<%=contextPath%>/enrollTerms.me">회원가입</a> 
+                <a href="<%= contextPath %>/loginInput.me">로그인</a>
                 <a href="<%= contextPath %>/myPage.my">마이페이지</a>
                 <a href="">고객센터</a>
                 <a href="">장바구니</a>
             </div> 
-            
-            <!-- 로그인 후
+            <%}else { %>
+            <!-- 로그인 후-->
             <div class="logined-area">
                 <div id="user-area">
                     <a href="">
-                        <i class="fas fa-user fa-2x" style="color:rgb(155, 213, 189)"></i>
-                        <b>홍길동</b>님
+                        <i class="fas fa-user fa" style="color:rgb(155, 213, 189)"></i>
+                        <b><%= loginUser.getmName() %></b>님
                     </a>
                 </div>
                 <div id="logout-area">
-                    <a href="">로그아웃</a>
+                    <a href="<%= contextPath %>/logout.me">로그아웃</a>
                     <a href="">마이페이지</a>
                     <a href="">고객센터</a>
                     <a href="">장바구니</a>
                 </div>                
-            </div>  -->
-                    
+            </div>
+            <%} %>
         </div>
         <div id="outer">
             <div class="navi" align="center">
