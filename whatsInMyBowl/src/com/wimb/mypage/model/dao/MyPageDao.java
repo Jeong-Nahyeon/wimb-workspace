@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.wimb.mypage.model.vo.Inquiry;
 import com.wimb.mypage.model.vo.MyOrders;
 
 public class MyPageDao {
@@ -64,6 +65,38 @@ public class MyPageDao {
 		return list;
 		
 	}
+	
+	// 2. inquiry 목록조회
+		public ArrayList<Inquiry> selectInquiryList(Connection conn) {
+			// 여러행 ArrayList<Inquiry>객체
+			ArrayList<Inquiry> list = new ArrayList<>(); // 텅빈리스트
+			
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String sql = prop.getProperty("selectInquiryList");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);			
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					list.add(new Inquiry(rset.getInt("i_code"),
+										 rset.getInt("m_code"),
+										 rset.getString("i_category"),
+										 rset.getString("i_title"),
+										 rset.getString("i_answer"),
+										 rset.getDate("i_date")));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			return list;
+		}
 	
 	
 	
