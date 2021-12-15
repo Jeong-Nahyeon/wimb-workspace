@@ -32,19 +32,20 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String userId = request.getParameter("userId");
-		String userPwd = request.getParameter("userPwd");
+		String mId = request.getParameter("userId");
+		String mPwd = request.getParameter("userPwd");
 		
-		Member loginUser = new MemberService().loginMember(userId, userPwd);
+		Member loginUser = new MemberService().loginMember(mId, mPwd);
 		
+		HttpSession session = request.getSession();
+
 		if(loginUser == null) {
-			request.setAttribute("alertMsg", "로그인 실패했습니다. 아이디 또는 비밀번호를 확인해주세요.");
-			request.getRequestDispatcher("views/common/mainPage.jsp").forward(request, response);
+			request.setAttribute("errorMsg", "로그인 실패했습니다. 아이디 또는 비밀번호를 확인해주세요.");
+			request.getRequestDispatcher(request.getContextPath() + "/views/common/errorPage.jsp");
+			
 		}else {
 			
-			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
-			
 			response.sendRedirect(request.getContextPath());
 		}
 		
