@@ -88,7 +88,7 @@
         font-size: 13px;
         margin: 5px;
     }
-   
+
    
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -131,42 +131,48 @@
 
         <ul>
             <li class="menubar-left-title">회원관리</li>
-            <li class="menubar-left-text"><a href="">회원 정보 관리</a></li>
-            <li class="menubar-left-text"><a href="">신고내역</a></li>
-            <li class="menubar-left-text"><a href="">블랙리스트</a></li>
-            <li class="menubar-left-text"><a href="">적립금 관리</a></li>
+            <li class="menubar-left-text left_link"><a href="">회원 정보 관리</a></li>
+            <li class="menubar-left-text left_link"><a href="">신고내역</a></li>
+            <li class="menubar-left-text left_link"><a href="">블랙리스트</a></li>
+            <li class="menubar-left-text left_link"><a href="">적립금 관리</a></li>
         </ul>
     
         <ul>
             <li class="menubar-left-title">상품관리</li>
-            <li class="menubar-left-text"><a href="">상품 등록</a></li>
-            <li class="menubar-left-text"><a href="">상품 수정 / 삭제</a></li>
-            <li class="menubar-left-text"><a href="">상품 배송관리</a></li>
-            <li class="menubar-left-text"><a href="">리뷰 관리</a></li>
-            <li class="menubar-left-text"><a href="">상품문의 관리</a></li>
+            <li class="menubar-left-text left_link"><a href="">상품 등록</a></li>
+            <li class="menubar-left-text left_link"><a href="">상품 수정 / 삭제</a></li>
+            <li class="menubar-left-text left_link"><a href="">상품 배송관리</a></li>
+            <li class="menubar-left-text left_link"><a href="">리뷰 관리</a></li>
+            <li class="menubar-left-text left_link"><a href="">상품문의 관리</a></li>
         </ul>
     
         <ul>
             <li class="menubar-left-title">홈페이지관리</li>
-            <li class="menubar-left-text"><a href="<%= contextPath %>/list.terms">이용약관</a></li>
-            <li class="menubar-left-text"><a href="">배너</a></li>
+            <li class="menubar-left-text left_link"><a href="<%= contextPath %>/list.terms">이용약관</a></li>
+            <li class="menubar-left-text left_link"><a href="">배너</a></li>
         </ul>
     
         <ul>
             <li class="menubar-left-title">고객센터관리</li>
-            <li class="menubar-left-text"><a href="">공지사항</a></li>
-            <li class="menubar-left-text"><a href="">1:1 문의</a></li>
-            <li class="menubar-left-text"><a href="">자주묻는 질문</a></li>
+            <li class="menubar-left-text left_link"><a href="">공지사항</a></li>
+            <li class="menubar-left-text left_link"><a href="">1:1 문의</a></li>
+            <li class="menubar-left-text left_link"><a href="">자주묻는 질문</a></li>
         </ul>
     
         <ul>
             <li class="menubar-left-title">통계</li>
-            <li class="menubar-left-text"><a href="">회원 수 통계</a></li>
-            <li class="menubar-left-text"><a href="">상품 수 통계</a></li>
-            <li class="menubar-left-text"><a href="">판매량 통계</a></li>
+            <li class="menubar-left-text left_link"><a href="">회원 수 통계</a></li>
+            <li class="menubar-left-text left_link"><a href="">상품 수 통계</a></li>
+            <li class="menubar-left-text left_link"><a href="">판매량 통계</a></li>
         </ul>
     </div>
+	<script>
+		$(".left_link a").on("click", function () {
+			  $(".left_link a").css('color', 'inherit');
+			  $(this).css('color', 'black');
+			});
 
+	</script>
 
 </body>
 </html>

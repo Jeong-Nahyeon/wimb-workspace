@@ -35,6 +35,7 @@ public class TermsListController extends HttpServlet {
 		// 이용약관 리스트를 불러오는 Controller
 		ArrayList<Terms> list = new termsService().selectTermsList();
 		
+		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("views/admin/termsListView.jsp").forward(request, response);
 		
