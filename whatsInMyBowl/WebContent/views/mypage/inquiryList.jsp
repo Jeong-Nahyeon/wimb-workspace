@@ -77,6 +77,8 @@
 </style>
 </head>
 <body>
+
+	<%@ include file="../common/myPage.jsp" %>
     <div class="outer">
         
         <div class="container">
@@ -104,7 +106,7 @@
 	              <% for(Inquiry i : list) { %>
 		                <tr align="center">
 		                  <td><%= i.getiCode() %></td>
-		                  <td><%= i.getmCode() %></td>
+		                  <td><%= i.getmName() %></td>
 		                  <td><%= i.getiTitle() %></td>
 		                  <td><%= i.getiCategory() %></td>
 		                  <td><%= i.getiDate() %></td>
@@ -119,34 +121,35 @@
 		                    </td>
 		                </tr>
 		                <% } %>
-		                <!--  
+		                  
 		                <tr align="center">
 		                  <td>2</td>
 		                  <td>홍길동</td>
 		                  <td>배송이 안왔는데 도착완료라고 떠요.</td>
 		                  <td>배송문의</td>
 		                  <td>21.12.30</td>
+		                  	<!--현재 로그인한 사용자가 해당 글을 쓴 본인일 경우-->
 		                  <td><button id="bt" type="button"><a href="">수정</a></button><br>
 		                    <button id="bt" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><a>삭제</a></button>
 		                  </td>
-		                  -->
-		                   <!-- The Modal 시작
+		                  
+		                   <!-- The Modal 시작-->
 		                  <div class="modal fade" id="myModal">
 		                  <div class="modal-dialog modal-dialog-centered">
 		                  <div class="modal-content">
-		              -->
-		                  <!-- Modal Header 
+		              
+		                  <!-- Modal Header -->
 		                  <div class="modal-header" style="width: 350px;">
 		                    <h6 class="modal-title">등록하신 1:1 문의를 삭제하시겠습니까?</h6>
 		                  </div>
-		                -->
-		                  <!-- Modal body 
+		                
+		                  <!-- Modal body -->
 		                  <div class="modal-body" style="width: 350px;">
 		                    <button><a href="">취소</a></button>
 		                    <button>삭제</button>
 		                  </div>
-		                -->
-		                  <!-- Modal footer 
+		                
+		                  <!-- Modal footer  -->
 		                  <div class="modal-footer" style="width: 200px;">
 		                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 		                  </div>
@@ -154,9 +157,9 @@
 		                  </div>
 		                  </div>
 		                  </div>
-		                  -->
+		                 
 		                   <!-- The Modal 끝 -->
-		                <!-- 
+		                
 		                </tr>
 		                <tr>
 		                    <td colspan="6">             
@@ -166,7 +169,7 @@
 						           22.01.02                   
 						   </td>
 		                </tr>
-		             -->
+		            
 	              </tbody>
               	<% }  %>
             </table>
