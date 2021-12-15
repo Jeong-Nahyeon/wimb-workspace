@@ -20,7 +20,7 @@ public class MyPageService {
 		return list;
 	}
 	
-	/* inquiry 목록조회 */
+	// inquiry 목록조회
 	public ArrayList<Inquiry> selectInquiryList() {
 		Connection conn = getConnection();
 		
