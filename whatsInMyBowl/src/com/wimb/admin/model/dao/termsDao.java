@@ -61,9 +61,90 @@ public class termsDao {
 	}
 	
 	
+	// 이용약관 등록하는 dao
+	public int insertTerms(Connection conn, String termsContent) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertTerms");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, termsContent);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
+	// 수정하기 클릭 시 선택한 이용약관의 내용을 불러오는 dao
+	public Terms selectTerms(Connection conn, int termsCode) {
+		Terms t = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectTerms");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, termsCode);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				t = new Terms(rset.getInt("terms_code"),
+						      rset.getString("terms_content"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return t;
 	
+	}
 	
+	// 수정하기 창에서 수정 시 기존의 이용약관 내용을 변경하는 dao
+	public int updateTerms(Connection conn, Terms t) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateTerms");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, t.getTermsContent());
+			pstmt.setInt(2, t.getTermsCode());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	
+	// 이용약관 글을 삭제하는 dao
+	public int deleteTerms(Connection conn, int termsCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteTerms");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, termsCode);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 	
 	

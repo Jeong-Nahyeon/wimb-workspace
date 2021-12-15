@@ -5,6 +5,7 @@
 
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	// 로그인한 관리자 회원의 정보가 담겨있는 Member 객체
+	String alertMsg = (String)session.getAttribute("alertMsg");
 %>
 
 <!DOCTYPE html>
@@ -98,7 +99,12 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <body>
-    
+    <% if(alertMsg != null){ %>
+		<script>
+			alert("<%= alertMsg %>");
+		</script>
+		<% session.removeAttribute("alertMsg"); %>
+	<% } %>
     
     <table id="menubar-top">
         <tr>

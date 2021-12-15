@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.wimb.admin.model.vo.Terms"%>
+<%
+	Terms t = (Terms)request.getAttribute("t");
+	// 글번호, 내용이 담김
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,18 +71,17 @@
         </div>
 
         <div id="content">
-            <form action="test.do" method="post">
+            <form action="<%= contextPath %>/update.terms" id="update-form" method="post">
+            	<input type="hidden" name="num" value="<%= t.getTermsCode() %>">
                 <table id="termsTable">
-                    <tr>
-                        <th id="termsTable-Title">제목</th>
-                        <td><input type="text" placeholder="제목을 입력해주세요."  style="margin-bottom: 20px;" required></td>
-                    </tr>
-
                     <tr id="contentOuter">
                         <th id="termsTable-Content">내용</th>
                         <td>
-                            <textarea name="" id="" cols="114" rows="20" style="resize: none;" required>내용을 입력해주세요.</textarea>
+                            <textarea name="termsContent" id="terms_textarea " cols="114" rows="20" style="resize: none;" required onkeyup="terms_checkByte(this)"><%= t.getTermsContent() %></textarea>
                         </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align:end"><span id="nowByte">0</span>/1300bytes</td>
                     </tr>
                 </table>
 
@@ -92,6 +96,38 @@
         </div>
 
     </main>
+    <script>
+    	// textarea 바이트 수 체크하는 함수
+    	function terms_checkByte(obj){
+    		const maxByte = 1300;                // 최대 1300바이트
+    		const text_val = obj.value;          // 입력한 문자
+    		const text_len = text_val.length;    // 입력한 문자 수
+    		
+    		let totalByte=0;
+    		for(let i=0; i<text_len; i++){
+    			const each_char = text_val.charAt(i);
+    	        const uni_char = escape(each_char)   //유니코드 형식으로 변환
+    	        if(uni_char.length>4){
+    	        	// 한글 : 2Byte
+    	            totalByte += 2;
+    	        }else{
+    	        	// 영문,숫자,특수문자 : 1Byte
+    	            totalByte += 1;
+    	        }
+    		}
+    		
+    		if(totalByte>maxByte){
+    	    	alert('최대 1300Byte까지만 입력가능합니다.');
+    	        	document.getElementById("nowByte").innerText = totalByte;
+    	            document.getElementById("nowByte").style.color = "red";
+    	        }else{
+    	        	document.getElementById("nowByte").innerText = totalByte;
+    	            document.getElementById("nowByte").style.color = "green";
+    	        }
+    	}
+    	
+    
+    </script>
 	
 
 </body>

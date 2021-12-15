@@ -112,8 +112,8 @@
 		                    <tr class="title-btn">
 		                        <div class="terms_twobtn_update_delete">
 		                            <td class="terms_twobtn_update_delete_td">
-		                                <button type="submit" class="terms_twobtn_update_delete_left">수정</button>
-		                                <button type="submit">삭제</button>
+		                                <button type="button" class="terms_twobtn_update_delete_left" onclick="location.href='<%= contextPath %>/updateForm.terms?num=<%= t.getTermsCode() %>';">수정</button>
+		                                <button type="button" onclick="location.href='<%= contextPath %>/delete.terms?num=<%= t.getTermsCode() %>';">삭제</button>
 		                            </td>
 		                        </div>
 		                    </tr>
@@ -133,6 +133,11 @@
         </div>
 
     </main>
+    
+    <script>
+	
+	    
+    </script>
 
 
 </body>

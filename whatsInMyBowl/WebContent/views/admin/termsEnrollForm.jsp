@@ -67,14 +67,17 @@
         </div>
 
         <div id="content">
-            <form action="test.do" method="post">
+            <form action="<%= contextPath %>/insert.terms" method="post">
                 <table id="termsTable">
                    
                     <tr id="contentOuter">
                         <th id="termsTable-Content">내용</th>
                         <td>
-                            <textarea name="" id="" cols="114" rows="20" style="resize: none;" required>내용을 입력해주세요.</textarea>
+                            <textarea name="termsContent" id="terms_textarea" cols="114" rows="20" wrap="hard" wstyle="resize: none;" required onkeyup="terms_checkByte(this)">내용을 입력하세요.</textarea>
                         </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align:end"><span id="nowByte">0</span>/1300bytes</td>
                     </tr>
                 </table>
 
@@ -83,12 +86,44 @@
                     <button type="submit" class="addTerms" style="background-color: #ffee58;">등록하기</button>
                 </div>
 
-
-
             </form>
         </div>
 
     </main>
+    
+    <script>
+    	// textarea 바이트 수 체크하는 함수
+    	function terms_checkByte(obj){
+    		const maxByte = 1300;                // 최대 1300바이트
+    		const text_val = obj.value;          // 입력한 문자
+    		const text_len = text_val.length;    // 입력한 문자 수
+    		
+    		let totalByte=0;
+    		for(let i=0; i<text_len; i++){
+    			const each_char = text_val.charAt(i);
+    	        const uni_char = escape(each_char)   //유니코드 형식으로 변환
+    	        if(uni_char.length>4){
+    	        	// 한글 : 2Byte
+    	            totalByte += 2;
+    	        }else{
+    	        	// 영문,숫자,특수문자 : 1Byte
+    	            totalByte += 1;
+    	        }
+    		}
+    		
+    		if(totalByte>maxByte){
+    	    	alert('최대 1300Byte까지만 입력가능합니다.');
+    	        	document.getElementById("nowByte").innerText = totalByte;
+    	            document.getElementById("nowByte").style.color = "red";
+    	        }else{
+    	        	document.getElementById("nowByte").innerText = totalByte;
+    	            document.getElementById("nowByte").style.color = "green";
+    	        }
+    	}
+    	
+    
+    </script>
+    
 
 
 

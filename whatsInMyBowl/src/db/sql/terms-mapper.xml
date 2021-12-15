@@ -13,19 +13,47 @@
 		    BY TERMS_CODE DESC
 	</entry>
 	
-	<entry key="">
-
+	<!-- 이용약관 등록하는 sql문  -->
+	<entry key="insertTerms">
+		INSERT
+		  INTO TERMS
+		  (
+		    TERMS_CODE
+		  , TERMS_CATEGORY
+		  , TERMS_CONTENT
+		  )
+		  VALUES
+		  (
+		    SEQ_TERMS.NEXTVAL
+		  , '이용약관'
+		  , ?
+		  )
 	
 	</entry>
 	
-	
-	<entry key="">
-
-	
+	<!-- 수정하기 클릭 시 선택한 이용약관의 내용을 불러오는 sql --> 
+	<entry key="selectTerms">
+		SELECT 
+		       TERMS_CODE
+		     , TERMS_CONTENT
+		  FROM TERMS
+		 WHERE TERMS_CODE = ?
 	</entry>
 	
+	<!-- 수정하기 창에서 수정 시 기존의 이용약관 내용을 변경하는 sql --> 
+	<entry key="updateTerms">
+		UPDATE
+		       TERMS
+		   SET TERMS_CONTENT = ?
+		 WHERE TERMS_CODE = ?
+	</entry>
 	
-
+	<entry key="deleteTerms">
+		DELETE 
+		  FROM TERMS
+		 WHERE TERMS_CODE = ?
+		          
+	</entry>
 
 
 
