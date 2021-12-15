@@ -2,6 +2,12 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
-	
+	<entry key="selectProductListCount">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM PRODUCT
+		 WHERE P_SHOW = 'Y'
+		   AND P_STOCK > 0
+	</entry>
 
 </properties>
