@@ -52,6 +52,7 @@ public class MyPageDao {
 										   rset.getDate("order_date"),
 										   rset.getString("cu_Name"),
 										   rset.getString("p_Name"),
+										   rset.getString("p_mainimg"),
 										   rset.getInt("pm_totalcost"));
 				list.add(mo);	
 			}

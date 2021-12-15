@@ -10,8 +10,16 @@
 		     , ORDER_INVOICE
 		     , ORDER_STATUS
 		     , ORDER_DATE
-		  FROM "ORDER"
-		 WHERE M_CODE = ?;
+		     , CU_NAME
+		     , P_NAME
+		     , P_MAINIMG
+		     , PM_TOTALCOST
+		  FROM "ORDER" OD
+		  JOIN SUBORDER USING (ORDER_CODE)
+		  JOIN PAYMENT USING (PM_CODE)
+		  LEFT JOIN CUSTOM USING (CU_CODE)
+		  LEFT JOIN PRODUCT USING (P_CODE)
+		 WHERE OD.M_CODE = ?
 	</entry>
 
 	<entry key="selectInquiryList">

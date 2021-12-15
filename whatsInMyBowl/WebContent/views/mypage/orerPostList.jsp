@@ -198,25 +198,28 @@
 		                            <% if(od.getpName() == null) {  // 커스텀이있을때%>
 		                            	<td><a href="상품상세페이지"><img src=""><%= od.getCuName() %></a></td>
 		                            <% }else { // 완제품이 있을 때%>
-		                            	<td><a href="상품상세페이지"><img src=""><%= od.getpName() %></a></td>
+		                            	<td><a href="상품상세페이지"><img src="<% contextPath %>/<%= od.getpMainImg() %>"><%= od.getpName() %></a></td>
 		                            <% } %>
 		                            <td><%= od.getPmTotalCost() %>원/<%= od.getOrderAmount() %>개</td>
 		                            <td><a href="주문목록/배송조회 이동"><%= od.getOrderStatus() %></a></td>
 		                            <td>
-		                            	
-		                                <!--주문상태가 결제완료, 상품준비중일 때만 가능-->
-		                                
-		                                <button type="button" onclick="cancelAlert()">
-		                                즉시취소
-		                                </button>
+		                            	<% if(od.getOrderStatus().equals("결제완료") || od.getOrderStatus().equals("상품준비중")) { %>
+		                                	<!--주문상태가 결제완료, 상품준비중일 때만 가능-->
+		                                	<button type="button" onclick="cancelAlert()">즉시취소</button>
+	                                	<% }else if(od.getOrderStatus().equals("배송중")) { %>
+	                                		<button>배송조회</button>
+                                		<% }else { %>
+                                			<button type="button"  onclick="location.href='리뷰작성페이지이동'">리뷰작성</button>
+                                			<button type="button" data-toggle="modal" data-target="#refundModal">환불요청</button>
+                                		<% } %>	
 		                            </td>
 	                        	</tr>
 	                        	
                         	<% } // for문 괄호 %>
                         	
                     	</table>
+                  <% } %>	
                    	
-                   	<% } // else문 괄호 %>
                     	
                     	
                     	

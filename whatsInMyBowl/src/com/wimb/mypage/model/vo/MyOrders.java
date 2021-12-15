@@ -12,12 +12,13 @@ public class MyOrders {
 	private Date orderDate;		   // 주문날짜
 	private String cuName;		   // 커스텀제품이름
 	private String pName;		   // 완제품이름
+	private String pMainImg;		   // 완제품 이미지
 	private int pmTotalCost;       // 원결제금액
 	
-	public MyOrders () {}
+	public MyOrders(){}
 
 	public MyOrders(int orderCode, int orderAmount, String orderCompany, String orderInvoice, String orderStatus,
-			Date orderDate, String cuName, String pName, int pmTotalCost) {
+			Date orderDate, String cuName, String pName, String pMainImg, int pmTotalCost) {
 		super();
 		this.orderCode = orderCode;
 		this.orderAmount = orderAmount;
@@ -27,6 +28,7 @@ public class MyOrders {
 		this.orderDate = orderDate;
 		this.cuName = cuName;
 		this.pName = pName;
+		this.pMainImg = pMainImg;
 		this.pmTotalCost = pmTotalCost;
 	}
 
@@ -94,6 +96,14 @@ public class MyOrders {
 		this.pName = pName;
 	}
 
+	public String getpMainImg() {
+		return pMainImg;
+	}
+
+	public void setpMainImg(String pMainImg) {
+		this.pMainImg = pMainImg;
+	}
+
 	public int getPmTotalCost() {
 		return pmTotalCost;
 	}
@@ -106,10 +116,10 @@ public class MyOrders {
 	public String toString() {
 		return "MyOrders [orderCode=" + orderCode + ", orderAmount=" + orderAmount + ", orderCompany=" + orderCompany
 				+ ", orderInvoice=" + orderInvoice + ", orderStatus=" + orderStatus + ", orderDate=" + orderDate
-				+ ", cuName=" + cuName + ", pName=" + pName + ", pmTotalCost=" + pmTotalCost + "]";
+				+ ", cuName=" + cuName + ", pName=" + pName + ", pMainImg=" + pMainImg + ", pmTotalCost=" + pmTotalCost
+				+ "]";
 	}
 
-	
 	
 
 }
