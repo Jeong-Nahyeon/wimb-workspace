@@ -17,13 +17,13 @@
 	<entry key="selectInquiryList">
 		SELECT
 		        I_CODE
-		      , M_CODE
+		      , M.M_NAME 
 		      , I_TITLE
 		      , I_CATEGORY
 		      , I_DATE
 		      , I_ANSWER
-		  FROM INQUIRY
-		  JOIN MEMBER USING (M_CODE)
+		  FROM INQUIRY I
+		LEFT JOIN MEMBER M ON (I.M_CODE = M.M_CODE)
 		 ORDER
 		    BY I_CODE DESC
 	</entry>
