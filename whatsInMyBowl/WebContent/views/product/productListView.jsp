@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.wimb.common.model.vo.PageInfo" %>
+    
+<%
+	PageInfo pi = (PageInfo)(request.getAttribute("pi"));
+
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+	
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -288,11 +299,21 @@
 			<!-- 페이징바 -->
             <div id="paging-bar" align="center">
             	<ul class="pagination">
-				    <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-				    <li class="page-item"><a class="page-link" href="#">1</a></li>
-				    <li class="page-item active"><a class="page-link" href="#">2</a></li>
-				    <li class="page-item"><a class="page-link" href="#">3</a></li>
-				    <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+            		<% if(currentPage != 1) { %>
+				   		 <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.pr?cpage=<%= currentPage - 1 %>">&lt;</a></li>
+				    <% } %>
+				    
+				    <% for(int p=startPage; p<=endPage; p++ ) { %>
+				    	<% if(p == currentPage) { %>
+					    	<li class="page-item active"><a class="page-link" href="#"><%= p %></a></li>
+					    <% } else { %>
+					  		 <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.pr?cpage=<%= p %>"><%= p %></a></li>
+					    <% } %>
+				    <% } %>
+				    
+				    <% if(currentPage != maxPage) { %>
+				 		   <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.pr?cpage=<%= currentPage + 1 %>">&gt;</a></li>
+				    <% } %>
 			    </ul>
             </div>
 		</div>

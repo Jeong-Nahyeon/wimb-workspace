@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wimb.common.model.vo.PageInfo;
 import com.wimb.product.model.service.ProductService;
 
 /**
@@ -30,19 +31,40 @@ public class ProductListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 완제품 총 개수
-		int productListCount = new ProductService().selectProductListCount();
-		
-		// 사용자가 요청한 페이지 번호
-		int currentPage = Integer.parseInt(request.getParameter("cpage"));
-		
-		// 페이징바에 보여질 최대 페이지 개수
-		int pageLimit = 10;
-		
-		// 한 페이지 보여질 최대 완제품 개수
-		int productListLimit = 10;
+		int listCount; // 완제품 총 개수
+		int currentPage; // 사용자가 요청한 페이지 번호
+		int pageLimit; // 페이징바에 보여질 최대 페이지 개수(단위)
+		int boardLimit; // 한 페이지 보여질 최대 완제품 개수(단위)
+		int maxPage; // 총 페이지 수 (가장 마지막 페이지 수)
+		int startPage; // 시작 페이지 수
+		int endPage; // 끝 페이지 수
 		
 		
+		listCount = new ProductService().selectListCount();
+		
+		currentPage = Integer.parseInt(request.getParameter("cpage"));
+		
+		pageLimit = 10;
+		
+		boardLimit = 10;
+		
+		maxPage = (int)Math.ceil((double)listCount / boardLimit);
+		
+		startPage = (currentPage-1) / pageLimit * pageLimit + 1;
+		
+		endPage = startPage + pageLimit - 1;
+		
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
+		
+		System.out.println(pi);
+		
+		request.setAttribute("pi", pi);
+		
+		request.getRequestDispatcher("views/product/productListView.jsp").forward(request, response);
 		
 	}
 

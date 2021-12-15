@@ -32,13 +32,13 @@ public class ProductDao {
 	 * @param conn
 	 * @return
 	 */
-	public int selectProductListCount(Connection conn) {
+	public int selectListCount(Connection conn) {
 		
-		int productListCount = 0;
+		int listCount = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("selectProductListCount"); // 완성된 sql문
+		String sql = prop.getProperty("selectListCount"); // 완성된 sql문
 		
 		try {
 			
@@ -46,7 +46,7 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				productListCount = rset.getInt("count");
+				listCount = rset.getInt("count");
 			}
 			
 		} catch (SQLException e) {
@@ -57,7 +57,7 @@ public class ProductDao {
 			close(pstmt);
 		}
 		
-		return productListCount;
+		return listCount;
 		
 	}
 
