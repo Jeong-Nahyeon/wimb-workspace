@@ -34,27 +34,18 @@
     .wrap{
         /*border: 2px solid red;*/
         width: 100%; 
-        height: 2000px;
+        height: auto;
         margin: auto;
     }
     #header, #footer{
         /*border: 1px solid lightcoral;*/
         width: 100%;
-        height: 170px;
-    }
-    .content{height: 1660px;}
-    .content>div{
-        height: 100%;
-        float: left;
-    }
-    #content_left, #content_right{
-        /*border: 1px solid green;*/
-        width: 441.5px;
+        height: 300px;
     }
     #content_main  {
         /*border: 1px solid skyblue;*/
         width: 1000px;
-        height: 100%;
+        height: auto;
         overflow: hidden;
     }
     #main_custom>div{
@@ -265,109 +256,71 @@
 
     <div class="wrap">
 
-        <div id="header"></div>
+        <div id="header">
+            <%@ include file="../common/menubar.jsp" %>
+        </div>
 
-        <div class="content">
-            <div id="content_left"></div>
+        <div id="content_main">
+            <div id="main_blank" style="position: relative;">
+                <h2 style="position: absolute; bottom: 0; padding: 0 20px; margin-bottom: 10px;">나만의 DIY 샐러드</h2>
+            </div>
+            <div id="main_custom">
+                <hr>
+                <!-- 왼쪽 데이터 영역-->
+                <div id="custom_left">
+                    <div class="custom_head">
+                        <div id="custom_image">이미지 자리</div>
+                        <div id="custom_guide">
+                            <span>채소, 토핑의 구성은 변경될 수 있습니다.</span> <br>
+                            <span>채소, 토핑의 구성은 변경될 수 있습니다.</span> <br>
+                            <span>채소, 토핑의 구성은 변경될 수 있습니다.</span> <br>
+                        </div>
+                    </div>
 
-            <div id="content_main">
-                <div id="main_blank" style="position: relative;">
-                    <h2 style="position: absolute; bottom: 0; padding: 0 20px; margin-bottom: 10px;">나만의 DIY 샐러드</h2>
-                </div>
-                <div id="main_custom">
-                    <hr>
-                    <!-- 왼쪽 데이터 영역-->
-                    <div id="custom_left">
-                        <div class="custom_head">
-                            <div id="custom_image">이미지 자리</div>
-                            <div id="custom_guide">
-                                <span>채소, 토핑의 구성은 변경될 수 있습니다.</span> <br>
-                                <span>채소, 토핑의 구성은 변경될 수 있습니다.</span> <br>
-                                <span>채소, 토핑의 구성은 변경될 수 있습니다.</span> <br>
+                    <div class="custom_list">
+                        <form action="" method="">
+                            <div class="customlist_name">
+                                <span>샐러드 이름</span>
+                                <input type="text" name="saladName" id="saladName">
                             </div>
-                        </div>
-
-                        <div class="custom_list">
-                            <form action="" method="">
-                                <div class="customlist_name">
-                                    <span>샐러드 이름</span>
-                                    <input type="text" name="saladName" id="saladName">
-                                </div>
-                               
-                                <table>
-                                    <tr>
-                                        <th colspan="2" style="text-align: left;">채소</th>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 220px; padding-left: 10px;">양상추</td>
-                                        <td style="width: 100px; text-align: right;">1000원</td>
-                                    </tr>
-                                    
-                                </table>
-                                <table>
-                                    <tr>
-                                        <th colspan="2" style="text-align: left;">메인 토핑</th>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 220px; padding-left: 10px;">양상추</td>
-                                        <td style="width: 100px; text-align: right;">1000원</td>
-                                    </tr>
-                                    
-                                </table>
-                                <table>
-                                    <tr>
-                                        <th colspan="2" style="text-align: left;">사이드 토핑</th>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 220px; padding-left: 10px;">양상추</td>
-                                        <td style="width: 100px; text-align: right;">1000원</td>
-                                    </tr>
-                                    
-                                </table>
-                                <table>
-                                    <tr>
-                                        <th colspan="2" style="text-align: left;">드레싱</th>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 220px; padding-left: 10px;">양상추</td>
-                                        <td style="width: 100px; text-align: right;">1000원</td>
-                                    </tr>
-                                    
-                                </table>
-
-                                <div class="customlist_price" align="right">
-                                    <span style="padding: 0 70px 0 20px;">총 금액</span>
-                                    <span style="padding: 0 15px 0 0;">20,000</span>
-                                </div>
-
-                                <div class="customlist_btn" align="right">
-                                    <button type="reset" id="customlist_btn_reset"><i class="fas fa-times fa-lg"></i></button>
-                                    <button type="submit" id="customlist_btn_submit">샐러드 추가</button>
-                                </div>
-
-                            </form>
-                        </div>
-
-                        <div class="custom_order">
+                            
                             <table>
                                 <tr>
-                                    <th colspan="3" style="text-align: left;">나만의 샐러드</th>
-                                    <th style="text-align: right;"><button id="customOrder_btn_cancle"><i class="fas fa-times fa-lg"></i></button></th>
+                                    <th colspan="2" style="text-align: left;">채소</th>
                                 </tr>
                                 <tr>
-                                    <td style="width: 100px; padding-left: 10px;">채소</td>
-                                    <td colspan="3" style="width: 220px; text-align: right;">가가가/나나나나/가가가/나나나나/나나나</td>
+                                    <td style="width: 220px; padding-left: 10px;">양상추</td>
+                                    <td style="width: 100px; text-align: right;">1000원</td>
                                 </tr>
                                 
                             </table>
                             <table>
                                 <tr>
-                                    <th colspan="3" style="text-align: left;">나만의 샐러드</th>
-                                    <th style="text-align: right;"><button id="customOrder_btn_cancle"><i class="fas fa-times fa-lg"></i></button></th>
+                                    <th colspan="2" style="text-align: left;">메인 토핑</th>
                                 </tr>
                                 <tr>
-                                    <td style="width: 100px; padding-left: 10px;">채소</td>
-                                    <td colspan="3" style="width: 220px; text-align: right;">가가가/나나나나/가가가/나나나나/나나나</td>
+                                    <td style="width: 220px; padding-left: 10px;">양상추</td>
+                                    <td style="width: 100px; text-align: right;">1000원</td>
+                                </tr>
+                                
+                            </table>
+                            <table>
+                                <tr>
+                                    <th colspan="2" style="text-align: left;">사이드 토핑</th>
+                                </tr>
+                                <tr>
+                                    <td style="width: 220px; padding-left: 10px;">양상추</td>
+                                    <td style="width: 100px; text-align: right;">1000원</td>
+                                </tr>
+                                
+                            </table>
+                            <table>
+                                <tr>
+                                    <th colspan="2" style="text-align: left;">드레싱</th>
+                                </tr>
+                                <tr>
+                                    <td style="width: 220px; padding-left: 10px;">양상추</td>
+                                    <td style="width: 100px; text-align: right;">1000원</td>
                                 </tr>
                                 
                             </table>
@@ -377,120 +330,153 @@
                                 <span style="padding: 0 15px 0 0;">20,000</span>
                             </div>
 
-                            <div class="customOrder_btn" align="right">
-                                <button id="customOrder_order">주문하기</button>
-                                <button id="customOrder_cart">장바구니</button>
+                            <div class="customlist_btn" align="right">
+                                <button type="reset" id="customlist_btn_reset"><i class="fas fa-times fa-lg"></i></button>
+                                <button type="submit" id="customlist_btn_submit">샐러드 추가</button>
                             </div>
-                            
-                        </div>
+
+                        </form>
                     </div>
-                    
 
-                    <!-- 가운데 세로선-->
-                    <div id="main_line"></div>
+                    <div class="custom_order">
+                        <table>
+                            <tr>
+                                <th colspan="3" style="text-align: left;">나만의 샐러드</th>
+                                <th style="text-align: right;"><button id="customOrder_btn_cancle"><i class="fas fa-times fa-lg"></i></button></th>
+                            </tr>
+                            <tr>
+                                <td style="width: 100px; padding-left: 10px;">채소</td>
+                                <td colspan="3" style="width: 220px; text-align: right;">가가가/나나나나/가가가/나나나나/나나나</td>
+                            </tr>
+                            
+                        </table>
+                        <table>
+                            <tr>
+                                <th colspan="3" style="text-align: left;">나만의 샐러드</th>
+                                <th style="text-align: right;"><button id="customOrder_btn_cancle"><i class="fas fa-times fa-lg"></i></button></th>
+                            </tr>
+                            <tr>
+                                <td style="width: 100px; padding-left: 10px;">채소</td>
+                                <td colspan="3" style="width: 220px; text-align: right;">가가가/나나나나/가가가/나나나나/나나나</td>
+                            </tr>
+                            
+                        </table>
 
-
-                    <!-- 오른쪽 데이터 영역-->
-                    <div id="custom_right">
-                        <div id="vegetable">
-                            <div class="custom_text">
-                                <div class="text_main" >채소 선택</div>
-                                <div class="text_sub">추가 채소는 기본 중량 10g 입니다. </div>
-                            </div>
-
-                            <div class="menu_list">
-                                <ul>
-                                    <li>
-                                        <div class="custom_pro">
-                                            <div class="pro_subject">양상추</div>
-                                            <div class="pro_btn" >
-                                                <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
-                                                <input type="text" name="" class="count_text" value="1">
-                                                <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    
-                                </ul>
-                            </div>
+                        <div class="customlist_price" align="right">
+                            <span style="padding: 0 70px 0 20px;">총 금액</span>
+                            <span style="padding: 0 15px 0 0;">20,000</span>
                         </div>
 
-                        <div id="topping_main">
-                            <div class="custom_text" >
-                                <div class="text_main" >메인 토핑 선택</div>
-                                <div class="text_sub">가나다 가나다</div>
-                            </div>
- 
-                            <div class="menu_list">
-                                <ul>
-                                    <li>
-                                        <div class="custom_pro">
-                                            <div class="pro_subject">양상추</div>
-                                            <div class="pro_btn" >
-                                                <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
-                                                <input type="text" name="" class="count_text" value="1">
-                                                <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    
-                                </ul>
-                            </div>
+                        <div class="customOrder_btn" align="right">
+                            <button id="customOrder_order">주문하기</button>
+                            <button id="customOrder_cart">장바구니</button>
                         </div>
-
-                        <div id="topping_side">
-                            <div class="custom_text">
-                                <div class="text_main">사이드 토핑 선택</div>
-                                <div class="text_sub">최대 5개 선택 가능</div>
-                            </div>
-
-                            <div class="menu_list">
-                                <ul>
-                                    <li>
-                                        <div class="custom_pro">
-                                            <div class="pro_subject">양상추</div>
-                                            <div class="pro_btn" >
-                                                <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
-                                                <input type="text" name="" class="count_text" value="1">
-                                                <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div id="dressing">
-                            <div class="custom_text">
-                                <div class="text_main">드레싱 선택</div>
-                                <div class="text_sub">최대 5개 선택 가능</div>
-                            </div>
-
-                            <div class="menu_list">
-                                <ul>
-                                    <li>
-                                        <div class="custom_pro">
-                                            <div class="pro_subject">올리브바질</div>
-                                            <div class="dressing_btn">
-                                                <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        
                         
                     </div>
                 </div>
+                
+
+                <!-- 가운데 세로선-->
+                <div id="main_line"></div>
+
+
+                <!-- 오른쪽 데이터 영역-->
+                <div id="custom_right">
+                    <div id="vegetable">
+                        <div class="custom_text">
+                            <div class="text_main" >채소 선택</div>
+                            <div class="text_sub">추가 채소는 기본 중량 10g 입니다. </div>
+                        </div>
+
+                        <div class="menu_list">
+                            <ul>
+                                <li>
+                                    <div class="custom_pro">
+                                        <div class="pro_subject">양상추</div>
+                                        <div class="pro_btn" >
+                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
+                                            <input type="text" name="" class="count_text" value="1">
+                                            <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="topping_main">
+                        <div class="custom_text" >
+                            <div class="text_main" >메인 토핑 선택</div>
+                            <div class="text_sub">가나다 가나다</div>
+                        </div>
+
+                        <div class="menu_list">
+                            <ul>
+                                <li>
+                                    <div class="custom_pro">
+                                        <div class="pro_subject">양상추</div>
+                                        <div class="pro_btn" >
+                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
+                                            <input type="text" name="" class="count_text" value="1">
+                                            <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="topping_side">
+                        <div class="custom_text">
+                            <div class="text_main">사이드 토핑 선택</div>
+                            <div class="text_sub">최대 5개 선택 가능</div>
+                        </div>
+
+                        <div class="menu_list">
+                            <ul>
+                                <li>
+                                    <div class="custom_pro">
+                                        <div class="pro_subject">양상추</div>
+                                        <div class="pro_btn" >
+                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
+                                            <input type="text" name="" class="count_text" value="1">
+                                            <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="dressing">
+                        <div class="custom_text">
+                            <div class="text_main">드레싱 선택</div>
+                            <div class="text_sub">최대 5개 선택 가능</div>
+                        </div>
+
+                        <div class="menu_list">
+                            <ul>
+                                <li>
+                                    <div class="custom_pro">
+                                        <div class="pro_subject">올리브바질</div>
+                                        <div class="dressing_btn">
+                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
-
-            <div id="content_right"></div>
         </div>
-        
 
-        <div id="footer"></div>
+        <div id="footer">
+        	<%@ include file="../common/footer.jsp" %>
+        </div>
     </div>
 
 </body>
