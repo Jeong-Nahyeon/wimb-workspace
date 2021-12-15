@@ -20,6 +20,7 @@
         width: 100%;
         height: 100%;
     }
+    html, body{height: 100%;}
 
     img{
         width: 130px;
@@ -49,10 +50,11 @@
     }
 
     #menubar-left{
-        height: auto;
+        height: 100vh;
         width: 190px;   
         float: left;
         background-color: lightgrey;
+        
     }
 
     ul{
@@ -101,7 +103,7 @@
     <table id="menubar-top">
         <tr>
             <td style="width: 10%;">
-                <img src="../admin/image/logo.png">
+                <img src="<%= contextPath %>/resources/images/LOGO.png">
             </td>
             <td style="width: 68%;">
                 <h1 style="font-weight:700;">Admin</h1>
@@ -140,7 +142,7 @@
     
         <ul>
             <li class="menubar-left-title">홈페이지관리</li>
-            <li class="menubar-left-text"><a href="<%= contextPath %>/list.terms">이용관리</a></li>
+            <li class="menubar-left-text"><a href="<%= contextPath %>/list.terms">이용약관</a></li>
             <li class="menubar-left-text"><a href="">배너</a></li>
         </ul>
     

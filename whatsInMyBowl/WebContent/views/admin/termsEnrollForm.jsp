@@ -69,11 +69,7 @@
         <div id="content">
             <form action="test.do" method="post">
                 <table id="termsTable">
-                    <tr>
-                        <th id="termsTable-Title">제목</th>
-                        <td><input type="text" placeholder="제목을 입력해주세요." required style="margin-bottom: 20px;"></td>
-                    </tr>
-
+                   
                     <tr id="contentOuter">
                         <th id="termsTable-Content">내용</th>
                         <td>

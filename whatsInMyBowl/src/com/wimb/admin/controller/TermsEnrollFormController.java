@@ -1,28 +1,23 @@
-package com.wimb.admin.controller;
+ package com.wimb.admin.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wimb.admin.model.service.termsService;
-import com.wimb.admin.model.vo.Terms;
-
 /**
- * Servlet implementation class TermsListController
+ * Servlet implementation class TermsEnrollFormController
  */
-@WebServlet("/list.terms")
-public class TermsListController extends HttpServlet {
+@WebServlet("/enrollForm.terms")
+public class TermsEnrollFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TermsListController() {
+    public TermsEnrollFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,11 +27,10 @@ public class TermsListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 이용약관 리스트를 불러오는 Controller
-		ArrayList<Terms> list = new termsService().selectTermsList();
+		// 등록하기 버튼 클릭 시 나타나는 이용약관 등록 페이지를 불러오는 컨트롤러
+		request.getRequestDispatcher("views/admin/termsEnrollForm.jsp").forward(request, response);
 		
-		request.setAttribute("list", list);
-		request.getRequestDispatcher("views/admin/termsListView.jsp").forward(request, response);
+		
 		
 	}
 

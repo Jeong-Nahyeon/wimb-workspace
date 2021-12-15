@@ -19,6 +19,12 @@ public class Terms {
 		this.termsDate = termsDate;
 	}
 
+	public Terms(int termsCode, String termsContent) {
+		super();
+		this.termsCode = termsCode;
+		this.termsContent = termsContent;
+	}
+
 	public int getTermsCode() {
 		return termsCode;
 	}

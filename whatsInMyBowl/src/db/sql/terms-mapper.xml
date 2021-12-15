@@ -2,9 +2,15 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
-	<entry key="">
-
-	
+	<!-- 이용약관 리스트를 가져오는 SQL문  -->
+	<entry key="selectTermsList">
+		SELECT
+				TERMS_CODE
+			  , TERMS_CONTENT
+		   FROM TERMS
+		  WHERE TERMS_CATEGORY = '이용약관'
+		  ORDER 
+		    BY TERMS_CODE DESC
 	</entry>
 	
 	<entry key="">
