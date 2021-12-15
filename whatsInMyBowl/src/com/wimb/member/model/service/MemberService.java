@@ -11,10 +11,10 @@ import com.wimb.member.model.vo.Member;
 public class MemberService {
 	
 	// 관리자 로그인
-	public Member loginMember(String userId, String userPwd) {
+	public Member loginMember(String mId, String mPwd) {
 		
 		Connection conn = getConnection();
-		Member m = new MemberDao().loginMember(conn, userId, userPwd);
+		Member m = new MemberDao().loginMember(conn, mId, mPwd);
 		
 		close(conn);
 		return m;	

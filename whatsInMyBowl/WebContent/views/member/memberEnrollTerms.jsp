@@ -73,9 +73,9 @@
 		</p>
 	</div>
 	<div id="termsFormBox" align="center">
-		<form action="" align="center">
+		<form action="<%=contextPath %>/enrollForm.me" align="center" id="termsForm" method="post">
 			<div id="titlearea">
-				<p style="font-size: x-large; font-weight: 900; margin-top:20px; margin-left: " align="left">
+				<p style="font-size: x-large; font-weight: 900; margin-top:20px; margin-left:30px;" align="left">
 					이용약관안내
 				</p>
 			</div>
@@ -96,7 +96,7 @@
 
 							회원제 서비스 이용에 따른 본인확인 , 개인 식별 , 불량회원의 부정 이용 방지와 비인가 사용 방지 , 가입 의사 확인 , 연령확인 , 만14세 미만 아동 개인정보 수집 시 법정 대리인 동의여부 확인, 불만처리 등 민원처리 , 고지사항 전달<br>
 
-							2. 수집하는 개인정보 항목 : 이름 , 생년월일 , 성별 , 로그인ID , 비밀번호 , 자택 전화번호 , 휴대전화번호 , 이메일 , 14세미만 가입자의 경우 법정대리인의 정보<br>
+							2. 수집하는 개인정보 항목 : 이름 , 생년월일 , 성별 , 로그인ID , 비밀번호 , 자택 전화번호 , 휴대전화번호 , 이메일 , 주소, 14세미만 가입자의 경우 법정대리인의 정보<br>
 
 							3. 개인정보의 보유기간 및 이용기간<br>
 
@@ -138,8 +138,8 @@
 						</p>
 					</div>
 					<div>
-						<input type="checkbox" id="agree1" name="agree1" requierd>
-						<label for="agree1">동의합니다</label>
+						<input type="checkbox" id="agreeTerms" name="agreeTerms">
+						<label for="agreeTerms">동의합니다</label>
 					</div>
 				</div>
 				<div id="memberTerms2" class="memberTerms">
@@ -201,8 +201,8 @@
 						</p>
 					</div>
 					<div>
-						<input type="checkbox" id="agree2" name="agree2" required>
-						<label for="agree2">동의합니다</label>
+						<input type="checkbox" id="agreePersonal" name="agreePersonal">
+						<label for="agreePersonal">동의합니다</label>
 					</div>
 				</div>
 				<div id="memberTerms3" class="memberTerms">
@@ -218,20 +218,46 @@
 							선택 약관에 동의하지 않으셔도 회원가입은 가능하며, 회원가입 후 회원정보수정 페이지에서 언제든지 수신여부를 변경하실 수 있습니다.<br>
 						</p>
 					</div>
-					<div>
-						<input type="checkbox" id="agree3" name="agree3">
-						<label for="agree3">SMS</label>
-						<input type="checkbox" id="agree4" name="agree4">
-						<label for="agree4">EMAIL</label>
+					<div >
+						<input type="checkbox" id="agreeSms" name="agree" style="margin-left:15px;">
+						<label for="agreeSms">SMS</label>
+						<input type="checkbox" id="agreeEmail" name="agree" style="margin-left:15px;">
+						<label for="agreeEmail">EMAIL</label>
 					</div>
 				</div>
 				<div align="center">
-					<input type="submit" value="가입 하기" id="nextBtn">
+					<input type="button" value="가입 하기" id="nextBtn">
 				</div>
 			</div>
 			
 		</form>
 	</div>
+	
+	<script>
+		
+		$(document).ready(function(e){
+			$("#nextBtn").click(function(){
+				if($("#agreeTerms").is(":checked") && $("#personalAgree").is(":checked")){
+					$("#termsForm").submit();
+				}else{
+					if(!($("#agreeTerms").is(":checked"))){
+						alert("이용약관에 동의해주십시오");
+						return;
+					}
+					if(!($("#agreePersonal").is(":checked"))){
+						alert("개인정보 수집 및 이용에 동의해주십시오");
+						return;
+					}
+					
+					$("#termsForm").submit();
+				}
+			});
+		});
+
+		
+		
+	
+	</script>
 
 	<br clear="both">
 	<footer>

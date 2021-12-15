@@ -3,7 +3,7 @@
 <properties>
 
 	<!-- 로그인 시 필요한 sql문 -->
-	<entry key="loginAdmin">
+	<entry key="loginMember">
 		SELECT 
 		       M_CODE
 		     , M_NAME

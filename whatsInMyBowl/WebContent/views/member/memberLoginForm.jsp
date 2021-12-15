@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.wimb.member.model.vo.Member" %>
+
+
 <%@ include file="../common/menubar.jsp"%>
 
 <!DOCTYPE html>
@@ -9,7 +12,7 @@
 <title>Insert title here</title>
 <style>
     div{box-sizing: border-box;}
-    #loginForm{    
+    #loginFormTable{    
         width: 400px;
         height: 300px;
     }
@@ -86,7 +89,7 @@
 
         <div class="logintap">
             <ul align="center">
-                <li><a href="">로그인</a></li>
+                <li><a href="" style="color:rgb(155, 213, 189)">로그인</a></li>
                 <li style="width:15%">&#124;</li>
                 <li><a href="">비회원 주문 조회</a></li>
             </ul>
@@ -94,9 +97,9 @@
         
         <br>
         <br>
-        <form action="" method="post">            
+        <form action="<%=contextPath %>/login.me" method="post" id="loginForm">            
 
-            <table id="loginForm" align="center">             
+            <table id="loginFormTable" align="center">             
                
                 <tr id="idInputForm">
                     
@@ -119,8 +122,7 @@
                     </td>
                     <td align="right" style="vertical-align: top">
                         <div class="findIdPwd">
-                            <a href="">아이디 찾기</a>&nbsp;&#124;
-                            <a href="">비밀번호 찾기</a>
+                            <a href="<%=contextPath%>/">아이디 | 비밀번호 찾기</a>
                         </div>
                     </td>
                 </tr>

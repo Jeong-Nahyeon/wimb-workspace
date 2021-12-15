@@ -27,19 +27,19 @@ public class MemberDao {
 		}
 	}
 	
-	// 관리자 로그인
-	public Member loginMember(Connection conn, String userId, String userPwd) {
+	// 로그인
+	public Member loginMember(Connection conn, String mId, String mPwd) {
 		
 		Member m = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("loginAdmin");
+		String sql = prop.getProperty("loginMember");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, userId);
-			pstmt.setString(2, userPwd);
+			pstmt.setString(1, mId);
+			pstmt.setString(2, mPwd);
 			
 			rset = pstmt.executeQuery();
 			
