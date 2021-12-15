@@ -255,6 +255,10 @@
     /*왼쪽 - 샐러드 주문 목록 테이블*/
     .custom_order{padding-top: 20px;}
     .custom_order th{padding-bottom: 10px;}
+
+    #itemCustom_table span{
+        display: block;
+    }
 </style>
 </head>
 <body>
@@ -289,13 +293,19 @@
                                 <input type="text" name="saladName" id="saladName">
                             </div>
                             
-                            <table>
+                            <table id="itemCustom_table">
                                 <tr>
                                     <th colspan="2" style="text-align: left;">채소</th>
                                 </tr>
                                 <tr>
-                                    <td style="width: 220px; padding-left: 10px;">양상추</td>
-                                    <td style="width: 100px; text-align: right;">1000원</td>
+                                    <td id="vagetable_name" style="width: 220px; padding-left: 10px;">
+                                        <!-- <span>양상추</span>  -->
+                                        
+                                    </td>
+                                    <td id="vagetable_price" style="width: 100px; text-align: right;">
+                                        <!-- <span>1000원</span>  -->
+                                        
+                                    </td>
                                 </tr>
                                 
                             </table>
@@ -304,8 +314,12 @@
                                     <th colspan="2" style="text-align: left;">메인 토핑</th>
                                 </tr>
                                 <tr>
-                                    <td style="width: 220px; padding-left: 10px;">양상추</td>
-                                    <td style="width: 100px; text-align: right;">1000원</td>
+                                    <td id="maintopping_name" style="width: 220px; padding-left: 10px;">
+                                    	<span>양상추</span>
+                                    </td>
+                                    <td id="maintopping_price" style="width: 100px; text-align: right;">
+                                        <span>1000원</span>
+                                    </td>
                                 </tr>
                                 
                             </table>
@@ -314,8 +328,10 @@
                                     <th colspan="2" style="text-align: left;">사이드 토핑</th>
                                 </tr>
                                 <tr>
-                                    <td style="width: 220px; padding-left: 10px;">양상추</td>
-                                    <td style="width: 100px; text-align: right;">1000원</td>
+                                    <td id="sidetopping_name" style="width: 220px; padding-left: 10px;">양상추</td>
+                                    <td id="item3_price" style="width: 100px; text-align: right;">
+                                        <span>1000원</span>
+                                    </td>
                                 </tr>
                                 
                             </table>
@@ -324,8 +340,10 @@
                                     <th colspan="2" style="text-align: left;">드레싱</th>
                                 </tr>
                                 <tr>
-                                    <td style="width: 220px; padding-left: 10px;">양상추</td>
-                                    <td style="width: 100px; text-align: right;">1000원</td>
+                                    <td id="dressing_name" style="width: 220px; padding-left: 10px;">양상추</td>
+                                    <td id="dressing_price" style="width: 100px; text-align: right;">
+                                        <span>1000원</span> 
+                                    </td>
                                 </tr>
                                 
                             </table>
@@ -402,7 +420,11 @@
 		                                        <div class="pro_subject"><%= i.getCiName() %></div>
 		                                        <div class="pro_btn" >
 		                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
-		                                            <input type="text" name="" class="count_text" value="0">
+		                                            <input type="text" name="" class="count_text" value="0" readonly>
+                                                    <input class="ci_name" type="hidden" value="<%= i.getCiName() %>">
+                                                    <input class="ci_price" type="hidden" value="<%= i.getCiPrice() %>">
+                                                    <input class="ci_code" type="hidden" value="<%= i.getCiCode()%>">
+                                                    <input class="ci_category" type="hidden" value="<%= i.getCiCategory() %>">
 		                                            <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
 		                                        </div>
 		                                    </div>
@@ -490,6 +512,61 @@
                     </div>
                     
                 </div>
+
+                <!--  -->
+                <script>
+                    $(".pro_btn_up").click(function(){
+                        //console.log("플러스클릭됨");
+                        setCustomlist($(this), ".pro_btn_up");
+                    });
+
+                    $(".pro_btn_down").click(function(){
+                        //console.log("마이너스클릭됨");
+                        setCustomlist($(this), ".pro_btn_down");
+                    });
+
+                    function setCustomlist(obj, action){
+                        var count = 0;
+                        var itemNameStr = "";
+                        var itemNamePrice = "";
+                        itemTotalPrice = 0;
+                        
+
+                        // 재료 수량버튼 클릭 시 input태그안의 수량 증감
+                        if(action == ".pro_btn_up"){
+                            count = parseInt(obj.siblings(".count_text").val()) +1;
+                            obj.siblings(".count_text").val(count);
+
+                            
+                        }else{
+                            count = parseInt(obj.siblings(".count_text").val()) -1;
+                            if(count <= 0) {
+                                count = 0;
+                            }
+                            obj.siblings(".count_text").val(count);
+                        }
+
+                        // 재료 정보
+                        if(obj.siblings(".ci_category").val() == "채소"){
+                            console.log("앗싸");
+                            $(action).each(function(){
+                                if($(this).siblings(".count_text").val() != "0"){
+                                    itemTotalPrice += parseInt($(this).siblings(".count_text").val()) * parseInt($(this).siblings(".setPrice").val());
+                                    
+                                    itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>";
+                                    itemNamePrice += "<span>" + itemTotalPrice + "</span>";
+                        
+                                }
+                
+                            });
+                            $("#vagetable_name").html(itemNameStr);
+                            $("#vagetable_price").html(itemNamePrice);
+
+                        }
+                        
+                        
+                    }
+                </script>
             </div>
         </div>
 
