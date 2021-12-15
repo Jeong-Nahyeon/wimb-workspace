@@ -15,7 +15,7 @@ import com.wimb.mypage.model.vo.Inquiry;
 /**
  * Servlet implementation class InquiryListController
  */
-@WebServlet("/inquiryList.me")
+@WebServlet("/inquiryList.my")
 public class InquiryListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -32,6 +32,9 @@ public class InquiryListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		request.setCharacterEncoding("UTF-8");
+		
+		
 		// 요청 처리
 		ArrayList<Inquiry> list = new MyPageService().selectInquiryList();
 		
