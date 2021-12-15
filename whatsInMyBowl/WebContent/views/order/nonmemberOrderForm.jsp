@@ -76,7 +76,7 @@
 
         <div class="logintap">
             <ul align="center">
-                <li><a href="">로그인</a></li>
+                <li><a href="<%=contextPath%>/loginInput.me">로그인</a></li>
                 <li style="width:15%">&#124;</li>
                 <li><a href="" style="color:rgb(155, 213, 189)">비회원 주문 조회</a></li>
             </ul>
