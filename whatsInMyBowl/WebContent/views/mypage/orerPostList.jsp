@@ -135,7 +135,9 @@
 </style>
 </head>
 <body>
-
+	
+	<%@ include file="../common/menubar.jsp" %>
+	
     <div class="orderPostList">
 
         <label style="font-size: 18px;"><b>주문목록/배송조회</b></label>
