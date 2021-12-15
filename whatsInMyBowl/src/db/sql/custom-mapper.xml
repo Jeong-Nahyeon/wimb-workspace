@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="selectItemList">
+		SELECT 
+		       CI_CODE
+		     , CI_NAME
+		     , CI_CATEGORY
+		     , CI_PRICE
+		     , CI_MAINIMG
+		     , CI_STOCK
+		  FROM ITEM
+		 WHERE CI_SHOW = 'Y'
+		   AND CI_STOCK > 0
+	</entry>
+
+</properties>

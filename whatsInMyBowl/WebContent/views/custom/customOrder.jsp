@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.wimb.custom.model.vo.Item, java.util.ArrayList" %>    
+<%
+	ArrayList<Item> list = (ArrayList<Item>)request.getAttribute("list");
+%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -390,17 +395,20 @@
 
                         <div class="menu_list">
                             <ul>
-                                <li>
-                                    <div class="custom_pro">
-                                        <div class="pro_subject">양상추</div>
-                                        <div class="pro_btn" >
-                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
-                                            <input type="text" name="" class="count_text" value="1">
-                                            <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
-                                        </div>
-                                    </div>
-                                </li>
-                                
+                            	<% for(Item i : list) { %>
+                            		<% if(i.getCiCategory().equals("채소")) { %>
+		                                <li>
+		                                    <div class="custom_pro">
+		                                        <div class="pro_subject"><%= i.getCiName() %></div>
+		                                        <div class="pro_btn" >
+		                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
+		                                            <input type="text" name="" class="count_text" value="0">
+		                                            <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
+		                                        </div>
+		                                    </div>
+		                                </li>
+	                                <% } %>
+                                <% } %>
                             </ul>
                         </div>
                     </div>
@@ -413,17 +421,20 @@
 
                         <div class="menu_list">
                             <ul>
-                                <li>
-                                    <div class="custom_pro">
-                                        <div class="pro_subject">양상추</div>
-                                        <div class="pro_btn" >
-                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
-                                            <input type="text" name="" class="count_text" value="1">
-                                            <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
-                                        </div>
-                                    </div>
-                                </li>
-                                
+                            	<% for(Item i : list) { %>
+                            		<% if(i.getCiCategory().equals("메인토핑")) {%>
+		                                <li>
+		                                    <div class="custom_pro">
+		                                        <div class="pro_subject"><%= i.getCiName() %></div>
+		                                        <div class="pro_btn" >
+		                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
+		                                            <input type="text" name="" class="count_text" value="0">
+		                                            <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
+		                                        </div>
+		                                    </div>
+		                                </li>
+	                                <% } %>
+                                <% } %>
                             </ul>
                         </div>
                     </div>
@@ -436,16 +447,20 @@
 
                         <div class="menu_list">
                             <ul>
-                                <li>
-                                    <div class="custom_pro">
-                                        <div class="pro_subject">양상추</div>
-                                        <div class="pro_btn" >
-                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
-                                            <input type="text" name="" class="count_text" value="1">
-                                            <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
-                                        </div>
-                                    </div>
-                                </li>
+                            	<% for(Item i : list){ %>
+	                            	<% if(i.getCiCategory().equals("사이드토핑")){ %>
+		                                <li>
+		                                    <div class="custom_pro">
+		                                        <div class="pro_subject"><%= i.getCiName() %></div>
+		                                        <div class="pro_btn" >
+		                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
+		                                            <input type="text" name="" class="count_text" value="0">
+		                                            <button class="pro_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
+		                                        </div>
+		                                    </div>
+		                                </li>
+	                                <% } %>
+                                <% } %>
                             </ul>
                         </div>
                     </div>
@@ -458,14 +473,18 @@
 
                         <div class="menu_list">
                             <ul>
-                                <li>
-                                    <div class="custom_pro">
-                                        <div class="pro_subject">올리브바질</div>
-                                        <div class="dressing_btn">
-                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
-                                        </div>
-                                    </div>
-                                </li>
+                             	<% for(Item i : list) { %>
+	                             	<% if(i.getCiCategory().equals("드레싱")){ %>
+		                                <li>
+		                                    <div class="custom_pro">
+		                                        <div class="pro_subject"><%= i.getCiName() %></div>
+		                                        <div class="dressing_btn">
+		                                            <button class="pro_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
+		                                        </div>
+		                                    </div>
+		                                </li>
+	                                <% } %>
+                                <% } %>
                             </ul>
                         </div>
                     </div>

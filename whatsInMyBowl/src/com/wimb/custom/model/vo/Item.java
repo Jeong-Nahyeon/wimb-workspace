@@ -27,6 +27,17 @@ public class Item {
 		this.ciShow = ciShow;
 		this.ciStock = ciStock;
 	}
+	
+
+	public Item(String ciCode, String ciName, String ciCategory, int ciPrice, String ciImg, int ciStock) {
+		super();
+		this.ciCode = ciCode;
+		this.ciName = ciName;
+		this.ciCategory = ciCategory;
+		this.ciPrice = ciPrice;
+		this.ciImg = ciImg;
+		this.ciStock = ciStock;
+	}
 
 	public String getCiCode() {
 		return ciCode;
