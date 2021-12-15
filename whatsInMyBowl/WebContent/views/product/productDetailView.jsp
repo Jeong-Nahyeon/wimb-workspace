@@ -21,6 +21,7 @@
 	}
 
 	/* 상품 상세 메인  */
+
 	.main{
 		box-sizing: border-box;
 		border:1px solid red;
@@ -32,7 +33,7 @@
 	
 	.main-left, .main-right{
 		box-sizing: border-box;
-		/* border:1px solid red; */
+		border:1px solid red;
 		width:50%;
 		height:100%;
 		float:left;
@@ -59,7 +60,7 @@
 
 	.main-right>.main-content{
 		box-sizing: border-box;
-		/* border:1px solid red; */
+		border:1px solid red;
 		width:400px;
 		height:400px;
 		position:absolute;
@@ -73,7 +74,7 @@
 
 	.content, .amount,.total-price, .main-btns{
 		box-sizing: border-box;
-		/* border:1px solid red; */
+		border:1px solid red;
 		width:100%;
 	}
 
@@ -106,6 +107,7 @@
 
 
 	/* 상세설명, 리뷰, 배송정보, 상품문의 이동 버튼 */
+
 	.btns{
 		box-sizing: border-box;
 		border:1px solid red;
@@ -116,7 +118,7 @@
 	}
 	.btn-detail, .btn-review, .btn-delivery, .btn-QnA{
 		box-sizing: border-box;
-		/* border:1px solid red; */
+		border:1px solid red;
 		width:25%;
 		height:100%;
 		float:left;
@@ -159,7 +161,7 @@
 		height:auto;
 	}
 
-	/* 리뷰 페이지는 따로 파일 합침 */
+	
 
 	/* 배송 정보 */
 	
@@ -187,8 +189,11 @@
 		padding:10px;
 	}
 
-		/* 나경님 파일 합치면 삭제 */
-		/* 상품 문의 */
+
+
+
+	/* 나경님 파일 합치면 삭제 */
+	/* 상품 문의 */
 	.product-QnA{
 		box-sizing: border-box;
 		border:1px solid red;
@@ -199,17 +204,23 @@
 	}
 
 
+	/* 모달창 스타일 */
+
+
+
+
+
 	/* 모달창 배경 스타일 */
 
-	.modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1040;
-    width: 100vw;
-    height: 100vh;
-    background-color: white !important;
-	}
+	/* .modal-backdrop {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1040;
+		width: 100vw;
+		height: 100vh;
+		background-color: white !important;
+	} */
 
 </style>
 </head>
@@ -309,7 +320,7 @@
 								<button class="btn" style="background:#9BD5BD; color:white; font-weight: bolder; width:100%;">바로구매</button>
 							</td>
 							<td class="cart-btn" width="40%">
-								<button class="btn" style="border:1px solid #9BD5BD; color:#9BD5BD; font-weight: bolder; bolder; width:100%;" data-toggle="modal" data-target="#cart-success-modal" data-backdrop="static" data-keyboard="false">장바구니</button>
+								<button class="btn" id="cart-btn"style="border:1px solid #9BD5BD; color:#9BD5BD; font-weight: bolder; width:100%;">장바구니</button>
 							</td>
 						</tr>
 					</table>
@@ -345,7 +356,7 @@
 		</div>
 
 		<!-- 리뷰 -->
-		<%@ include file="../review/reviewListView.jsp" %>
+		<%@ include file="../review/reviewListView.jsp"%>
 
 		<!-- 배송 정보 -->
 		<div id="delivery-info" class="delivery-info">
@@ -370,12 +381,15 @@
 	
 
 	</div>
+
 	
 	<%@ include file="../common/footer.jsp" %>
 
-	<!-- 장바구니 담기 성공 모달창 -->
-	<div class="modal fade" id="cart-success-modal" style="opacity: 100%;">
-		<div class="modal-dialog modal-dialog-centered " role="document" style="width:500px; height:350px;">
+
+	<!-- 장바구니 담기 성공 모달창  -->
+
+	<div class="modal fade" id="cart-success-modal">
+		<div class="modal-dialog modal-dialog-centered" role="document" style="width:500px; height:350px;">
 			<div class="modal-content success-cart-modal">
 				
 				<!-- Modal Header -->
@@ -402,13 +416,26 @@
 				<!-- Modal footer -->
 				<div class="modal-footer button-area">
 					<div class="cart-success-btns" align="center" style="width:100%;">
-						<button type="reset" id="cart-success-close-btn" class="btn btn-sm" data-dismiss="modal">취소</button>
-					
+						<button type="button" class="btn btn-sm" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
 						<button type="submit" id="cart-page-btn" class="btn btn-sm" style="background:#9BD5BD; margin:0px 5px;">확인</button>
 					</div>
 				</div>
-			
+
 			</div>
+		</div>
+	</div>		
+	<script>
+		$(document).ready(function(){
+			$("#cart-btn").click(function(){
+			$("#cart-success-modal").modal({backdrop: "static"});
+			});
+		});
+	</script>
+
+
+	
+
+
 
 </body>
 </html>

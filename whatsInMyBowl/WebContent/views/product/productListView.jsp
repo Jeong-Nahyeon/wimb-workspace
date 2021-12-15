@@ -193,14 +193,6 @@
 		margin:0px 5px;
 	}
 
-	/* 장바구니 담기 성공 모달창 */
-
-	#cart-success-close-btn{
-		background:white;
-		border:1px solid lightgray;
-		margin:0px 5px;
-	}
-
 
 	/* 모달창 배경 스타일 */
 
@@ -251,7 +243,7 @@
 					<!-- case2. 찜 했을 경우 -->
 						<!-- <i class="fas fa-heart fa-2x heart-btn"></i> -->
 
-						<i class="fas fa-cart-plus fa-2x cart-btn" data-toggle="modal" data-target="#cart-modal" data-backdrop="static" data-keyboard="false"></i>
+						<i id="cart-btn" class="fas fa-cart-plus fa-2x cart-btn"></i>
 					</div>
 
 					<h6>닭가슴살 샐러드</h6>
@@ -302,15 +294,15 @@
 		</div>
 	</div>
 	
-	<button data-toggle="modal" data-target="#cart-success-modal" data-backdrop="static" data-keyboard="false">장바구니 담기 성공 창 테스트</button>
-
+	
 	<%@ include file="../common/footer.jsp" %>
+	<button id="cart-success-btn">장바구니 담기 성공 창 테스트</button>
 
 
 	<!-- 장바구니 모달창 -->
     <div class="modal fade" id="cart-modal">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content cart-modal-content" style="width:500px; height:350px;">
+            <div class="modal-content cart-modal-content">
                 
                 <!-- Modal Header -->
                 <div class="modal-header cart-title-area">
@@ -371,7 +363,7 @@
 							</script>
 
 					   </div>
-
+					   
                     </form>
                 </div>
                 
@@ -379,55 +371,68 @@
                 <div class="modal-footer button-area">
 					<div class="btns" align="center" style="width:100%;">
 						<button type="reset" id="cart-close-btn" class="btn btn-sm" data-dismiss="modal">취소</button>
-					
 						<button type="submit" id="cart-insert-btn" class="btn btn-sm" style="background:#9BD5BD; margin:0px 5px;" form="cart-insert-form">등록</button>
 					</div>
                 </div>
             
             </div>
         </div>
-        </div>
+    </div>
+	<script>
+		$(document).ready(function(){
+			$("#cart-btn").click(function(){
+			$("#cart-modal").modal({backdrop: "static"});
+			});
+		});
+	</script>
 
 
-		    <!-- 장바구니 담기 성공 모달창 -->
-			<div class="modal fade" id="cart-success-modal">
-				<div class="modal-dialog modal-dialog-centered" role="document" style="width:500px; height:350px;">
-					<div class="modal-content success-cart-modal">
-						
-						<!-- Modal Header -->
-						<div class="modal-header title-area">
-							<h6 class="modal-title">장바구니 담기</h6>
-							<button type="button" class="close" data-dismiss="modal">×</button>
-						</div>
-						
-						<!-- Modal body -->
-						<div class="modal-body content-area">
-							<div class="cart-success-img" align="center" style=" height:40%;">
-								<i class="fas fa-cart-plus fa-4x" style="color:#9BD5BD;"></i>
-							</div>
+		   
+	<!-- 장바구니 담기 성공 모달창  -->
 
-							<div class="cart-success-content" align="center" style=" height:60%;">
-								<br>
-								<b>상품이 장바구니에 담겼습니다.</b>
-								<br>
-								바로 확인하시겠습니까?
-							</div>
+	<div class="modal fade" id="cart-success-modal">
+		<div class="modal-dialog modal-dialog-centered" role="document" style="width:500px; height:350px;">
+			<div class="modal-content success-cart-modal">
+				
+				<!-- Modal Header -->
+				<div class="modal-header title-area">
+					<h6 class="modal-title">장바구니 담기</h6>
+					<button type="button" class="close" data-dismiss="modal">×</button>
+				</div>
+				
+				<!-- Modal body -->
+				<div class="modal-body content-area">
+					<div class="cart-success-img" align="center" style=" height:40%;">
+						<i class="fas fa-cart-plus fa-4x" style="color:#9BD5BD;"></i>
+					</div>
 
-						</div>
-						
-						<!-- Modal footer -->
-						<div class="modal-footer button-area">
-							<div class="cart-success-btns" align="center" style="width:100%;">
-								<button type="reset" id="cart-success-close-btn" class="btn btn-sm" data-dismiss="modal">취소</button>
-							
-								<button type="submit" id="cart-page-btn" class="btn btn-sm" style="background:#9BD5BD; margin:0px 5px;">확인</button>
-							</div>
-						</div>
-					
+					<div class="cart-success-content" align="center" style=" height:60%;">
+						<br>
+						<b>상품이 장바구니에 담겼습니다.</b>
+						<br>
+						바로 확인하시겠습니까?
+					</div>
+
+				</div>
+				
+				<!-- Modal footer -->
+				<div class="modal-footer button-area">
+					<div class="cart-success-btns" align="center" style="width:100%;">
+						<button type="button" class="btn btn-sm" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
+						<button type="submit" id="cart-page-btn" class="btn btn-sm" style="background:#9BD5BD; margin:0px 5px;">확인</button>
 					</div>
 				</div>
-				</div>
 
+			</div>
+		</div>
+	</div>		
+	<script>
+		$(document).ready(function(){
+			$("#cart-success-btn").click(function(){
+			$("#cart-success-modal").modal({backdrop: "static"});
+			});
+		});
+	</script>
 
 </body>
 </html>
