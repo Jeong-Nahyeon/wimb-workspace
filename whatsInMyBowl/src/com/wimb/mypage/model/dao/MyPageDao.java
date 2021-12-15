@@ -48,7 +48,10 @@ public class MyPageDao {
 										   rset.getString("order_company"),
 										   rset.getString("order_invoice"),
 										   rset.getString("order_status"),
-										   rset.getDate("order_date"));
+										   rset.getDate("order_date"),
+										   rset.getString("cu_Name"),
+										   rset.getString("p_Name"),
+										   rset.getInt("pm_totalcost"));
 				list.add(mo);	
 			}
 			

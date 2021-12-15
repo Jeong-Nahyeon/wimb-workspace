@@ -5,13 +5,21 @@
 	<entry key="selectOrderList">
 		SELECT
 		       ORDER_CODE
+		     , OD.M_CODE
 		     , ORDER_AMOUNT
 		     , ORDER_COMPANY
 		     , ORDER_INVOICE
 		     , ORDER_STATUS
 		     , ORDER_DATE
-		  FROM "ORDER"
-		 WHERE M_CODE = ?;
+		     , CU_NAME
+		     , P_NAME
+		     , PM_TOTALCOST
+		  FROM "ORDER" OD
+		  JOIN SUBORDER SB USING (ORDER_CODE)
+		  LEFT JOIN CUSTOM PD USING (CU_CODE)
+		  LEFT JOIN PRODUCT PD USING (P_CODE)
+		  JOIN PAYMENT PA USING (PM_CODE)
+		 WHERE OD.M_CODE = ?
 	</entry>
 
 </properties>

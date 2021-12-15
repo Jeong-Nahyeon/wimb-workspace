@@ -161,50 +161,62 @@
 
             <label style="font-size: 13px;"><b>주문/배송내역 조회 총 1건</b></label>
             <div class="listView">
-                    <table class="orderList">
-                    	
-                    	<% if(list.isEmpty()) { %>
-                        <!--case1. 최근 주문내역이 없을 때-->
-                        <tr>
-                            <th width="130">주문일자<br>[주문번호]</th>
-                            <th>상품명</th>
-                            <th width="100">상품금액/수량</th>
-                            <th width="80">주문상태</th>
-                            <th width="80">확인/리뷰</th>
-                        </tr>
-                        <tr>
-                            <td colspan="5" height="180">최근 주문 정보가 없습니다.</td>
-                        </tr>
-                        <% }else { %>
-                    </table>
-                    <table class="orderList">
-                       <!--case2. 최근 주문내역이 있을 때 (if(sysdate-30일))-->
-                        <tr>
-                            <th width="130">주문일자<br>[주문번호]</th>
-                            <th>상품명</th>
-                            <th width="100">상품금액/수량</th>
-                            <th width="80">주문상태</th>
-                            <th width="80">확인/리뷰</th>
-                        </tr>
+            
+                    <!--case1. 최근 주문내역이 없을 때-->
+            		<% if(list.isEmpty()) { %>
+            		
+                   		<table class="orderList">
+	                        <tr>
+	                            <th width="130">주문일자<br>[주문번호]</th>
+	                            <th>상품명</th>
+	                            <th width="100">상품금액/수량</th>
+	                            <th width="80">주문상태</th>
+	                            <th width="80">확인/리뷰</th>
+	                        </tr>
+	                        <tr>
+	                            <td colspan="5" height="180">최근 주문 정보가 없습니다.</td>
+	                        </tr>
+	                        
+                    	</table>
+                    <% }else { %>
+                    
+                       	<!--case2. 최근 주문내역이 있을 때 (if(sysdate-30일))-->
+                    	<table class="orderList">
+	                        <tr>
+	                            <th width="130">주문일자<br>[주문번호]</th>
+	                            <th>상품명</th>
+	                            <th width="100">상품금액/수량</th>
+	                            <th width="80">주문상태</th>
+	                            <th width="80">확인/리뷰</th>
+	                        </tr>
                         
                         	<% for(MyOrders od : list) { %>
                      
-                        <tr>
-                            <td><%= od.getOrderDate() %><br>[<%= od.getOrderCode() %>]</td>
-                            <td><a href="상품상세페이지"><img src=""><%= od.get %></a></td>
-                            <td>7,900원/1개</td>
-                            <td><a href="주문목록/배송조회 이동">상품준비중</a></td>
-                            <td>
-                            	<% if(Orders.orderStatus) %>
-                                <!--주문상태가 결제완료, 상품준비중일 때만 가능-->
-                                <button type="button" onclick="cancelAlert()">
-                                즉시취소
-                                </button>
-                            </td>
-                        </tr>
+	                        	<tr>
+		                            <td><%= od.getOrderDate() %><br>[<%= od.getOrderCode() %>]</td>
+		                            
+		                            <% if(od.getpName() == null) {  // 커스텀이있을때%>
+		                            	<td><a href="상품상세페이지"><img src=""><%= od.getCuName() %></a></td>
+		                            <% }else { // 완제품이 있을 때%>
+		                            	<td><a href="상품상세페이지"><img src=""><%= od.getpName() %></a></td>
+		                            <% } %>
+		                            <td><%= od.getPmTotalCost() %>원/<%= od.getOrderAmount() %>개</td>
+		                            <td><a href="주문목록/배송조회 이동"><%= od.getOrderStatus() %></a></td>
+		                            <td>
+		                            	
+		                                <!--주문상태가 결제완료, 상품준비중일 때만 가능-->
+		                                
+		                                <button type="button" onclick="cancelAlert()">
+		                                즉시취소
+		                                </button>
+		                            </td>
+	                        	</tr>
+	                        	
                         	<% } // for문 괄호 %>
-                    </table>
-                    	<% } // else문 괄호 %>
+                        	
+                    	</table>
+                   	
+                   	<% } // else문 괄호 %>
                     	
                     	
                     	

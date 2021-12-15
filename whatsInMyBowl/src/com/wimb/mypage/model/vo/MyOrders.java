@@ -8,20 +8,26 @@ public class MyOrders {
 	private int orderAmount;	   // 총수량
 	private String orderCompany;   // 택배사
 	private String orderInvoice;   // 운송장번호
-	private String orederStatus;   // 주문상태
+	private String orderStatus;    // 주문상태
 	private Date orderDate;		   // 주문날짜
+	private String cuName;		   // 커스텀제품이름
+	private String pName;		   // 완제품이름
+	private int pmTotalCost;       // 원결제금액
 	
-	public MyOrders() {}
-	
-	public MyOrders(int orderCode, int orderAmount, String orderCompany, String orderInvoice, String orederStatus,
-			Date orderDate) {
+	public MyOrders () {}
+
+	public MyOrders(int orderCode, int orderAmount, String orderCompany, String orderInvoice, String orderStatus,
+			Date orderDate, String cuName, String pName, int pmTotalCost) {
 		super();
 		this.orderCode = orderCode;
 		this.orderAmount = orderAmount;
 		this.orderCompany = orderCompany;
 		this.orderInvoice = orderInvoice;
-		this.orederStatus = orederStatus;
+		this.orderStatus = orderStatus;
 		this.orderDate = orderDate;
+		this.cuName = cuName;
+		this.pName = pName;
+		this.pmTotalCost = pmTotalCost;
 	}
 
 	public int getOrderCode() {
@@ -56,12 +62,12 @@ public class MyOrders {
 		this.orderInvoice = orderInvoice;
 	}
 
-	public String getOrederStatus() {
-		return orederStatus;
+	public String getOrderStatus() {
+		return orderStatus;
 	}
 
-	public void setOrederStatus(String orederStatus) {
-		this.orederStatus = orederStatus;
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 
 	public Date getOrderDate() {
@@ -72,13 +78,37 @@ public class MyOrders {
 		this.orderDate = orderDate;
 	}
 
+	public String getCuName() {
+		return cuName;
+	}
+
+	public void setCuName(String cuName) {
+		this.cuName = cuName;
+	}
+
+	public String getpName() {
+		return pName;
+	}
+
+	public void setpName(String pName) {
+		this.pName = pName;
+	}
+
+	public int getPmTotalCost() {
+		return pmTotalCost;
+	}
+
+	public void setPmTotalCost(int pmTotalCost) {
+		this.pmTotalCost = pmTotalCost;
+	}
+
 	@Override
 	public String toString() {
 		return "MyOrders [orderCode=" + orderCode + ", orderAmount=" + orderAmount + ", orderCompany=" + orderCompany
-				+ ", orderInvoice=" + orderInvoice + ", orederStatus=" + orederStatus + ", orderDate=" + orderDate
-				+ "]";
+				+ ", orderInvoice=" + orderInvoice + ", orderStatus=" + orderStatus + ", orderDate=" + orderDate
+				+ ", cuName=" + cuName + ", pName=" + pName + ", pmTotalCost=" + pmTotalCost + "]";
 	}
-	
+
 	
 	
 
