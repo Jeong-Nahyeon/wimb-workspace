@@ -4,15 +4,16 @@ import java.sql.Date;
 
 public class Inquiry {
 
-	private int iCode; // 1:1문의 글번호
-	private int mCode; // 회원번호 // 
-	private String iCategory; // 문의유형
-	private String iTitle; // 글제목
-	private String iContent; // 내용
-	private String iAnswer; // 답변여부
-	private Date iDate; // 최종작성일
-	private String aContent; // 답변내용
-	private Date aDate; // 답변일
+	private int iCode; 			// 1:1문의 글번호
+	private int mCode; 			// 회원번호 
+	private String iCategory; 	// 문의유형
+	private String iTitle; 		// 글제목
+	private String iContent; 	// 내용
+	private String iAnswer; 	// 답변여부
+	private Date iDate; 		// 최종작성일
+	private String aContent; 	// 답변내용
+	private Date aDate; 		// 답변일
+	private String mName;
 	
 	public Inquiry() {}
 
@@ -32,10 +33,10 @@ public class Inquiry {
 	
 	
 
-	public Inquiry(int iCode, int mCode, String iCategory, String iTitle, String iAnswer, Date iDate) {
+	public Inquiry(int iCode, String mName, String iCategory, String iTitle, String iAnswer, Date iDate) {
 		super();
 		this.iCode = iCode;
-		this.mCode = mCode;
+		this.mName = mName;
 		this.iCategory = iCategory;
 		this.iTitle = iTitle;
 		this.iAnswer = iAnswer;
@@ -56,6 +57,14 @@ public class Inquiry {
 
 	public void setmCode(int mCode) {
 		this.mCode = mCode;
+	}
+	
+	public String getmName() {
+		return mName;
+	}
+
+	public void setmName(String mName) {
+		this.mName = mName;
 	}
 
 	public String getiCategory() {
