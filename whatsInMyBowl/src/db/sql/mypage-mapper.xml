@@ -22,6 +22,16 @@
 		 WHERE OD.M_CODE = ?
            AND ORDER_DATE BETWEEN (SYSDATE - 30) AND SYSDATE
 	</entry>
+	
+	<entry key="selectMainPagePostStatus">
+		SELECT 
+		       ORDER_STATUS
+		     , COUNT(ORDER_STATUS) "COUNT"
+		  FROM "ORDER"
+		 WHERE M_CODE = ?
+		   AND ORDER_DATE BETWEEN (SYSDATE - 30) AND SYSDATE
+		 GROUP BY ORDER_STATUS
+	</entry>
 
 	<entry key="selectInquiryList">
 		SELECT

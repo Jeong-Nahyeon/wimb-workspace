@@ -16,9 +16,22 @@ public class MyPageService {
 	
 	public ArrayList<MyOrders> selectOrderList(Member m) {
 		Connection conn = getConnection();
-		ArrayList<MyOrders> list = new MyPageDao().selectOrderList(conn, m);
+		
+		ArrayList<MyOrders> list1 = new MyPageDao().selectOrderList(conn, m);
+		
 		close(conn);
-		return list;
+		return list1;
+	
+	}
+	
+	public ArrayList<MyOrders> selectMainPagePostStatus(Member m) {
+		Connection conn = getConnection();
+		
+		ArrayList<MyOrders> list2 = new MyPageDao().selectMainPagePostStatus(conn, m);
+		
+		close(conn);
+		return list2;
+	
 	}
 	
 	// inquiry 목록조회

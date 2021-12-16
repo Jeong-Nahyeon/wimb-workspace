@@ -31,7 +31,7 @@ public class MyPageDao {
 	}
 	// Properties 객체 생성 끝
 	
-	// 1
+	// 최근 30일 주문정보 조회
 	public ArrayList<MyOrders> selectOrderList(Connection conn, Member m) {
 		ArrayList<MyOrders> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -67,6 +67,40 @@ public class MyPageDao {
 		return list;
 		
 	}
+	
+		// 최근 30일 주문정보 (배송현황) 조회
+		public ArrayList<MyOrders> selectMainPagePostStatus(Connection conn, Member m) {
+			
+			ArrayList<MyOrders> list = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("selectMainPagePostStatus");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, m.getmCode());
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					MyOrders mo = new MyOrders();
+					mo.setOrderStatus(rset.getString("order_status"));
+					mo.setStatusCount(rset.getInt("count"));
+					
+					
+					list.add(mo);	
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return list;
+			
+			
+		}
 	
 	// inquiry 목록조회
 		public ArrayList<Inquiry> selectInquiryList(Connection conn) {

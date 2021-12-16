@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.wimb.mypage.model.vo.MyOrders, java.util.ArrayList"%>
 <%
-	ArrayList<MyOrders> list = (ArrayList<MyOrders>)request.getAttribute("orderlist");
+	ArrayList<MyOrders> list1 = (ArrayList<MyOrders>)request.getAttribute("orderlist");
+	ArrayList<MyOrders> list2 = (ArrayList<MyOrders>)request.getAttribute("orderstatus");
 %>
 <!DOCTYPE html>
 <html>
@@ -230,19 +231,16 @@
                 </Form>
             
             </div>
-
+            
             
             <table class="orderStatus" align="center">
                 <tr >
-                    <th rowspan="2">0</th>
-                    <th rowspan="2"></th>
-                    <th rowspan="2">0</th>
-                    <th rowspan="2"></th>
-                    <th rowspan="2">0</th>
-                    <th rowspan="2"></th>
-                    <th rowspan="2">1</th>
-                    <th rowspan="2"></th>
-                    <th rowspan="2">0</th>
+                	<% for(int i=0; i<list2.size(); i++) { %>
+                		
+                		system.out.println(list2.get[i]);
+                		
+                	<% } %>	
+                		
                 </tr>
                 <tr>
                 </tr>
@@ -268,7 +266,7 @@
                 </tr>
                 </thead>
 				
-				<% if(list.isEmpty()) { %>
+				<% if(list1.isEmpty()) { %>
 	                <!--case1. 최근 주문내역이 없을 때-->
 	                <tbody>
 	                    <tr>
@@ -277,8 +275,8 @@
 	                </tbody>
                 <% } else { %>
                 		
-                		<% for(MyOrders mo : list) { %>
-	                <!--case2. 최근 주문내역이 있을 때 (if(sysdate-30일))-->
+                		<% for(MyOrders mo : list1) { %>
+	               		<!--case2. 최근 주문내역이 있을 때 (if(sysdate-30일))-->
 	                <tbody>
 	                    <tr>
 	                        <td><%= mo.getOrderDate() %><br>[<%= mo.getOrderCode() %>]</td>

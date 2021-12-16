@@ -15,7 +15,21 @@ public class MyOrders {
 	private String pMainImg;	   // 완제품 이미지
 	private int pmTotalCost;       // 원결제금액
 	
+	private int statusCount;
 	
+	public int getStatusCount() {
+		return statusCount;
+	}
+
+	public void setStatusCount(int statusCount) {
+		this.statusCount = statusCount;
+	}
+
+	public MyOrders(int statusCount) {
+		super();
+		this.statusCount = statusCount;
+	}
+
 	public MyOrders() {}
 	
 	public MyOrders(String orderCode, int orderAmount, String orderCompany, String orderInvoice, String orderStatus,
@@ -101,7 +115,7 @@ public class MyOrders {
 		return "MyOrders [orderCode=" + orderCode + ", orderAmount=" + orderAmount + ", orderCompany=" + orderCompany
 				+ ", orderInvoice=" + orderInvoice + ", orderStatus=" + orderStatus + ", orderDate=" + orderDate
 				+ ", cuName=" + cuName + ", pName=" + pName + ", pMainImg=" + pMainImg + ", pmTotalCost=" + pmTotalCost
-				+ "]";
+				+ ", statusCount" + statusCount +"]";
 	}
 	
 	
