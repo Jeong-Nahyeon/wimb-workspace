@@ -142,7 +142,7 @@
     
         <ul>
             <li class="menubar-left-title">상품관리</li>
-            <li class="menubar-left-text left_link"><a href="">상품 등록</a></li>
+            <li class="menubar-left-text left_link"><a href="<%= contextPath %>/list.apr?cpage=1">상품 등록</a></li>
             <li class="menubar-left-text left_link"><a href="">상품 수정 / 삭제</a></li>
             <li class="menubar-left-text left_link"><a href="">상품 배송관리</a></li>
             <li class="menubar-left-text left_link"><a href="">리뷰 관리</a></li>

@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+	// 요청처리 완료 모달창 메시지
+	String productMsg = (String)(session.getAttribute("productMsg"));
+
+%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -210,6 +217,23 @@
 </style>
 </head>
 <body>
+
+	<% if(productMsg != null) { %>
+		<script>
+		
+			$(function(){
+				
+				$("#insert-success-modal").modal({backdrop: "static"});
+				
+				<% session.removeAttribute("productMsg"); %>
+				
+			});
+		
+		</script>
+		
+		
+		
+	<% } %>
 
    <%@ include file="../common/adminBar.jsp" %>
     
@@ -654,7 +678,7 @@
                     </div>
 
                     <div class="insert-success-content" align="center" style="height:40%; line-height:60px;">
-                        <b>상품등록을 완료했습니다.</b>
+                        <b><%= productMsg %></b>
                     </div>
 				</div>
 				
@@ -668,14 +692,15 @@
 			</div>
 		</div>
 	</div>		
+	<!--  
 	<script>
 		$(document).ready(function(){
 			$("#insert-success-btn").click(function(){
-			$("#insert-success-modal").modal({backdrop: "static"});
+				$("#insert-success-modal").modal({backdrop: "static"});
 			});
 		});
 	</script>
-
+	-->
 
     <!-- 상품 상세정보 모달창 -->
 
