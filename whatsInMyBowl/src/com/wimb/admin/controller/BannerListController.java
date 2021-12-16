@@ -30,7 +30,7 @@ public class BannerListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 배너 게시판을 불러오는 컨트롤롤러
+		// 배너 게시판을 불러오는 컨트롤러
 		
 		request.getRequestDispatcher("views/admin/bannerListView.jsp").forward(request, response);
 		

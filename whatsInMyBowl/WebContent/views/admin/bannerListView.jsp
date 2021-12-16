@@ -360,7 +360,7 @@
     <div class="insert_banner_area">
         <div class="modal_close"><a href="#">close</a></div>
         <div align="center" style="margin-top: 30px;">
-            <form action="" id="enroll-form" method="post" enctype="multipart/form-data">
+            <form action="<%= contextPath %>/insert.banner" id="enroll-form" method="get" enctype="multipart/form-data">
                 <table>
                     <tr>
                         <th>배너번호</th>
@@ -368,12 +368,12 @@
                     </tr>
                     <tr>
                         <th>배너명</th>
-                        <td><input type="text" id="bannerTitle" placeholder="배너명 입력" required style="width: 90%;"></td>
+                        <td><input type="text" name="bannerTitle" id="bannerTitle" placeholder="배너명 입력" required style="width: 90%;"></td>
                     </tr>
                     <tr>
                         <th>상태</th>
                         <td>
-                            <select name="bannerCategory" id="bannerCategory">
+                            <select name="bannerStatus" id="status">
                                 <option value="Y">게시중</option>
                                 <option value="N">게시종료</option>
                             </select>
@@ -396,7 +396,7 @@
                     <tr>
                         <th>이미지</th>
                         <td>
-                        	<input type="file" id="bannerFile" onchange="loadImg(this);" required>
+                        	<input type="file" name="bannerFile" id="bannerFile" onchange="loadImg(this);" required>
                         	<img class="inputImg" height="280" style="display: block;">
                         </td>
                     </tr>

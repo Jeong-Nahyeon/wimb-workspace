@@ -10,14 +10,18 @@ import com.wimb.admin.model.vo.Banner;
 
 public class bannerService {
 	
-	public ArrayList<Banner> selectBannerList(){
+	// 배너를 등록하는 Service
+	public int insertBanner(Banner b) {
 		Connection conn = getConnection();
+		int result = new bannerDao().insertBanner(conn, b);
 		
-		ArrayList<Banner> list = new bannerDao().selectBannerList(conn);
-		close(conn);
-		return list;
+		if(result> 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		return result;
 	}
-	
 	
 	
 	
