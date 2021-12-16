@@ -14,16 +14,16 @@ import com.wimb.product.model.service.ProductService;
 import com.wimb.product.model.vo.Product;
 
 /**
- * Servlet implementation class ProductListController
+ * Servlet implementation class ProductAdminListController
  */
-@WebServlet("/list.pr")
-public class ProductListController extends HttpServlet {
+@WebServlet("/list.apr")
+public class ProductAdminListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductListController() {
+    public ProductAdminListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -48,7 +48,7 @@ public class ProductListController extends HttpServlet {
 		
 		pageLimit = 10;
 		
-		boardLimit = 12;
+		boardLimit = 10;
 		
 		maxPage = (int)Math.ceil((double)listCount / boardLimit);
 		
@@ -68,12 +68,7 @@ public class ProductListController extends HttpServlet {
 		request.setAttribute("pi", pi);
 		request.setAttribute("totalList", totalList);
 		
-		request.getRequestDispatcher("views/product/productListView.jsp").forward(request, response);
-		
-		
-		// 비건 샐러드 조회
-		// 육류 샐러드 조회
-		// 해산물 샐러드 조회
+		request.getRequestDispatcher("views/product/productAdminInsertListView.jsp").forward(request, response);
 		
 	}
 

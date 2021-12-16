@@ -72,6 +72,9 @@ public class ProductDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
 		String sql = prop.getProperty("selectProductList"); // 미완성 sql문
 		
 		try {
@@ -87,15 +90,18 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()){
-				Product p = new Product();
-				p.setpCode(rset.getString("p_code"));
-				p.setpName(rset.getString("p_name"));
-				p.setpCategory(rset.getString("p_category"));
-				p.setpPrice(rset.getInt("p_price"));
-				p.setpMainImg(rset.getString("p_mainimg"));
-				p.setpStock(rset.getInt("p_stock"));
 				
-				totalList.add(p);
+				totalList.add(new Product(rset.getString("p_code"),
+										  rset.getString("p_name"),
+										  rset.getString("p_category"),
+										  rset.getInt("p_price"),
+										  rset.getString("p_provider"),
+										  rset.getInt("p_providePrice"),
+										  rset.getString("p_mainimg"),
+										  rset.getString("p_show"),
+										  rset.getInt("p_stock"),
+										  filePath));
+				
 			}
 			
 			

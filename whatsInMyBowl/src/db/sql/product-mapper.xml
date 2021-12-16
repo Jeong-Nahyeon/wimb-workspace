@@ -21,7 +21,10 @@
 		                       , P_NAME
 		                       , P_CATEGORY
 		                       , P_PRICE
+		                       , P_PROVIDER
+		                       , P_PROVIDEPRICE
 		                       , P_MAINIMG
+		                       , p_SHOW
 		                       , P_STOCK
 		                    FROM PRODUCT
 		                   WHERE p_SHOW = 'Y'

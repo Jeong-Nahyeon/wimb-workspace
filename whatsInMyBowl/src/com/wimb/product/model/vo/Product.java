@@ -42,6 +42,22 @@ public class Product {
 	}
 	
 	
+	public Product(String pCode, String pName, String pCategory, int pPrice, String pProvider, int pProvidePrice,
+			String pMainImg, String pShow, int pStock, String filePath) {
+		super();
+		this.pCode = pCode;
+		this.pName = pName;
+		this.pCategory = pCategory;
+		this.pPrice = pPrice;
+		this.pProvider = pProvider;
+		this.pProvidePrice = pProvidePrice;
+		this.pMainImg = pMainImg;
+		this.pShow = pShow;
+		this.pStock = pStock;
+		this.filePath = filePath;
+	}
+
+
 	public String getFilePath() {
 		return filePath;
 	}

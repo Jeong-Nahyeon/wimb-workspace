@@ -1,10 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
+
+<%@ page import="com.wimb.common.model.vo.PageInfo, java.util.ArrayList, com.wimb.product.model.vo.Product" %>
     
-<%
-	// 요청처리 완료 모달창 메시지
+<%	
+
+// 요청처리 완료 모달창 메시지
 	String productMsg = (String)(session.getAttribute("productMsg"));
 
+	// 페이징바 처리
+	PageInfo pi = (PageInfo)(request.getAttribute("pi"));
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+	
+	// 완제품 전체 조회
+	ArrayList<Product> totalList = (ArrayList<Product>)(request.getAttribute("totalList"));
+	
 %>
     
 <!DOCTYPE html>
@@ -21,11 +35,16 @@
 <style>
     .outer{
         /* border:1px solid red; */
-        margin:auto;
+        margin-left: 150px;
         margin-top:100px;
-        width:800px;
+        width:1800px;
         height:1000px;
     }
+
+    #menu-title{
+        margin-left:150px;
+    }
+
     #menu-title h2{
         display:inline;
         font-size:25px;
@@ -34,7 +53,7 @@
     #product-custom-button{
         box-sizing: border-box;
         /* border:1px solid red;  */
-        width:750px;
+        width:1500px;
         height:50px;
         margin:auto;
         margin-top:20px;
@@ -72,7 +91,7 @@
     #list{
         box-sizing: border-box;
         /* border:1px solid red; */
-        width:750px;
+        width:1500px;
         margin:auto; 
     }
 
@@ -218,24 +237,10 @@
 </head>
 <body>
 
-	<% if(productMsg != null) { %>
-		<script>
-		
-			$(function(){
-				
-				$("#insert-success-modal").modal({backdrop: "static"});
-				
-				<% session.removeAttribute("productMsg"); %>
-				
-			});
-		
-		</script>
-		
-		
-		
-	<% } %>
+	<%@ include file="../common/adminBar.jsp" %>
 
-   <%@ include file="../common/adminBar.jsp" %>
+	
+   
     
     <div class="outer">
 
@@ -304,151 +309,38 @@
                     </tr>
                 </thead>
                 <tbody >
-                    <tr>
-                        <td colspan="9"> 등록된 상품이 없습니다.</td>
-                    </tr>
-                    <tr>
-                        <!-- 노출여부 수정 창 => 기본 안 보이게 설정 -->
-                        <div class="extra-fee" style="border:1px solid black; background:white; width:100px; height:130px; padding:5px; position:relative; z-index:2; top:260px; left:330px; display: none;">
-                            <h6 style="font-weight: bolder; margin-top: 10px;">노출여부</h6>
-                            <select name="productStatus" style="width:65px; margin-top:5px; margin-bottom:10px;">
-                                <option>Y</option>
-                                <option>N</option>
-                            </select>
-                            <button class="btn btn-sm" style="background:rgb(255, 225, 90); width:65px;">수정</button>
-                        </div>
-                        <td> 
-                            <!-- [고려사항]
-                                등록 페이지 목록에서는 해당 체크박스 비활성화 되게 하는게 나을 것 같음.. 수정 페이지 목록에서만 활성화되도록!
-                             -->
-                            <input type="checkbox" name="" id="" disabled>
-                        </td>
-                        <td>10</td>
-                        <td>PM0001</td>
-                        <td><a id="product-name">닭가슴살샐러드</a></td>
-                        <td>업체명</td>
-                        <td>3000</td>
-                        <td>6000</td>
-                        <td>155</td>
-                        <td>Y</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>PM0001</td>
-                        <td>닭가슴살샐러드</td>
-                        <td>업체명</td>
-                        <td>3000</td>
-                        <td>6000</td>
-                        <td>155</td>
-                        <td>Y</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>PM0001</td>
-                        <td>닭가슴살샐러드</td>
-                        <td>업체명</td>
-                        <td>3000</td>
-                        <td>6000</td>
-                        <td>155</td>
-                        <td>Y</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>PM0001</td>
-                        <td>닭가슴살샐러드</td>
-                        <td>업체명</td>
-                        <td>3000</td>
-                        <td>6000</td>
-                        <td>155</td>
-                        <td>Y</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>PM0001</td>
-                        <td>닭가슴살샐러드</td>
-                        <td>업체명</td>
-                        <td>3000</td>
-                        <td>6000</td>
-                        <td>155</td>
-                        <td>Y</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>PM0001</td>
-                        <td>닭가슴살샐러드</td>
-                        <td>업체명</td>
-                        <td>3000</td>
-                        <td>6000</td>
-                        <td>155</td>
-                        <td>Y</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>PM0001</td>
-                        <td>닭가슴살샐러드</td>
-                        <td>업체명</td>
-                        <td>3000</td>
-                        <td>6000</td>
-                        <td>155</td>
-                        <td>Y</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>PM0001</td>
-                        <td>닭가슴살샐러드</td>
-                        <td>업체명</td>
-                        <td>3000</td>
-                        <td>6000</td>
-                        <td>155</td>
-                        <td>Y</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>PM0001</td>
-                        <td>닭가슴살샐러드</td>
-                        <td>업체명</td>
-                        <td>3000</td>
-                        <td>6000</td>
-                        <td>155</td>
-                        <td>Y</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>PM0001</td>
-                        <td>닭가슴살샐러드</td>
-                        <td>업체명</td>
-                        <td>3000</td>
-                        <td>6000</td>
-                        <td>155</td>
-                        <td>Y</td>
-                    </tr>
+                	<% if(totalList == null) { %>
+	                    <tr>
+	                        <td colspan="9"> 등록된 상품이 없습니다.</td>
+	                    </tr>
+                    <% } else { %>
+                    	<% for(int i=0; i<totalList.size(); i++) { %>
+	                    <tr>
+	                        <!-- 노출여부 수정 창 => 기본 안 보이게 설정 -->
+	                        <%-- >
+	                        <div class="extra-fee" style="border:1px solid black; background:white; width:100px; height:130px; padding:5px; position:relative; z-index:2; top:260px; left:330px; display: none;">
+	                            <h6 style="font-weight: bolder; margin-top: 10px;">노출여부</h6>
+	                            <select name="productStatus" style="width:65px; margin-top:5px; margin-bottom:10px;">
+	                                <option>Y</option>
+	                                <option>N</option>
+	                            </select>
+	                            <button class="btn btn-sm" style="background:rgb(255, 225, 90); width:65px;">수정</button>
+	                        </div>
+	                        --%>
+	                        <td>
+	                            <input type="checkbox" name="" id="" disabled>
+	                        </td>
+	                        <td><%= totalList.size() - i %></td>
+	                        <td><%= totalList.get(i).getpCode() %></td>
+	                        <td><a class="product-name"><%= totalList.get(i).getpName() %></a></td>
+	                        <td><%= totalList.get(i).getpProvider() %></td>
+	                        <td><%= totalList.get(i).getpProvidePrice() %></td>
+	                        <td><%= totalList.get(i).getpPrice() %></td>
+	                        <td><%= totalList.get(i).getpStock() %></td>
+	                        <td><%= totalList.get(i).getpShow() %></td>
+	                    </tr>
+	                    <% } %>
+                    <% } %>
                 </tbody>
             </table>
              <!-- [고려사항]
@@ -464,11 +356,26 @@
             </script>
 
             <!-- 페이징바 -->
-            <div id="paging-bar">
-                <a href="">&lt;</a>
-                <a href="">1</a>
-                <a href="">&gt;</a>
+            <div id="paging-bar" align="center">
+            	<ul class="pagination">
+            		<% if(currentPage != 1) { %>
+				   		 <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.pr?cpage=<%= currentPage - 1 %>">&lt;</a></li>
+				    <% } %>
+				    
+				    <% for(int p=startPage; p<=endPage; p++ ) { %>
+				    	<% if(p == currentPage) { %>
+					    	<li class="page-item active"><a class="page-link" href="#"><%= p %></a></li>
+					    <% } else { %>
+					  		 <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.pr?cpage=<%= p %>"><%= p %></a></li>
+					    <% } %>
+				    <% } %>
+				    
+				    <% if(currentPage != maxPage) { %>
+				 		   <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.pr?cpage=<%= currentPage + 1 %>">&gt;</a></li>
+				    <% } %>
+			    </ul>
             </div>
+             
             <br>
 
             <!-- 상품 검색 -->
@@ -678,7 +585,7 @@
                     </div>
 
                     <div class="insert-success-content" align="center" style="height:40%; line-height:60px;">
-                        <b><%= productMsg %></b>
+                        <b>상품등록성공</b>
                     </div>
 				</div>
 				
@@ -827,7 +734,7 @@
     </div>
 	<script>
 		$(document).ready(function(){
-			$("#product-name").click(function(){
+			$(".product-name").click(function(){
 			$("#product-detail-modal").modal({backdrop: "static"});
 			});
 		});

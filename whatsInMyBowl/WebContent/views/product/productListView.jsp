@@ -161,13 +161,14 @@
 
 	.product h6{
 		/* border:1px solid red; */
+		/* display:inline-block; */
+		font-size: 13px;
 		font-weight: bolder;
-		display:inline-block;
 	}
 	.product h4{
 		/* border:1px solid red; */
+		/* display:inline-block; */
 		font-weight: bolder;
-		display:inline-block;
 		color: #9BD5BD
 		
 	}
@@ -251,58 +252,28 @@
 
 			<div class="product-area">
 				
-				<% if(pi.getCurrentPage() == 1) {  // cpage=1 페이지인 경우 %>
 					<% for (Product p : totalList) { %>
 						<div class="product">
 							<div class="product-img">
-								<img src="../../resources/images/product_images/main_images/meatsalad1.jpg">
+								<img src="<%= contextPath %>/<%= p.getFilePath() + p.getpMainImg() %>">
 							
 								<!-- case1. 찜 안 했을 경우 -->
 								<i class="far fa-heart fa-2x heart-btn"></i>
-							<!-- case2. 찜 했을 경우 -->
+								<!-- case2. 찜 했을 경우 -->
 								<!-- <i class="fas fa-heart fa-2x heart-btn"></i> -->
 		
-								<i id="cart-btn" class="fas fa-cart-plus fa-2x cart-btn"></i>
+								<i class="fas fa-cart-plus fa-2x cart-btn"></i>
 							</div>
 		
-							<h6>닭가슴살 샐러드</h6>
+							<h6><%=  p.getpName() %></h6>
 		
 							<!-- case1. 원가 -->
-							<h4>4900원</h4>
+							<h4><%= p.getpPrice() %>원</h4>
 							<!-- case2. 할인가 -->
 							<!-- <h4 style="text-decoration: line-through; color:lightgray; font-size: medium;">4900원</h4>
 							<h4 style="color:salmon;">4410원</h4> -->
 						</div>
 					<% } %>
-				<% } %>
-				
-				<div class="product">
-					<div class="product-img">
-						<img src="../../resources/images/product_images/main_images/meatsalad1.jpg">
-						<i class="far fa-heart fa-2x heart-btn"></i>
-						<i class="fas fa-cart-plus fa-2x cart-btn"></i>
-					</div>
-					<h6>닭가슴살 샐러드</h6>
-					<h4>4900원</h4>
-				</div>
-				<div class="product">
-					<div class="product-img">
-						<img src="../../resources/images/product_images/main_images/meatsalad1.jpg">
-						<i class="far fa-heart fa-2x heart-btn"></i>
-						<i class="fas fa-cart-plus fa-2x cart-btn"></i>
-					</div>
-					<h6>닭가슴살 샐러드</h6>
-					<h4>4900원</h4>
-				</div>
-				<div class="product">
-					<div class="product-img">
-						<img src="../../resources/images/product_images/main_images/meatsalad1.jpg">
-						<i class="far fa-heart fa-2x heart-btn"></i>
-						<i class="fas fa-cart-plus fa-2x cart-btn"></i>
-					</div>
-					<h6>닭가슴살 샐러드</h6>
-					<h4>4900원</h4>
-				</div>
 				
 
 			</div>
@@ -327,6 +298,7 @@
 				    <% } %>
 			    </ul>
             </div>
+            
 		</div>
 	</div>
 	
@@ -416,7 +388,7 @@
     </div>
 	<script>
 		$(document).ready(function(){
-			$("#cart-btn").click(function(){
+			$(".cart-btn").click(function(){
 			$("#cart-modal").modal({backdrop: "static"});
 			});
 		});
