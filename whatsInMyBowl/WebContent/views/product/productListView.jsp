@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.wimb.common.model.vo.PageInfo" %>
+    pageEncoding="UTF-8" %>
+    
+<%@ page import="com.wimb.common.model.vo.PageInfo, java.util.ArrayList, com.wimb.product.model.vo.Product" %>
     
 <%
 	PageInfo pi = (PageInfo)(request.getAttribute("pi"));
@@ -8,6 +10,10 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
+	
+	// 전체 샐러드 조회 => 상품코드, 상품명, 카테고리, 판매가격, 대표이미지, 재고수량
+	ArrayList<Product> totalList = (ArrayList<Product>)(request.getAttribute("totalList"));
+	
 	
 %>
 
@@ -228,7 +234,7 @@
 
 			<div class="title-area">
 				<h4>샐러드</h4>
-				<a href="<%= contextPath %>/list.pr?pno=1">전체상품</a>
+				<a href="<%= contextPath %>/list.pr?cpage=1">전체상품</a>
 				<a href="">비건샐러드</a>
 				<a href="">육류샐러드</a>
 				<a href="">해산물샐러드</a>
@@ -244,27 +250,32 @@
 			</div>
 
 			<div class="product-area">
-
-				<div class="product">
-					<div class="product-img">
-						<img src="../../resources/images/product_images/main_images/meatsalad1.jpg">
-					
-						<!-- case1. 찜 안 했을 경우 -->
-						<i class="far fa-heart fa-2x heart-btn"></i>
-					<!-- case2. 찜 했을 경우 -->
-						<!-- <i class="fas fa-heart fa-2x heart-btn"></i> -->
-
-						<i id="cart-btn" class="fas fa-cart-plus fa-2x cart-btn"></i>
-					</div>
-
-					<h6>닭가슴살 샐러드</h6>
-
-					<!-- case1. 원가 -->
-					<h4>4900원</h4>
-					<!-- case2. 할인가 -->
-					<!-- <h4 style="text-decoration: line-through; color:lightgray; font-size: medium;">4900원</h4>
-					<h4 style="color:salmon;">4410원</h4> -->
-				</div>
+				
+				<% if(pi.getCurrentPage() == 1) {  // cpage=1 페이지인 경우 %>
+					<% for (Product p : totalList) { %>
+						<div class="product">
+							<div class="product-img">
+								<img src="../../resources/images/product_images/main_images/meatsalad1.jpg">
+							
+								<!-- case1. 찜 안 했을 경우 -->
+								<i class="far fa-heart fa-2x heart-btn"></i>
+							<!-- case2. 찜 했을 경우 -->
+								<!-- <i class="fas fa-heart fa-2x heart-btn"></i> -->
+		
+								<i id="cart-btn" class="fas fa-cart-plus fa-2x cart-btn"></i>
+							</div>
+		
+							<h6>닭가슴살 샐러드</h6>
+		
+							<!-- case1. 원가 -->
+							<h4>4900원</h4>
+							<!-- case2. 할인가 -->
+							<!-- <h4 style="text-decoration: line-through; color:lightgray; font-size: medium;">4900원</h4>
+							<h4 style="color:salmon;">4410원</h4> -->
+						</div>
+					<% } %>
+				<% } %>
+				
 				<div class="product">
 					<div class="product-img">
 						<img src="../../resources/images/product_images/main_images/meatsalad1.jpg">

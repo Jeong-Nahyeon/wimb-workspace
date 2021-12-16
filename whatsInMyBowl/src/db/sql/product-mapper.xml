@@ -9,5 +9,27 @@
 		 WHERE P_SHOW = 'Y'
 		   AND P_STOCK > 0
 	</entry>
+	
+	<entry key="selectProductList">
+		SELECT *
+		  FROM (
+		         SELECT
+		                ROWNUM RNUM, A.*
+		           FROM (
+		                  SELECT
+		                         P_CODE
+		                       , P_NAME
+		                       , P_CATEGORY
+		                       , P_PRICE
+		                       , P_MAINIMG
+		                       , P_STOCK
+		                    FROM PRODUCT
+		                   WHERE p_SHOW = 'Y'
+		                   ORDER
+		                      BY P_CODE DESC
+		                 ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
 
 </properties>

@@ -1,6 +1,7 @@
 package com.wimb.product.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.product.model.service.ProductService;
+import com.wimb.product.model.vo.Product;
 
 /**
  * Servlet implementation class ProductListController
@@ -60,9 +62,15 @@ public class ProductListController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		System.out.println(pi);
+		// 전체 샐러드 조회
+		ArrayList<Product> totalList = new ProductService().selectProductList(pi);
+		
+		// 비건 샐러드 조회
+		// 육류 샐러드 조회
+		// 해산물 샐러드 조회
 		
 		request.setAttribute("pi", pi);
+		request.setAttribute("totalList", totalList);
 		
 		request.getRequestDispatcher("views/product/productListView.jsp").forward(request, response);
 		
