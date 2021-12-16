@@ -108,15 +108,17 @@ public class MyOrders {
 	public void setPmTotalCost(int pmTotalCost) {
 		this.pmTotalCost = pmTotalCost;
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		return "MyOrders [orderCode=" + orderCode + ", orderAmount=" + orderAmount + ", orderCompany=" + orderCompany
 				+ ", orderInvoice=" + orderInvoice + ", orderStatus=" + orderStatus + ", orderDate=" + orderDate
 				+ ", cuName=" + cuName + ", pName=" + pName + ", pMainImg=" + pMainImg + ", pmTotalCost=" + pmTotalCost
-				+ ", statusCount" + statusCount +"]";
+				+ ", statusCount=" + statusCount + "]";
 	}
+	
+	
+	
 	
 	
 	

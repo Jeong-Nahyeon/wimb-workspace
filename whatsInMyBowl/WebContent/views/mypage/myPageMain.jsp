@@ -3,6 +3,8 @@
 <%
 	ArrayList<MyOrders> list1 = (ArrayList<MyOrders>)request.getAttribute("orderlist");
 	ArrayList<MyOrders> list2 = (ArrayList<MyOrders>)request.getAttribute("orderstatus");
+	
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -233,14 +235,58 @@
             </div>
             
             
-            <table class="orderStatus" align="center">
-                <tr >
-                	<% for(int i=0; i<list2.size(); i++) { %>
+            <% for(MyOrders od : list2) {
+    				System.out.println(od);
+    		}
+    		
+    		%>
                 		
-                		system.out.println(list2.get[i]);
+               	
+            
+            
+            <table class="orderStatus" align="center" border=1>
+                <tr>
+                	<% for(MyOrders od : list2) { %>
                 		
-                	<% } %>	
+                		<% if(!od.getOrderStatus().equals("결제대기")) { %>
+                			 <th rowspan="2">0</th>
+                			 <th rowspan="2"></th>
+                		<% }else if(od.getOrderStatus().equals("결제대기")) { %>
+                			 <th rowspan="2"><%= od.getStatusCount() %></th>
+                			 <th rowspan="2"></th>
+                		<% } %>
                 		
+                		<% if(!od.getOrderStatus().equals("결제완료")) { %>
+                			 <th rowspan="2">0</th>
+                			 <th rowspan="2"></th>
+                		<% }else if(od.getOrderStatus().equals("결제완료")) { %>
+                			 <th rowspan="2"><%= od.getStatusCount() %></th>
+                			 <th rowspan="2"></th>
+                		<% } %>
+                		
+                		<% if(!od.getOrderStatus().equals("배송준비")) { %>
+                			 <th rowspan="2">0</th>
+                			 <th rowspan="2"></th>
+                		<% }else if(od.getOrderStatus().equals("배송준비")) { %>
+                			 <th rowspan="2"><%= od.getStatusCount() %></th>
+                			 <th rowspan="2"></th>
+                		<% } %>
+                		
+                		<% if(!od.getOrderStatus().equals("배송중")) { %>
+                			 <th rowspan="2">0</th>
+                			 <th rowspan="2"></th>
+                		<% }else if(od.getOrderStatus().equals("배송중")) { %>
+                			 <th rowspan="2"><%= od.getStatusCount() %></th>
+                			 <th rowspan="2"></th>
+                		<% } %>
+                		
+                		<% if(!od.getOrderStatus().equals("배송완료")) { %>
+                			 <th rowspan="2">0</th>
+                		<% }else if(od.getOrderStatus().equals("배송완료")){ %>
+                			 <th rowspan="2"><%= od.getStatusCount() %></th>
+                		<% } %>
+                		
+               		<% } %>
                 </tr>
                 <tr>
                 </tr>
