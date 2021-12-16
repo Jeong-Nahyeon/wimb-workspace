@@ -200,7 +200,7 @@
                 
                 <a href="<%=contextPath%>/enrollTerms.me">회원가입</a> 
                 <a href="<%= contextPath %>/loginInput.me">로그인</a>
-                <a href="<%= contextPath %>/myPage.my">마이페이지</a>
+                <a href="<%= contextPath %>/loginInput.me">마이페이지</a>
                 <a href="">고객센터</a>
                 <a href="">장바구니</a>
             </div> 
@@ -215,7 +215,7 @@
                 </div>
                 <div id="logout-area">
                     <a href="<%= contextPath %>/logout.me">로그아웃</a>
-                    <a href="">마이페이지</a>
+                    <a href="<%= contextPath %>/myPage.my">마이페이지</a>
                     <a href="">고객센터</a>
                     <a href="">장바구니</a>
                 </div>                
