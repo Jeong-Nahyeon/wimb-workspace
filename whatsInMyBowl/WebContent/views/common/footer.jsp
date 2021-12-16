@@ -64,9 +64,9 @@
 	            <ul>
 	                <li><a href="">고객센터</a></li>
 	                <li>|</li>
-	                <li><a href="">이용약관</a></li>
+	                <li><a href="/wimb/listUserView.terms">이용약관</a></li>
 	                <li>|</li>
-	                <li><a href="/wimb/listUserView.terms">이용안내</a></li>
+	                <li><a href=>이용안내</a></li>
 	                <li>|</li>
 	                <li><a href="/wimb/listPeronalInformationUserView.terms">개인정보 처리방침</a></li>
 	            </ul>
