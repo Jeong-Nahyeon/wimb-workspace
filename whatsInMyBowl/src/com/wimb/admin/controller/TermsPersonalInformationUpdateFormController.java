@@ -14,14 +14,14 @@ import com.wimb.admin.model.vo.Terms;
 /**
  * Servlet implementation class TermsUpdateFormController
  */
-@WebServlet("/updateForm.terms")
-public class TermsUpdateFormController extends HttpServlet {
+@WebServlet("/PersonalInformationupdateForm.terms")
+public class TermsPersonalInformationUpdateFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TermsUpdateFormController() {
+    public TermsPersonalInformationUpdateFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +31,12 @@ public class TermsUpdateFormController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 이용약관 리스트에서 수정 버튼 클릭 시 수정하고자 하는 글의 내용을 띄워주는 컨트롤러
+		// 개인정보처리방침 리스트에서 수정 버튼 클릭 시 수정하고자 하는 글의 내용을 띄워주는 컨트롤러
 		int termsCode = Integer.parseInt(request.getParameter("num"));		
 		Terms t = new termsService().selectTerms(termsCode);
 	
 		request.setAttribute("t", t);
-		request.getRequestDispatcher("views/admin/termsUpdateForm.jsp").forward(request, response);
+		request.getRequestDispatcher("views/admin/termsPersonalInformationUpdateForm.jsp").forward(request, response);
 	}
 
 	/**

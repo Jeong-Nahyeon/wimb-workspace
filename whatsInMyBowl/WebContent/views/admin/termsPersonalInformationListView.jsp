@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이용약관 - 이용약관</title>
+<title>이용약관 - 개인정보처리방침</title>
 <style>
 
     main{
@@ -56,8 +56,8 @@
     }
     .terms_twobtn_right button:hover{background-color: #ffee58;}
     .terms_twobtn button:focus{outline: none;}
-    .terms_twobtn .terms_twobtn_left{
-        margin-right: 10px;
+    .terms_twobtn .terms_twobtn_right{
+        margin-left: 10px;
         background-color: #ffee58;
     }
     .terms_twobtn button{
@@ -95,7 +95,7 @@
 
         <div id="mainTitle">
             <h2 id="mainTitle1">홈페이지관리 </h2>
-            <h2>> 이용약관</h2>
+            <h2>> 이용약관 > 개인정보처리방침</h2>
         </div>
 
         <div id="content">
@@ -115,8 +115,8 @@
 		                    <tr class="title-btn">
 		                        <div class="terms_twobtn_update_delete">
 		                            <td class="terms_twobtn_update_delete_td">
-		                                <button type="button" class="terms_twobtn_update_delete_left" onclick="location.href='<%= contextPath %>/updateForm.terms?num=<%= t.getTermsCode() %>';">수정</button>
-		                                <button type="button" onclick="location.href='<%= contextPath %>/delete.terms?num=<%= t.getTermsCode() %>';">삭제</button>
+		                                <button type="button" class="terms_twobtn_update_delete_left" onclick="location.href='<%= contextPath %>/PersonalInformationupdateForm.terms?num=<%= t.getTermsCode() %>';">수정</button>
+		                                <button type="button" onclick="location.href='<%= contextPath %>/deletePersonalInformation.terms?num=<%= t.getTermsCode() %>';">삭제</button>
 		                            </td>
 		                        </div>
 		                    </tr>
@@ -130,7 +130,7 @@
                 </table>
     
                 <div>
-                    <button id="addTerms" class="btnColor" type="button" onclick="location.href='<%= contextPath %>/enrollForm.terms';">등록하기</button>
+                    <button id="addTerms" class="btnColor" type="button" onclick="location.href='<%= contextPath %>/PersonalInformationenrollForm.terms';">등록하기</button>
                 </div>
             </form>
         </div>

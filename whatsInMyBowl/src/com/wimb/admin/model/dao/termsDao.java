@@ -146,7 +146,54 @@ public class termsDao {
 		return result;
 	}
 	
+	// 개인정보처리방침 리스트를 가져오는 dao
+	public ArrayList<Terms> selectPersonalInformationTermsList(Connection conn) {
+		
+		ArrayList<Terms> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("selectPersonalInformationTermsList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Terms(rset.getInt("terms_Code"),
+								   rset.getString("terms_content")));
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	}
 	
+	// 개인정보처리방침 글을 등록하는 dao
+	public int insertPersonalInformationTerms(Connection conn, String termsContent) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertPersonalInformationTerms");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, termsContent);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 	
 }

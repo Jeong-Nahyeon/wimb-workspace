@@ -61,7 +61,7 @@ public class termsService {
 		return result;
 	}
 	
-	// 이용약관 글을 삭제하는 Service
+	// 이용약관, 개인정보처리방침 글을 삭제하는 Service
 	public int deleteTerms(int termsCode) {
 		Connection conn = getConnection();
 		int result = new termsDao().deleteTerms(conn, termsCode);
@@ -75,6 +75,30 @@ public class termsService {
 				
 	}
 	
+	// 개인정보처리방침 리스트를 가져오는 Service
+	public ArrayList<Terms> selectPersonalInformationTermsList() {
+		Connection conn = getConnection();
+		
+		ArrayList<Terms> list = new termsDao().selectPersonalInformationTermsList(conn);
+		close(conn);
+		
+		return list;
+	}
 	
+	// 개인정보처리방침 등록하는 service
+	public int insertPersonalInformationTerms(String termsContent) {
+		Connection conn = getConnection();
+		
+		int result = new termsDao().insertPersonalInformationTerms(conn, termsContent);
+
+		if(result > 0 ) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+		
+	}
 	
 }

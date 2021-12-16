@@ -9,19 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wimb.admin.model.service.termsService;
-import com.wimb.admin.model.vo.Terms;
 
 /**
- * Servlet implementation class TermsUpdateFormController
+ * Servlet implementation class TermsDeleteController
  */
-@WebServlet("/updateForm.terms")
-public class TermsUpdateFormController extends HttpServlet {
+@WebServlet("/deletePersonalInformation.terms")
+public class TermsPersonalInformationDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TermsUpdateFormController() {
+    public TermsPersonalInformationDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,13 +29,19 @@ public class TermsUpdateFormController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		// 이용약관 리스트에서 수정 버튼 클릭 시 수정하고자 하는 글의 내용을 띄워주는 컨트롤러
-		int termsCode = Integer.parseInt(request.getParameter("num"));		
-		Terms t = new termsService().selectTerms(termsCode);
 	
-		request.setAttribute("t", t);
-		request.getRequestDispatcher("views/admin/termsUpdateForm.jsp").forward(request, response);
+		int termsCode = Integer.parseInt(request.getParameter("num"));
+		
+		int result = new termsService().deleteTerms(termsCode);
+		
+		if(result > 0) { // 성공 => 이용약관 리스트 페이지(/wimb/list.terms)
+			
+			request.getSession().setAttribute("alertMsg", "성공적으로 삭제되었습니다.");
+			response.sendRedirect(request.getContextPath() + "/listPersonalInformation.terms");
+		} else { // 실패 => 에러문구
+			request.setAttribute("errorMsg", "삭제 실패");
+			request.getRequestDispatcher("/views/common/adminerrorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**

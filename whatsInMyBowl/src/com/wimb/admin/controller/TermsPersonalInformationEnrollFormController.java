@@ -1,27 +1,23 @@
-package com.wimb.admin.controller;
+ package com.wimb.admin.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wimb.admin.model.service.termsService;
-import com.wimb.admin.model.vo.Terms;
-
 /**
- * Servlet implementation class TermsUpdateFormController
+ * Servlet implementation class TermsEnrollFormController
  */
-@WebServlet("/updateForm.terms")
-public class TermsUpdateFormController extends HttpServlet {
+@WebServlet("/PersonalInformationenrollForm.terms")
+public class TermsPersonalInformationEnrollFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TermsUpdateFormController() {
+    public TermsPersonalInformationEnrollFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +27,11 @@ public class TermsUpdateFormController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 이용약관 리스트에서 수정 버튼 클릭 시 수정하고자 하는 글의 내용을 띄워주는 컨트롤러
-		int termsCode = Integer.parseInt(request.getParameter("num"));		
-		Terms t = new termsService().selectTerms(termsCode);
-	
-		request.setAttribute("t", t);
-		request.getRequestDispatcher("views/admin/termsUpdateForm.jsp").forward(request, response);
+		// 등록하기 버튼 클릭 시 나타나는 이용약관 등록 페이지를 불러오는 컨트롤러
+		request.getRequestDispatcher("views/admin/termsPersonalInformationEnrollForm.jsp").forward(request, response);
+		
+		
+		
 	}
 
 	/**

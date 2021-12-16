@@ -55,9 +55,34 @@
 		          
 	</entry>
 
+	<!-- 개인정보처리방침 리스트를 가져오는 SQL문  -->
+	<entry key="selectPersonalInformationTermsList">
+		SELECT
+				TERMS_CODE
+			  , TERMS_CONTENT
+		   FROM TERMS
+		  WHERE TERMS_CATEGORY = '개인정보수집'
+		  ORDER 
+		     BY TERMS_CODE DESC
+	</entry>
 
-
-
+	<!-- 개인정보처리방침 글 등록하는 sql문  -->
+	<entry key="insertPersonalInformationTerms">
+		INSERT
+		  INTO TERMS
+		  (
+		    TERMS_CODE
+		  , TERMS_CATEGORY
+		  , TERMS_CONTENT
+		  )
+		  VALUES
+		  (
+		    SEQ_TERMS.NEXTVAL
+		  , '개인정보수집'
+		  , ?
+		  )
+	
+	</entry>
 
 
 
