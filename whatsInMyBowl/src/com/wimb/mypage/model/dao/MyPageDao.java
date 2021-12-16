@@ -36,7 +36,7 @@ public class MyPageDao {
 		ArrayList<MyOrders> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("selectOrderList");
+		String sql = prop.getProperty("selectMainPageOrderList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

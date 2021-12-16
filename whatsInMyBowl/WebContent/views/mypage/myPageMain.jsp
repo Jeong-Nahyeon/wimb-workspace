@@ -272,7 +272,7 @@
 	                <!--case1. 최근 주문내역이 없을 때-->
 	                <tbody>
 	                    <tr>
-	                        <td colspan="4" height="200">최근 주문 정보가 없습니다.</td>
+	                        <td colspan="4" height="200">최근 30일 내에 주문 정보가 없습니다.</td>
 	                    </tr>
 	                </tbody>
                 <% } else { %>

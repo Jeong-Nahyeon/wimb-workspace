@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
-	<entry key="selectOrderList">
+	<entry key="selectMainPageOrderList">
 		SELECT
 		       ORDER_CODE
 		     , ORDER_AMOUNT
@@ -20,6 +20,7 @@
 		  LEFT JOIN CUSTOM USING (CU_CODE)
 		  LEFT JOIN PRODUCT USING (P_CODE)
 		 WHERE OD.M_CODE = ?
+           AND ORDER_DATE BETWEEN (SYSDATE - 30) AND SYSDATE
 	</entry>
 
 	<entry key="selectInquiryList">
