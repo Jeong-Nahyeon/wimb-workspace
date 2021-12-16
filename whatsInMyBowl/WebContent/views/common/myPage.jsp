@@ -98,6 +98,7 @@
 <body>
     <%@ include file="../common/menubar.jsp" %>
     
+    <div class="outer">
 
         <!-- 사용자 적립금/찜하기 테이블 시작-->
         <table id="usertable"  width="700" height="100">
@@ -169,10 +170,10 @@
             </div>
         </div>
         <!-- 마이페이지 사이드바 끝-->
-    </div>     
+         
 
     <%@ include file="../common/footer.jsp" %>
  
-       
+  </div>     
 </body>
 </html>

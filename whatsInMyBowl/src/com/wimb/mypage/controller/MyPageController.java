@@ -41,7 +41,7 @@ public class MyPageController extends HttpServlet {
 		} else {
 			
 			// 로그인 후 : myPage메인
-			request.getRequestDispatcher("views/myPage/myPageMain.jsp").forward(request, response);
+			request.getRequestDispatcher("views/mypage/myPageMain.jsp").forward(request, response);
 			
 		}
 	
