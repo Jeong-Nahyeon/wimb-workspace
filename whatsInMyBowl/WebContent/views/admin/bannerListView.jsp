@@ -37,7 +37,7 @@
         border: 1px solid gray;
     }
     .banner_box{display: inline-block;}
-    #updatebtn{
+    .updatebtn{
         border: none;
         background-color: #ffee58;
         border-radius: 4px;
@@ -88,8 +88,8 @@
     /*모달창 만드는 css*/
     .insert_banner_area{
         display: none;
-        width: 450px;
-        height: 500px;
+        width: 540px;
+        height: 600px;
         position: absolute;
         top:50%;
         left: 50%;
@@ -127,8 +127,8 @@
     /*모달창에 속한 테이블 css*/
     .insert_banner_area table{
         text-align: center;
-        width: 400px;
-        height: 400px;
+        width: 520px;
+        height: 500px;
     }
     .insert_banner_area table tr, .insert_banner_area table th{border: 1px solid gray;}
     .insert_banner_area table td{
@@ -136,6 +136,11 @@
         padding-left: 20px;
     }
     .insert_banner_area table input{border: none;}
+    .inputImg{
+        width: 430px;
+        padding: 0;
+        margin-right: 10px;
+    }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -162,7 +167,7 @@
                     <table>
                         <tr>
                             <td colspan="3">
-                                <img src="" alt="">
+                                <img src="" alt="" class="titleImg">
                             </td>
                         </tr>
                         <tr>
@@ -187,7 +192,7 @@
                     </table>
                     <div class="checkboxandbtn">
                         <input type="checkbox">
-                        <button type="button" id="updatebtn">수정하기</button>
+                        <button type="button" class="updatebtn">수정하기</button>
                     </div>
 
                 </div>
@@ -221,7 +226,7 @@
                     </table>
                     <div class="checkboxandbtn">
                         <input type="checkbox">
-                        <button type="button" id="updatebtn">수정하기</button>
+                        <button type="button" class="updatebtn">수정하기</button>
                     </div>
 
                 </div>
@@ -255,7 +260,7 @@
                     </table>
                     <div class="checkboxandbtn">
                         <input type="checkbox">
-                        <button type="button" id="updatebtn">수정하기</button>
+                        <button type="button" class="updatebtn">수정하기</button>
                     </div>
 
                 </div>
@@ -355,7 +360,7 @@
     <div class="insert_banner_area">
         <div class="modal_close"><a href="#">close</a></div>
         <div align="center" style="margin-top: 30px;">
-            <form action="">
+            <form action="" id="enroll-form" method="post" enctype="multipart/form-data">
                 <table>
                     <tr>
                         <th>배너번호</th>
@@ -368,19 +373,19 @@
                     <tr>
                         <th>상태</th>
                         <td>
-                            <select name="" id="">
-                                <option value="">게시중</option>
-                                <option value="">게시종료</option>
+                            <select name="bannerCategory" id="bannerCategory">
+                                <option value="Y">게시중</option>
+                                <option value="N">게시종료</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <th>위치</th>
                         <td>
-                            <select name="" id="">
-                                <option value="">메인1</option>
-                                <option value="">메인2</option>
-                                <option value="">메인3</option>
+                            <select name="bannerPosition" id="bannerPosition">
+                                <option value="1">메인1</option>
+                                <option value="2">메인2</option>
+                                <option value="3">메인3</option>
                             </select>
                         </td>
                     </tr>
@@ -390,7 +395,10 @@
                     </tr>
                     <tr>
                         <th>이미지</th>
-                        <td><input type="file" id="bannerFile" required></td>
+                        <td>
+                        	<input type="file" id="bannerFile" onchange="loadImg(this);" required>
+                        	<img class="inputImg" height="280" style="display: block;">
+                        </td>
                     </tr>
                 </table>
                 <div class="two_btn" align="center" style="margin-top: 20px;">
@@ -420,6 +428,28 @@
         document.getElementById('insertbannerbtn').addEventListener('click', onClick);
         document.querySelector('.modal_close').addEventListener('click', offClick); 
     };
+
+        function loadImg(inputFile){
+            // inputFile : 현재 변화가 생긴 input type=file 요소
+            
+            if(inputFile.files.length == 1){
+                // 파일을 읽어들이는 FileReader 객체 생성
+                const reader = new FileReader()
+
+                // 파일 읽어들이는 메소드
+                reader.readAsDataURL(inputFile.files[0]);
+                // 해당 파일을 읽어들이는 순간 해당 이 파일만의 고유한 url 부여
+
+                // 파일 읽어들이기가 완료됐을 때 알아서 실행할 함수
+                reader.onload = function(e){
+                    // e.target.result => 읽어들인 파일의 고유한 url
+                    $(".inputImg").attr("src", e.target.result);
+                }
+            } else {
+                $(".inputImg").attr("src", null);
+            }
+
+        }
     </script>
     
     

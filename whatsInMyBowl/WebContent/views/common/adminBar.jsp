@@ -152,7 +152,7 @@
         <ul>
             <li class="menubar-left-title">홈페이지관리</li>
             <li class="menubar-left-text left_link"><a href="<%= contextPath %>/list.terms">이용약관</a></li>
-            <li class="menubar-left-text left_link"><a href="">배너</a></li>
+            <li class="menubar-left-text left_link"><a href="<%= contextPath %>/list.banner">배너</a></li>
         </ul>
     
         <ul>
