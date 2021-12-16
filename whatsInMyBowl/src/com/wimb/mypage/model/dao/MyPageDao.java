@@ -133,7 +133,27 @@ public class MyPageDao {
 			
 			return list;
 		}
-	
-	
+		
+		// inquiry 삭제 dao
+		public int deleteInquiryList(Connection conn, int iCode) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("deleteInquiryList");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, iCode);
+				
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
+		}
+
+
 	
 }

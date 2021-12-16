@@ -46,4 +46,12 @@
 		 ORDER
 		    BY I_CODE DESC
 	</entry>
+	
+	<entry key="deleteInquiryList">
+	UPDATE
+	        INQUIRY
+	    SET STATUS = 'N'
+	 WHERE I_CODE = ?
+	</entry>
+	
 </properties>

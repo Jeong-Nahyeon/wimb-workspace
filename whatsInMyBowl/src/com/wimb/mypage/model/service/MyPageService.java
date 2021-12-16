@@ -46,6 +46,22 @@ public class MyPageService {
 		
 	}
 	
+	// inquiry 삭제
+	public int deleteInquiryList(int iCode) {
+		Connection conn = getConnection();	
+		int result = new MyPageDao().deleteInquiryList(conn, iCode);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+	
+		return result;
+	}
+	
 	
 	
 	
