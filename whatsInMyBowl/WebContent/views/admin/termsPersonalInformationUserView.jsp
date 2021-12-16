@@ -8,14 +8,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>홈페이지에서 보는 이용약관</title>
+<title>What'sInMyBowl-개인정보처리방침</title>
 <style>
 
     main{
         margin-top: 20px;
         margin-left: 25%;
-        width: 950px
-
+        width: 950px;
     }
 
     #mainTitle{margin-bottom: 60px;}
@@ -57,8 +56,8 @@
 <body>
 	
 	<%@ include file="../common/menubar.jsp" %>
-	
     <main>
+		
         <div id="content">
             <h2 style="font-size: 23px; font-weight: 600; padding-top: 100px;" >개인정보처리방침</h2>
 

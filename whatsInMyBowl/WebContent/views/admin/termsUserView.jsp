@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>홈페이지에서 보는 이용약관</title>
+<title>What'sInMyBowl-이용약관</title>
 <style>
 
     main{

@@ -88,7 +88,10 @@
         font-size: 13px;
         margin: 5px;
     }
-
+	.lastul{
+		height:100%;
+		background-color: lightgrey;
+	}
    
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -159,7 +162,7 @@
             <li class="menubar-left-text left_link"><a href="">자주묻는 질문</a></li>
         </ul>
     
-        <ul>
+        <ul class="lastul">
             <li class="menubar-left-title">통계</li>
             <li class="menubar-left-text left_link"><a href="">회원 수 통계</a></li>
             <li class="menubar-left-text left_link"><a href="">상품 수 통계</a></li>
