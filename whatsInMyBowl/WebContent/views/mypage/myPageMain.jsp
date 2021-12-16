@@ -140,7 +140,8 @@
 
 	<%@ include file="../common/menubar.jsp" %>
     <%@ include file="../common/footer.jsp" %>
-
+		
+		<input type="hidden" name="mCode" value="<%= loginUser.getmCode() %>">
         <!-- 사용자 적립금/찜하기 테이블 시작-->
         <table id="usertable"  width="700" height="100">
             <tr>
