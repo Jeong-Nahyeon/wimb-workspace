@@ -256,7 +256,7 @@
     .custom_order{padding-top: 20px;}
     .custom_order th{padding-bottom: 10px;}
 
-    #itemCustom_table span{
+    .itemCustom_table span{
         display: block;
     }
 </style>
@@ -293,7 +293,7 @@
                                 <input type="text" name="saladName" id="saladName">
                             </div>
                             
-                            <table id="itemCustom_table">
+                            <table class="itemCustom_table">
                                 <tr>
                                     <th colspan="2" style="text-align: left;">채소</th>
                                 </tr>
@@ -309,48 +309,40 @@
                                 </tr>
                                 
                             </table>
-                            <table>
+                            <table class="itemCustom_table">
                                 <tr>
                                     <th colspan="2" style="text-align: left;">메인 토핑</th>
                                 </tr>
                                 <tr>
-                                    <td id="maintopping_name" style="width: 220px; padding-left: 10px;">
-                                    	<span>양상추</span>
-                                    </td>
-                                    <td id="maintopping_price" style="width: 100px; text-align: right;">
-                                        <span>1000원</span>
-                                    </td>
+                                    <td id="maintopping_name" style="width: 220px; padding-left: 10px;"></td>
+                                    <td id="maintopping_price" style="width: 100px; text-align: right;"></td>
                                 </tr>
                                 
                             </table>
-                            <table>
+                            <table class="itemCustom_table">
                                 <tr>
                                     <th colspan="2" style="text-align: left;">사이드 토핑</th>
                                 </tr>
                                 <tr>
-                                    <td id="sidetopping_name" style="width: 220px; padding-left: 10px;">양상추</td>
-                                    <td id="item3_price" style="width: 100px; text-align: right;">
-                                        <span>1000원</span>
-                                    </td>
+                                    <td id="sidetopping_name" style="width: 220px; padding-left: 10px;"></td>
+                                    <td id="sidetopping_price" style="width: 100px; text-align: right;"></td>
                                 </tr>
                                 
                             </table>
-                            <table>
+                            <table class="itemCustom_table">
                                 <tr>
                                     <th colspan="2" style="text-align: left;">드레싱</th>
                                 </tr>
                                 <tr>
-                                    <td id="dressing_name" style="width: 220px; padding-left: 10px;">양상추</td>
-                                    <td id="dressing_price" style="width: 100px; text-align: right;">
-                                        <span>1000원</span> 
-                                    </td>
+                                    <td id="dressing_name" style="width: 220px; padding-left: 10px;"></td>
+                                    <td id="dressing_price" style="width: 100px; text-align: right;"></td>
                                 </tr>
                                 
                             </table>
 
                             <div class="customlist_price" align="right">
                                 <span style="padding: 0 70px 0 20px;">총 금액</span>
-                                <span style="padding: 0 15px 0 0;">20,000</span>
+                                <span id="total_sum" style="padding: 0 15px 0 0;"></span>
                             </div>
 
                             <div class="customlist_btn" align="right">
@@ -387,7 +379,7 @@
 
                         <div class="customlist_price" align="right">
                             <span style="padding: 0 70px 0 20px;">총 금액</span>
-                            <span style="padding: 0 15px 0 0;">20,000</span>
+                            <span id="total_sum" style="padding: 0 15px 0 0;"></span>
                         </div>
 
                         <div class="customOrder_btn" align="right">
@@ -453,9 +445,17 @@
 		                                    <div class="custom_pro">
 		                                        <div class="pro_subject"><%= i.getCiName() %></div>
 		                                        <div class="pro_btn" >
-		                                            <button class="main_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
-		                                            <input type="text" name="" class="count_text" value="0">
-		                                            <button class="main_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
+		                                            <button class="pro_btn_up mainTopping-up">
+		                                            	<i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i>
+		                                            </button>
+		                                            <input type="text" name="" class="count_text" value="0" readonly>
+                                                    <input class="ci_name" type="hidden" value="<%= i.getCiName() %>">
+                                                    <input class="ci_price" type="hidden" value="<%= i.getCiPrice() %>">
+                                                    <input class="ci_code" type="hidden" value="<%= i.getCiCode()%>">
+                                                    <input class="ci_category" type="hidden" value="<%= i.getCiCategory() %>">
+		                                            <button class="pro_btn_down mainTopping-down">
+		                                            	<i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i>
+		                                            </button>
 		                                        </div>
 		                                    </div>
 		                                </li>
@@ -479,9 +479,17 @@
 		                                    <div class="custom_pro">
 		                                        <div class="pro_subject"><%= i.getCiName() %></div>
 		                                        <div class="pro_btn" >
-		                                            <button class="side_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
-		                                            <input type="text" name="" class="count_text" value="0">
-		                                            <button class="side_btn_down"><i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i></button>
+		                                            <button class="pro_btn_up sideTopping-up">
+		                                            	<i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i>
+		                                            </button>
+		                                            <input type="text" name="" class="count_text" value="0" readonly>
+                                                    <input class="ci_name" type="hidden" value="<%= i.getCiName() %>">
+                                                    <input class="ci_price" type="hidden" value="<%= i.getCiPrice() %>">
+                                                    <input class="ci_code" type="hidden" value="<%= i.getCiCode()%>">
+                                                    <input class="ci_category" type="hidden" value="<%= i.getCiCategory() %>">
+		                                            <button class="pro_btn_down sideTopping-down">
+		                                            	<i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i>
+		                                            </button>
 		                                        </div>
 		                                    </div>
 		                                </li>
@@ -504,8 +512,18 @@
 		                                <li>
 		                                    <div class="custom_pro">
 		                                        <div class="pro_subject"><%= i.getCiName() %></div>
-		                                        <div class="dressing_btn">
-		                                            <button class="dressing_btn_up"><i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i></button>
+		                                        <div class="pro_btn" >
+		                                            <button class="pro_btn_up dressing-up">
+		                                            	<i class="fas fa-plus fa-xs " style="margin: 0 0 6px 0;"></i>
+		                                            </button>
+		                                            <input type="text" name="" class="count_text" value="0" readonly>
+                                                    <input class="ci_name" type="hidden" value="<%= i.getCiName() %>">
+                                                    <input class="ci_price" type="hidden" value="<%= i.getCiPrice() %>">
+                                                    <input class="ci_code" type="hidden" value="<%= i.getCiCode()%>">
+                                                    <input class="ci_category" type="hidden" value="<%= i.getCiCategory() %>">
+		                                            <button class="pro_btn_down dressing-down">
+		                                            	<i class="fas fas fa-minus fa-xs fa-fw" style="margin: 0 0 6px 0;"></i>
+		                                            </button>
 		                                        </div>
 		                                    </div>
 		                                </li>
@@ -531,11 +549,40 @@
                         setCustomlist($(this), ".pro_btn_down", itemClass);
                     });
 
-                    function setCustomlist(obj, action, action2){
+                    // 선택된 재료의 총 합 구하기
+                    function sum(itemPrice){
+                        var vagetable_sum = 0;
+                        var mainTopping_sum = 0;
+                        var sideTopping_sum = 0;
+                        var dressing_sum = 0;
+                        var itemTotal_sum = 0;
+
+                        $(".vagetable_sum").each(function(){
+                            vagetable_sum += parseInt($(this).val());
+                        });
+                        
+                        $(".mainTopping_sum").each(function(){
+                            mainTopping_sum += parseInt($(this).val());
+                        });
+                        $(".sideTopping_sum").each(function(){
+                            sideTopping_sum += parseInt($(this).val());
+                        });
+                        $(".dressing_sum").each(function(){
+                            dressing_sum += parseInt($(this).val());
+                        });
+
+                        itemTotal_sum = vagetable_sum + mainTopping_sum + sideTopping_sum + dressing_sum;
+                        $("#total_sum").text(itemTotal_sum);
+                    }
+                    
+
+                    function setCustomlist(obj, action, itemClass){
                         var count = 0;
                         var itemNameStr = "";
                         var itemNamePrice = "";
-                        itemTotalPrice = 0;
+                        var itemTotalPrice = "";
+                        itemPrice = 0;
+                        
 
                         // 재료 수량버튼 클릭 시 input태그안의 수량 증감
                         if(action == ".pro_btn_up"){
@@ -555,23 +602,87 @@
                         
                         if(obj.siblings(".ci_category").val() == "채소"){
                             //console.log("앗싸");
-                            console.log(action2);
-                            $(action2).each(function(){
-                                console.log("each실행");
+                            //console.log(action2);
+                            
+                            $(itemClass).each(function(){
+                                //console.log("each실행");
                                 if($(this).siblings(".count_text").val() != "0"){
-                                    itemTotalPrice += parseInt($(this).siblings(".count_text").val()) * parseInt($(this).siblings(".setPrice").val());
-                                    
+                                    itemPrice = parseInt($(this).siblings(".count_text").val()) * parseInt($(this).siblings(".ci_price").val());
+
+                                    //console.log(itemTotalPrice);
+                                    //console.log(parseInt($(this).siblings(".count_text").val()))
+                                    //console.log(parseInt($(this).siblings(".ci_price").val()))
+
                                     itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>";
-                                    itemNamePrice += "<span>" + itemTotalPrice + "</span>";
+                                    itemNamePrice += "<span>" + itemPrice + "</span>" + 
+                                                     "<input type='hidden' class='vagetable_sum' value='"+itemPrice+"'></input>"; 
+                                    //itemTotalPrice += "<input type='hidden' class='vagetable_sum' value='"+itemPrice+"'></input>";
                                     //console.log($(this).val);
+                                    //sum(itemPrice);
+                                }
+                                
+                            });
+                            $("#vagetable_name").html(itemNameStr);
+                            $("#vagetable_price").html(itemNamePrice);
+                            //$(".customlist_price").html(itemTotalPrice);
+                            sum();
+                            
+                        
+                        } else if(obj.siblings(".ci_category").val() == "메인토핑"){
+                
+                            $(itemClass).each(function(){
+                                if($(this).siblings(".count_text").val() != "0"){
+                                    itemPrice = parseInt($(this).siblings(".count_text").val()) * parseInt($(this).siblings(".ci_price").val());
+
+                                    itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>";
+                                    itemNamePrice += "<span>" + itemPrice + "</span>" + 
+                                                     "<input type='hidden' class='mainTopping_sum' value='"+itemPrice+"'></input>"; 
+                                    
                                 }
                                 
                             });
                             
-                            $("#vagetable_name").html(itemNameStr);
-                            $("#vagetable_price").html(itemNamePrice);
-                        }
+                            $("#maintopping_name").html(itemNameStr);
+                            $("#maintopping_price").html(itemNamePrice);
+                            sum();
                         
+                        } else if(obj.siblings(".ci_category").val() == "사이드토핑"){
+                            $(itemClass).each(function(){
+                                
+                                if($(this).siblings(".count_text").val() != "0"){
+                                    itemPrice = parseInt($(this).siblings(".count_text").val()) * parseInt($(this).siblings(".ci_price").val());
+
+                                    itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>";
+                                    itemNamePrice += "<span>" + itemPrice + "</span>" + 
+                                                     "<input type='hidden' class='sideTopping_sum' value='"+itemPrice+"'></input>"; 
+                                    
+                                }
+                                
+                            });
+                            
+                            $("#sidetopping_name").html(itemNameStr);
+                            $("#sidetopping_price").html(itemNamePrice);
+                            sum();
+
+                        } else{
+                            
+                            $(itemClass).each(function(){
+                                
+                                if($(this).siblings(".count_text").val() != "0"){
+                                    itemPrice = parseInt($(this).siblings(".count_text").val()) * parseInt($(this).siblings(".ci_price").val());
+
+                                    itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>";
+                                    itemNamePrice += "<span>" + itemPrice + "</span>" + 
+                                                     "<input type='hidden' class='dressing_sum' value='"+itemPrice+"'></input>"; 
+                                    
+                                }
+                                
+                            });
+                            
+                            $("#dressing_name").html(itemNameStr);
+                            $("#dressing_price").html(itemNamePrice);
+                            sum();
+                        }
                         
                     }
                 </script>
