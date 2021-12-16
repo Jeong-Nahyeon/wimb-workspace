@@ -43,6 +43,9 @@
   }
   a { text-decoration:none}
   /* table */
+  .table{
+    font-size: 10pt;
+  }
   #num, #writer, #title, #type, #writeDate, #status{
     border-top: 2px solid black;
   }
@@ -50,17 +53,24 @@
     color: black;
   }
   #num{
-    width: 60px;
+    width: 30px;
   }
   #writer{
-    width: 150px;
+    width: 50px;
   }
   #title{
-    width: 400px;
+    width: 200px;
   }
-  #type, #writeDate, #status{
+  #type{
     width: 100px;
   }
+  #writeDate{
+    width: 50px
+  }
+  #status{
+    width: 10px;
+  }
+
   /* modal button */
   .modal-body button{
     color: white;
@@ -79,9 +89,9 @@
 <body>
 
 	<%@ include file="../common/myPage.jsp" %>
-    <div class="outer">
+    
         
-        <div class="container">
+        <div class="container" style="width: 700;">
             <h5>1 : 1 문의</h5>
             <hr style="border-color: gray;">
             <table id="report" class="table">
@@ -114,10 +124,10 @@
 		                </tr>
 		                <tr>
 		                    <td colspan="6">             
-		                        <h6>문의내용 : 적립금이 안들어왔어요</h6> <br>
+		                                문의내용 : 적립금이 안들어왔어요<br><br>
 						                        답변내용 : <br><br>
 						                        상품구매적립금이 안들어와서 확인해주세요!<br><br>
-						           21.10.30                         
+						                        21.10.30                         
 		                    </td>
 		                </tr>
 		                <% } %>
@@ -129,7 +139,8 @@
 		                  <td>배송문의</td>
 		                  <td>21.12.30</td>
 		                  	<!--현재 로그인한 사용자가 해당 글을 쓴 본인일 경우-->
-		                  <td><button id="bt" type="button"><a href="">수정</a></button><br>
+		                  	
+		                  <td><button id="bt" type="button" onclick="modify()">수정</a></button><br>
 		                    <button id="bt" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><a>삭제</a></button>
 		                  </td>
 		                  
@@ -145,8 +156,8 @@
 		                
 		                  <!-- Modal body -->
 		                  <div class="modal-body" style="width: 350px;">
-		                    <button><a href="">취소</a></button>
-		                    <button>삭제</button>
+		                    <button>취소</button>
+		                    <button><a href="<%= contextPath %>/delete.inquiry"></a>삭제</button>
 		                  </div>
 		                
 		                  <!-- Modal footer  -->
@@ -163,16 +174,23 @@
 		                </tr>
 		                <tr>
 		                    <td colspan="6">             
-		                        <h6>문의내용 : 배송이 안왔는데 도착완료라고 떠요.</h6><br>
+		                                문의내용 : 배송이 안왔는데 도착완료라고 떠요.<br><br>
 						                        답변내용 : <br><br>
 						                        배송은 도착완료라고뜨는데 샐러드를 받지못했어요<br><br> 
-						           22.01.02                   
+						                        22.01.02                   
 						   </td>
 		                </tr>
 		            
 	              </tbody>
               	<% }  %>
+              	
             </table>
+            
+            <script>
+            	function modify(){
+            		location.href = "<%= contextPath %>/myPage.my" // 고객센터 1:1문의로 이동하는 링크걸기
+            	}
+            </script>
           </div>
           <!-- 1:1 문의가 있을때 끝-->
     
@@ -201,7 +219,7 @@
           </div>
           -->
       
-        </div>  
+        
     
 </body>
 </html>
