@@ -31,5 +31,39 @@
 		        )
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
+	
+	
+	
+	<entry key="insertProduct">
+		INSERT
+		  INTO PRODUCT
+		  (
+		    P_CODE
+		  , P_NAME
+		  , P_CATEGORY
+		  , P_PRICE
+		  , P_PROVIDER
+		  , P_PROVIDEPRICE
+		  , P_MAINIMG
+		  , P_DETAILIMG
+		  , P_DETAIL
+		  , P_STOCK
+		  , P_KEYWORD
+		  )
+		  VALUES
+		  (
+		    'P' || SEQ_PRODUCT.NEXTVAL
+		  , 상품명
+		  , 카테고리명
+		  , 판매가격
+		  , 공급자명
+		  , 공급가격
+		  , 대표이미지
+		  , 상세이미지
+		  , 상세내용
+		  , P_STOCK + 입고수량
+		  , 검색키워드
+		  )
+	</entry>
 
 </properties>

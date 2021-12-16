@@ -110,5 +110,48 @@ public class ProductDao {
 		return totalList;
 		
 	}
+	
+	
+	public int insertProduct(Connection conn, Product p) {
+		
+		int result = 0; 
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertProduct"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, p.getpName());
+			pstmt.setString(2, p.getpCategory());
+			pstmt.setInt(3, p.getpPrice());
+			pstmt.setString(4, p.getpProvider());
+			pstmt.setInt(5, p.getpProvidePrice());
+			pstmt.setString(6, p.getpMainImg());
+			
+			if(p.getpDetailImg() != null) { // 상세이미지 => null이 아닌 경우
+				pstmt.setString(7, p.getpDetailImg());
+			} else { // 상세이미지 => null인 경우
+				pstmt.setNull(7, java.sql.Types.VARCHAR); // 과연 null처리 해줄 것인가????????
+			}
+			
+			pstmt.setString(8, p.getpDetail());
+			pstmt.setInt(9, p.getpStock());
+			pstmt.setString(10, p.getpKeyword());
+			
+			result = pstmt.executeUpdate();
+		
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
 
 }

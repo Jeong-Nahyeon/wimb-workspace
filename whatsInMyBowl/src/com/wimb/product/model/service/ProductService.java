@@ -1,7 +1,6 @@
 package com.wimb.product.model.service;
 
-import static com.wimb.common.JDBCTemplate.close;
-import static com.wimb.common.JDBCTemplate.getConnection;
+import static com.wimb.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -37,6 +36,25 @@ public class ProductService {
 		close(conn);
 		
 		return totalList;
+		
+	}
+	
+	
+	public int insertProduct(Product p) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().insertProduct(conn, p);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
 		
 	}
 

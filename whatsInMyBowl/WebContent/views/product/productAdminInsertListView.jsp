@@ -577,7 +577,6 @@
                                         <tr>
                                             <td>
                                                 <textarea name="detailContent" rows="10" style="resize:none; overflow-y:scroll; overflow-x:hidden;" required>상세내용을 입력해주세요</textarea>
-                                                </textarea>
                                             </td>
                                         </tr>
                                         <tr>
