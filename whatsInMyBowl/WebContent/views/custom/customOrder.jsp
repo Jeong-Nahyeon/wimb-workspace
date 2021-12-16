@@ -347,7 +347,7 @@
 
                             <div class="customlist_btn" align="right">
                                 <button type="reset" id="customlist_btn_reset"><i class="fas fa-times fa-lg"></i></button>
-                                <button type="submit" id="customlist_btn_submit">샐러드 추가</button>
+                                <button type="submit" id="customlist_btn_submit" onclick="insertCustomOrder();">샐러드 추가</button>
                             </div>
 
                         </form>
@@ -613,12 +613,15 @@
                                     //console.log(parseInt($(this).siblings(".count_text").val()))
                                     //console.log(parseInt($(this).siblings(".ci_price").val()))
 
-                                    itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>";
+                                    itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>" +
+                                                   "<input type='hidden' class='ci_getCode' value='"+$(this).siblings(".ci_code").val()+"'></input>" + 
+                                                   "<input type='hidden' class='ci_getCount' value='"+$(this).siblings(".count_text").val()+"'></input>";
                                     itemNamePrice += "<span>" + itemPrice + "</span>" + 
                                                      "<input type='hidden' class='vagetable_sum' value='"+itemPrice+"'></input>"; 
                                     //itemTotalPrice += "<input type='hidden' class='vagetable_sum' value='"+itemPrice+"'></input>";
                                     //console.log($(this).val);
                                     //sum(itemPrice);
+                                    console.log(itemNameStr)
                                 }
                                 
                             });
@@ -634,9 +637,11 @@
                                 if($(this).siblings(".count_text").val() != "0"){
                                     itemPrice = parseInt($(this).siblings(".count_text").val()) * parseInt($(this).siblings(".ci_price").val());
 
-                                    itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>";
+                                    itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>" +
+                                                   "<input type='hidden' class='ci_getCode' value='"+$(this).siblings(".ci_code").val()+"'></input>" + 
+                                                   "<input type='hidden' class='ci_getCount' value='"+$(this).siblings(".count_text").val()+"'></input>";
                                     itemNamePrice += "<span>" + itemPrice + "</span>" + 
-                                                     "<input type='hidden' class='mainTopping_sum' value='"+itemPrice+"'></input>"; 
+                                                     "<input type='hidden' class='vagetable_sum' value='"+itemPrice+"'></input>"; 
                                     
                                 }
                                 
@@ -652,9 +657,11 @@
                                 if($(this).siblings(".count_text").val() != "0"){
                                     itemPrice = parseInt($(this).siblings(".count_text").val()) * parseInt($(this).siblings(".ci_price").val());
 
-                                    itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>";
+                                    itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>" +
+                                                   "<input type='hidden' class='ci_getCode' value='"+$(this).siblings(".ci_code").val()+"'></input>" + 
+                                                   "<input type='hidden' class='ci_getCount' value='"+$(this).siblings(".count_text").val()+"'></input>";
                                     itemNamePrice += "<span>" + itemPrice + "</span>" + 
-                                                     "<input type='hidden' class='sideTopping_sum' value='"+itemPrice+"'></input>"; 
+                                                     "<input type='hidden' class='vagetable_sum' value='"+itemPrice+"'></input>"; 
                                     
                                 }
                                 
@@ -671,9 +678,11 @@
                                 if($(this).siblings(".count_text").val() != "0"){
                                     itemPrice = parseInt($(this).siblings(".count_text").val()) * parseInt($(this).siblings(".ci_price").val());
 
-                                    itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>";
+                                    itemNameStr += "<span>" + $(this).siblings(".ci_name").val() + "</span>" +
+                                                   "<input type='hidden' class='ci_getCode' value='"+$(this).siblings(".ci_code").val()+"'></input>" + 
+                                                   "<input type='hidden' class='ci_getCount' value='"+$(this).siblings(".count_text").val()+"'></input>";
                                     itemNamePrice += "<span>" + itemPrice + "</span>" + 
-                                                     "<input type='hidden' class='dressing_sum' value='"+itemPrice+"'></input>"; 
+                                                     "<input type='hidden' class='vagetable_sum' value='"+itemPrice+"'></input>"; 
                                     
                                 }
                                 
@@ -685,7 +694,22 @@
                         }
                         
                     }
+
+                    function insertCustomOrder(){
+                        var arrVagetable = [];
+
+                        $(".ci_getCode").each(function(){
+                            arrVagetable.push($(this).val());
+                        });
+
+                        console.log(arrVagetable);
+                    }
                 </script>
+                
+                
+
+                
+                
             </div>
         </div>
 
