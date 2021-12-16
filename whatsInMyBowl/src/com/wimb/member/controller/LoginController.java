@@ -32,10 +32,10 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String mId = request.getParameter("userId");
-		String mPwd = request.getParameter("userPwd");
+		String userId = request.getParameter("userId");
+		String userPwd = request.getParameter("userPwd");
 		
-		Member loginUser = new MemberService().loginMember(mId, mPwd);
+		Member loginUser = new MemberService().loginMember(userId, userPwd);
 		
 		HttpSession session = request.getSession();
 
