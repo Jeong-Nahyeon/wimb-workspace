@@ -125,11 +125,11 @@
 
     #product-list>thead th{
         background:lightgray;
-        font-size:13px;
+        font-size:15px;
     }
 
     #product-list>tbody td{
-        font-size:12px;
+        font-size:13px;
     }
 
     #select-form span{
@@ -237,6 +237,17 @@
 </head>
 <body>
 
+	<!-- 상품 등록 테스트용 alert -->
+	<% if(productMsg != null) { %>
+	<script>
+		
+		alert("<%= productMsg %>");
+		
+		<% session.removeAttribute("productMsg"); %>
+	
+	</script>
+	<% } %>
+
 	<%@ include file="../common/adminBar.jsp" %>
 
 	
@@ -253,7 +264,7 @@
         <div id="product-custom-button">
             <div id="left">
                 <div id="product-button">
-                    <a href=""><b>완제품</b></a>
+                    <a href="<%= contextPath%>/list.apr?cpage=1"><b>완제품</b></a>
                 </div>
             </div>
             <div id="right" align="right">
@@ -298,14 +309,13 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th width="7%">번호</th>
-                        <th width="12%">상품번호</th>
+                        <th width="15%">상품번호</th>
                         <th width="20%">상품명</th>
-                        <th width="15%">업체명</th>
-                        <th width="12%">공급가(원)</th>
-                        <th width="12%">판매가(원)</th>
-                        <th width="7%">재고</th>
-                        <th width="12%">노출여부</th>
+                        <th width="20%">업체명</th>
+                        <th width="10%">공급가(원)</th>
+                        <th width="10%">판매가(원)</th>
+                        <th width="10%">재고</th>
+                        <th width="10%">노출여부</th>
                     </tr>
                 </thead>
                 <tbody >
@@ -330,7 +340,6 @@
 	                        <td>
 	                            <input type="checkbox" name="" id="" disabled>
 	                        </td>
-	                        <td><%= totalList.size() - i %></td>
 	                        <td><%= totalList.get(i).getpCode() %></td>
 	                        <td><a class="product-name"><%= totalList.get(i).getpName() %></a></td>
 	                        <td><%= totalList.get(i).getpProvider() %></td>
@@ -359,19 +368,19 @@
             <div id="paging-bar" align="center">
             	<ul class="pagination">
             		<% if(currentPage != 1) { %>
-				   		 <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.pr?cpage=<%= currentPage - 1 %>">&lt;</a></li>
+				   		 <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.apr?cpage=<%= currentPage - 1 %>">&lt;</a></li>
 				    <% } %>
 				    
 				    <% for(int p=startPage; p<=endPage; p++ ) { %>
 				    	<% if(p == currentPage) { %>
 					    	<li class="page-item active"><a class="page-link" href="#"><%= p %></a></li>
 					    <% } else { %>
-					  		 <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.pr?cpage=<%= p %>"><%= p %></a></li>
+					  		 <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.apr?cpage=<%= p %>"><%= p %></a></li>
 					    <% } %>
 				    <% } %>
 				    
 				    <% if(currentPage != maxPage) { %>
-				 		   <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.pr?cpage=<%= currentPage + 1 %>">&gt;</a></li>
+				 		   <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.apr?cpage=<%= currentPage + 1 %>">&gt;</a></li>
 				    <% } %>
 			    </ul>
             </div>

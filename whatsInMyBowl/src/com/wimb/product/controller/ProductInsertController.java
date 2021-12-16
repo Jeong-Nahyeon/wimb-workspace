@@ -48,6 +48,9 @@ public class ProductInsertController extends HttpServlet {
 			
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new WimbFileRenamePolicy());
 			
+			System.out.println("값이 담겨서 오긴함?");
+			// ^^.. 이 이후부터 문제네 
+			
 			Product p = new Product();
 			p.setpCategory(multiRequest.getParameter("productCategory"));
 			p.setpName(multiRequest.getParameter("productName"));
@@ -81,13 +84,11 @@ public class ProductInsertController extends HttpServlet {
 			} else { // 실패
 				
 				if(p.getpMainImg() != null) { // 대표이미지가 있을 경우
-					
-					if(p.getpDetailImg() != null) { // 상세 이미지도 있을 경우
-						new File(savePath + p.getpDetailImg()).delete();
-					}
-					
 					new File(savePath + p.getpMainImg()).delete();
-					
+				}
+				
+				if(p.getpDetailImg() != null) { // 상세 이미지 있을 경우
+					new File(savePath + p.getpDetailImg()).delete();
 				}
 				
 				request.setAttribute("errorMsg", "상품 등록 실패");

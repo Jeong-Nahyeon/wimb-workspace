@@ -100,7 +100,8 @@ public class ProductDao {
 										  rset.getString("p_mainimg"),
 										  rset.getString("p_show"),
 										  rset.getInt("p_stock"),
-										  filePath));
+										  filePath,
+										  rset.getInt("rnum")));
 				
 			}
 			
