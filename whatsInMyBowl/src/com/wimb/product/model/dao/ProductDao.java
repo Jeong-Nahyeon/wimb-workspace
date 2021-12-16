@@ -1,14 +1,18 @@
 package com.wimb.product.model.dao;
 
+import static com.wimb.common.JDBCTemplate.close;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
-import static com.wimb.common.JDBCTemplate.*;
+import com.wimb.common.model.vo.PageInfo;
+import com.wimb.product.model.vo.Product;
 
 public class ProductDao {
 	
@@ -58,6 +62,52 @@ public class ProductDao {
 		}
 		
 		return listCount;
+		
+	}
+	
+	
+	public ArrayList<Product> selectProductList(Connection conn, PageInfo pi){
+		
+		ArrayList<Product> totalList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectProductList"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1; // 시작값
+			int endRow = startRow + pi.getBoardLimit() - 1; // 끝값
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				Product p = new Product();
+				p.setpCode(rset.getString("p_code"));
+				p.setpName(rset.getString("p_name"));
+				p.setpCategory(rset.getString("p_category"));
+				p.setpPrice(rset.getInt("p_price"));
+				p.setpMainImg(rset.getString("p_mainimg"));
+				p.setpStock(rset.getInt("p_stock"));
+				
+				totalList.add(p);
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalList;
 		
 	}
 

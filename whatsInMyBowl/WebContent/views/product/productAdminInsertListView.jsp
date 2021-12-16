@@ -160,12 +160,11 @@
         font-size: 15px;
     }
 
-    #main-img{
-        border:1px solid lightgray;
-        width:300px;
-        height:300px;
-        text-align:center;
-        line-height:300px;
+    #main-img-area, #detail-img-area{
+        width:100% !important;
+        /* height:100% !important; */
+        margin:0 !important;
+        padding:0 !important;
     }
 
     #button-left-area, #button-right-area{
@@ -256,6 +255,13 @@
                     <button type="button" id="insert-product-btn" class="btn btn-sm" style="background:rgb(255, 225, 90);">상품등록</button>
                 </div>
             </div>
+            <script>
+					$(document).ready(function(){
+						$("#insert-product-btn").click(function(){
+						$("#insert-product-modal").modal({backdrop: "static"});
+						});
+					});
+				</script>
 
 
             <!-- 완제품 목록 -->
@@ -478,7 +484,7 @@
                     
                     <!-- Modal body -->
                     <div class="modal-body content-area">
-                        <form action="" id="insert-form" method="post" enctype="multipart/form-data">
+                        <form action="<%= contextPath %>/insert.pr" id="insert-form" method="post" enctype="multipart/form-data">
                             <!-- 상품 설명 영역 -->
                                 <div id="main">
                                     <table class="table-borderless">
@@ -500,17 +506,17 @@
                                             <tr>
                                                 <th>사진등록</th>
                                                 <td colspan="2">
-                                                    <input type="file" name="file1" id="file1" required>
+                                                    <input type="file" name="mainImg" onchange="loadImg(this, 1);" required>
                                                 </td>
                                             </tr>
                                     </table>
+                                    
                                     <br>
+
                                     <table class="table-borderless">       
                                             <tr>
-                                                <td rowspan="8" width="300">
-                                                    <div id="main-img">
-                                                        대표이미지
-                                                    </div>
+                                                <td rowspan="8" style="width:300px; height:300px; padding:0; border:1px solid lightgray;">
+                                                    <img id="main-img-area">
                                                 </td>
                                                 <th>제품명</th>
                                                 <td><input type="text" name="productName" placeholder="ex) 닭가슴살샐러드" required></td>
@@ -520,7 +526,9 @@
                                                 <td><input type="number" name="productPrice" placeholder="ex) 3000" required></td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2" style="font-size:12px; text-align: center; color:salmon;">-- 아래 영역은 실제 회원에게 보여지지 않는 부분입니다 --</td>
+                                                <td colspan="2" style="font-size:12px; text-align: center; color:salmon;">
+                                                    -- 아래 영역은 실제 회원에게 보여지지 않는 부분입니다 --
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>공급업체</th>
@@ -531,17 +539,17 @@
                                                 <td><input type="number" name="supplyPrice" placeholder="ex) 2000" required></td>
                                             </tr>
                                             <tr>
-                                                <th>재고수량</th>
-                                                <td><input type="number" name="amount" placeholder="ex) 30" required></td>
+                                                <th>입고수량</th>
+                                                <td><input type="number" name="productAmount" placeholder="ex) 30" required></td>
                                             </tr>
                                             <tr>
                                                 <th>키워드</th>
-                                                <td><input type="text" name="keyword" placeholder="ex)비건,채소" required></td>
+                                                <td><input type="text" name="productKeyword" placeholder="ex) 비건,채소" required></td>
                                             </tr>
                                             <tr>
                                                 <th>노출여부</th>
                                                 <td>
-                                                    <select name="status" required>
+                                                    <select name="productStatus" required>
                                                         <option>Y</option>
                                                         <option>N</option>
                                                     </select>
@@ -561,30 +569,62 @@
                                         </tr>
                                         <tr>
                                             <th>사진등록</th>
-                                            <td><input type="file" name="file2" id="file2"></td>
+                                            <td><input type="file" name="detailImg" onchange="loadImg(this, 2);"></td>
                                         </tr>
                                     </table>
                                     <br>
                                     <table id="detail-2" class="table-borderless">
                                         <tr>
                                             <td>
-                                                <textarea name="" rows="10" style="resize:none;" style="overflow-y:scroll; overflow-x:hidden;" placeholder="상세 내용을 입력해주세요" required></textarea>
+                                                <textarea name="detailContent" rows="10" style="resize:none; overflow-y:scroll; overflow-x:hidden;" required>상세내용을 입력해주세요</textarea>
+                                                </textarea>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="font-size:12px; text-align: center; color:gray;"><p>-- 상세이미지 등록 시 아래에 미리보기 화면이 보여집니다 --</p></td>
+                                            <td style="font-size:12px; text-align: center; color:gray;">
+                                                <p>-- 상세이미지 등록 시 아래에 미리보기 화면이 보여집니다 --</p>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td align="center">
-                                                <div id="detail-img">
-                                                    상세 이미지
-                                                </div>
+                                            <td align="center" style="width:100%; padding:0; border:1px solid lightgray;">
+                                                <img id="detail-img-area">
                                             </td>
                                         </tr>
                                     </table>
                                 </div>
                         </form>
                     </div>
+
+                    <script>
+
+                        function loadImg(inputFile, num){
+                            if(inputFile.files.length == 1){ // 파일 선택된 경우 => 파일 읽어들여서 미리보기
+
+                                const reader = new FileReader();
+
+                                reader.readAsDataURL(inputFile.files[0]);
+
+                                reader.onload = function(e){ // 읽어들인 파일 => 매개변수 e
+
+                                    switch(num){
+                                        case 1 : $("#main-img-area").attr("src", e.target.result); break;
+                                        case 2 : $("#detail-img-area").attr("src", e.target.result); break;
+                                    }
+        
+                                }
+        
+                            } else { // 선택된 파일이 취소된 경우 => 미리보기된 것도 사라지게
+        
+                                switch(num){
+                                    case 1 : $("#main-img-area").attr("src", null); break;
+                                    case 2 : $("#detail-img-area").attr("src", null); break;
+                                }
+        
+                            }
+        
+                        }
+
+                    </script>
                     
                     <!-- Modal footer -->
                     <div class="modal-footer button-area">
@@ -599,13 +639,7 @@
                 </div>
             </div>
     </div>
-    <script>
-		$(document).ready(function(){
-			$("#insert-product-btn").click(function(){
-			$("#insert-product-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
+    
 
 
     <!-- 상품등록 성공 모달창 -->

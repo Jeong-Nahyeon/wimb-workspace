@@ -16,6 +16,9 @@ public class Product {
 	private int pStock; // 현재 재고수량
 	private String pKeyword; // 검색 키워드
 	
+	private String mainImgPath; // 대표이미지 파일경로 추가
+	private String detailImgPath; // 상세이미지 파일경로 추가
+	
 	
 	public Product() {}
 

@@ -1,10 +1,14 @@
 package com.wimb.product.model.service;
 
-import static com.wimb.common.JDBCTemplate.*;
+import static com.wimb.common.JDBCTemplate.close;
+import static com.wimb.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
+import com.wimb.common.model.vo.PageInfo;
 import com.wimb.product.model.dao.ProductDao;
+import com.wimb.product.model.vo.Product;
 
 public class ProductService {
 	
@@ -20,6 +24,19 @@ public class ProductService {
 		close(conn);
 		
 		return listCount;
+		
+	}
+	
+	
+	public ArrayList<Product> selectProductList(PageInfo pi){
+		
+		Connection conn = getConnection();
+				
+		ArrayList<Product> totalList = new ProductDao().selectProductList(conn, pi);
+		
+		close(conn);
+		
+		return totalList;
 		
 	}
 
