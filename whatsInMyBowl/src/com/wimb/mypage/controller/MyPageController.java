@@ -42,7 +42,11 @@ public class MyPageController extends HttpServlet {
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		ArrayList<MyOrders> list1 = new MyPageService().selectOrderList(m);
-		ArrayList<MyOrders> list2 = new MyPageService().selectMainPagePostStatus(m);
+		MyOrders od1 = new MyPageService().orderStatus1(m);
+		MyOrders od2 = new MyPageService().orderStatus2(m);
+		MyOrders od3 = new MyPageService().orderStatus3(m);
+		MyOrders od4 = new MyPageService().orderStatus4(m);
+		MyOrders od5 = new MyPageService().orderStatus5(m);
 		
 		// 로그인 조건검사
 		if(session.getAttribute("loginUser") == null) {
@@ -55,7 +59,11 @@ public class MyPageController extends HttpServlet {
 			
 			// 로그인 후 : myPage메인
 			request.setAttribute("orderlist", list1);
-			request.setAttribute("orderstatus", list2);
+			request.setAttribute("od1", od1);
+			request.setAttribute("od2", od2);
+			request.setAttribute("od3", od3);
+			request.setAttribute("od4", od4);
+			request.setAttribute("od5", od5);
 			request.getRequestDispatcher("views/mypage/myPageMain.jsp").forward(request, response);
 			
 		}

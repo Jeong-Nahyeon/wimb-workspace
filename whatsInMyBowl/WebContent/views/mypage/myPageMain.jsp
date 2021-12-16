@@ -2,8 +2,11 @@
     pageEncoding="UTF-8" import="com.wimb.mypage.model.vo.MyOrders, java.util.ArrayList"%>
 <%
 	ArrayList<MyOrders> list1 = (ArrayList<MyOrders>)request.getAttribute("orderlist");
-	ArrayList<MyOrders> list2 = (ArrayList<MyOrders>)request.getAttribute("orderstatus");
-	
+	MyOrders od1 = (MyOrders)request.getAttribute("od1");
+	MyOrders od2 = (MyOrders)request.getAttribute("od2");
+	MyOrders od3 = (MyOrders)request.getAttribute("od3");
+	MyOrders od4 = (MyOrders)request.getAttribute("od4");
+	MyOrders od5 = (MyOrders)request.getAttribute("od5");
 	
 %>
 <!DOCTYPE html>
@@ -227,66 +230,24 @@
                 <span style="font-size: 12pt;"><b>최근 주문 정보</b></span>
                 <span style="font-size: 8pt; color: gray;"> 최근 30일 내에 주문하신 내역입니다.</span>
                 <!--더보기 클릭시 주문목록/배송조회페이지 이동-->
-                <span id="plus"><a onclick="$(#plus-form).submit();"><i class="fas fa-plus-square">&nbsp;더보기</i></a></span>
-            	<Form id="plus-form" action="<%= contextPath %>/orderList.my" method="post">
-                    <input type="hidden" name="mCode" value="<%= loginUser.getmCode() %>">
-                </Form>
-            
+                <span id="plus"><a href="<%= contextPath %>/orderList.my"><i class="fas fa-plus-square">&nbsp;더보기</i></a></span>
             </div>
             
+
             
-            <% for(MyOrders od : list2) {
-    				System.out.println(od);
-    		}
-    		
-    		%>
-                		
-               	
-            
-            
-            <table class="orderStatus" align="center" border=1>
+            <table class="orderStatus" align="center">
                 <tr>
-                	<% for(MyOrders od : list2) { %>
                 		
-                		<% if(!od.getOrderStatus().equals("결제대기")) { %>
-                			 <th rowspan="2">0</th>
-                			 <th rowspan="2"></th>
-                		<% }else if(od.getOrderStatus().equals("결제대기")) { %>
-                			 <th rowspan="2"><%= od.getStatusCount() %></th>
-                			 <th rowspan="2"></th>
-                		<% } %>
+           			 <th rowspan="2"><%= od1.getStatusCount() %></th>
+           			 <th rowspan="2"></th>
+           			 <th rowspan="2"><%= od2.getStatusCount() %></th>
+           			 <th rowspan="2"></th>
+           			 <th rowspan="2"><%= od3.getStatusCount() %></th>
+           			 <th rowspan="2"></th>
+           			 <th rowspan="2"><%= od4.getStatusCount() %></th>
+           			 <th rowspan="2"></th>
+           			 <th rowspan="2"><%= od5.getStatusCount() %></th>
                 		
-                		<% if(!od.getOrderStatus().equals("결제완료")) { %>
-                			 <th rowspan="2">0</th>
-                			 <th rowspan="2"></th>
-                		<% }else if(od.getOrderStatus().equals("결제완료")) { %>
-                			 <th rowspan="2"><%= od.getStatusCount() %></th>
-                			 <th rowspan="2"></th>
-                		<% } %>
-                		
-                		<% if(!od.getOrderStatus().equals("배송준비")) { %>
-                			 <th rowspan="2">0</th>
-                			 <th rowspan="2"></th>
-                		<% }else if(od.getOrderStatus().equals("배송준비")) { %>
-                			 <th rowspan="2"><%= od.getStatusCount() %></th>
-                			 <th rowspan="2"></th>
-                		<% } %>
-                		
-                		<% if(!od.getOrderStatus().equals("배송중")) { %>
-                			 <th rowspan="2">0</th>
-                			 <th rowspan="2"></th>
-                		<% }else if(od.getOrderStatus().equals("배송중")) { %>
-                			 <th rowspan="2"><%= od.getStatusCount() %></th>
-                			 <th rowspan="2"></th>
-                		<% } %>
-                		
-                		<% if(!od.getOrderStatus().equals("배송완료")) { %>
-                			 <th rowspan="2">0</th>
-                		<% }else if(od.getOrderStatus().equals("배송완료")){ %>
-                			 <th rowspan="2"><%= od.getStatusCount() %></th>
-                		<% } %>
-                		
-               		<% } %>
                 </tr>
                 <tr>
                 </tr>

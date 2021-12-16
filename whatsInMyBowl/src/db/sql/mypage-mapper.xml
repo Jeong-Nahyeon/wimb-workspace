@@ -23,14 +23,69 @@
            AND ORDER_DATE BETWEEN (SYSDATE - 30) AND SYSDATE
 	</entry>
 	
-	<entry key="selectMainPagePostStatus">
-		SELECT 
-		       ORDER_STATUS
-		     , COUNT(ORDER_STATUS) "COUNT"
+	<entry key="orderStatus1">
+		SELECT
+		       COUNT(ORDER_STATUS) "COUNT"
 		  FROM "ORDER"
-		 WHERE M_CODE = ?
-		   <!-- AND ORDER_DATE BETWEEN (SYSDATE - 30) AND SYSDATE  -->
-		 GROUP BY ORDER_STATUS
+		 WHERE ORDER_STATUS = '결제대기'
+		   AND ORDER_DATE BETWEEN (SYSDATE - 30) AND SYSDATE
+		   AND M_CODE = ?
+	</entry>
+	
+	<entry key="orderStatus2">
+		SELECT
+		       COUNT(ORDER_STATUS) "COUNT"
+		  FROM "ORDER"
+		 WHERE ORDER_STATUS = '결제완료'
+		   AND ORDER_DATE BETWEEN (SYSDATE - 30) AND SYSDATE
+		   AND M_CODE = ?
+	</entry>
+	
+	<entry key="orderStatus3">
+		SELECT
+		       COUNT(ORDER_STATUS) "COUNT"
+		  FROM "ORDER"
+		 WHERE ORDER_STATUS = '배송준비'
+		   AND ORDER_DATE BETWEEN (SYSDATE - 30) AND SYSDATE
+		   AND M_CODE = ?
+	</entry>
+	
+	<entry key="orderStatus4">
+		SELECT
+		       COUNT(ORDER_STATUS) "COUNT"
+		  FROM "ORDER"
+		 WHERE ORDER_STATUS = '배송중'
+		   AND ORDER_DATE BETWEEN (SYSDATE - 30) AND SYSDATE
+		   AND M_CODE = ?
+	</entry>
+	
+	<entry key="orderStatus5">
+		SELECT
+		       COUNT(ORDER_STATUS) "COUNT"
+		  FROM "ORDER"
+		 WHERE ORDER_STATUS = '배송완료'
+		   AND ORDER_DATE BETWEEN (SYSDATE - 30) AND SYSDATE
+		   AND M_CODE = ?
+	</entry>
+	
+	<entry key="orderListDetail">
+		SELECT
+		       ORDER_CODE
+		     , ORDER_AMOUNT
+		     , ORDER_COMPANY
+		     , ORDER_INVOICE
+		     , ORDER_STATUS
+		     , ORDER_DATE
+		     , CU_NAME
+		     , P_NAME
+		     , P_MAINIMG
+		     , PM_TOTALCOST
+		  FROM "ORDER" OD
+		  JOIN SUBORDER USING (ORDER_CODE)
+		  JOIN PAYMENT USING (PM_CODE)
+		  LEFT JOIN CUSTOM USING (CU_CODE)
+		  LEFT JOIN PRODUCT USING (P_CODE)
+		 WHERE OD.M_CODE = ?
 	</entry>
 
 	<entry key="selectInquiryList">

@@ -16,23 +16,73 @@ public class MyPageService {
 	
 	public ArrayList<MyOrders> selectOrderList(Member m) {
 		Connection conn = getConnection();
-		
 		ArrayList<MyOrders> list1 = new MyPageDao().selectOrderList(conn, m);
-		
 		close(conn);
 		return list1;
-	
 	}
 	
-	public ArrayList<MyOrders> selectMainPagePostStatus(Member m) {
+	// od1
+	public MyOrders orderStatus1(Member m) {
 		Connection conn = getConnection();
 		
-		ArrayList<MyOrders> list2 = new MyPageDao().selectMainPagePostStatus(conn, m);
+		MyOrders od = new MyPageDao().orderStatus1(conn, m);
 		
 		close(conn);
-		return list2;
+		return od;
 	
 	}
+	
+	// od2
+	public MyOrders orderStatus2(Member m) {
+		Connection conn = getConnection();
+		
+		MyOrders od = new MyPageDao().orderStatus2(conn, m);
+		
+		close(conn);
+		return od;
+	
+	}
+	
+	// od3
+	public MyOrders orderStatus3(Member m) {
+		Connection conn = getConnection();
+		
+		MyOrders od = new MyPageDao().orderStatus3(conn, m);
+		
+		close(conn);
+		return od;
+	
+	}
+	
+	// od4
+	public MyOrders orderStatus4(Member m) {
+		Connection conn = getConnection();
+		
+		MyOrders od = new MyPageDao().orderStatus4(conn, m);
+		
+		close(conn);
+		return od;
+	
+	}
+	
+	// od5
+	public MyOrders orderStatus5(Member m) {
+		Connection conn = getConnection();
+		
+		MyOrders od = new MyPageDao().orderStatus5(conn, m);
+		
+		close(conn);
+		return od;
+	
+	}
+	
+	public ArrayList<MyOrders> orderListDetail(Member m) {
+		Connection conn = getConnection();
+		ArrayList<MyOrders> list = new MyPageDao().orderListDetail(conn, m);
+		close(conn);
+		return list;
+	}
+	
 	
 	// inquiry 목록조회
 	public ArrayList<Inquiry> selectInquiryList() {

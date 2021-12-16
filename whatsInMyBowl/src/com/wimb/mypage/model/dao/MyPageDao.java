@@ -68,27 +68,20 @@ public class MyPageDao {
 		
 	}
 	
-		// 최근 30일 주문정보 (배송현황) 조회
-		public ArrayList<MyOrders> selectMainPagePostStatus(Connection conn, Member m) {
-			
-			ArrayList<MyOrders> list = new ArrayList<>();
+		// 최근 30일 주문정보 (배송현황) 조회1
+		public MyOrders orderStatus1(Connection conn, Member m) {
+			MyOrders od = null;
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
-			String sql = prop.getProperty("selectMainPagePostStatus");
+			String sql = prop.getProperty("orderStatus1");
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, m.getmCode());
-				
 				rset = pstmt.executeQuery();
 				
-				while(rset.next()) {
-					MyOrders mo = new MyOrders();
-					mo.setOrderStatus(rset.getString("order_status"));
-					mo.setStatusCount(rset.getInt("count"));
-					
-					
-					list.add(mo);	
+				if(rset.next()) {
+					od = new MyOrders(rset.getInt("count"));	
 				}
 				
 			} catch (SQLException e) {
@@ -97,12 +90,137 @@ public class MyPageDao {
 				close(rset);
 				close(pstmt);
 			}
-			return list;
-			
+			return od;
 			
 		}
-	
-	// inquiry 목록조회
+		
+		// 최근 30일 주문정보 (배송현황) 조회2
+		public MyOrders orderStatus2(Connection conn, Member m) {
+			MyOrders od = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("orderStatus2");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, m.getmCode());
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					od = new MyOrders(rset.getInt("count"));	
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return od;
+			
+		}
+		
+		// 최근 30일 주문정보 (배송현황) 조회3
+		public MyOrders orderStatus3(Connection conn, Member m) {
+			MyOrders od = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("orderStatus3");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, m.getmCode());
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					od = new MyOrders(rset.getInt("count"));	
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return od;
+			
+		}
+		
+		
+		// 최근 30일 주문정보 (배송현황) 조회4
+		public MyOrders orderStatus4(Connection conn, Member m) {
+			MyOrders od = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("orderStatus4");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, m.getmCode());
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					od = new MyOrders(rset.getInt("count"));	
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return od;
+			
+		}
+		
+		
+		// 최근 30일 주문정보 (배송현황) 조회5
+		public MyOrders orderStatus5(Connection conn, Member m) {
+			MyOrders od = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("orderStatus5");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, m.getmCode());
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					od = new MyOrders(rset.getInt("count"));	
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return od;
+			
+		}
+		
+		public ArrayList<MyOrders> orderListDetail(Connection conn, Member m) {
+			ArrayList<MyOrders> list = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("orderListDetail");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, m.getmCode());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rset);
+			}
+			return list;
+			
+		}
+		
+		
+		// inquiry 목록조회
 		public ArrayList<Inquiry> selectInquiryList(Connection conn) {
 			// 여러행 ArrayList<Inquiry>객체
 			ArrayList<Inquiry> list = new ArrayList<>(); // 텅빈리스트
