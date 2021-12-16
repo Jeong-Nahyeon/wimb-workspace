@@ -8,7 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.wimb.member.model.vo.Member;
 import com.wimb.mypage.model.service.MyPageService;
 import com.wimb.mypage.model.vo.MyOrders;
 
@@ -34,16 +36,15 @@ public class OrderPostListController extends HttpServlet {
 		
 		
 		// 전달값 기록
-		int mCode = Integer.parseInt(request.getParameter("mCode"));
+		HttpSession session = request.getSession();
 		
+		Member m = (Member)session.getAttribute("loginUser");		
 		// 요청처리
-		ArrayList<MyOrders> list = new MyPageService().selectOrderList(mCode);
+		ArrayList<MyOrders> list = new MyPageService().orderListDetail(m);
 		
 		// 응답뷰
 		request.getSession().setAttribute("list", list);
 		request.getRequestDispatcher("views/mypage/orderPostList.jsp").forward(request, response);
-		
-		
 	}
 
 	/**
