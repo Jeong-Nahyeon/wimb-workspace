@@ -22,6 +22,29 @@ public class CustomDao {
 		}
 	}
 	
+	public int selectListCount(Connection conn) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+	
 	// 커스텀 페이지 오른쪽 - 재료목록조회
 	public ArrayList<Item> selectItemList(Connection conn){
 		// select
@@ -39,8 +62,11 @@ public class CustomDao {
 				list.add(new Item(rset.getString("ci_code"),
 						   rset.getString("ci_name"),
 						   rset.getString("ci_category"),
+						   rset.getString("ci_provider"),
+						   rset.getInt("ci_provideprice"),
 						   rset.getInt("ci_price"),
 						   rset.getString("ci_mainimg"),
+						   rset.getString("ci_show"),
 						   rset.getInt("ci_stock")
 					 	   ));
 			}

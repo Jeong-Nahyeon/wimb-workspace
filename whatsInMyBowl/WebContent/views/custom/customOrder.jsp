@@ -287,7 +287,7 @@
                     </div>
 
                     <div class="custom_list">
-                        <form action="" method="">
+                        <!--<form action="" method="">-->
                             <div class="customlist_name">
                                 <span>샐러드 이름</span>
                                 <input type="text" name="saladName" id="saladName">
@@ -350,7 +350,7 @@
                                 <button type="submit" id="customlist_btn_submit" onclick="insertCustomOrder();">샐러드 추가</button>
                             </div>
 
-                        </form>
+                        <!--</form>-->
                     </div>
 
                     <div class="custom_order">
@@ -696,13 +696,18 @@
                     }
 
                     function insertCustomOrder(){
-                        var arrVagetable = [];
+                        var arrItemCode = [];
+                        var arrItemCount = [];
 
                         $(".ci_getCode").each(function(){
-                            arrVagetable.push($(this).val());
+                            arrItemCode.push($(this).val());
                         });
+                        $(".ci_getCount").each(function(){
+                            arrItemCount.push($(this).val());
+                        })
 
-                        console.log(arrVagetable);
+                        console.log(arrItemCode);
+                        console.log(arrItemCount);
                     }
                 </script>
                 

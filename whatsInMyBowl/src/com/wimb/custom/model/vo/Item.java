@@ -9,13 +9,13 @@ public class Item {
 	private int ciProvidePrice;
 	private int ciPrice;
 	private String ciImg;
-	private char ciShow;
+	private String ciShow;
 	private int ciStock;
 	
 	public Item() {}
 
 	public Item(String ciCode, String ciName, String ciCategory, String ciProvider, int ciProvidePrice, int ciPrice,
-			String ciImg, char ciShow, int ciStock) {
+			String ciImg, String ciShow, int ciStock) {
 		super();
 		this.ciCode = ciCode;
 		this.ciName = ciName;
@@ -95,11 +95,11 @@ public class Item {
 		this.ciImg = ciImg;
 	}
 
-	public char getCiShow() {
+	public String getCiShow() {
 		return ciShow;
 	}
 
-	public void setCiShow(char ciShow) {
+	public void setCiShow(String ciShow) {
 		this.ciShow = ciShow;
 	}
 
