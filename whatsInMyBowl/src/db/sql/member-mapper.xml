@@ -30,14 +30,60 @@
 		  AND M_PWD = ?
 		  AND (M_STATUS = 'Y'
 		   OR M_STATUS = 'A')
-	
 	</entry>
 
+	<!-- 아이디 더블체크 -->
+	<entry key="idCheck">
+		SELECT
+		       COUNT(*) "COUNT"
+		  FROM MEMBER
+		 WHERE M_ID = ?
+	</entry>
 
+	<entry key="emailCheck">
+		SELECT
+		       COUNT(*) "COUNT"
+		  FROM MEMBER
+		 WHERE M_EMAIL = ?
+	</entry>
 
-
-
-
+	<entry key="insertMember">
+	INSERT
+	  INTO MEMBER
+	     (
+	       M_CODE
+	     , M_NAME
+	     , M_ID
+	     , M_PWD
+	     , M_PHONE
+	     , M_BIRTH
+	     , M_GENDER
+	     , M_ADDRESS
+	     , M_SUBADDRESS
+	     , M_POSTCODE
+	     , M_EMAIL
+	     , M_INTRODUCER
+	     , M_AD
+	     , M_POINT
+	     )
+	VALUES
+	    (
+	      SEQ_MEMBER.NEXTVAL
+	    , ?
+	    , ?
+	    , ?
+	    , ?
+	    , ?
+	    , ?
+	    , ?
+	    , ?
+	    , ?
+	    , ?
+	    , ?
+	    , ?
+	    , 1000
+	    )
+	</entry>
 
 
 

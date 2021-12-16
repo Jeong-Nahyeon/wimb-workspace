@@ -11,20 +11,35 @@ import com.wimb.member.model.vo.Member;
 public class MemberService {
 	
 	// 관리자 로그인
-	public Member loginMember(String mId, String mPwd) {
+	public Member loginMember(String userId, String userPwd) {
 		
 		Connection conn = getConnection();
-		Member m = new MemberDao().loginMember(conn, mId, mPwd);
+		Member m = new MemberDao().loginMember(conn, userId, userPwd);
 		
 		close(conn);
 		return m;	
 	}
 	
+	// 아이디 더블체크
+	public int idCheck(String checkId) {
+		
+		Connection conn = getConnection();
+		int count = new MemberDao().idCheck(conn, checkId);
+		
+		close(conn);
+		return count;
+	}
 	
+	public int emailCheck(String checkEmail) {
+			
+			Connection conn = getConnection();
+			int count = new MemberDao().emailCheck(conn, checkEmail);
+			
+			close(conn);
+			return count;
+	}
 	
-	
-	
-	
+	//public int insertMember()
 	
 	
 

@@ -1,24 +1,26 @@
 package com.wimb.member.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import com.wimb.member.model.service.MemberService;
 
 /**
- * Servlet implementation class MemberEnrollFormController
+ * Servlet implementation class AjaxMemberIdCheckController
  */
-@WebServlet("/enrollForm.me")
-public class MemberEnrollFormController extends HttpServlet {
+@WebServlet("/idCheck.me")
+public class AjaxMemberIdCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberEnrollFormController() {
+    public AjaxMemberIdCheckController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,12 +29,17 @@ public class MemberEnrollFormController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		String checkId = request.getParameter("checkId");
 		
+		int count =  new MemberService().idCheck(checkId);
 		
+		if(count > 0) {
+			response.getWriter().print("NNNNN");
+		}else {
+			response.getWriter().print("NNNNY");
+		}
 		
-		// 회원가입 정보입력 응답페이지
-		request.getRequestDispatcher("views/member/memberEnrollForm.jsp").forward(request, response);
-						
 	}
 
 	/**

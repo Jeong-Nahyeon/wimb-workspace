@@ -6,19 +6,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import com.wimb.member.model.service.MemberService;
 
 /**
- * Servlet implementation class MemberEnrollFormController
+ * Servlet implementation class AjaxMemberEmailCheckController
  */
-@WebServlet("/enrollForm.me")
-public class MemberEnrollFormController extends HttpServlet {
+@WebServlet("/emailCheck.me")
+public class AjaxMemberEmailCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberEnrollFormController() {
+    public AjaxMemberEmailCheckController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,11 +29,17 @@ public class MemberEnrollFormController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String checkEmail = request.getParameter("checkEmail");
+			
+			int count =  new MemberService().emailCheck(checkEmail);
+			
+			if(count > 0) {
+				response.getWriter().print("NNNNN");
+			}else {
+				response.getWriter().print("NNNNY");
+			}
+			
 		
-		
-		// 회원가입 정보입력 응답페이지
-		request.getRequestDispatcher("views/member/memberEnrollForm.jsp").forward(request, response);
-						
 	}
 
 	/**

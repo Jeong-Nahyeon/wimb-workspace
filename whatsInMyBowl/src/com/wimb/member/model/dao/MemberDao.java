@@ -28,7 +28,7 @@ public class MemberDao {
 	}
 	
 	// 로그인
-	public Member loginMember(Connection conn, String mId, String mPwd) {
+	public Member loginMember(Connection conn, String userId, String userPwd) {
 		
 		Member m = null;
 		PreparedStatement pstmt = null;
@@ -38,8 +38,8 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, mId);
-			pstmt.setString(2, mPwd);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userPwd);
 			
 			rset = pstmt.executeQuery();
 			
@@ -77,7 +77,59 @@ public class MemberDao {
 		return m;
 	}
 	
+	public int idCheck(Connection conn, String checkId) {
+		
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("idCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, checkId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return count;
+	}
 	
+	public int emailCheck(Connection conn, String checkEmail) {
+		
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("emailCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, checkEmail);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return count;
+	}
 	
 	
 	

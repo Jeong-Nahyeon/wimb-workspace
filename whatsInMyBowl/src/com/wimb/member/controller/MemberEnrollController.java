@@ -1,24 +1,26 @@
 package com.wimb.member.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import com.wimb.member.model.service.MemberService;
 
 /**
- * Servlet implementation class MemberEnrollFormController
+ * Servlet implementation class MemberEnrollController
  */
-@WebServlet("/enrollForm.me")
-public class MemberEnrollFormController extends HttpServlet {
+@WebServlet("/enroll.me")
+public class MemberEnrollController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberEnrollFormController() {
+    public MemberEnrollController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,11 +30,10 @@ public class MemberEnrollFormController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String userName = request.getParameter("userName");
 		
+		//int result = new MemberService().insertMember();
 		
-		// 회원가입 정보입력 응답페이지
-		request.getRequestDispatcher("views/member/memberEnrollForm.jsp").forward(request, response);
-						
 	}
 
 	/**
