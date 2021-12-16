@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.wimb.member.model.vo.Member;
 import com.wimb.mypage.model.vo.Inquiry;
 import com.wimb.mypage.model.vo.MyOrders;
 
@@ -31,7 +32,7 @@ public class MyPageDao {
 	// Properties 객체 생성 끝
 	
 	// 1
-	public ArrayList<MyOrders> selectOrderList(Connection conn, int mCode) {
+	public ArrayList<MyOrders> selectOrderList(Connection conn, Member m) {
 		ArrayList<MyOrders> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -39,12 +40,12 @@ public class MyPageDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, mCode);
+			pstmt.setInt(1, m.getmCode());
 			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				MyOrders mo = new MyOrders(rset.getInt("order_code"),
+				MyOrders mo = new MyOrders(rset.getString("order_code"),
 										   rset.getInt("order_amount"),
 										   rset.getString("order_company"),
 										   rset.getString("order_invoice"),

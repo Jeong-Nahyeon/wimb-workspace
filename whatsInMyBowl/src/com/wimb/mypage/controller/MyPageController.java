@@ -1,12 +1,19 @@
 package com.wimb.mypage.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.wimb.member.model.vo.Member;
+import com.wimb.mypage.model.service.MyPageService;
+import com.wimb.mypage.model.vo.MyOrders;
+
 
 /**
  * Servlet implementation class MyPageController
@@ -27,9 +34,14 @@ public class MyPageController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
+		
 		// 세션객체 얻어오기
 		HttpSession session = request.getSession();
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		ArrayList<MyOrders> list = new MyPageService().selectOrderList(m);
 		
 		// 로그인 조건검사
 		if(session.getAttribute("loginUser") == null) {
@@ -41,6 +53,7 @@ public class MyPageController extends HttpServlet {
 		} else {
 			
 			// 로그인 후 : myPage메인
+			request.setAttribute("orderlist", list);
 			request.getRequestDispatcher("views/mypage/myPageMain.jsp").forward(request, response);
 			
 		}

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.wimb.mypage.model.vo.MyOrders, java.util.ArrayList"%>
+<%
+	ArrayList<MyOrders> list = (ArrayList<MyOrders>)request.getAttribute("orderlist");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -118,7 +121,10 @@
         margin-left: 230px;
         border-top: 2px solid black ;
     }
-    a { text-decoration:none}
+    a:link { 
+    	text-decoration:none;
+    	color:black;
+    }
     #like{text-align: center;}
     #userImage #userName{
         display: inline-block;
@@ -141,17 +147,17 @@
 	<%@ include file="../common/menubar.jsp" %>
 		
     <div class="outer">
-		<input type="hidden" name="mCode" value="<%= loginUser.getmCode() %>">
+		
         <!-- 사용자 적립금/찜하기 테이블 시작-->
         <table id="usertable"  width="700" height="100">
             <tr>
                 <td rowspan="2" colspan="2" align="right" width="200">
                    <div id="userImage"><img src="https://www.w3schools.com/howto/img_avatar.png" alt="userImg" class="userImg"></div>
-                    <div id="userName"><h5><a href="">홍길동</a>님</h5></div>
+                    <div id="userName"><h5><a href=""><%= loginUser.getmName() %></a>님</h5></div>
                 </td>
                 <td colspan="2" rowspan="2" width="80px" >
                     <div id="point">적립금<br><br>
-                        <a href="">0</a>원
+                        <a href=""><%= loginUser.getmPoint() %></a>원
                     </div>
                 </td>
                 
@@ -218,7 +224,11 @@
                 <span style="font-size: 12pt;"><b>최근 주문 정보</b></span>
                 <span style="font-size: 8pt; color: gray;"> 최근 30일 내에 주문하신 내역입니다.</span>
                 <!--더보기 클릭시 주문목록/배송조회페이지 이동-->
-                <span id="plus"><a href="<%= contextPath %>/orderList.my"><i class="fas fa-plus-square">&nbsp;더보기</i></a></span>
+                <span id="plus"><a onclick="$(#plus-form).submit();"><i class="fas fa-plus-square">&nbsp;더보기</i></a></span>
+            	<Form id="plus-form" action="<%= contextPath %>/orderList.my" method="post">
+                    <input type="hidden" name="mCode" value="<%= loginUser.getmCode() %>">
+                </Form>
+            
             </div>
 
             
@@ -257,34 +267,32 @@
                     <th style="width:80px;">주문상태</th>
                 </tr>
                 </thead>
-
-                <!--case1. 최근 주문내역이 없을 때-->
-                <tbody>
-                    <tr>
-                        <td colspan="4" height="200">최근 주문 정보가 없습니다.</td>
-                    </tr>
-                </tbody>
-                <!--case2. 최근 주문내역이 있을 때 (if(sysdate-30일))-->
-                <tbody>
-                    <tr>
-                        <td>2021-11-15<br>[20211115131234]</td>
-                        <td><a href="상품상세페이지"><img src="">닭가슴살 샐러드</a></td>
-                        <td>7,900원/1개</td>
-                        <td><a href="주문목록/배송조회 이동">배송중</a></td>
-                    </tr>
-                    <tr>
-                        <td>2021-11-15<br>[20211115131234]</td>
-                        <td><a href="상품상세페이지"><img src="">닭가슴살 샐러드</a></td>
-                        <td>7,900원/1개</td>
-                        <td><a href="주문목록/배송조회 이동">배송중</a></td>
-                    </tr>
-                    <tr>
-                        <td>2021-11-15<br>[20211115131234]</td>
-                        <td><a href="상품상세페이지"><img src="">닭가슴살 샐러드</a></td>
-                        <td>7,900원/1개</td>
-                        <td><a href="주문목록/배송조회 이동">배송중</a></td>
-                    </tr>
-                </tbody>
+				
+				<% if(list.isEmpty()) { %>
+	                <!--case1. 최근 주문내역이 없을 때-->
+	                <tbody>
+	                    <tr>
+	                        <td colspan="4" height="200">최근 주문 정보가 없습니다.</td>
+	                    </tr>
+	                </tbody>
+                <% } else { %>
+                		
+                		<% for(MyOrders mo : list) { %>
+	                <!--case2. 최근 주문내역이 있을 때 (if(sysdate-30일))-->
+	                <tbody>
+	                    <tr>
+	                        <td><%= mo.getOrderDate() %><br>[<%= mo.getOrderCode() %>]</td>
+	                        <% if(mo.getpName() == null) { // 커스텀상품일시 %>
+	                        	<td><a href="상품상세페이지"><img src=""><%= mo.getCuName() %></a></td>
+	                        <% }else { // 완제품일시 %>
+	                        	<td><a href="상품상세페이지"><img src=""><%= mo.getpName() %></a></td>
+                        	<% } %>
+	                        <td><%= mo.getPmTotalCost() %>/<%= mo.getOrderAmount() %></td>
+	                        <td><a href="주문목록/배송조회 이동"><%= mo.getOrderStatus() %></a></td>
+	                    </tr>
+	                </tbody>
+	                	<% } %>
+                <% } %>
             </table>
         </div>
 
