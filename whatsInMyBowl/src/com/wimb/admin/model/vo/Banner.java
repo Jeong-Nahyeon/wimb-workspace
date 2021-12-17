@@ -14,6 +14,8 @@ public class Banner {
 	private String bOriginName; // 파일 원본명
 	private String bChangeName; // 파일 수정명
 	
+	private String mainImg;     // 메인에 등록할 파일 경로
+	
 	public Banner() {}
 
 	public Banner(int bCode, String bName, Date startDate, String status, String bPostion, String bPath,
@@ -45,6 +47,13 @@ public class Banner {
 		this.startDate = startDate;
 		this.status = status;
 		this.bPostion = bPostion;
+	}
+
+	public Banner(int bCode, String bName, String bOriginName) {
+		super();
+		this.bCode = bCode;
+		this.bName = bName;
+		this.bOriginName = bOriginName;
 	}
 
 	public int getbCode() {
@@ -109,6 +118,14 @@ public class Banner {
 
 	public void setbChangeName(String bChangeName) {
 		this.bChangeName = bChangeName;
+	}
+
+	public String getMainImg() {
+		return mainImg;
+	}
+
+	public void setMainImg(String mainImg) {
+		this.mainImg = mainImg;
 	}
 
 	@Override

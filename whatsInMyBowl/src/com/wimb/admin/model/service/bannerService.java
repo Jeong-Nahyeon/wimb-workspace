@@ -78,12 +78,12 @@ public class bannerService {
 		 return listCount;
 	}
 	
-	// 메인1에 등록된 배너를 조회하는 Service
-	public Banner selectFirstMainBanner(){
+	// 메인1 글씨 오른쪽 '변경하기'버튼 클릭 시 생성되는 모달창 안에 띄워줄 게시종료 상태 리스트
+	public ArrayList<Banner> selectFisrtMainList(){
 		Connection conn = getConnection();
-		ArrayList<Banner> list = new bannerDao().selectFirstMainBanner(conn);
+		ArrayList<Banner> list = new bannerDao().selectFisrtMainList(conn);
 		close(conn);
-		return b;
+		return list;
 	}	
 
 	

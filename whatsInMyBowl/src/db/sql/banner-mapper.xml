@@ -111,7 +111,20 @@
 		  FROM BANNER
          WHERE B_STATUS = 'N'
 	</entry>
-
+	
+	<!-- 메인1 글씨 오른쪽 '변경하기'버튼 클릭 시 생성되는 모달창 안에 띄워줄 게시종료 상태 리스트 -->
+	<entry key="selectFisrtMainList">
+		SELECT
+		       B_CODE
+		     , B_NAME
+		     , B_ORIGINNAME
+		     , B_PATH || B_CHANGENAME "FILEPATH"
+		  FROM BANNER
+		 WHERE B_STATUS = 'N'
+		 ORDER
+		    BY B_CODE DESC	
+	</entry>
+	
 
 
 

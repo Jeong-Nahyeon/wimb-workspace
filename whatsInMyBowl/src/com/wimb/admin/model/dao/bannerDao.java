@@ -232,8 +232,38 @@ public class bannerDao {
 		return listCount;
 	}
 	
-	
-	
+	// 메인1 글씨 오른쪽 '변경하기'버튼 클릭 시 생성되는 모달창 안에 띄워줄 게시종료 상태 리스트
+	public ArrayList<Banner> selectFisrtMainList(Connection conn){
+		
+		ArrayList<Banner> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("selectFisrtMainList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Banner b = new Banner();
+				b.setbCode(rset.getInt("b_code"));
+				b.setbName(rset.getString("b_name"));
+				b.setbOriginName(rset.getString("b_originname"));
+				b.setMainImg(rset.getString("filepath"));
+				
+				list.add(b);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+		
+	}
 	
 	
 	

@@ -10,6 +10,9 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
+	
+	// 메인1 '변경하기'버튼 클릭 시 생성되는 리스트 정보를 담은 객체
+	//ArrayList<Banner> Firstlist = (ArrayList<Banner>)request.getAttribute("Firstlist");
 %>
 <!DOCTYPE html>
 <html>
@@ -475,7 +478,6 @@
     </div>
     
     <!-- 메인 베너에서 메인1 변경하기 클릭 시 나타나는 등록된 베너 리스트 모달창 -->
-        
         <div class="mainblack_bg"></div>
         <div class="mainmodal_wrap">
 
@@ -486,21 +488,22 @@
                     <button type="button" class="mainBanner_btn_right">등록</button>
                 </div>
                 <form action="">
-    
-                    <table>
-                        <tr>
-                            <td colspan="4">
-                                <img class="inputMainImg" height="180" width="290px">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="radio" name="selectMainImg" style="margin: 0px 10px;"></td>
-                            <td>배너명</td>
-                            <td style="width: 3px;">-</td>
-                            <td>원본파일명</td>
-                        </tr>
-                    </table>
-                    
+    				
+    				
+	                    <table>
+	                        <tr>
+	                            <td colspan="4">
+	                                <img src="" class="inputMainImg" height="180" width="290px">
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td><input type="radio" name="selectMainImg" style="margin: 0px 10px;"></td>
+	                            <td>qqq</td>
+	                            <td style="width: 3px;">-</td>
+	                            <td>qqq</td>
+	                        </tr>
+	                    </table>
+				
                 </form>
             </div>
 
@@ -550,6 +553,7 @@
         }
     	
     	// 변경하기 버튼 시 띄워지는 메인등록1에 사용될 등록될 메인 리스트들
+    	/*
         window.onload = function() {
             
             function onClick() {
@@ -564,6 +568,7 @@
             document.getElementById('updatebtn1').addEventListener('click', onClick);
             document.querySelector('.mainmodal_close').addEventListener('click', offClick); 
         	};
+        	*/
     </script>
     
     
