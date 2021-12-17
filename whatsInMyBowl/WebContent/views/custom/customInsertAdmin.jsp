@@ -505,10 +505,10 @@
                                     <td colspan="2">
                                         <select name="ciCategory">
                                             <option>재료 구분</option>
-                                            <option value="vagetable">채소</option>
-                                            <option value="mainToppoing">메인토핑</option>
-                                            <option value="sideTopping">사이드토핑</option>
-                                            <option value="dressing">드레싱</option>
+                                            <option value="채소">채소</option>
+                                            <option value="메인토핑">메인토핑</option>
+                                            <option value="사이드토핑">사이드토핑</option>
+                                            <option value="드레싱">드레싱</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -536,21 +536,21 @@
                                     <th>노출여부</th>
                                     <td>
                                         <select name="ciShow">
-                                            <option value="">Y</option>
-                                            <option value="">N</option>
+                                            <option value="Y">Y</option>
+                                            <option value="N">N</option>
                                         </select>
                                     </td>
                                 </tr>
                             </table>
+                            <!-- Modal footer -->
+		                    <div class="modal-footer">
+		                        <div id="insert_btn_right">
+		                            <button type="submit" class="btn btn-sm btn btn-outline-warning">등록</button>
+		                        </div>
+		                    </div>
                         </form>
                     </div>
-            
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <div id="insert_btn_right">
-                            <button type="submit" class="btn btn-sm btn btn-outline-warning">등록</button>
-                        </div>
-                    </div>
+                    
             
                 </div>
                 </div>

@@ -49,5 +49,18 @@ public class CustomService {
 		return result;
 	}
 	
+	// 재료등록
+	public int insertItemAdmin(Item i) {
+		Connection conn = getConnection();
+		int result = new CustomDao().insertItemAdmin(conn, i);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
+	
 
 }

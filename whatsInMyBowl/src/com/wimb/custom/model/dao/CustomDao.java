@@ -139,7 +139,31 @@ public class CustomDao {
 	}
 	
 	
-	
+	// 재료등록
+	public int insertItemAdmin(Connection conn, Item i) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertItemAdmin");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, i.getCiName());
+			pstmt.setString(2, i.getCiCategory());
+			pstmt.setString(3, i.getCiProvider());
+			pstmt.setInt(4, i.getCiProvidePrice());
+			pstmt.setInt(5, i.getCiPrice());
+			pstmt.setInt(6, i.getCiStock());
+			pstmt.setString(7, i.getCiShow());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 	
 	

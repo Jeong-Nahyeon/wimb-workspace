@@ -31,6 +31,8 @@ public class AdminItemInsertController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8");
+		
 		String category = request.getParameter("ciCategory");
 		String name = request.getParameter("ciName");
 		int price = Integer.parseInt(request.getParameter("ciPrice"));
@@ -42,6 +44,14 @@ public class AdminItemInsertController extends HttpServlet {
 		Item i = new Item(name, category, provider, providePrice, price, show, stock);
 		
 		int result = new CustomService().insertItemAdmin(i);
+		
+		if(result > 0) {
+			request.getSession().setAttribute("alertMsg", "재료 등록 성공");
+			response.sendRedirect(request.getContextPath() + "/aitem.cu?cupage=1");
+		} else {
+			request.setAttribute("errorMsg", "재료 등록 실패");
+			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**

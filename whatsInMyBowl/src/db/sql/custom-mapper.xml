@@ -32,5 +32,33 @@
 		UPDATE ITEM
   		   SET CI_MAINIMG = ?
 	</entry>
+	
+	<entry key="insertItemAdmin">
+		INSERT 
+		  INTO ITEM
+		  (
+		    CI_CODE
+		  , CI_NAME
+		  , CI_CATEGORY
+		  , CI_PROVIDER
+		  , CI_PROVIDEPRICE
+		  , CI_PRICE
+		  , CI_MAINIMG
+		  , CI_STOCK
+		  , CI_SHOW
+		  )
+		  VALUES
+		  (
+		    'CI' || SEQ_ITEM.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , (SELECT CI_MAINIMG FROM ITEM WHERE CI_CODE = 'CI1001')
+		  , ?
+		  , ?
+		  )
+	</entry>
 
 </properties>
