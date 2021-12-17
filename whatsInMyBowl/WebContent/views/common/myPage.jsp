@@ -22,9 +22,9 @@
     /* 은지 */
     .outer{
         width: 1000px;
-        height: 550px;
+        height: 0px;
         margin: auto;
-        margin-top: 200px;
+        margin-top: 90px;
     }
     .mypageSidebar{
         width: 200px;

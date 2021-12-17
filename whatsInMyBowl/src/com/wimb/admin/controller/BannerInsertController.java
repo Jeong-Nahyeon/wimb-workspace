@@ -40,18 +40,24 @@ public class BannerInsertController extends HttpServlet {
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
 			
-			int maxSize = 10 * 1024 * 1024; // 전송용량제한
-			String savePath = request.getSession().getServletContext().getRealPath("/resources/banner_upfiles/"); // 저장폴더의 물리적 경로
+			// 전송용량제한
+			int maxSize = 10 * 1024 * 1024; 
+			// 저장폴더의 물리적 경로
+			String savePath = request.getSession().getServletContext().getRealPath("/resources/images/banner_upfiles/");
 			
-			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new WimbFileRenamePolicy()); // 전달된 파일 업로드
-			Banner b = new Banner();
-			b.setbName(multiRequest.getParameter("bannerTitle"));
-			b.setStatus(multiRequest.getParameter("bannerStatus"));
-			b.setbPostion(multiRequest.getParameter("bannerPosition"));
-			b.setbOriginName(multiRequest.getOriginalFileName("bannerFile"));
-			b.setbChangeName(multiRequest.getFilesystemName("bannerFile"));
-			b.setbPath("resources/banner_upfiles/");	
+			// 전달된 파일 업로드
+			MultipartRequest multi = null;
+			multi = new MultipartRequest(request, savePath, maxSize, "UTF-8", new WimbFileRenamePolicy()); 
 			
+			String bannerTitle = multi.getParameter("bannerTitle");
+			String bannerPosition = multi.getParameter("bannerPosition");
+			String bannerPath = "resources/images/banner_upfiles/";	
+			String originName = multi.getOriginalFileName("bannerFile");
+			String changeName = multi.getFilesystemName("bannerFile");				
+			
+			Banner b = new Banner(bannerTitle, bannerPosition, bannerPath, originName, changeName);
+			
+		
 			int result = new bannerService().insertBanner(b);
 			
 			if(result > 0) { // 성공 => /wimb/list.banner 재요청
@@ -62,6 +68,8 @@ public class BannerInsertController extends HttpServlet {
 				request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
 				
 			}
+		
+			// 왜 흰화면만 나오는거야ㅠㅠㅠ 어디가 문제라고 알려주면 안되냐고...
 		}
 		
 		

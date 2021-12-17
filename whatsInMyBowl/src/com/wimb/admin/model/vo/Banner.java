@@ -28,6 +28,15 @@ public class Banner {
 		this.bOriginName = bOriginName;
 		this.bChangeName = bChangeName;
 	}
+	
+	public Banner(String bName, String bPostion, String bPath, String bOriginName, String bChangeName) {
+		super();
+		this.bName = bName;
+		this.bPostion = bPostion;
+		this.bPath = bPath;
+		this.bOriginName = bOriginName;
+		this.bChangeName = bChangeName;
+	}
 
 	public int getbCode() {
 		return bCode;

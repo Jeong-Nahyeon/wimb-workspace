@@ -37,11 +37,10 @@ public class bannerDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, b.getbName());
-			pstmt.setString(2, b.getStatus());
-			pstmt.setString(3, b.getbPostion());
-			pstmt.setString(4, b.getbPath());
-			pstmt.setString(5, b.getbOriginName());
-			pstmt.setString(6, b.getbChangeName());
+			pstmt.setString(2, b.getbPostion());
+			pstmt.setString(3, b.getbPath());
+			pstmt.setString(4, b.getbOriginName());
+			pstmt.setString(5, b.getbChangeName());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
