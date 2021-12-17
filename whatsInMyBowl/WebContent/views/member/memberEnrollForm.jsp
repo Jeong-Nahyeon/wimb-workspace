@@ -18,7 +18,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 --> 
+<!--다음 주소API-->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>  
+
+
+
 <style>
 	*{box-sizing: border-box;}
 	#enrollStatus{
@@ -30,7 +34,7 @@
 	#titlearea{margin-left: 50px;}
 	#enrollFormBox th{
 		text-align: right;
-		width: 100px;
+		width: 110px;
 		font-size: small;
 	}
 	#enrollFormTable i, #titlearea i{
@@ -38,7 +42,7 @@
 		color: rgb(248, 126, 126);
 		vertical-align: top;
 	}
-	#enrollFormTable button{
+	#enrollFormTable input[type="button"]{
 		width: 100px;
 		font-size: small;
 		border: 1px solid rgb(155, 213, 189);
@@ -47,7 +51,7 @@
 		color: rgb(155, 213, 189);
 		font-weight: 900;
 	}
-	#enrollFormTable button:hover{background-color:rgb(155, 213, 189); color: white;}
+	#enrollFormTable input[type="button"]:hover{background-color:rgb(155, 213, 189); color: white;}
 	#enrollFormBox{
 		width: 800px;
 		height: 800px;
@@ -95,7 +99,7 @@
 			회원가입
 		</p>
 		<p>
-			<a href="memberEnrollTerms.jsp" id="level1">01|이용약관</a> >><a id="level2">02|정보입력 및 이메일 인증</a>>><a id="level3">03|가입완료</a>
+			<a href="<%=contextPath%>/enrollTerms.me" id="level1">01|이용약관</a> >><a id="level2">02|정보입력 및 이메일 인증</a>>><a id="level3">03|가입완료</a>
 		</p>
 	</div>
 	<div id="enrollFormBox" align="center">
@@ -108,46 +112,46 @@
 				<i class="fas fa-star-of-life"></i> 필수입력사항
 			</p>
 		</div>
-		<form action="<%=contextPath %>/enroll.me" align="center" id="enroll-form" >
+		<form action="<%=contextPath %>/enroll.me" align="center" id="enrollForm" onsubmit="return enroll()" >
 		
 			<table id="enrollFormTable" align="center">
 				<tr>
 					<th>아이디<i class="fas fa-star-of-life"></i></th>
 					<td>
-						<input type="text" name="userId" id="userId" placeholder="영문자와 숫자, 5~15글자내로 입력" required><br>
+						<input type="text" name="userId" id="userId"  class="req" placeholder="영문자와 숫자, 8~16글자내로 입력" required><br>
 						<div id="checkId">
 
 						</div>
 					</td>
 					<td>
-						<button style="width:100px;" onclick="doubleIdChk();">중복확인</button>
-						<input type="hidden" name="idDupleChk" value="idN">
+						<input type="button" style="width:100px;" value="중복확인" onclick="doubleIdChk();">
+						<input type="hidden" id="idDupleChk" name="idDupleChk" value="idN">
 					</td>
 				</tr>
 				<tr>
 					<th>비밀번호<i class="fas fa-star-of-life"></i></th>
-					<td><input type="password" name="userPwd" id="userPwd" placeholder="영문자와 숫자, 5~15글자내로 입력" required><br>
+					<td><input type="password" name="userPwd" id="userPwd" class="req" placeholder="영문자와 숫자, 8~16글자내로 입력" required><br>
 						<div id="checkPwd">
 
 						</div></td>
 				</tr>
 				<tr>
 					<th>비밀번호 확인<i class="fas fa-star-of-life"></i></th>
-					<td><input type="password" name="checkPwd" id="checkPwd" required><br>
+					<td><input type="password" name="userPwdChk" id="userPwdChk" class="req" required><br>
 						<div id="checkPwdchk">
 
 						</div></td>
 				</tr>
 				<tr>
 					<th>이름<i class="fas fa-star-of-life"></i></th>
-					<td><input type="text" name="userName" id="userName" required><br>
+					<td><input type="text" name="userName" id="userName" class="req" required><br>
 						<div id="checkName">
 
 						</div></td>
 				</tr>
 				<tr>
 					<th>전화번호<i class="fas fa-star-of-life"></i></th>
-					<td><input type="tel" name="userPhone" id="userPhone" placeholder="숫자만 입력" required><br>
+					<td><input type="tel" name="userPhone" id="userPhone" class="req" placeholder="숫자만 입력" required><br>
 						<div id="checkPhone">
 
 						</div>
@@ -155,29 +159,29 @@
 				</tr>
 				<tr>
 					<th>이메일<i class="fas fa-star-of-life"></i></th>
-					<td><input type="email" name="userEmail" id="userEmail" required><br>
+					<td><input type="email" name="userEmail" id="userEmail" class="req" required><br>
 						<div id="checkEmail">
 
 						</div></td>
 					<td>
-						<button style="width:100px;" onclick="doubleEmailChk();">중복확인</button>
-						<input type="hidden" name="emailDupleChk" value="emailN">
+						<input type="button" style="width:100px;" value="중복확인" onclick="doubleEmailChk();">
+						<input type="hidden" id="emailDupleChk" name="emailDupleChk" value="emailN">
 					</td>
 				</tr>
 				<tr>
 					<th></th>
-					<td><input type="text" name="userEmailCheck" id="userEmailCheck" required></td>
-					<td><button style="width:100px;">인증번호</button></td>
+					<td><input type="text" name="userEmailCheck" class="req" id="userEmailCheck" required></td>
+					<td><input type="button" style="width:100px" value="인증번호"></td>
 				</tr>
 				<tr>
 					<th>주소<i class="fas fa-star-of-life"></i></th>
-					<td><input type="text" name="userAddress1" id="userAddress1" required readonly></td>
-					<td><button style="width:100px;" onclick="Postcode();">주소찾기</button></td>
+					<td><input type="text" name="userAddress1" id="userAddress1" class="req" autocomplete="off"></td>
+					<td><input type="button" style="width:100px;" value="주소찾기" onclick="Postcode();"></td>
 				</tr>
 				<tr>
 					<th></th>
-					<td><input type="text" name="userAddress2" id="userAddress2" placeholder="상세주소입력" required></td>
-					<td><input type="text" name="postcode" id="postcode" style="width:100px;"></td>
+					<td><input type="text" name="userAddress2" id="userAddress2" class="req" placeholder="상세주소입력" required></td>
+					<td><input type="text" name="postcode" id="postcode" style="width:100px" placeholder="우편번호"></td>
 				</tr>
 				<tr>
 					<th>성별<i class="fas fa-star-of-life"></i></th>
@@ -190,7 +194,7 @@
 				<tr>
 					<th>생년월일<i class="fas fa-star-of-life"></i></th>
 					<td>
-						<input type="text" name="birth" id="birth" placeholder="YYYYMMDD 8글자" required><br>
+						<input type="text" name="userBirth" id="userBirth" class="req" placeholder="YYYYMMDD 8글자" required><br>
 						<div id="checkBirth">
 
 						</div>
@@ -213,21 +217,23 @@
 				</tr>
 			</table>
 			<div id="submitBox" align="center">
-				<input type="button" value="가입 하기" id="submitBtn">
+				<input type="submit" value="가입 하기" id="submitBtn">
 			</div>
 		</form>
 		<script>
 			// 아이디 정규식
-			let idExp = /^[a-z][a-z0-9]{5,15}$/;
+			let idExp = /^[A-Za-z0-9_|-]{8,16}$/;
 			// 비밀번호 정규식
-			let pwdExp = /^[A-Za-z0-9]{5,15}$/;
+			let pwdExp = (/^(?=.*[a-z])(?=.*[0-9]).{8,16}$/);
 			// 이름 정규식
 			let nameExp = /^[가-힣]{2,6}$/;
 			// 이메일 정규식
 			let emailExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 			//let emailExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 			// 휴대폰 정규식
-			let phoneExp = /^(010)([0-9]{4})([0-9]{4})$/;
+			let phoneExp = /^01[0179]([0-9]{7,8}$)/;
+			// 생년월일 정규식
+			let birthExp = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
 
 			$("#userId").blur(function(){
 				if(idExp.test($(this).val())){
@@ -249,10 +255,12 @@
 					$('#checkPwd').css('color', 'red');
 				}
 			})
-			$("#checkPwd").blur(function(){
-				if(($("#userPwd").val()) == ($("#checkPwd").val())){
+			$("#userPwdChk").blur(function(){
+				if($("#userPwd").val() == $("#userPwdChk").val()){
+					console.log($("#userPwd").val() == $("#userPwdChk").val());
 					$("#checkPwdchk").text('');
 				}else{
+					console.log($("#userPwd").val() == $("#userPwdChk").val());
 					$('#checkPwdchk').text("비밀번호가 일치하지 않습니다.");
 					$('#checkPwdchk').css('color', 'red');
 				}
@@ -260,7 +268,7 @@
 			$("#userName").blur(function(){
 				if(nameExp.test($(this).val())){
 					console.log(nameExp.test($(this).val()));
-					$("#checkName").text('');
+				
 				}else{
 					console.log(nameExp.test($(this).val()));
 					$('#checkName').text("이름을 확인해주세요");
@@ -287,11 +295,22 @@
 					$('#checkEmail').css('color', 'red');
 				}
 			})
+			$("#userBirth").blur(function(){
+				if(birthExp.test($(this).val())){
+					console.log(birthExp.test($(this).val()));
+					$("#checkBirth").text('');
+				}else{
+					console.log(birthExp.test($(this).val()));
+					$('#checkBirth').text("생년월일을 확인해주세요");
+					$('#checkBirth').css('color', 'red');
+				}
+			})
+		
 		
 			// 아이디 중복 체크
 			function doubleIdChk(){
 				
-				const $idInput = $("#enroll-form input[name=userId]");
+				const $idInput = $("#enrollForm input[name=userId]");
 
 				$.ajax({
 					url:"idCheck.me",
@@ -326,10 +345,11 @@
 				})
 			}
 
+			
 			// email 중복 체크
 			function doubleEmailChk(){
 				
-				const $emailInput = $("#enroll-form input[name=userEmail]");
+				const $emailInput = $("#enrollForm input[name=userEmail]");
 
 				$.ajax({
 					url:"emailCheck.me",
@@ -340,6 +360,7 @@
 						if(emailExp.test($emailInput.val()) == false){
 							alert("이메일을 입력해주세요.");
 							$emailInput.focus();
+							
 						}else{
 							if(result == 'NNNNN'){
 								
@@ -363,7 +384,7 @@
 				})
 			}
 			
-			
+			// 주소 API
 		    function Postcode() {
 		        new daum.Postcode({
 					popupKey: 'popup1',
@@ -414,57 +435,57 @@
 		        }).open();
 		    }
 
-
 			
+
+			$("#disagree").click(function(){
+				if($("#disagree").prop("checked")){
+					$("#agreeEmail").prop("checked", false);
+					$("#agreeSms").prop("checked", false);
+				}
+			});
+
+			$("#agreeEmail").click(function(){
+				if($("#agreeEmail").prop("checked")){
+					$("#disagree").prop("checked", false);
+				}
+			});
+
+			$("#agreeSms").click(function(){
+				if($("#agreeSms").prop("checked")){
+					$("#disagree").prop("checked", false);
+				}
+			});
+
+
+			function enroll(){
+
+				const $iddup = $("#idDupleChk");
+				const $emaildup = $("#emailDupleChk");
+
+				if($iddup.val() == 'idY' && $emaildup.val() == 'emailY' && $(".agree").is(":checked")){
+					$("#enrollForm").submit();
+
+				}else{
+					if($iddup.val() == 'idN'){
+						alert("아이디 중복체크를 해주세요");
+						$iddup.focus()
+						return false;
+					}
+					if($emaildup.val() == 'emailN'){
+						alert("이메일 중복체크를 해주세요");
+						$emaildup.focus();
+						return false;
+					}
+					if(!($(".agree").is(":checked"))){
+						alert("마케팅 수신 동의에 체크해주세오");
+						return false;
+					}
+				}
+				return false;
+			}
+
+
 				
-				$("#disagree").click(function(){
-					if($("#disagree").prop("checked")){
-						$("#agreeEmail").prop("checked", false);
-						$("#agreeSms").prop("checked", false);
-					}
-				});
-
-				$("#agreeEmail").click(function(){
-					if($("#agreeEmail").prop("checked")){
-						$("#disagree").prop("checked", false);
-					}
-				});
-
-				$("#agreeSms").click(function(){
-					if($("#agreeSms").prop("checked")){
-						$("#disagree").prop("checked", false);
-					}
-				});
-			
-			
-				$(document).ready(function(e){
-					
-					$("#submitBtn").click(function(){
-
-						const $iddup = $("#idDupleChk");
-						const $emaildup = $("#emailDupleChk");
-
-						if($iddup.attr("value") == 'idY' && $emaildup.attr("value") == 'emailY'){
-							$("#enroll-form").submit();
-						}else{
-							if($iddup.attr("value") == 'idN'){
-								alert("아이디 중복체크를 해주세요");
-								$iddup.focus()
-								return;
-							}
-							if($emaildup.attr("value") == 'emailN'){
-								alert("이메일 중복체크를 해주세요");
-								$emaildup.focus();
-								return;
-							}
-						}
-						
-						return;
-					})
-				});
-		
-				
-			
 
 		</script>
 	</div>
