@@ -19,7 +19,7 @@ import com.wimb.product.model.vo.Product;
 /**
  * Servlet implementation class ProductInsertController
  */
-@WebServlet("/insert.pr")
+@WebServlet("/insert.apr")
 public class ProductInsertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -48,38 +48,40 @@ public class ProductInsertController extends HttpServlet {
 			
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new WimbFileRenamePolicy());
 			
-			System.out.println("값이 담겨서 오긴함?");
+//			System.out.println("값이 담겨서 오긴함?");
 			// ^^.. 이 이후부터 문제네 
 			
-			Product p = new Product();
-			p.setpCategory(multiRequest.getParameter("productCategory"));
-			p.setpName(multiRequest.getParameter("productName"));
-			p.setpPrice(Integer.parseInt(multiRequest.getParameter("productPrice")));
-			p.setpProvider(multiRequest.getParameter("provider"));
-			p.setpProvidePrice(Integer.parseInt(multiRequest.getParameter("supplyPrice")));
-			p.setpStock(Integer.parseInt(multiRequest.getParameter("productAmount")));
-			p.setpKeyword(multiRequest.getParameter("productKeyword"));
-			p.setpShow(multiRequest.getParameter("productStatus"));
-			p.setpDetail(multiRequest.getParameter("detailContent"));
+			String productCategory = multiRequest.getParameter("productCategory");
+			String productName = multiRequest.getParameter("productName");
+			int productPrice = Integer.parseInt(multiRequest.getParameter("productPrice"));
+			String provider = multiRequest.getParameter("provider");
+			int supplyPrice = Integer.parseInt(multiRequest.getParameter("supplyPrice"));
+			int productAmount = Integer.parseInt(multiRequest.getParameter("productAmount"));
+			String productKeyword = multiRequest.getParameter("productKeyword");
+			String productStatus = multiRequest.getParameter("productStatus");
+			String detailContent = multiRequest.getParameter("detailContent");
 			
-			// 대표이미지 => 무조건 담겨올 것 (required 속성 부여)
+			String filePath = "resources/images/product_images/";
+			
+			String mainImg = null;
 			if(multiRequest.getOriginalFileName("mainImg") != null) {
-				p.setpMainImg(multiRequest.getParameter("mainImg"));
+				mainImg = multiRequest.getFilesystemName("mainImg");
 			}
 			
-			// 상세이미지
+			String detailImg = null;
 			if(multiRequest.getOriginalFileName("detailImg") != null) {
-				p.setpDetailImg(multiRequest.getParameter("detailImg"));
+				detailImg = multiRequest.getFilesystemName("detailImg");
 			}
 			
-			// 이미지 저장경로
-			p.setFilePath("resources/images/product_images/");
+			
+			Product p = new Product(productName, productCategory, productPrice, provider, supplyPrice,
+									mainImg, detailImg, detailContent, productStatus, productAmount, productKeyword, filePath);
 			
 			int result = new ProductService().insertProduct(p);
-			
+		
 			if(result > 0) { // 성공
 				request.getSession().setAttribute("productMsg", "성공적으로 상품을 등록했습니다.");
-				response.sendRedirect(request.getContextPath() + "list.apr?cpage=1");
+				response.sendRedirect(request.getContextPath() + "/list.apr?cpage=1");
 				
 			} else { // 실패
 				

@@ -50,22 +50,26 @@
 		  , P_MAINIMG
 		  , P_DETAILIMG
 		  , P_DETAIL
+		  , P_SHOW
+		  , P_DATE
 		  , P_STOCK
 		  , P_KEYWORD
 		  )
 		  VALUES
 		  (
 		    'P' || SEQ_PRODUCT.NEXTVAL
-		  , 상품명
-		  , 카테고리명
-		  , 판매가격
-		  , 공급자명
-		  , 공급가격
-		  , 대표이미지
-		  , 상세이미지
-		  , 상세내용
-		  , P_STOCK + 입고수량
-		  , 검색키워드
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , SYSDATE
+		  , ?
+		  , ?
 		  )
 	</entry>
 

@@ -100,8 +100,7 @@ public class ProductDao {
 										  rset.getString("p_mainimg"),
 										  rset.getString("p_show"),
 										  rset.getInt("p_stock"),
-										  filePath,
-										  rset.getInt("rnum")));
+										  filePath));
 				
 			}
 			
@@ -130,22 +129,23 @@ public class ProductDao {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, p.getpName());
-			pstmt.setString(2, p.getpCategory());
-			pstmt.setInt(3, p.getpPrice());
-			pstmt.setString(4, p.getpProvider());
-			pstmt.setInt(5, p.getpProvidePrice());
-			pstmt.setString(6, p.getpMainImg());
+			pstmt.setString(1, p.getpName()); // 상품명
+			pstmt.setString(2, p.getpCategory()); // 카테고리명
+			pstmt.setInt(3, p.getpPrice()); // 판매가격
+			pstmt.setString(4, p.getpProvider()); // 공급자명
+			pstmt.setInt(5, p.getpProvidePrice()); // 공급가격
+			pstmt.setString(6, p.getpMainImg()); // 대표이미지
 			
 			if(p.getpDetailImg() != null) { // 상세이미지 => null이 아닌 경우
-				pstmt.setString(7, p.getpDetailImg());
+				pstmt.setString(7, p.getpDetailImg()); // 상세이미지
 			} else { // 상세이미지 => null인 경우
 				pstmt.setNull(7, java.sql.Types.VARCHAR); // 과연 null처리 해줄 것인가????????
 			}
 			
-			pstmt.setString(8, p.getpDetail());
-			pstmt.setInt(9, p.getpStock());
-			pstmt.setString(10, p.getpKeyword());
+			pstmt.setString(8, p.getpDetail()); // 상세내용
+			pstmt.setString(9, p.getpShow()); // 노출여부
+			pstmt.setInt(10, p.getpStock()); // 입고수량
+			pstmt.setString(11, p.getpKeyword()); // 검색키워드
 			
 			result = pstmt.executeUpdate();
 		

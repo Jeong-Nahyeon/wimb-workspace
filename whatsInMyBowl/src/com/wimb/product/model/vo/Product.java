@@ -17,7 +17,6 @@ public class Product {
 	private String pKeyword; // 검색 키워드
 	
 	private String filePath; // 이미지파일경로 추가
-	private int rowNum; // 관리자용 상품 리스트 번호 => 게시글번호 없는데 구현해야 돼서 추가
 	
 	public Product() {}
 
@@ -41,9 +40,28 @@ public class Product {
 		this.pKeyword = pKeyword;
 	}
 	
-	
+
+	public Product(String pName, String pCategory, int pPrice, String pProvider, int pProvidePrice,
+			String pMainImg, String pDetailImg, String pDetail, String pShow, int pStock, String pKeyword,
+			String filePath) {
+		super();
+		this.pName = pName;
+		this.pCategory = pCategory;
+		this.pPrice = pPrice;
+		this.pProvider = pProvider;
+		this.pProvidePrice = pProvidePrice;
+		this.pMainImg = pMainImg;
+		this.pDetailImg = pDetailImg;
+		this.pDetail = pDetail;
+		this.pShow = pShow;
+		this.pStock = pStock;
+		this.pKeyword = pKeyword;
+		this.filePath = filePath;
+	}
+
+
 	public Product(String pCode, String pName, String pCategory, int pPrice, String pProvider, int pProvidePrice,
-			String pMainImg, String pShow, int pStock, String filePath, int rowNum) {
+			String pMainImg, String pShow, int pStock, String filePath) {
 		super();
 		this.pCode = pCode;
 		this.pName = pName;
@@ -55,7 +73,6 @@ public class Product {
 		this.pShow = pShow;
 		this.pStock = pStock;
 		this.filePath = filePath;
-		this.rowNum = rowNum;
 	}
 
 
@@ -69,16 +86,6 @@ public class Product {
 	}
 	
 	
-	public int getRowNum() {
-		return rowNum;
-	}
-
-
-	public void setRowNum(int rowNum) {
-		this.rowNum = rowNum;
-	}
-
-
 	public String getpCode() {
 		return pCode;
 	}

@@ -241,7 +241,12 @@
 	<% if(productMsg != null) { %>
 	<script>
 		
-		alert("<%= productMsg %>");
+		$(function(){
+			
+			$("#insert-success-modal b").text("<%= productMsg %>");
+			$("#insert-success-modal").modal({backdrop: "static"});
+			
+		});
 		
 		<% session.removeAttribute("productMsg"); %>
 	
@@ -305,7 +310,7 @@
 
 
             <!-- 완제품 목록 -->
-            <table id="product-list" height="500px" class="table table-hover">
+            <table id="product-list" class="table table-hover">
                 <thead>
                     <tr>
                         <th></th>
@@ -407,7 +412,6 @@
     </div>
 
     
-	<button id="insert-success-btn">상품등록 성공 창 테스트</button>
 
 
         <!-- 상품 등록 모달창 -->
@@ -424,7 +428,7 @@
                     
                     <!-- Modal body -->
                     <div class="modal-body content-area">
-                        <form action="<%= contextPath %>/insert.pr" id="insert-form" method="post" enctype="multipart/form-data">
+                        <form action="<%= contextPath %>/insert.apr" id="insert-form" method="post" enctype="multipart/form-data">
                             <!-- 상품 설명 영역 -->
                                 <div id="main">
                                     <table class="table-borderless">
@@ -594,14 +598,14 @@
                     </div>
 
                     <div class="insert-success-content" align="center" style="height:40%; line-height:60px;">
-                        <b>상품등록성공</b>
+                        <b> </b>
                     </div>
 				</div>
 				
 				<!-- Modal footer -->
 				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
 					<div align="center" style="width:100%;">
-						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">확인</button>
+						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;" data-dismiss="modal">확인</button>
 					</div>
 				</div>
 
