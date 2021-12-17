@@ -9,6 +9,7 @@
 		  (
 		    B_CODE
 		  , B_NAME
+          , B_STATDATE
 		  , B_STATUS
 		  , B_POSITION
 		  , B_PATH 
@@ -19,7 +20,8 @@
 		  (
 		    SEQ_BANNER.NEXTVAL
 		  , ?
-		  , ?
+          , SYSDATE
+		  , N
 		  , ?
 		  , ?
 		  , ?
