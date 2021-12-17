@@ -68,8 +68,7 @@ public class BannerInsertController extends HttpServlet {
 				request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
 				
 			}
-		
-			// 왜 흰화면만 나오는거야ㅠㅠㅠ 어디가 문제라고 알려주면 안되냐고...
+
 		}
 		
 		

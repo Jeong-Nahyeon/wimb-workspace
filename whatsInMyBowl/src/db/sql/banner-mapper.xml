@@ -25,15 +25,32 @@
 		     )
 	</entry>
 	
-	<entry key="">
-	
-	
-	
+	<!-- 개시여부 상관없이 전체보기 시 배너 리스트를 조회하는 sql문 -->
+	<entry key="selectBannerList">
+		SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT
+                               B_CODE
+                             , B_NAME
+                             , B_STARTDATE
+                             , B_STATUS
+                             , B_POSITION
+                          FROM BANNER
+                         ORDER 
+                            BY DECODE(B_STATUS, 'Y', 1), B_POSITION ASC
+                             , B_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
-	<entry key="">
-	
-	
+	<!-- 페이징바에 사용할 등록된 베너게시글의 총 갯수를 구하는 sql문 -->
+	<entry key="selectListCount">
+		SELECT 
+		       COUNT(*) count
+		  FROM BANNER
 	</entry>
 	
 	

@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, com.wimb.admin.model.vo.Banner, com.wimb.common.model.vo.PageInfo" %>
+<%
+	//전체보기 시 필요한 데이터 (배너번호, 배너명, 게시일, 게시여부, 배너위치)
+	ArrayList<Banner> listAll = (ArrayList<Banner>)request.getAttribute("listAll");
+	
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,7 +89,16 @@
         padding: 2px 11px;
         font-size: 13px;
     }
-    #deletebanner{background-color: lightgray;}
+    #deletebanner{
+    	background-color: lightgray;
+    	margin-right: 10px;
+    }
+    .paging-area{
+        text-align: center;
+        margin-left: auto; 
+        margin-right: auto; 
+        width: 800px
+    }
     .paging-area button{
         margin-top: 20px;
         border: 0;
@@ -275,16 +295,16 @@
     <div class="bannerList">
 
         
-        <table style="margin-left: auto; margin-right: auto; width: 800px;" >
+        <table style="margin-left: 600px; margin-right: auto; width: 800px;" >
 
             <div>
-                <select name="sorting_banner" id="sorting_banner" style="position: absolute; top:77%; right: 455px;">
+                <select name="sorting_banner" id="sorting_banner" style="position: absolute; top:77%; right: 503px;">
                     <option value="">전체보기</option>
                     <option value="">게시중</option>
                     <option value="">게시종료</option>
                 </select>
             </div>
-            <div style="margin-left: 68%;" class="two_btn">
+            <div style="margin-left: 65%;" class="two_btn">
                 <button type="button" id="deletebanner">선택삭제</button>
                 <button type="button" id="insertbannerbtn">등록하기</button>
             </div>
@@ -296,62 +316,37 @@
                 <td class="bannerList_header">게시일</td>
                 <td class="bannerList_header">상태</td>
             </tr>
-
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>10</td>
-                <td>배너이름10</td>
-                <td>메인1</td>
-                <td>2021-11-02</td>
-                <td>게시중</td>
-            </tr>
-
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>10</td>
-                <td>배너이름9</td>
-                <td>메인2</td>
-                <td>2021-11-02</td>
-                <td>게시중</td>
-            </tr>
-
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>10</td>
-                <td>배너이름8</td>
-                <td>메인3</td>
-                <td>2021-11-02</td>
-                <td>게시중</td>
-            </tr>
-
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>10</td>
-                <td>배너이름7</td>
-                <td>메인1</td>
-                <td>2021-11-02</td>
-                <td>게시종료</td>
-            </tr>
-
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>10</td>
-                <td>배너이름6</td>
-                <td>메인2</td>
-                <td>2021-11-02</td>
-                <td>게시종료</td>
-            </tr>
+            <% for(Banner b : listAll) { %>
+	            <tr>
+	                <td><input type="checkbox"></td>
+	                <td><%= b.getbCode() %></td>
+	                <td><%= b.getbName() %></td>
+	                <td><%= b.getbPostion() %></td>
+	                <td><%= b.getStartDate() %></td>
+	                <td><%= b.getStatus() %></td>
+	            </tr>
+            <% } %>
         </table>
 
-        <div class="paging-area" align="center">
-            <button>&lt;</button>
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
-            <button>&gt;</button>
+        <div class="paging-area">
+            
+            <% if(currentPage != 1) { %>
+            	<button onclick="location.href='<%= contextPath %>/list.banner?cpage=<%=currentPage-1%>';">&lt;</button>
+            <% } %>
+            
+            <% for(int p=startPage; p<=endPage; p++) { %>
+            	<% if(p == currentPage) { %>
+            		<button disabled><%= p %></button>
+            	<% } else { %>
+            		<button onclick="location.href='<%= contextPath %>/list.banner?cpage=<%= p %>';"><%= p %></button>
+            	<% } %>
+            <% } %>
+            
+            <% if(currentPage != maxPage) { %>
+            <button onclick="location.href='<%= contextPath %>/list.banner?cpage=<%=currentPage+1%>';">&gt;</button>
+        	<% } %>
         </div>
+
         
     </div>
 
