@@ -32,9 +32,9 @@ public class ProductDao {
 	}
 	
 	
-	/** 완제품 총 개수 반환해주는메소드
+	/** 페이징바용 완제품 총 개수 반환해주는 메소드
 	 * @param conn
-	 * @return
+	 * @return  :  완제품 총 개수
 	 */
 	public int selectListCount(Connection conn) {
 		
@@ -66,6 +66,11 @@ public class ProductDao {
 	}
 	
 	
+	/** 완제품 목록 조회 해주는 메소드
+	 * @param conn
+	 * @param pi  :  사용자가 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @return
+	 */
 	public ArrayList<Product> selectProductList(Connection conn, PageInfo pi){
 		
 		ArrayList<Product> totalList = new ArrayList<>();
@@ -118,6 +123,11 @@ public class ProductDao {
 	}
 	
 	
+	/** 완제품 등록해주는 메소드
+	 * @param conn
+	 * @param p  :  사용자가 작성한 등록할 완제품 정보
+	 * @return
+	 */
 	public int insertProduct(Connection conn, Product p) {
 		
 		int result = 0; 
@@ -158,6 +168,62 @@ public class ProductDao {
 		}
 		
 		return result;
+		
+	}
+	
+	
+	/** 완제품 상세 조회해주는 메소드
+	 * @param conn
+	 * @param pCode  :  상세 정보 조회할 상품의 상품번호
+	 * @return
+	 */
+	public Product selectProductDetail(Connection conn, String pCode) {
+		
+		Product p = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
+		String sql = prop.getProperty("selectProductDetail"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, pCode);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				p = new Product(rset.getString("p_code"),
+								rset.getString("p_name"),
+								rset.getString("p_category"),
+								rset.getInt("p_price"),
+								rset.getString("p_provider"),
+								rset.getInt("p_provideprice"),
+								rset.getString("p_mainimg"),
+								rset.getString("p_detailimg"),
+								rset.getString("p_detail"),
+								rset.getString("p_show"),
+								rset.getString("p_date"),
+								rset.getInt("p_stock"),
+								rset.getString("p_keyword"),
+								filePath);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return p;
 		
 	}
 

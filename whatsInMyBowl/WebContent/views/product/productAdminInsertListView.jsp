@@ -186,7 +186,7 @@
         font-size: 15px;
     }
 
-    #main-img-area, #detail-img-area{
+    .main-img-area, .detail-img-area{
         width:100% !important;
         /* height:100% !important; */
         margin:0 !important;
@@ -232,12 +232,26 @@
         text-align:center;
         line-height:300px;
     }
+    
+    .product-name{
+    	color:black;
+    	text-decoration: none;
+        cursor:pointer;
+    }
+
+    .footer-area>div{
+        /* border:1px solid red; */
+        box-sizing:border-box;
+        width:50%;
+        height:100%;
+        float:left;
+    }
 
 </style>
 </head>
 <body>
 
-	<!-- 상품 등록 테스트용 alert -->
+	<!-- 요청처리 성공 알림 -->
 	<% if(productMsg != null) { %>
 	<script>
 		
@@ -293,7 +307,7 @@
             <div id="list-2">
                 <!-- 등록 개수 -->
                 <div align="left">
-                    총 <span style="color:orange; font-weight:bold;">20</span> 건
+                    총 <span style="color:orange; font-weight:bold;"><%= pi.getListCount() %></span> 건
                 </div>
                 <!-- 상품등록 버튼 -->
                 <div align="right">
@@ -301,7 +315,7 @@
                 </div>
             </div>
             <script>
-					$(document).ready(function(){
+					$(function(){
 						$("#insert-product-btn").click(function(){
 						$("#insert-product-modal").modal({backdrop: "static"});
 						});
@@ -346,7 +360,9 @@
 	                            <input type="checkbox" name="" id="" disabled>
 	                        </td>
 	                        <td><%= totalList.get(i).getpCode() %></td>
-	                        <td><a class="product-name"><%= totalList.get(i).getpName() %></a></td>
+	                        <td>
+	                        	<a class="product-name"><%= totalList.get(i).getpName() %></a>
+	                        </td>
 	                        <td><%= totalList.get(i).getpProvider() %></td>
 	                        <td><%= totalList.get(i).getpProvidePrice() %></td>
 	                        <td><%= totalList.get(i).getpPrice() %></td>
@@ -357,16 +373,43 @@
                     <% } %>
                 </tbody>
             </table>
-             <!-- [고려사항]
-                상품명 클릭 시 모달창으로 수정 폼 뜨도록.... 해야하는데 어떻게 해야할지....??????
-                게시글번호 데이터 넘기면서 요청해서 데이터 받아와야하는데............. AJAX로 해야하는 것 같음...?
-            -->
+
+             <!-- 완제품 상세 조회용 ajax -->
             <script>
-                $(function(){
-                    $("#product-list>tbody>tr>a").click(function(){
-                        href=""
-                    });
-                });
+            
+            	$(function(){
+            		
+            		$(".product-name").click(function(){
+            			$.ajax({
+                            url:"detail.apr",
+                            data:{
+                                pcode:$(this).parent().prev().text()
+                            },
+                            success:function(p){
+                                
+                                $("#detailMainImg").attr("src", p.filePath + p.pMainImg);
+                                $("#detailName").text(p.pName);
+                                $("#detailCategory").text(p.pCategory);
+                                $("#datailPrice").text(p.pPrice);
+                                $("#detailProvider").text(p.pProvider);
+                                $("#detailSupplyPrice").text(p.pProvidePrice);
+                                $("#detailStock").text(p.pStock);
+                                $("#detailKeyword").text(p.pKeyword);
+                                $("#detailStatus").text(p.pShow);
+                                $("#detailContent").text(p.pDetail);
+                                $("#detailSubImg").attr("src", p.filePath + p.pDetailImg);
+                                $("#detailDate").text(p.pDate);
+
+                                $("#product-detail-modal").modal({backdrop: "static"});
+    							
+                            }, error:function(){
+                                console.log("ajax 통신 실패");
+                            }
+                        });
+            		});
+            		
+            	});
+            
             </script>
 
             <!-- 페이징바 -->
@@ -460,7 +503,7 @@
                                     <table class="table-borderless">       
                                             <tr>
                                                 <td rowspan="8" style="width:300px; height:300px; padding:0; border:1px solid lightgray;">
-                                                    <img id="main-img-area">
+                                                    <img 	class="main-img-area">
                                                 </td>
                                                 <th>제품명</th>
                                                 <td><input type="text" name="productName" placeholder="ex) 닭가슴살샐러드" required></td>
@@ -530,7 +573,7 @@
                                         </tr>
                                         <tr>
                                             <td align="center" style="width:100%; padding:0; border:1px solid lightgray;">
-                                                <img id="detail-img-area">
+                                                <img class="detail-img-area">
                                             </td>
                                         </tr>
                                     </table>
@@ -550,8 +593,8 @@
                                 reader.onload = function(e){ // 읽어들인 파일 => 매개변수 e
 
                                     switch(num){
-                                        case 1 : $("#main-img-area").attr("src", e.target.result); break;
-                                        case 2 : $("#detail-img-area").attr("src", e.target.result); break;
+                                        case 1 : $(".main-img-area").attr("src", e.target.result); break;
+                                        case 2 : $(".detail-img-area").attr("src", e.target.result); break;
                                     }
         
                                 }
@@ -559,8 +602,8 @@
                             } else { // 선택된 파일이 취소된 경우 => 미리보기된 것도 사라지게
         
                                 switch(num){
-                                    case 1 : $("#main-img-area").attr("src", null); break;
-                                    case 2 : $("#detail-img-area").attr("src", null); break;
+                                    case 1 : $(".main-img-area").attr("src", null); break;
+                                    case 2 : $(".detail-img-area").attr("src", null); break;
                                 }
         
                             }
@@ -647,40 +690,40 @@
                     <br>
                     <table class="table-borderless" style="width: 100%;">       
                         <tr>
-                            <td rowspan="8" width="300">
-                                <div id="detail-main-img">
-                                    대표이미지
-                                </div>
+                            <td rowspan="8" style="width:300px; height:300px; padding:0; border:1px solid lightgray;">
+                                <img id="detailMainImg" class="main-img-area">
                             </td>
                             <th>제품명</th>
-                            <td>닭가슴살샐러드</td>
+                            <td>
+                                <span id="detailName"></span> (<span id="detailCategory">육류</span>)
+                            </td>
                         </tr>
                         <tr>
-                            <th>판매가격</th>
-                            <td>4900원</td>
+                            <th>판매가격(원)</th>
+                            <td id="datailPrice"></td>
                         </tr>
                         <tr>
                             <td colspan="2" style="font-size:12px; text-align: center; color:salmon;">-- 아래 영역은 실제 회원에게 보여지지 않는 부분입니다 --</td>
                         </tr>
                         <tr>
                             <th>공급업체</th>
-                            <td>ㅇㅇ식품</td>
+                            <td id="detailProvider"></td>
                         </tr>
                         <tr>
-                            <th>공급가격</th>
-                            <td>3900원</td>
+                            <th>공급가격(원)</th>
+                            <td id="detailSupplyPrice"></td>
                         </tr>
                         <tr>
                             <th>재고수량</th>
-                            <td>33개</td>
+                            <td id="detailStock"></td>
                         </tr>
                         <tr>
                             <th>키워드</th>
-                            <td>육류,닭가슴살</td>
+                            <td id="detailKeyword"></td>
                         </tr>
                         <tr>
                             <th>노출여부</th>
-                            <td>Y</td>
+                            <td id="detailStatus">Y</td>
                         </tr>
                     </table>
 
@@ -700,19 +743,7 @@
                     <table class="table-borderless" style="width: 100%;">
                         <tr>
                             <td>
-                                <p style="text-align: center;">
-                                    상품 상세 내용 <br>
-                                    상품 상세 내용 <br>
-                                    상품 상세 내용 <br>
-                                    상품 상세 내용 <br>
-                                    상품 상세 내용 <br>
-                                    상품 상세 내용 <br>
-                                    상품 상세 내용 <br>
-                                    상품 상세 내용 <br>
-                                    상품 상세 내용 <br>
-                                    상품 상세 내용 <br>
-                                    상품 상세 내용 <br>
-                                </p>
+                                <p  id="detailContent" style="text-align: center;"></p>
                             </td>
                         </tr>
                         <tr>
@@ -721,10 +752,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td align="center">
-                                <div id="detail-main-img" style="width: 100%;">
-                                    상세이미지
-                                </div>
+                            <td  align="center" style="width:100%; padding:0; border:1px solid lightgray;">
+                                <!-- case1. 상세이미지 없을 경우 -->
+                                <!-- <p>등록된 상세이미지가 없습니다</p> -->
+                                <!-- case2. 상세이미지 있을 경우 -->
+                                <img id="detailSubImg" class="detail-img-area">
                             </td>
                         </tr>
                     </table>
@@ -736,22 +768,28 @@
             
             <!-- Modal footer -->
             <div class="modal-footer">
-                <div align="center" style="width:100%;">
-                    <button type="submit" class="btn btn-sm" style="background:rgb(255, 225, 90); margin:0px 5px;" data-dismiss="modal">확인</button>
+                <div class="footer-area" style="width:100%; height:100%; text-align:center;">
+                    <div align="left">
+                        <span>
+                            최종등록일 : <span id="detailDate"></span>
+                        </span>
+                    </div>
+                    <div align="right">
+                        <button type="submit" class="btn btn-sm" style="background:rgb(255, 225, 90); margin:0px 5px;" data-dismiss="modal">확인</button>
+                    </div>
                 </div>
             </div>
             
           </div>
         </div>
-      </div>
     </div>
-	<script>
+	<!-- <script>
 		$(document).ready(function(){
 			$(".product-name").click(function(){
 			$("#product-detail-modal").modal({backdrop: "static"});
 			});
 		});
-	</script>
+	</script> -->
 
 
 

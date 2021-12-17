@@ -72,5 +72,24 @@
 		  , ?
 		  )
 	</entry>
+	
+	<entry key="selectProductDetail">
+		SELECT
+			   P_CODE
+		     , P_NAME
+		     , P_CATEGORY
+		     , P_PRICE
+		     , P_PROVIDER
+		     , P_PROVIDEPRICE
+		     , P_MAINIMG
+		     , P_DETAILIMG
+		     , P_DETAIL
+		     , P_SHOW
+		     , TO_CHAR(P_DATE, 'YYYY.MM.DD') "P_DATE"
+		     , P_STOCK
+		     , P_KEYWORD
+		  FROM PRODUCT
+		 WHERE P_CODE = ?
+	</entry>
 
 </properties>

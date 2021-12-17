@@ -18,7 +18,29 @@ public class Product {
 	
 	private String filePath; // 이미지파일경로 추가
 	
+	
 	public Product() {}
+	
+	
+	public Product(String pCode, String pName, String pCategory, int pPrice, String pProvider, int pProvidePrice,
+			String pMainImg, String pDetailImg, String pDetail, String pShow, String pDate, int pStock, String pKeyword,
+			String filePath) {
+		super();
+		this.pCode = pCode;
+		this.pName = pName;
+		this.pCategory = pCategory;
+		this.pPrice = pPrice;
+		this.pProvider = pProvider;
+		this.pProvidePrice = pProvidePrice;
+		this.pMainImg = pMainImg;
+		this.pDetailImg = pDetailImg;
+		this.pDetail = pDetail;
+		this.pShow = pShow;
+		this.pDate = pDate;
+		this.pStock = pStock;
+		this.pKeyword = pKeyword;
+		this.filePath = filePath;
+	}
 
 
 	public Product(String pCode, String pName, String pCategory, int pPrice, String pProvider, int pProvidePrice,
