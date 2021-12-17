@@ -62,5 +62,14 @@ public class CustomService {
 		return result;
 	}
 	
+	// 재료 하나 조회
+	public Item selectItem(String ciCode) {
+		Connection conn = getConnection();
+		Item i = new CustomDao().selectItem(conn, ciCode);
+		
+		close(conn);
+		return i;
+	}
+	
 
 }

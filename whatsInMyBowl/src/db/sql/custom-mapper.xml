@@ -60,5 +60,11 @@
 		  , ?
 		  )
 	</entry>
+	
+	<entry key="selectItem">
+		SELECT *
+		  FROM ITEM
+		 WHERE CI_CODE = ?
+	</entry>
 
 </properties>

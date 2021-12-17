@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ page import="com.wimb.custom.model.vo.Item, java.util.ArrayList, com.wimb.common.model.vo.PageInfo" %>     
+<%
+	ArrayList<Item> list = (ArrayList<Item>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,24 +18,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
+    <!-- 폰트 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/fca98d1848.js" crossorigin="anonymous"></script>
+	
+	<!-- Latest compiled and minified CSS -->
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  -->
+	
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
+	
+	
+	
+	
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script src="https://kit.fontawesome.com/fca98d1848.js" crossorigin="anonymous"></script>
+    
 
     <style>
         /* * {font-family: 'Noto Sans KR', sans-serif;}*/
@@ -285,7 +303,7 @@
                 </div>
                 <div id="right" align="right">
                     <div id="custom-button">
-                        <a href="<%= contextPath %>/aitem.cu?cupage=1"><b>커스텀</b></a>
+                        <a href="<%= contextPath %>/aUplist.cu?update=1"><b>커스텀</b></a>
                     </div>
                 </div>
             </div>
@@ -309,8 +327,8 @@
                     <span>건</span>
                 </div>
                 <div class="custom_btn" align="right">
-                    <button type="button" style="margin-right: 10px;" data-toggle="modal" data-target="#title_img_Modal">대표 이미지 관리</button>
-                    <button type="button" data-toggle="modal" data-target="#costom_insert_Modal">재료 등록</button>
+                    <!--<button type="button" style="margin-right: 10px;" data-toggle="modal" data-target="#title_img_Modal">대표 이미지 관리</button>-->
+                    <button type="button" data-toggle="modal" data-target="#costom_insert_Modal">선택 삭제</button>
                 </div>
             </div>
 
@@ -335,8 +353,10 @@
 	                        <td>
 	                            <input type="checkbox">
 	                        </td>
-	                        <td><%= i.getCiCode() %></td>
-	                        <td><%= i.getCiName() %></td>
+	                        <td class="ajaxCiCode"><%= i.getCiCode() %></td>
+	                        <td>
+                                <a href="#" class="item_Name"><%= i.getCiName() %></a>
+                            </td>
 	                        <td><%= i.getCiProvider() %></td>
 	                        <td><%= i.getCiProvidePrice() %></td>
 	                        <td><%= i.getCiPrice() %></td>
@@ -346,7 +366,35 @@
                     <% } %>
                 </tbody>
             </table>
+            <!-- 재료 수정용 모달 띄우기 -->
+			<script>
+				$(function(){
+					$(".item_Name").click(function(){
+						var ciCode = $(this).parent().siblings(".ajaxCiCode").text();
+						
+						$.ajax({
+							url:"aitemupdate.cu",
+							data:{
+								"ciCode":ciCode
+							},
+							success:function(i){
+								console.log(i);
+								if($())
+								$("#ci_name").val(i.ciName);
+                                $("#ci_price").val(i.ciPrice);
+                                $("#ci_provider").val(i.ciProvider);
+                                $("#ci_providePrice").val(i.ciProvidePrice);
+                                $("#ci_stock").val(i.ciStock);
+								$("#custom_update_Modal").modal('show');
+							},
+							error:function(){
+								console.log("ajax 통신 실패");
+							}
+						});
+					})
+				})
 
+			</script>
 
             <!-- 페이징바 -->
             <div class="paging_area">
@@ -405,56 +453,20 @@
                 </div>
             </div>
 
-            <!-- 대표이미지 관리 모달-->
-            <div class="modal fade" id="title_img_Modal">
-                <div class="modal-dialog ">
-                <div class="modal-content">
-                    <div style="padding: 5px 5px;">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="modal-body" style="margin: auto;">
-                        <div class="image_manage">
-                            <form action="">
-                                <span>첨부파일</span>
-                                <input class="upload_name" value="">
-                                <label for="file">파일찾기</label>
-                                <input type="file" name="" id="file"> 
-                
-                                <div id="image_example">
-                                    <span>대표 이미지 예시</span>
-                                    <div>
-                                        <img src="" id="title_img">
-                                    </div>
-                                </div>
-                                <button type="submit">등록</button>
-                            </form>
-                            <script>
-                                $("#file").on('change',function(){
-                                    var fileName = $("#file").val();
-                                    $(".upload_name").val(fileName);
-                                });
-                            </script>
-                        </div> 
-                    </div>
-                </div>
-                </div>
-            </div>
-
-            <!-- 재료등록 모달-->
-            <div class="modal fade" id="costom_insert_Modal">
+            <!-- 재료수정 모달-->
+            <div class="modal fade" id="custom_update_Modal">
                 <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
             
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">커스텀 재료 등록</h4>
+                        <h4 class="modal-title">커스텀 재료 수정</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
             
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="" >
+                        <!-- <form action="" id="item_update">  -->
                             <table id="custom_insertTable">
                                 <tr>
                                     <td colspan="2">
@@ -469,35 +481,35 @@
                                 </tr>
                                 <tr>
                                     <th><span>재료명</span></th>
-                                    <td><input type="text" name="" ></td>
+                                    <td><input type="text" name="" value="" id="ci_name"> </td>
                                 </tr>
                                 <tr>
                                     <th>판매금액</th>
-                                    <td><input type="number" name="" ></td>
+                                    <td><input type="number" name="" value="" id="ci_price" ></td>
                                 </tr>
                                 <tr>
                                     <th>업체명</th>
-                                    <td><input type="text" name="" ></td>
+                                    <td><input type="text" name="" value="" id="ci_provider"></td>
                                 </tr>
                                 <tr>
                                     <th>공급가</th>
-                                    <td><input type="number" name="" ></td>
+                                    <td><input type="number" name="" value="" id="ci_providePrice"></td>
                                 </tr>
                                 <tr>
                                     <th>입고수량</th>
-                                    <td><input type="number" name=""></td>
+                                    <td><input type="number" name="" value="" id="ci_stock"></td>
                                 </tr>
                                 <tr>
                                     <th>노출여부</th>
                                     <td>
-                                        <select name="">
+                                        <select name="" value="">
                                             <option value="">Y</option>
                                             <option value="">N</option>
                                         </select>
                                     </td>
                                 </tr>
                             </table>
-                        </form>
+                       <!-- </form>  --> 
                     </div>
             
                     <!-- Modal footer -->

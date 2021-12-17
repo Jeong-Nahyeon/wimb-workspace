@@ -165,7 +165,40 @@ public class CustomDao {
 		return result;
 	}
 	
-	
+	// 재료 하나 조회
+	public Item selectItem(Connection conn, String ciCode) {
+		Item i = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectItem");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ciCode);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				i = new Item(rset.getString("ci_code"),
+							 rset.getString("ci_name"),
+							 rset.getString("ci_category"),
+							 rset.getString("ci_provider"),
+							 rset.getInt("ci_provideprice"),
+							 rset.getInt("ci_price"),
+							 rset.getString("ci_mainimg"),
+							 rset.getString("ci_show"),
+							 rset.getInt("ci_stock")
+							);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return i;
+	}
 	
 	
 	
