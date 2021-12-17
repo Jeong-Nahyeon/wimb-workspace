@@ -22,7 +22,7 @@
     /* 은지 */
     .outer{
         width: 1000px;
-        height: 0px;
+        height: 100px;
         margin: auto;
         margin-top: 90px;
     }

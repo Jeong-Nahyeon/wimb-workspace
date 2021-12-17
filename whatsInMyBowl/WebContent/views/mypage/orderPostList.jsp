@@ -28,8 +28,8 @@
 <style>
     /* 주문|배송조회 전체영역 */
     .orderPostList {
-        margin-left: 18px;
-        margin-top: 50px;
+    	margin-top: 40px;
+        margin-left: 500px;
     }
     /* 주문|배송조회 기간 선택 영역 */
     .selectDate {
@@ -136,7 +136,7 @@
 </head>
 <body>
 	
-	<%@ include file="../common/menubar.jsp" %>
+	
 	<%@ include file="../common/myPage.jsp" %>
 	
     <div class="orderPostList">
@@ -147,21 +147,21 @@
                 <p style="margin-bottom: 5px; font-size: 15px;"><b>조회기간</b></p>
                 <div class="selectBtn" style="display: inline-block;">
                     <div>
-                        <button type="button" value="7" name="week" style="margin-right: -6px;">7일</button>
-                        <button type="button" value="15" name="halfMonth" style="margin-right: -6px;">15일</button>
-                        <button type="button" value="30" name="month" style="margin-right: -6px;">1개월</button>
-                        <button type="button" value="90" name="threeMonth" style="margin-right: -6px;">3개월</button>
-                        <button type="button" value="365" name="year">1년</button>
+                        <button type="button" onclick="dateSub(7);" value="7" name="week" style="margin-right: -6px;">7일</button>
+                        <button type="button" onclick="dateSub(15);" value="15" name="halfMonth" style="margin-right: -6px;">15일</button>
+                        <button type="button" onclick="dateSub(30);" value="30" name="month" style="margin-right: -6px;">1개월</button>
+                        <button type="button" onclick="dateSub(90);" value="90" name="threeMonth" style="margin-right: -6px;">3개월</button>
+                        <button type="button" onclick="dateSub(365);" value="365" name="year">1년</button>
                     </div>
                 </div>
                 <div class="selectCalendar" style="display: inline-block;">
-                    <input type="date" name="startDate">
+                    <input type="date" onclick="inputDate(this);" id="startDate" name="startDate">
                     <label>~</label>
-                    <input type="date" name="endDate">
+                    <input type="date" onclick="inputDate(this);" id="endDate" name="endDate">
+                    <button type="submit" id="submit" onclick="submitDate();" name="submit">조회&nbsp;<i class="fas fa-search"></i></button>
                 </div>
-                <button type="submit" id="submit" namd="submit">조회&nbsp;<i class="fas fa-search"></i></button>
             </form>
-
+		
             <label style="font-size: 13px;"><b>주문/배송내역 조회 총 1건</b></label>
             <div class="listView">
             
@@ -282,7 +282,7 @@
                     <p>* 취소완료 후에는 철회가 불가능합니다.</p>
                 </div>
                 
-        \
+        
                 <!-- Modal footer -->
                 <div class="modal-footer" style="border:0px;">
                     <button type="submit" data-dismiss="modal">환불요청</button>
@@ -292,6 +292,79 @@
             </div>
         </div>
     </div>
+    
+    <script>
+    	// 버튼클릭시
+    	function dateSub(day) {
+    		
+    		// 오늘날짜 
+    		var today = new Date();
+    		
+    		// 선택한날짜 == startDay
+    		var day = today - day*24*60*60*1000; // n일 전
+    		var startDay = new Date(day);
+    		//console.log(today);
+    		//console.log(startDay);
+    		
+    		var tempMonth = (String(startDay.getMonth()+1));
+    		var temoDate = (String(startDay.getDate()));
+    		console.log(tempMonth);
+    		console.log(temoDate);
+    		
+    		
+    		if(nd.getMonth()+1 < 10) {
+    			var tempMonth = "";
+    			var tempMonth = "0+String(startDay.getMonth()+1)"
+    		}
+    		
+    		if(nd.getDate() < 10) {
+    			var tempDate = "";
+    			var tempDate = "0+String(startDay.getDate())"
+    		}
+    		
+    		var tempDay = String(startDay.getYear()) + tempMonth + tempDate;
+    		$("#startDate").val(tempDay);
+    		
+    		
+    		// 선택한 날짜 == endDay
+    		var endDate = new Date();
+    		var sendDate = new Date(endDate);
+    		
+    		var tempMonth1 = (String(sendDate.getMonth()+1));
+    		var tempDate1 = (String(sendDate.getDate()));
+    		
+    		
+    		if(nd.getMonth()+1 < 10) {
+    			var tempMonth = "";
+    			var tempMonth = "0+String(sendDate.getMonth()+1)"
+    		}
+    		
+    		if(nd.getDate() < 10) {
+    			var tempDate = "";
+    			var tempDate = "0+String(sendDate.getDate())"
+    		}
+    		var temp1 = String(sendDate.getYear()) + tempMonth1 + tempDate1;
+    		$("#endDate").val(temp1);
+    		console.log($("#endDate").val());
+    		console.log($("#startDate").val());
+    	}
+    	
+    	/*
+    	fuction submit Date() {
+    		
+    		var strt = document.f.startDate.value;
+    		var end = document.f.endDate.value;
+    		if(document.f.startDate.value == "" || document.f.endDate.value == "") {
+    			alert("날짜를 입력하세요.");
+    			return;
+    		}else {
+    			document.f.action = "/orderList.my?startDate=" + i + "&endDate = " +j;
+    			document.f.dubmit();
+    		}
+    		*/
+    
+    
+    </script>
   
 </body>
 </html>
