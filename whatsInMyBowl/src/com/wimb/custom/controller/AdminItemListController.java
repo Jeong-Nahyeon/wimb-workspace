@@ -44,8 +44,8 @@ public class AdminItemListController extends HttpServlet {
 		int endPage;
 		
 		listCount = new CustomService().selectListCount();
-		//currentPage = Integer.parseInt(request.getParameter("cpage"));
-		currentPage = 1;
+		currentPage = Integer.parseInt(request.getParameter("cupage"));
+		//currentPage = 1;
 		pageLimit = 5;
 		boardLimit = 10;
 		

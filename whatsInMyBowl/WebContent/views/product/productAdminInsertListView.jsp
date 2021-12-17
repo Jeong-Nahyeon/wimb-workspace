@@ -269,7 +269,7 @@
             </div>
             <div id="right" align="right">
                 <div id="custom-button">
-                    <a href=""><b>커스텀</b></a>
+                    <a href="<%= contextPath%>/aitem.cu?cupage=1"><b>커스텀</b></a>
                 </div>
             </div>
         </div>

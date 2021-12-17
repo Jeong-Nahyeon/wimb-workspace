@@ -280,12 +280,12 @@
             <div class="product_category">
                 <div id="left">
                     <div id="product-button">
-                        <a href=""><b>완제품</b></a>
+                        <a href="<%= contextPath %>/list.apr?cpage=1"><b>완제품</b></a>
                     </div>
                 </div>
                 <div id="right" align="right">
                     <div id="custom-button">
-                        <a href=""><b>커스텀</b></a>
+                        <a href="<%= contextPath %>/aitem.cu?cupage=1"><b>커스텀</b></a>
                     </div>
                 </div>
             </div>
@@ -318,14 +318,14 @@
                 <thead>
                     <tr>
                         <th width="3%"></th>
-                        <th width="4%">번호</th>
-                        <th width="4%">상품번호</th>
+                        
+                        <th width="15%">상품번호</th>
                         <th width="15%">상품명</th>
-                        <th width="10%">업체명</th>
-                        <th width="7%">공급가(원)</th>
-                        <th width="7%">판매가(원)</th>
-                        <th width="7%">재고</th>
-                        <th width="3%">노출 여부</th>
+                        <th width="20%">업체명</th>
+                        <th width="10%">공급가(원)</th>
+                        <th width="10%">판매가(원)</th>
+                        <th width="10%">재고</th>
+                        <th width="10%">노출 여부</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -335,7 +335,6 @@
 	                        <td>
 	                            <input type="checkbox">
 	                        </td>
-	                        <td>12</td>
 	                        <td><%= i.getCiCode() %></td>
 	                        <td><%= i.getCiName() %></td>
 	                        <td><%= i.getCiProvider() %></td>
