@@ -271,7 +271,43 @@ public class MyPageDao {
 			
 			return result;
 		}
-
-
+		
+		// 주문목록/배송조회 페이지
+		public ArrayList<MyOrders> orderListDetail(Connection conn, Member m, String startDay, String endDay) {
+			ArrayList<MyOrders> list = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("orderListDetail");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, m.getmCode());
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					MyOrders mo = new MyOrders(rset.getString("order_code"),
+											   rset.getInt("order_amount"),
+											   rset.getString("order_company"),
+											   rset.getString("order_invoice"),
+											   rset.getString("order_status"),
+											   rset.getDate("order_date"),
+											   rset.getString("cu_Name"),
+											   rset.getString("p_Name"),
+											   rset.getString("p_mainimg"),
+											   rset.getInt("pm_totalcost"));
+					list.add(mo);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return list;
+		}
+		
+		
 	
 }

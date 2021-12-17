@@ -132,6 +132,10 @@
         text-align: center;
         color: red;
     }
+    a:link { 
+    	text-decoration:none;
+    	color:black;
+    }
 </style>
 </head>
 <body>
@@ -143,26 +147,26 @@
 
         <label style="font-size: 18px;"><b>주문목록/배송조회</b></label>
         <div>
-            <form action="" method="get" class="selectDate">
+            <form action="<%= contextPath %>/orderList.my" method="get" class="selectDate">
                 <p style="margin-bottom: 5px; font-size: 15px;"><b>조회기간</b></p>
                 <div class="selectBtn" style="display: inline-block;">
                     <div>
-                        <button type="button" onclick="dateSub(7);" value="7" name="week" style="margin-right: -6px;">7일</button>
-                        <button type="button" onclick="dateSub(15);" value="15" name="halfMonth" style="margin-right: -6px;">15일</button>
-                        <button type="button" onclick="dateSub(30);" value="30" name="month" style="margin-right: -6px;">1개월</button>
-                        <button type="button" onclick="dateSub(90);" value="90" name="threeMonth" style="margin-right: -6px;">3개월</button>
-                        <button type="button" onclick="dateSub(365);" value="365" name="year">1년</button>
+                        <button type="button" onclick="dateSub(7);" style="margin-right: -6px;">7일</button>
+                        <button type="button" onclick="dateSub(15);" style="margin-right: -6px;">15일</button>
+                        <button type="button" onclick="dateSub(30);" style="margin-right: -6px;">1개월</button>
+                        <button type="button" onclick="dateSub(90);" style="margin-right: -6px;">3개월</button>
+                        <button type="button" onclick="dateSub(365);">1년</button>
                     </div>
                 </div>
                 <div class="selectCalendar" style="display: inline-block;">
-                    <input type="date" onclick="inputDate(this);" id="startDate" name="startDate">
+                    <input type="date" id="startDate" name="startDate">
                     <label>~</label>
-                    <input type="date" onclick="inputDate(this);" id="endDate" name="endDate">
+                    <input type="date" id="endDate" name="endDate">
                     <button type="submit" id="submit" onclick="submitDate();" name="submit">조회&nbsp;<i class="fas fa-search"></i></button>
                 </div>
             </form>
 		
-            <label style="font-size: 13px;"><b>주문/배송내역 조회 총 1건</b></label>
+            <label style="font-size: 13px;"><b>주문/배송내역 조회 총 <%= list.size() %>건</b></label>
             <div class="listView">
             
                     <!--case1. 최근 주문내역이 없을 때-->
@@ -294,76 +298,59 @@
     </div>
     
     <script>
-    	// 버튼클릭시
+    	// 조회기간 1 구하기
+    	
+    	// 1. 버튼으로 기간 클릭시
     	function dateSub(day) {
     		
     		// 오늘날짜 
     		var today = new Date();
     		
     		// 선택한날짜 == startDay
-    		var day = today - day*24*60*60*1000; // n일 전
-    		var startDay = new Date(day);
-    		//console.log(today);
-    		//console.log(startDay);
+    		var sday = today - day*24*60*60*1000; // n일 전
+    		var startDay = new Date(sday);
     		
-    		var tempMonth = (String(startDay.getMonth()+1));
-    		var temoDate = (String(startDay.getDate()));
-    		console.log(tempMonth);
-    		console.log(temoDate);
-    		
-    		
-    		if(nd.getMonth()+1 < 10) {
-    			var tempMonth = "";
-    			var tempMonth = "0+String(startDay.getMonth()+1)"
-    		}
-    		
-    		if(nd.getDate() < 10) {
-    			var tempDate = "";
-    			var tempDate = "0+String(startDay.getDate())"
-    		}
-    		
-    		var tempDay = String(startDay.getYear()) + tempMonth + tempDate;
-    		$("#startDate").val(tempDay);
-    		
-    		
-    		// 선택한 날짜 == endDay
-    		var endDate = new Date();
-    		var sendDate = new Date(endDate);
-    		
-    		var tempMonth1 = (String(sendDate.getMonth()+1));
-    		var tempDate1 = (String(sendDate.getDate()));
-    		
-    		
-    		if(nd.getMonth()+1 < 10) {
-    			var tempMonth = "";
-    			var tempMonth = "0+String(sendDate.getMonth()+1)"
-    		}
-    		
-    		if(nd.getDate() < 10) {
-    			var tempDate = "";
-    			var tempDate = "0+String(sendDate.getDate())"
-    		}
-    		var temp1 = String(sendDate.getYear()) + tempMonth1 + tempDate1;
-    		$("#endDate").val(temp1);
-    		console.log($("#endDate").val());
+		    var stYear = startDay.getFullYear();
+			var stMonth = ('0' + (startDay.getMonth() + 1)).slice(-2);
+			var stDay = ('0' + startDay.getDate()).slice(-2);
+			
+			var startDateString = stYear + '-' + stMonth  + '-' + stDay;
+    		$("#startDate").val(startDateString);
     		console.log($("#startDate").val());
     	}
     	
-    	/*
-    	fuction submit Date() {
+    	// 3. inputDate 시작날짜 미입력시! == 기본 7일
+    	$('#startDate').ready(function(){
+    		var today = new Date();
+			var sevenDay = new Date(today - 7*24*60*60*1000);
+			
+			var svYear = sevenDay.getFullYear();
+			var svMonth = ('0' + (sevenDay.getMonth() + 1)).slice(-2);
+			var svDay = ('0' + sevenDay.getDate()).slice(-2);
+			
+			var startDateString = svYear + svMonth + svDay;
+			
+    		$("#startDate").val(startDateString);
+    		console.log($("#startDate").val());
+		
+		})
+		
+		// 3. inputDate 끝날짜 미입력시! == 오늘날짜
+		$('#endDate').ready(function(){
+		
+			var today = new Date();
+		
+			var edYear = today.getFullYear();
+			var edMonth = ('0' + (today.getMonth() + 1)).slice(-2);
+			var edDay = ('0' + today.getDate()).slice(-2);
+			
+			var endDateString = edYear + edMonth + edDay;
+			
+			$("#endDate").val(endDateString);
+    		console.log($("#endDate").val());
+		
+		})
     		
-    		var strt = document.f.startDate.value;
-    		var end = document.f.endDate.value;
-    		if(document.f.startDate.value == "" || document.f.endDate.value == "") {
-    			alert("날짜를 입력하세요.");
-    			return;
-    		}else {
-    			document.f.action = "/orderList.my?startDate=" + i + "&endDate = " +j;
-    			document.f.dubmit();
-    		}
-    		*/
-    
-    
     </script>
   
 </body>

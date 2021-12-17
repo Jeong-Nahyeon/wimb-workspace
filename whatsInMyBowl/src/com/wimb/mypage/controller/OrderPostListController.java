@@ -34,13 +34,15 @@ public class OrderPostListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
 		// 전달값 기록
 		HttpSession session = request.getSession();
-		
 		Member m = (Member)session.getAttribute("loginUser");		
+		String startDay = request.getParameter("startDate");
+		String endDay = request.getParameter("endDate");
+		
+		
 		// 요청처리
-		ArrayList<MyOrders> list = new MyPageService().orderListDetail(m);
+		ArrayList<MyOrders> list = new MyPageService().orderListDetail(m, startDay, endDay);
 		
 		// 응답뷰
 		request.getSession().setAttribute("list", list);
