@@ -50,13 +50,12 @@ public class BannerInsertController extends HttpServlet {
 			multi = new MultipartRequest(request, savePath, maxSize, "UTF-8", new WimbFileRenamePolicy()); 
 			
 			String bannerTitle = multi.getParameter("bannerTitle");
-			String bannerStatus = multi.getParameter("bannerStatus");
 			String bannerPosition = multi.getParameter("bannerPosition");
 			String bannerPath = "resources/images/banner_upfiles/";	
 			String originName = multi.getOriginalFileName("bannerFile");
 			String changeName = multi.getFilesystemName("bannerFile");				
 			
-			Banner b = new Banner(bannerTitle, bannerStatus, bannerPosition, bannerPath, originName, changeName);
+			Banner b = new Banner(bannerTitle, bannerPosition, bannerPath, originName, changeName);
 			
 		
 			int result = new bannerService().insertBanner(b);

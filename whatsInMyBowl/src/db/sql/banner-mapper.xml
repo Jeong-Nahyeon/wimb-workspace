@@ -4,29 +4,25 @@
 	
 	<!-- 배너 등록 SQL문 -->
 	<entry key="insertBanner">
-		INSERT
+		INSERT 
 		  INTO BANNER
-		  (
-		    B_CODE
-		  , B_NAME
-          , B_STATDATE
-		  , B_STATUS
-		  , B_POSITION
-		  , B_PATH 
-		  , B_ORIGINNAME
-		  , B_CHANGENAME
-		  )
-		  VALUES
-		  (
-		    SEQ_BANNER.NEXTVAL
-		  , ?
-          , SYSDATE
-		  , N
-		  , ?
-		  , ?
-		  , ?
-		  , ?
-		  )	
+		     (
+		       B_CODE
+		     , B_NAME
+		     , B_POSITION
+		     , B_PATH
+		     , B_ORIGINNAME
+		     , B_CHANGENAME
+		     )
+		     VALUES
+		     (
+		       SEQ_BANNER.NEXTVAL
+		     , ?
+		     , ?
+		     , ?
+		     , ?
+		     , ?
+		     )
 	</entry>
 	
 	<entry key="">

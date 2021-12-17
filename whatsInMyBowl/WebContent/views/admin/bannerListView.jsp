@@ -360,7 +360,7 @@
     <div class="insert_banner_area">
         <div class="modal_close"><a href="#">close</a></div>
         <div align="center" style="margin-top: 30px;">
-            <form action="<%= contextPath %>/insert.banner" id="enroll-form" method="get" enctype="multipart/form-data">
+            <form action="<%= contextPath %>/insert.banner" id="enroll-form" method="post" enctype="multipart/form-data">
                 <table>
                     <tr>
                         <th>배너번호</th>
@@ -369,15 +369,6 @@
                     <tr>
                         <th>배너명</th>
                         <td><input type="text" name="bannerTitle" id="bannerTitle" placeholder="배너명 입력" required style="width: 90%;"></td>
-                    </tr>
-                    <tr>
-                        <th>상태</th>
-                        <td>
-                            <select name="bannerStatus" id="status">
-                                <option value="Y">게시중</option>
-                                <option value="N">게시종료</option>
-                            </select>
-                        </td>
                     </tr>
                     <tr>
                         <th>위치</th>

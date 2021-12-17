@@ -29,10 +29,9 @@ public class Banner {
 		this.bChangeName = bChangeName;
 	}
 	
-	public Banner(String bName, String status, String bPostion, String bPath, String bOriginName, String bChangeName) {
+	public Banner(String bName, String bPostion, String bPath, String bOriginName, String bChangeName) {
 		super();
 		this.bName = bName;
-		this.status = status;
 		this.bPostion = bPostion;
 		this.bPath = bPath;
 		this.bOriginName = bOriginName;
