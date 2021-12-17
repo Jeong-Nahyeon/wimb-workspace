@@ -28,7 +28,6 @@
 		height: 900px;
 		text-align: center;
 		border: 1px solid lightgrey;
-		margin-top: 100px;
 		margin: auto;
 	}
 	#termsFormBox div{margin: auto; margin-left: 20px; margin-top: 30px;}
@@ -205,7 +204,10 @@
 						<label for="agreePersonal">동의합니다</label>
 					</div>
 				</div>
-			
+				<div>
+					<input type="checkbox" id="agreeAge" name="agreeAge">
+					<label for="agreeAge">만 14세 이상입니다</label>
+				</div>
 				<div align="center">
 					<input type="button" value="가입 하기" id="nextBtn">
 				</div>
@@ -218,7 +220,7 @@
 		
 		$(document).ready(function(e){
 			$("#nextBtn").click(function(){
-				if($("#agreeTerms").is(":checked") && $("#personalAgree").is(":checked") ){
+				if($("#agreeTerms").is(":checked") && $("#agreePersonal").is(":checked") &&($("#agreeAge").is(":checked")) ){
 					$("#termsForm").submit();
 				}else{
 					if(!($("#agreeTerms").is(":checked"))){
@@ -229,7 +231,10 @@
 						alert("개인정보 수집 및 이용에 동의해주십시오");
 						return;
 					}
-					
+					if(!($("#agreeAge").is(":checked"))){
+						alert("만 14세 이상임을 확인해주십시오");
+						return;
+					}
 					$("#termsForm").submit();
 				}
 			});

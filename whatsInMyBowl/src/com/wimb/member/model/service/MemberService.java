@@ -1,10 +1,10 @@
 package com.wimb.member.model.service;
 
+
 import static com.wimb.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 
-import com.wimb.common.JDBCTemplate;
 import com.wimb.member.model.dao.MemberDao;
 import com.wimb.member.model.vo.Member;
 
@@ -32,14 +32,28 @@ public class MemberService {
 	
 	public int emailCheck(String checkEmail) {
 			
-			Connection conn = getConnection();
-			int count = new MemberDao().emailCheck(conn, checkEmail);
-			
-			close(conn);
-			return count;
+		Connection conn = getConnection();
+		int count = new MemberDao().emailCheck(conn, checkEmail);
+		
+		close(conn);
+		return count;
 	}
 	
-	//public int insertMember()
+	public int insertMember(Member m) {
+		
+		Connection conn = getConnection();
+		int result = new MemberDao().insertMember(conn, m);
+		
+		close(conn);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+		
+	}
 	
 	
 

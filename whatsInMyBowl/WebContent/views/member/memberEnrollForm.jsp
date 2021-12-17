@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../common/menubar.jsp"%>
-<%
-	String[] adCheckArr = (String[])request.getAttribute("adCheckArr");
-	//String adCheck = String.join(",", adCheckArr);
-%>
 
 <!DOCTYPE html>
 <html>
@@ -112,13 +108,13 @@
 				<i class="fas fa-star-of-life"></i> 필수입력사항
 			</p>
 		</div>
-		<form action="<%=contextPath %>/enroll.me" align="center" id="enrollForm" onsubmit="return enroll()" >
+		<form action="<%=contextPath %>/enroll.me" align="center" type="post" id="enrollForm" onsubmit="return enroll()" >
 		
 			<table id="enrollFormTable" align="center">
 				<tr>
 					<th>아이디<i class="fas fa-star-of-life"></i></th>
 					<td>
-						<input type="text" name="userId" id="userId"  class="req" placeholder="영문자와 숫자, 8~16글자내로 입력" required><br>
+						<input type="text" name="userId" id="userId"  class="req" placeholder="영문자와 숫자, 6~16글자내로 입력" required><br>
 						<div id="checkId">
 
 						</div>
@@ -130,7 +126,7 @@
 				</tr>
 				<tr>
 					<th>비밀번호<i class="fas fa-star-of-life"></i></th>
-					<td><input type="password" name="userPwd" id="userPwd" class="req" placeholder="영문자와 숫자, 8~16글자내로 입력" required><br>
+					<td><input type="password" name="userPwd" id="userPwd" class="req" placeholder="영문자와 숫자, 6~16글자내로 입력" required><br>
 						<div id="checkPwd">
 
 						</div></td>
@@ -222,9 +218,9 @@
 		</form>
 		<script>
 			// 아이디 정규식
-			let idExp = /^[A-Za-z0-9_|-]{8,16}$/;
+			let idExp = /^[A-Za-z0-9_|-]{6,16}$/;
 			// 비밀번호 정규식
-			let pwdExp = (/^(?=.*[a-z])(?=.*[0-9]).{8,16}$/);
+			let pwdExp = (/^(?=.*[a-z])(?=.*[0-9]).{6,16}$/);
 			// 이름 정규식
 			let nameExp = /^[가-힣]{2,6}$/;
 			// 이메일 정규식

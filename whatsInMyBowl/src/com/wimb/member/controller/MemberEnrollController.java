@@ -7,8 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.wimb.member.model.service.MemberService;
+import com.wimb.member.model.vo.Member;
 
 /**
  * Servlet implementation class MemberEnrollController
@@ -30,9 +32,38 @@ public class MemberEnrollController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String userName = request.getParameter("userName");
+		request.setCharacterEncoding("utf-8");
 		
-		//int result = new MemberService().insertMember();
+		String userName = request.getParameter("userName");
+		String userId = request.getParameter("userId");
+		String userPwd = request.getParameter("userPwd");
+		String phone = request.getParameter("userPhone");
+		String birth = request.getParameter("userBirth");
+		String gender = request.getParameter("gender");
+		String address = request.getParameter("userAddress1");
+		String subAddress = request.getParameter("userAddress2");
+		String postcode = request.getParameter("postcode");
+		String email = request.getParameter("userEmail");
+		String introducer = request.getParameter("introducer");
+		String[] adArr = request.getParameterValues("ad");
+		
+		String ad = "";
+		if(adArr != null) {
+			ad = String.join(",", adArr);
+		}
+		
+		Member m = new Member(userName, userId, userPwd, phone, birth, gender, address, subAddress, postcode, email, introducer, ad);
+		
+		int result = new MemberService().insertMember(m);
+		
+		if(result > 0) {
+			
+			response.sendRedirect(request.getContextPath());
+		} else {
+			
+			request.setAttribute("errorMsg", "회원가입 실패했습니다.");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 		
 	}
 
