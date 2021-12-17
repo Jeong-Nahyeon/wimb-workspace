@@ -48,12 +48,16 @@
         border: 1px solid gray;
     }
     .banner_box{display: inline-block;}
-    .updatebtn{
+    .checkboxandbtn button{
         border: none;
         background-color: #ffee58;
         border-radius: 4px;
         padding: 2px 13px;
-        margin-left: 10px;
+        margin-left: 3px;
+    }
+    .mainName{
+        font-size: 17px;
+        font-weight: bold;
     }
     .banner_box table{
         width: 400px;
@@ -68,7 +72,7 @@
     }
     .checkboxandbtn{margin-top: 20px;}
     .bannerList{
-        margin-top: 100px;
+        margin-top: 140px;
         width: 100%;
     }
     .bannerList table{
@@ -161,6 +165,78 @@
         padding: 0;
         margin-right: 10px;
     }
+    
+    /*메인1 변경하기 클릭 시 생성되는 모달창 내부 css*/
+     .mainBanner_Outer{
+        border: 1px solid black;
+        width: 970px;
+        height: auto;
+        padding: 30px;
+    }
+    .inputMainImg{
+        border: 1px solid black;
+        width: 300px;
+    }
+    .mainBanner_box table{
+        width: 300px;
+        height: 230px;
+        display: inline-block;
+        text-align: center;
+        border: 1px solid black;
+        margin: 30px 10px;
+    }
+    .mainBanner_btn{text-align: right;}
+    .mainBanner_btn button{
+        border: none;
+        padding: 4px 16px;
+        border-radius: 5px;
+        font-size: 15px;
+    }
+    .mainBanner_btn button:focus{outline: none;}
+    .mainBanner_btn_right{
+        margin-left: 10px;
+        background-color: #fdd835;
+    }
+    .mainBanner_btn_left{background-color: #8e8e8e;}
+    
+    /*메인1 변경하기 클릭 시 생성하는 모달창 css*/
+    .mainmodal_wrap{
+        display: none;
+        width: 1040px;
+        height: auto;
+        position: absolute;
+        top:50%;
+        left: 40%;
+        margin: -250px 0 0 -250px;
+        background:#eee;
+        z-index: 2;
+        padding: 30px
+    }
+    .mainblack_bg{
+        display: none;
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 2000px;
+        background-color:rgba(0, 0,0, 0.5);
+        top:0;
+        left: 0;
+        z-index: 1;
+    }
+    .mainmodal_close{
+        width: 26px;
+        height: 26px;
+        position: absolute;
+        top: -30px;
+        right: 0;
+    }
+    .mainmodal_close> a{
+        display: block;
+        width: 100%;
+        height: 100%;
+        background:url(https://img.icons8.com/metro/26/000000/close-window.png);
+        text-indent: -9999px;
+    }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -182,7 +258,8 @@
         <div class="banner-area">
 
             <div class="banner">
-
+				
+				<!-- 배너 메인 1 영역 -->
                 <div class="banner_box" align="center">
                     <table>
                         <tr>
@@ -207,16 +284,16 @@
                             <td>이벤트배너임</td>
                             <td>10</td>
                             <td>메인1</td>
-                        </tr>
-                    
+                        </tr>     
                     </table>
                     <div class="checkboxandbtn">
-                        <input type="checkbox">
-                        <button type="button" class="updatebtn">수정하기</button>
+                        <span class="mainName">메인1</span>
+                        <button type="button" id="updatebtn1">변경하기</button>
                     </div>
 
                 </div>
-
+				
+				<!-- 배너 메인 2 영역 -->
                 <div class="banner_box" align="center">
                     <table>
                         <tr>
@@ -245,12 +322,13 @@
                     
                     </table>
                     <div class="checkboxandbtn">
-                        <input type="checkbox">
-                        <button type="button" class="updatebtn">수정하기</button>
+                        <span class="mainName">메인2</span>
+                        <button type="button" id="updatebtn2">변경하기</button>
                     </div>
 
                 </div>
-
+				
+				<!-- 배너 메인 3 영역 -->
                 <div class="banner_box" align="center">
                     <table>
                         <tr>
@@ -279,10 +357,9 @@
                     
                     </table>
                     <div class="checkboxandbtn">
-                        <input type="checkbox">
-                        <button type="button" class="updatebtn">수정하기</button>
+                        <span class="mainName">메인3</span>
+                        <button type="button" id="updatebtn3">변경하기</button>
                     </div>
-
                 </div>
 
             </div>
@@ -298,7 +375,7 @@
         <table style="margin-left: 600px; margin-right: auto; width: 800px;" >
 
             <div>
-                <select name="sorting_banner" id="sorting_banner" style="position: absolute; top:77%; right: 503px;" onchange="window.open(value,'_self');">
+                <select name="sorting_banner" id="sorting_banner" style="position: absolute; top:81%; right: 503px;" onchange="window.open(value,'_self');">
                     <option value="<%= contextPath %>/list.banner?cpage=1" selected>전체보기</option>
                     <option value="<%= contextPath %>/Postinglist.banner?cpage=1">게시중</option>
                     <option value="<%= contextPath %>/EndOfPostinglist.banner?cpage=1">게시종료</option>
@@ -388,7 +465,7 @@
                     </tr>
                 </table>
                 <div class="two_btn" align="center" style="margin-top: 20px;">
-                    <button type="button" style="background-color:lightgray; margin-right: 10px;">취소</button>
+                    <button type="button" style="background-color:gray; margin-right: 10px;">취소</button>
                     <button type="submit">등록</button>
                 </div>
 
@@ -396,10 +473,44 @@
 
         </div>
     </div>
+    
+    <!-- 메인 베너에서 메인1 변경하기 클릭 시 나타나는 등록된 베너 리스트 모달창 -->
+        
+        <div class="mainblack_bg"></div>
+        <div class="mainmodal_wrap">
+
+            <div class="mainmodal_close"><a href="#">close</a></div>
+            <div class="mainBanner_box">
+                <div class="mainBanner_btn">
+                    <button type="button" class="mainBanner_btn_left">취소</button>
+                    <button type="button" class="mainBanner_btn_right">등록</button>
+                </div>
+                <form action="">
+    
+                    <table>
+                        <tr>
+                            <td colspan="4">
+                                <img class="inputMainImg" height="180" width="290px">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="selectMainImg" style="margin: 0px 10px;"></td>
+                            <td>배너명</td>
+                            <td style="width: 3px;">-</td>
+                            <td>원본파일명</td>
+                        </tr>
+                    </table>
+                    
+                </form>
+            </div>
+
+
+
 
 
 
     <script>
+    	// 등록 버튼 클릭 시 띄워지는 화면 등록 모달창
         window.onload = function() {
      
         function onClick() {
@@ -413,8 +524,9 @@
      
         document.getElementById('insertbannerbtn').addEventListener('click', onClick);
         document.querySelector('.modal_close').addEventListener('click', offClick); 
-    };
-
+    	};
+		
+    	// 등록하기 창에서 첨부파일 등록 시 썸네일로 띄워줄 js
         function loadImg(inputFile){
             // inputFile : 현재 변화가 생긴 input type=file 요소
             
@@ -436,6 +548,22 @@
             }
 
         }
+    	
+    	// 변경하기 버튼 시 띄워지는 메인등록1에 사용될 등록될 메인 리스트들
+        window.onload = function() {
+            
+            function onClick() {
+                document.querySelector('.mainmodal_wrap').style.display ='block';
+                document.querySelector('.mainblack_bg').style.display ='block';
+            }   
+            function offClick() {
+                document.querySelector('.mainmodal_wrap').style.display ='none';
+                document.querySelector('.mainblack_bg').style.display ='none';
+            }
+         
+            document.getElementById('updatebtn1').addEventListener('click', onClick);
+            document.querySelector('.mainmodal_close').addEventListener('click', offClick); 
+        	};
     </script>
     
     

@@ -78,6 +78,13 @@ public class bannerService {
 		 return listCount;
 	}
 	
+	// 메인1에 등록된 배너를 조회하는 Service
+	public Banner selectFirstMainBanner(){
+		Connection conn = getConnection();
+		ArrayList<Banner> list = new bannerDao().selectFirstMainBanner(conn);
+		close(conn);
+		return b;
+	}	
 
 	
 }
