@@ -35,6 +35,22 @@ public class bannerService {
 		return list;
 	}
 	
+	// 게시중인 배너 리스트를 조회하는 Service
+	public ArrayList<Banner> selectPostingBannerList(PageInfo pi){
+		Connection conn = getConnection();
+		ArrayList<Banner> list = new bannerDao().selectPostingBannerList(conn, pi);
+		close(conn);
+		return list;
+	}
+	
+	// 게시종료 배너 리스트를 조회하는 Service
+	public ArrayList<Banner> selectEndOfPostingBannerList(PageInfo pi){
+		Connection conn = getConnection();
+		ArrayList<Banner> list = new bannerDao().selectEndOfPostingBannerList(conn, pi);
+		close(conn);
+		return list;
+	}
+	
 	// 페이징바에 사용할 등록된 베너게시글의 총 갯수를 구하는 Service
 	public int selectListCount() {
 		 Connection conn = getConnection();
@@ -43,4 +59,25 @@ public class bannerService {
 		 
 		 return listCount;
 	}
+	
+	// 페이징바에 사용할 게시중인 베너게시글의 총 갯수를 구하는 Service
+	public int selectPostingListCount() {
+		 Connection conn = getConnection();
+		 int listCount = new bannerDao().selectPostingListCount(conn);
+		 close(conn);
+		 
+		 return listCount;
+	}
+	
+	// 페이징바에 사용할 게시종료한 베너게시글의 총 갯수를 구하는 Service
+	public int selectEndPostingListCount() {
+		 Connection conn = getConnection();
+		 int listCount = new bannerDao().selectEndPostingListCount(conn);
+		 close(conn);
+		 
+		 return listCount;
+	}
+	
+
+	
 }

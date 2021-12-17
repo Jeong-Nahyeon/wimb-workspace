@@ -3,7 +3,7 @@
 <%@ page import="java.util.ArrayList, com.wimb.admin.model.vo.Banner, com.wimb.common.model.vo.PageInfo" %>
 <%
 	//전체보기 시 필요한 데이터 (배너번호, 배너명, 게시일, 게시여부, 배너위치)
-	ArrayList<Banner> listAll = (ArrayList<Banner>)request.getAttribute("listAll");
+	ArrayList<Banner> Postinglist = (ArrayList<Banner>)request.getAttribute("Postinglist");
 	
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int currentPage = pi.getCurrentPage();
@@ -299,8 +299,8 @@
 
             <div>
                 <select name="sorting_banner" id="sorting_banner" style="position: absolute; top:77%; right: 503px;" onchange="window.open(value,'_self');">
-                    <option value="<%= contextPath %>/list.banner?cpage=1" selected>전체보기</option>
-                    <option value="<%= contextPath %>/Postinglist.banner?cpage=1">게시중</option>
+                    <option value="<%= contextPath %>/list.banner?cpage=1">전체보기</option>
+                    <option value="<%= contextPath %>/Postinglist.banner?cpage=1" selected>게시중</option>
                     <option value="<%= contextPath %>/EndOfPostinglist.banner?cpage=1">게시종료</option>
                 </select>
             </div>
@@ -316,7 +316,7 @@
                 <td class="bannerList_header">게시일</td>
                 <td class="bannerList_header">상태</td>
             </tr>
-            <% for(Banner b : listAll) { %>
+            <% for(Banner b : Postinglist) { %>
 	            <tr>
 	                <td><input type="checkbox"></td>
 	                <td><%= b.getbCode() %></td>

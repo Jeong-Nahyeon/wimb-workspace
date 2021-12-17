@@ -14,16 +14,16 @@ import com.wimb.admin.model.vo.Banner;
 import com.wimb.common.model.vo.PageInfo;
 
 /**
- * Servlet implementation class BannerListController
+ * Servlet implementation class BannerPostingListController
  */
-@WebServlet("/list.banner")
-public class BannerListController extends HttpServlet {
+@WebServlet("/Postinglist.banner")
+public class BannerPostingListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BannerListController() {
+    public BannerPostingListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,7 +33,7 @@ public class BannerListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 배너 전체목록을 불러오는 컨트롤러
+		// 게시중인 배너 리스트를 불러오는 컨트롤러
 		
 		// 페이징 처리
 		int listCount;     // 현재 총 배너게시글 갯수
@@ -45,7 +45,7 @@ public class BannerListController extends HttpServlet {
 		int startPage;     // 페이징바의 시작 수
 		int endPage;       // 페이징바의 끝 수
 		
-		listCount = new bannerService().selectListCount();
+		listCount = new bannerService().selectPostingListCount();
 		
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
@@ -65,13 +65,13 @@ public class BannerListController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		// 전체보기인 경우
-		ArrayList<Banner> listAll = new bannerService().selectBannerList(pi);
+		// 게시중인 경우
+		ArrayList<Banner> Postinglist = new bannerService().selectPostingBannerList(pi);
 		
 		request.setAttribute("pi", pi);
-		request.setAttribute("listAll", listAll);
+		request.setAttribute("Postinglist", Postinglist);
 		
-		request.getRequestDispatcher("views/admin/bannerListView.jsp").forward(request, response);
+		request.getRequestDispatcher("views/admin/bannerPostingListView.jsp").forward(request, response);	
 		
 		
 	}

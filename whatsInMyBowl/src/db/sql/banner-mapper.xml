@@ -46,6 +46,49 @@
         WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+	<!-- 게시중인 배너 리스트를 조회하는 sql문 -->
+	<entry key="selectPostingBannerList">
+	    SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT
+                               B_CODE
+                             , B_NAME
+                             , B_STARTDATE
+                             , B_STATUS
+                             , B_POSITION
+                          FROM BANNER
+                         WHERE B_STATUS = 'Y' 
+                         ORDER 
+                            BY B_CODE 
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<!-- 게시종료 배너 리스트를 조회하는 sql문 -->
+	<entry key="selectEndOfPostingBannerList">
+	    SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT
+                               B_CODE
+                             , B_NAME
+                             , B_STARTDATE
+                             , B_STATUS
+                             , B_POSITION
+                          FROM BANNER
+                         WHERE B_STATUS = 'N' 
+                         ORDER 
+                            BY B_CODE 
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	
 	<!-- 페이징바에 사용할 등록된 베너게시글의 총 갯수를 구하는 sql문 -->
 	<entry key="selectListCount">
 		SELECT 
@@ -53,8 +96,21 @@
 		  FROM BANNER
 	</entry>
 	
+	<!-- 페이징바에 사용할 게시중인 베너게시글의 총 갯수를 구하는 sql문 -->
+	<entry key="selectPostingListCount">
+		SELECT 
+		       COUNT(*) count
+		  FROM BANNER
+         WHERE B_STATUS = 'Y'
+	</entry>
 	
-
+	<!-- 페이징바에 사용할 게시종료한 베너게시글의 총 갯수를 구하는 sql문 -->
+	<entry key="selectEndPostingListCount">
+		SELECT 
+		       COUNT(*) count
+		  FROM BANNER
+         WHERE B_STATUS = 'N'
+	</entry>
 
 
 
