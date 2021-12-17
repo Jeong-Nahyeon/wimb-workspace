@@ -427,57 +427,63 @@
                         <div class="image_manage">
                             <form action="<%= contextPath %>/amainimg.cu" method="post" enctype="multipart/form-data" id="form">
                                 <span>첨부파일</span>
-                                <input class="upload_name" value="">
+                                <input class="upload_name" id="img_name" value="">
                                 <label for="file">파일찾기</label>
                                 <input type="file" name="mainImg" id="file"> 
                 
                                 <div id="image_example">
                                     <span>대표 이미지 예시</span>
                                     <div>
-                                        <img src="" id="title_img">
+                                        <img id="title_img">
                                     </div>
                                 </div>
                                 <button type="submit">등록</button>
                             </form>
                             
                             <script>
-                                $("#file").on('change',function(){                   
+                                $("#file").on('change',function(){  
+                                    
+                                	console.log("실행")
+                                    if(this.files.length == 1){
+                                        console.log(this.files.length)
+                                        var reader = new FileReader();
+                                        reader.readAsDataURL(this.files[0]);
+                                        reader.onload = function(e){
+                                            $("#title_img").attr("src", e.target.result);
+                                        }
+                                        
+                                    }else{
+                                        $("#title_img").attr("src", null);
+                                        $("#img_name").val("");
+                                    }
+                                	
+                                	
                                     var fileName = $("#file").val();                       
                                     $(".upload_name").val(fileName);
                                 });
+
+                                function loadImg(inputFile){
+                                    console.log("실행")
+                                    if(inputFile.files.length == 1){
+                                        console.log(inputFile.files.length)
+                                        var reader = new FileReader();
+                                        reader.onload = function(e){
+                                            $("#title_img").attr("src", e.target.result);
+                                        }
+                                        reader.readAsDataURL(inputFile.files[0]);
+                                    }else{
+                                        $("#title_img").attr("src", null);
+                                        $("#img_name").val("");
+                                    }
+                                    
+                                }
                             </script>
                         </div> 
                     </div>
                 </div>
                 </div>
             </div>
-            <!-- 대표이미지 ajax -->
-            <!-- 
-            <script>
-                function mainImgUpdate(){
-                    var mainImg = $("#form").serialize();
-
-                    $.ajax({
-                        url:"amainimg.cu",
-                        type:"post",
-                        enctype:'multipart/form-data',
-                        data: mainImg,
-                        success:function(data){
-                            if(data == 1){
-                            
-                            	console.log("파일등록성공");
-                            }else{
-                            	console.log(mainImg);
-                            }
-                        },
-                        error:function(){
-							console.log("ajax 통신 실패");
-                        }
-                    });
-                }
-
-            </script>
-             -->
+            
             
 
             <!-- 재료등록 모달-->

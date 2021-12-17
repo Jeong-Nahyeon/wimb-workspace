@@ -19,13 +19,13 @@ import com.wimb.custom.model.vo.Item;
  * Servlet implementation class AjaxUpdateMainImgController
  */
 @WebServlet("/amainimg.cu")
-public class AjaxUpdateMainImgController extends HttpServlet {
+public class AdminUpdateMainImgController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxUpdateMainImgController() {
+    public AdminUpdateMainImgController() {
         super();
         // TODO Auto-generated constructor stub
     }
