@@ -14,5 +14,23 @@
 		 WHERE CI_SHOW = 'Y'
 		   AND CI_STOCK > 0
 	</entry>
+	
+	<entry key="selectAdminItemList">
+		SELECT *
+		  FROM (
+		         SELECT ROWNUM RNUM, A.*
+		           FROM (
+		                  SELECT *
+		                    FROM ITEM
+		                   WHERE CI_SHOW = 'Y'
+		                )A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="updateMainImg">
+		UPDATE ITEM
+  		   SET CI_MAINIMG = ?
+	</entry>
 
 </properties>

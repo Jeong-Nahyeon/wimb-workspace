@@ -1,5 +1,7 @@
 package com.wimb.custom.model.dao;
 
+import static com.wimb.common.JDBCTemplate.close;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -9,8 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.wimb.common.model.vo.PageInfo;
 import com.wimb.custom.model.vo.Item;
-import static com.wimb.common.JDBCTemplate.*;
 public class CustomDao {
 
 	private Properties prop = new Properties();
@@ -78,4 +80,71 @@ public class CustomDao {
 		}
 		return list;
 	}
+	
+	public ArrayList<Item> selectAdminItemList(Connection conn, PageInfo pi){
+		ArrayList<Item> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminItemList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() -1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				list.add(new Item(rset.getString("ci_code"),
+						   rset.getString("ci_name"),
+						   rset.getString("ci_category"),
+						   rset.getString("ci_provider"),
+						   rset.getInt("ci_provideprice"),
+						   rset.getInt("ci_price"),
+						   rset.getString("ci_mainimg"),
+						   rset.getString("ci_show"),
+						   rset.getInt("ci_stock")
+					 	   ));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public int updateMainImg(Connection conn, Item item) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateMainImg");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, item.getCiImg());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -1,11 +1,12 @@
 package com.wimb.custom.model.service;
 
-import static com.wimb.common.JDBCTemplate.close;
+import static com.wimb.common.JDBCTemplate.*;
 import static com.wimb.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.wimb.common.model.vo.PageInfo;
 import com.wimb.custom.model.dao.CustomDao;
 import com.wimb.custom.model.vo.Item;
 public class CustomService {
@@ -27,6 +28,26 @@ public class CustomService {
 		return list;
 	}
 	
+	public ArrayList<Item> selectAdminItemList(PageInfo	pi){
+		Connection conn = getConnection();
+		ArrayList<Item> list = new CustomDao().selectAdminItemList(conn, pi);
+		
+		close(conn);
+		return list;
+	}
+	
+	// 대표이미지 관리
+	public int updateMainImg(Item i) {
+		Connection conn = getConnection();
+		int result = new CustomDao().updateMainImg(conn, i);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
 	
 
 }

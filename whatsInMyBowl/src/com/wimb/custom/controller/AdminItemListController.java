@@ -58,7 +58,7 @@ public class AdminItemListController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		ArrayList<Item> list = new CustomService().selectItemList();
+		ArrayList<Item> list = new CustomService().selectAdminItemList(pi);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);

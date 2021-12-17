@@ -37,13 +37,13 @@
     <script src="https://kit.fontawesome.com/fca98d1848.js" crossorigin="anonymous"></script>
 
     <style>
-        * {font-family: 'Noto Sans KR', sans-serif;}
+        /* * {font-family: 'Noto Sans KR', sans-serif;}*/
         div{box-sizing: border-box;}
         .fas{vertical-align: middle;}
         .outer{
             /*border:1px solid red;*/
             margin: auto;
-            margin-top:50px;
+            margin-top:100px;
             margin-left:300px;
             /*margin-left: 20px;*/
             width:1800px;
@@ -52,27 +52,29 @@
         .menu_categoty h2{
             display:inline;
             font-size: 25px;
+            font-weight: 800;
         }
         .custom_admin{
             /*width: 750px;*/
-            width: 1900px;
-            margin: auto;
+            width: 1500px;
+            /*margin: auto;*/
+            
         }
         .product_category{
             height: 50px;
-            margin: 20px 0 20px 0;
+            margin: 20px 0 0 0;
             /*border: 1px solid blue;*/
         }
         .custom_category{
             height: 30px;
-            margin: 20px 0 5px 0;
+            margin: 10px 0 5px 0;
             /*border: 1px solid purple;*/
         }
         /* 완제품, 커스텀 버튼*/
         #product_category{
             box-sizing: border-box;
             /* border:1px solid red;  */
-            width:1000px;
+            width:99%px;
             height:50px;
             margin:auto;
             margin-top:20px;
@@ -109,31 +111,37 @@
             width: 100%;
             height: 30px;
             overflow: hidden;
+            margin-bottom: 5px;
         }
         .custom_manage>div{
             /*border: 1px solid pink;*/
             float: left;
             width: 50%;
             height: 100%;
+            
         }
-        .custom_info>span, .custom_btn>button{
+        /*.custom_info>span, .custom_btn>button{
             font-size: 13px;
-        }
+        }*/
         .custom_btn>button{
             width: auto;
-            height: 25px;
+            height: 30px;
             background-color: rgb(247,223,125);
             border: none;
             border-radius: 5%;
+            font-size: 13px;
         }
         /*커스텀 재료 목록 테이블*/
         #custom_table{
             border: 1px solid lightgrey;
             width: 100%;
-            font-size: 13px;
+           
         }
         #custom_table th, #custom_table td{
             text-align: center;
+        }
+        #custom_table td{
+        	font-size: 13px;
         }
         /*페이징 바*/
         .paging_area{
@@ -201,7 +209,7 @@
         .image_manage{
             width: 400px;
             height: 300px;
-            padding: 10px 20px;
+            /*padding: 10px 20px;*/
         }
         .image_manage>form>span{font-size: 13px; margin-right: 5px;}
         .image_manage input[type="file"]{
@@ -213,12 +221,12 @@
             display: inline-block;
             padding: 0 10px;
             vertical-align: middle;
-            border: 1px solid #dddddd;
             width: 60%;
             height: 30px;
             font-size: 13px;
             color: #999999;
         }
+        .upload_name{border: 1px solid #dddddd;}
         .image_manage label{
             padding: 5px 10px;
             color: #fff;
@@ -237,9 +245,9 @@
             margin-bottom: 20px;
         }
         #image_example img{
-            border: 1px solid gray;
             width: 130px;
             height: 130px;
+            padding: 0;
         }
         .image_manage button{
             border: none; border-radius: 5%;
@@ -269,7 +277,9 @@
 </head>
 <body>
     <%@ include file="../common/adminBar.jsp" %>
+    
     <div class="outer">
+    
         <div class="menu_categoty">
             <h2 style="color:gray;">상품관리</h2>
             <h2>&gt; 상품등록</h2>
@@ -292,7 +302,7 @@
 
             <!-- 카테고리 선택 -->
             <div class="custom_category">
-                <select name="category" style="font-size: 13px;">
+                <select name="category" >
                     <option>메뉴 선택</option>
 	                <option value="">채소</option>
 	                <option value="">메인토핑</option>
@@ -317,10 +327,10 @@
             <table id="custom_table" class="table table-hover">
                 <thead>
                     <tr>
-                        <th width="3%"></th>
+                        <th width="4%"></th>
                         
                         <th width="15%">상품번호</th>
-                        <th width="15%">상품명</th>
+                        <th width="20%">상품명</th>
                         <th width="20%">업체명</th>
                         <th width="10%">공급가(원)</th>
                         <th width="10%">판매가(원)</th>
@@ -351,19 +361,19 @@
             <!-- 페이징바 -->
             <div class="paging_area">
             	<% if(currentPage != 1){ %>
-                	<button onclick="location.href='<%= contextPath %>/aitem.cu?cpage=<%= currentPage -1 %>';">&lt;</button>
+                	<button onclick="location.href='<%= contextPath %>/aitem.cu?cupage=<%= currentPage -1 %>';">&lt;</button>
                 <% } %>
                 
                 <% for(int p = startPage; p<=endPage; p++){ %>
                 	<% if(p == currentPage) { %>
 	                	<button disabled><%= p %></button>
 	                <% }else { %>
-	                	<button onclick="location.href='<%= contextPath%>/aitem.cu?cpage=<%= p %>';"><%= p %></button>
+	                	<button onclick="location.href='<%= contextPath%>/aitem.cu?cupage=<%= p %>';"><%= p %></button>
 	                <% } %>
 	            <% } %>
 	            
 	            <% if(currentPage != maxPage){ %>
-                	<button onclick="location.href='<%= contextPath %>/aitem.cu?cpage=<%= currentPage +1%>'">&gt;</button>
+                	<button onclick="location.href='<%= contextPath %>/aitem.cu?cupage=<%= currentPage +1%>'">&gt;</button>
                	<% } %>
             </div>
 
@@ -415,11 +425,11 @@
                     <!-- Modal body -->
                     <div class="modal-body" style="margin: auto;">
                         <div class="image_manage">
-                            <form action="">
+                            <form action="<%= contextPath %>/amainimg.cu" method="post" enctype="multipart/form-data" id="form">
                                 <span>첨부파일</span>
                                 <input class="upload_name" value="">
                                 <label for="file">파일찾기</label>
-                                <input type="file" name="" id="file"> 
+                                <input type="file" name="mainImg" id="file"> 
                 
                                 <div id="image_example">
                                     <span>대표 이미지 예시</span>
@@ -429,9 +439,10 @@
                                 </div>
                                 <button type="submit">등록</button>
                             </form>
+                            
                             <script>
-                                $("#file").on('change',function(){
-                                    var fileName = $("#file").val();
+                                $("#file").on('change',function(){                   
+                                    var fileName = $("#file").val();                       
                                     $(".upload_name").val(fileName);
                                 });
                             </script>
@@ -440,6 +451,34 @@
                 </div>
                 </div>
             </div>
+            <!-- 대표이미지 ajax -->
+            <!-- 
+            <script>
+                function mainImgUpdate(){
+                    var mainImg = $("#form").serialize();
+
+                    $.ajax({
+                        url:"amainimg.cu",
+                        type:"post",
+                        enctype:'multipart/form-data',
+                        data: mainImg,
+                        success:function(data){
+                            if(data == 1){
+                            
+                            	console.log("파일등록성공");
+                            }else{
+                            	console.log(mainImg);
+                            }
+                        },
+                        error:function(){
+							console.log("ajax 통신 실패");
+                        }
+                    });
+                }
+
+            </script>
+             -->
+            
 
             <!-- 재료등록 모달-->
             <div class="modal fade" id="costom_insert_Modal">
@@ -454,43 +493,43 @@
             
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="" >
+                        <form action="<%= contextPath%>/aiteminsert.cu" method="post">
                             <table id="custom_insertTable">
                                 <tr>
                                     <td colspan="2">
-                                        <select name="" id="">
+                                        <select name="ciCategory">
                                             <option>재료 구분</option>
-                                            <option value="">채소</option>
-                                            <option value="">메인토핑</option>
-                                            <option value="">사이드토핑</option>
-                                            <option value="">드레싱</option>
+                                            <option value="vagetable">채소</option>
+                                            <option value="mainToppoing">메인토핑</option>
+                                            <option value="sideTopping">사이드토핑</option>
+                                            <option value="dressing">드레싱</option>
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th><span>재료명</span></th>
-                                    <td><input type="text" name="" ></td>
+                                    <td><input type="text" name="ciName" ></td>
                                 </tr>
                                 <tr>
                                     <th>판매금액</th>
-                                    <td><input type="number" name="" ></td>
+                                    <td><input type="number" name="ciPrice" ></td>
                                 </tr>
                                 <tr>
                                     <th>업체명</th>
-                                    <td><input type="text" name="" ></td>
+                                    <td><input type="text" name="ciProvider" ></td>
                                 </tr>
                                 <tr>
                                     <th>공급가</th>
-                                    <td><input type="number" name="" ></td>
+                                    <td><input type="number" name="ciProvidePrice" ></td>
                                 </tr>
                                 <tr>
                                     <th>입고수량</th>
-                                    <td><input type="number" name=""></td>
+                                    <td><input type="number" name="ciStock"></td>
                                 </tr>
                                 <tr>
                                     <th>노출여부</th>
                                     <td>
-                                        <select name="">
+                                        <select name="ciShow">
                                             <option value="">Y</option>
                                             <option value="">N</option>
                                         </select>
