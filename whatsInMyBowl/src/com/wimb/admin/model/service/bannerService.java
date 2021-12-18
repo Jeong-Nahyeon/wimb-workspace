@@ -81,9 +81,9 @@ public class bannerService {
 	// 메인1 글씨 오른쪽 '변경하기'버튼 클릭 시 생성되는 모달창 안에 띄워줄 게시종료 상태 리스트
 	public ArrayList<Banner> selectFisrtMainList(){
 		Connection conn = getConnection();
-		ArrayList<Banner> list = new bannerDao().selectFisrtMainList(conn);
+		ArrayList<Banner> Firstlist = new bannerDao().selectFisrtMainList(conn);
 		close(conn);
-		return list;
+		return Firstlist;
 	}	
 
 	

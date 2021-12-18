@@ -232,10 +232,18 @@ public class bannerDao {
 		return listCount;
 	}
 	
+	// 체크박스에 선택된 다수의 값을 한꺼번에 삭제시켜주는 dao
+	/*
+	public int deleteSelectAll(Connection conn) {
+		int result = 0;
+	}
+	*/
+	
+	
 	// 메인1 글씨 오른쪽 '변경하기'버튼 클릭 시 생성되는 모달창 안에 띄워줄 게시종료 상태 리스트
 	public ArrayList<Banner> selectFisrtMainList(Connection conn){
 		
-		ArrayList<Banner> list = new ArrayList<>();
+		ArrayList<Banner> Firstlist = new ArrayList<>();
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
 		
@@ -246,13 +254,9 @@ public class bannerDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				Banner b = new Banner();
-				b.setbCode(rset.getInt("b_code"));
-				b.setbName(rset.getString("b_name"));
-				b.setbOriginName(rset.getString("b_originname"));
-				b.setMainImg(rset.getString("filepath"));
-				
-				list.add(b);
+				Firstlist.add(new Banner(rset.getInt("b_code"),
+						                 rset.getString("b_name"),
+						                 rset.getString("filepath")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -260,7 +264,7 @@ public class bannerDao {
 			close(rset);
 			close(pstmt);
 		}
-		return list;
+		return Firstlist;
 		
 		
 	}

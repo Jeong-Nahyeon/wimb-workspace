@@ -11,7 +11,7 @@
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
 	
-	// 메인1 '변경하기'버튼 클릭 시 생성되는 리스트 정보를 담은 객체
+	// 메인1 '변경하기'버튼 클릭 시 생성되는 리스트 정보를 담은 객체 (배너번호, 배너명, 파일경로)
 	ArrayList<Banner> Firstlist = (ArrayList<Banner>)request.getAttribute("Firstlist");
 %>
 <!DOCTYPE html>
@@ -291,7 +291,7 @@
                     </table>
                     <div class="checkboxandbtn">
                         <span class="mainName">메인1</span>
-                        <button type="button" id="updatebtn1">변경하기</button>
+                        <button type="button" id="updatebtn1" onclick="location.href='<%= contextPath %>/firstMainlist.banner';">변경하기</button>
                     </div>
 
                 </div>
@@ -385,7 +385,7 @@
                 </select>
             </div>
             <div style="margin-left: 65%;" class="two_btn">
-                <button type="button" id="deletebanner">선택삭제</button>
+                <button type=submit id="deletebanner">선택삭제</button>
                 <button type="button" id="insertbannerbtn">등록하기</button>
             </div>
             <tr>
@@ -398,7 +398,7 @@
             </tr>
             <% for(Banner b : listAll) { %>
 	            <tr>
-	                <td><input type="checkbox"></td>
+	                <td><input type="checkbox" name="reportChkBxRow"></td>
 	                <td><%= b.getbCode() %></td>
 	                <td><%= b.getbName() %></td>
 	                <td><%= b.getbPostion() %></td>
@@ -487,24 +487,15 @@
                     <button type="button" class="mainBanner_btn_left">취소</button>
                     <button type="button" class="mainBanner_btn_right">등록</button>
                 </div>
-                <form action="">
-    				
-    				
-	                    <table>
-	                        <tr>
-	                            <td colspan="4">
-	                                <img src="" class="inputMainImg" height="180" width="290px">
-	                            </td>
-	                        </tr>
-	                        <tr>
-	                            <td><input type="radio" name="selectMainImg" style="margin: 0px 10px;"></td>
-	                            <td>qqq</td>
-	                            <td style="width: 3px;">-</td>
-	                            <td>qqq</td>
-	                        </tr>
-	                    </table>
-				
-                </form>
+	                <table>
+	                    <tr>
+		                    <td colspan="2"><img src="" class="inputMainImg" height="180" width="290px"></td>
+		                </tr>
+		                <tr>
+		                    <td><input type="radio" name="selectMainImg" style="margin: 0px 10px;"></td>
+		                    <td>배너명</td>
+		                </tr>
+		            </table>
             </div>
 
 
@@ -568,6 +559,8 @@
             document.querySelector('.mainmodal_close').addEventListener('click', offClick); 	  			
     	}
        	 
+    	
+
     </script>
     
     

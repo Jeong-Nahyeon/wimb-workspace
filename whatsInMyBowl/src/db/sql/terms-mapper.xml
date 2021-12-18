@@ -4,11 +4,12 @@
 
 	<!-- 이용약관 리스트를 가져오는 SQL문  -->
 	<entry key="selectTermsList">
-		SELECT
+         SELECT
 				TERMS_CODE
 			  , TERMS_CONTENT
 		   FROM TERMS
 		  WHERE TERMS_CATEGORY = '이용약관'
+            AND TERMS_ADMINSHOW = 'Y'
 		  ORDER 
 		    BY TERMS_CODE DESC
 	</entry>
@@ -48,11 +49,12 @@
 		 WHERE TERMS_CODE = ?
 	</entry>
 	
+	<!-- 삭제버튼 클릭 시 관리자게시여부를 N으로 수정하는 SQL문 -->
 	<entry key="deleteTerms">
-		DELETE 
-		  FROM TERMS
+		UPDATE 
+		       TERMS
+		   SET TERMS_ADMINSHOW = 'N'
 		 WHERE TERMS_CODE = ?
-		          
 	</entry>
 
 	<!-- 개인정보처리방침 리스트를 가져오는 SQL문  -->
@@ -62,6 +64,7 @@
 			  , TERMS_CONTENT
 		   FROM TERMS
 		  WHERE TERMS_CATEGORY = '개인정보수집'
+		    AND TERMS_ADMINSHOW = 'Y'
 		  ORDER 
 		     BY TERMS_CODE DESC
 	</entry>
