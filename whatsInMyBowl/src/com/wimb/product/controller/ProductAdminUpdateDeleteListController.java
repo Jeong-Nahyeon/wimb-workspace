@@ -14,16 +14,16 @@ import com.wimb.product.model.service.ProductService;
 import com.wimb.product.model.vo.Product;
 
 /**
- * Servlet implementation class ProductListController
+ * Servlet implementation class ProductAdminUpdateDeleteListController
  */
-@WebServlet("/list.pr")
-public class ProductListController extends HttpServlet {
+@WebServlet("/updateDeleteList.apr")
+public class ProductAdminUpdateDeleteListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductListController() {
+    public ProductAdminUpdateDeleteListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,13 +42,13 @@ public class ProductListController extends HttpServlet {
 		int endPage; // 끝 페이지 수
 		
 		
-		listCount = new ProductService().selectListCount();
+		listCount = new ProductService().selectAdminListCount();
 		
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
 		pageLimit = 10;
 		
-		boardLimit = 12;
+		boardLimit = 10;
 		
 		maxPage = (int)Math.ceil((double)listCount / boardLimit);
 		
@@ -63,12 +63,12 @@ public class ProductListController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
 		// 전체 샐러드 조회
-		ArrayList<Product> totalList = new ProductService().selectProductList(pi);
+		ArrayList<Product> totalList = new ProductService().selectAdminProductList(pi);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("totalList", totalList);
 		
-		request.getRequestDispatcher("views/product/productListView.jsp").forward(request, response);
+		request.getRequestDispatcher("views/product/productAdminUpdateDeleteListView.jsp").forward(request, response);
 		
 	}
 
