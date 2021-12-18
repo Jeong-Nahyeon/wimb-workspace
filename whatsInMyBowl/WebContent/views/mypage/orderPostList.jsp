@@ -29,7 +29,7 @@
     /* 주문|배송조회 전체영역 */
     .orderPostList {
     	margin-top: 40px;
-        margin-left: 500px;
+        margin-left: 700px;
     }
     /* 주문|배송조회 기간 선택 영역 */
     .selectDate {
@@ -49,7 +49,7 @@
     button:hover {background-color: rgb(155, 213, 189);}
     input {
         height: 35px;
-        width:120px;
+        width:130px;
         margin-left: 5px;
     }
     input:hover {cursor: pointer;}
@@ -59,6 +59,7 @@
         color: white;
         width: 90px;
         float: right;
+        margin-left: 10px;
     }
     /* 주문|배송 내역 리스트 영역 */
     .orderList th {
@@ -69,7 +70,7 @@
         background-color: rgba(240, 239, 233, 0.445);
     }
     .orderList td {
-        border-bottom: 2px solid rgba(133, 136, 139, 0.548);
+        border-bottom: 1px solid rgba(179, 174, 174, 0.384);
         padding: 18px 0px 18px 0px;
         font-size: 13px;;
     }
@@ -79,6 +80,7 @@
         border-spacing: 0px;
         box-sizing: border-box;
         margin-bottom:15px;
+        border-bottom: 2px solid rgba(133, 136, 139, 0.548);
     }
     .orderList button {
         display: block;
@@ -121,7 +123,6 @@
     }
     .modal-footer button {
         border: 0px;
-        border-radius: 4px;
         width: 120px;
         height: 40px;
         margin-right: 10px;
@@ -135,6 +136,9 @@
     a:link { 
     	text-decoration:none;
     	color:black;
+    }
+    .selectBtn button:focus {
+    	background-color: lightgrey;
     }
 </style>
 </head>
@@ -162,7 +166,7 @@
                     <input type="date" id="startDate" name="startDate">
                     <label>~</label>
                     <input type="date" id="endDate" name="endDate">
-                    <button type="submit" id="submit" onclick="submitDate();" name="submit">조회&nbsp;<i class="fas fa-search"></i></button>
+                    <button type="submit" id="submit" name="submit">조회&nbsp;<i class="fas fa-search"></i></button>
                 </div>
             </form>
 		
@@ -208,13 +212,26 @@
                  					<td><a href="주문목록/배송조회 이동"><%= od.getOrderStatus() %></a></td> 
                    					<td>
                    						<% if(od.getOrderStatus().equals("결제완료") || od.getOrderStatus().equals("상품준비중")) { %>
+		                                	
 		                                	<!--주문상태가 결제완료, 상품준비중일 때만 가능-->
 		                                	<button type="button" onclick="cancelAlert()">즉시취소</button>
+	                                	
 	                                	<% }else if(od.getOrderStatus().equals("배송중")) { %>
+	                                		
+	                                		<!--주문상태가 배송중일 때만 가능-->
 	                                		<button>배송조회</button>
-                                		<% }else { %>
+                                		
+                                		<% }else if(od.getOrderStatus().equals("배송완료")){ %>
+                                			
+                                			<!--주문상태가 배송완료일 때만 가능-->
                                 			<button type="button"  onclick="location.href='리뷰작성페이지이동'">리뷰작성</button>
                                 			<button type="button" data-toggle="modal" data-target="#refundModal">환불요청</button>
+                                		
+                                		<% }else { %>
+                                			
+                                			<!--주문상태가 환불/취소일 때만 가능-->
+                                			<button type="button"  onclick="location.href='취소/환불내역페이지이동'">상세보기</button>
+                                			
                                 		<% } %>	
 		                            </td>
 	                        	</tr>
@@ -328,12 +345,28 @@
 			var svMonth = ('0' + (sevenDay.getMonth() + 1)).slice(-2);
 			var svDay = ('0' + sevenDay.getDate()).slice(-2);
 			
-			var startDateString = svYear + svMonth + svDay;
+			var startDateString = svYear + '-' + svMonth  + '-' + svDay;
 			
     		$("#startDate").val(startDateString);
     		console.log($("#startDate").val());
 		
 		})
+		
+		/*
+		$('#startDate').change(function(){
+			var sday = today - day*24*60*60*1000; // n일 전
+    		var startDay = new Date(sday);
+			
+			var stYear = startDay.getFullYear();
+			var stMonth = ('0' + (startDay.getMonth() + 1)).slice(-2);
+			var stDay = ('0' + startDay.getDate()).slice(-2);
+			
+			var startDateString = stYear + '-' + stMonth  + '-' + stDay;
+    		$("#startDate").val(startDateString);
+    		console.log($("#startDate").val());
+		
+		})
+		*/
 		
 		// 3. inputDate 끝날짜 미입력시! == 오늘날짜
 		$('#endDate').ready(function(){
@@ -344,12 +377,14 @@
 			var edMonth = ('0' + (today.getMonth() + 1)).slice(-2);
 			var edDay = ('0' + today.getDate()).slice(-2);
 			
-			var endDateString = edYear + edMonth + edDay;
+			var endDateString = edYear + '-' + edMonth + '-' + edDay;
 			
 			$("#endDate").val(endDateString);
     		console.log($("#endDate").val());
 		
 		})
+		
+		
     		
     </script>
   

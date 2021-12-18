@@ -14,6 +14,7 @@ import com.wimb.mypage.model.vo.MyOrders;
 
 public class MyPageService {
 	
+	// 주문/배송목록 - 메인페이지
 	public ArrayList<MyOrders> selectOrderList(Member m) {
 		Connection conn = getConnection();
 		ArrayList<MyOrders> list = new MyPageDao().selectOrderList(conn, m);
@@ -76,12 +77,6 @@ public class MyPageService {
 	
 	}
 	
-	public ArrayList<MyOrders> orderListDetail(Member m) {
-		Connection conn = getConnection();
-		ArrayList<MyOrders> list = new MyPageDao().orderListDetail(conn, m);
-		close(conn);
-		return list;
-	}
 	
 	
 	// inquiry 목록조회
@@ -114,17 +109,9 @@ public class MyPageService {
 	
 	
 	// 주문목록/배송조회 페이지
-	public ArrayList<MyOrders> orderListDetail(Member m, String startDay, String endDay) {
+	public ArrayList<MyOrders> orderListDetail(Member m, String startDate, String endDate) {
 		Connection conn = getConnection();
-		ArrayList<MyOrders> list = new MyPageDao().orderListDetail(conn, m, startDay, endDay);
-		close(conn);
-		return list;
-	}
-	
-	// 주문목록/배송조회 기간입력시
-	public ArrayList<MyOrders> selectOrderDate(Member m, String startDay, String endDay) {
-		Connection conn = getConnection();
-		ArrayList<MyOrders> list = new MyPageDao().orderListDetail(conn, m, startDay, endDay);
+		ArrayList<MyOrders> list = new MyPageDao().orderListDetail(conn, m, startDate, endDate);
 		close(conn);
 		return list;
 	}

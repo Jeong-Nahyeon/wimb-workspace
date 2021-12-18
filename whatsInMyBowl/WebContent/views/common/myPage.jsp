@@ -105,11 +105,11 @@
             <tr>
                 <td rowspan="2" colspan="2" align="right" width="200">
                    <div id="userImage"><img src="https://www.w3schools.com/howto/img_avatar.png" alt="userImg" class="userImg"></div>
-                    <div id="userName"><h5><a href="">홍길동</a>님</h5></div>
+                    <div id="userName"><h5><a href=""><%= loginUser.getmName() %></a>님</h5></div>
                 </td>
                 <td colspan="2" rowspan="2" width="80px" >
                     <div id="point">적립금<br><br>
-                        <a href="">0</a>원
+                        <a href=""><%= loginUser.getmPoint() %></a>원
                     </div>
                 </td>
                 
@@ -146,7 +146,7 @@
                     <th>쇼핑정보</th>
                 </tr>
                 <tr>
-                    <td><a href="">주문목록/배송조회</a></td>
+                    <td><a href="<%=contextPath%>/orderList.my">주문목록/배송조회</a></td>
                 </tr>
                 <tr>
                     <td><a href="">취소/환불내역</a></td>

@@ -40,7 +40,6 @@ public class OrderPostListController extends HttpServlet {
 		String startDay = request.getParameter("startDate");
 		String endDay = request.getParameter("endDate");
 		
-		
 		// 요청처리
 		ArrayList<MyOrders> list = new MyPageService().orderListDetail(m, startDay, endDay);
 		
