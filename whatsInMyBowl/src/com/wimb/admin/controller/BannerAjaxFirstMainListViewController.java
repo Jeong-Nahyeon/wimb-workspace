@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.wimb.admin.model.service.bannerService;
 import com.wimb.admin.model.vo.Banner;
 
@@ -16,13 +17,13 @@ import com.wimb.admin.model.vo.Banner;
  * Servlet implementation class BannerFirstMainListViewController
  */
 @WebServlet("/firstMainlist.banner")
-public class BannerFirstMainListViewController extends HttpServlet {
+public class BannerAjaxFirstMainListViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BannerFirstMainListViewController() {
+    public BannerAjaxFirstMainListViewController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,8 +36,9 @@ public class BannerFirstMainListViewController extends HttpServlet {
 		// 메인1 글씨 오른쪽 '변경하기'버튼 클릭 시 생성되는 모달창 안에 띄워줄 게시종료 상태 리스트
 		ArrayList<Banner> Firstlist = new bannerService().selectFisrtMainList();
 
-			request.setAttribute("Firstlist", Firstlist);
-			request.getRequestDispatcher("views/admin/bannerListView.jsp").forward(request, response);
+		response.setContentType("application/json; charset=UTF-8");
+		new Gson().toJson(Firstlist, response.getWriter());
+			
 			
 		
 	}
