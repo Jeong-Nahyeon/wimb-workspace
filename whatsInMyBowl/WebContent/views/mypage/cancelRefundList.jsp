@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@
+	page import="com.wimb.mypage.model.vo.MyOrders, java.util.ArrayList"
+%>
+<%
+	ArrayList<MyOrders> clist = (ArrayList<MyOrders>)session.getAttribute("clist");
+ %>    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,6 +98,11 @@
         text-decoration: none;
         color:black;
     }
+    img {
+    	widt: 80px;
+    	height: 80px;
+    	margin-right: 20px;
+    }
 
 </style>
 
@@ -107,25 +119,44 @@
                 <p style="margin-bottom: 5px; font-size: 15px;"><b>조회기간</b></p>
                 <div class="selectBtn" style="display: inline-block;">
                     <div>
-                        <button type="button" value="7" name="week" style="margin-right: -6px;">7일</button>
-                        <button type="button" value="15" name="halfMonth" style="margin-right: -6px;">15일</button>
-                        <button type="button" value="30" name="month" style="margin-right: -6px;">1개월</button>
-                        <button type="button" value="90" name="threeMonth" style="margin-right: -6px;">3개월</button>
-                        <button type="button" value="365" name="year">1년</button>
+                        <button type="button" onclick="dateSub(7);" style="margin-right: -6px;">7일</button>
+                        <button type="button" onclick="dateSub(15);" style="margin-right: -6px;">15일</button>
+                        <button type="button" onclick="dateSub(30);" style="margin-right: -6px;">1개월</button>
+                        <button type="button" onclick="dateSub(90);" style="margin-right: -6px;">3개월</button>
+                        <button type="button" onclick="dateSub(365);">1년</button>
                     </div>
                 </div>
                 <div class="selectCalendar" style="display: inline-block;">
-                    <input type="date">
+                    <input type="date" id="startDate" name="startDate">
                     <label>~</label>
-                    <input type="date">
+                    <input type="date" id="endDate" name="endDate">
+                    <button type="submit" id="submit" name="submit">조회&nbsp;<i class="fas fa-search"></i></button>
                 </div>
-                <button type="submit" id="submit" namd="submit">조회&nbsp;<i class="fas fa-search"></i></button>
             </form>
 
-            <label style="font-size: 13px;"><b>취소/환불내역 조회 총 3건</b></label>
+            <label style="font-size: 13px;"><b>취소/환불내역 조회 총 <%= clist.size() %>건</b></label>
             <div class="listView">
+            
+                    <!--case1. 최근 주문내역이 없을 때-->
+            		<% if(list.isEmpty()) { %>
+            		
+                   		<table class="orderList">
+	                        <tr>
+	                            <th width="130">주문일자<br>[주문번호]</th>
+	                            <th>상품명</th>
+	                            <th width="80">상품금액/수량</th>
+	                            <th width="80">처리일자</th>
+	                            <th width="80">상세보기</th>
+	                        </tr>
+	                        <tr>
+	                            <td colspan="5" height="180">최근 취소/환불 정보가 없습니다.</td>
+	                        </tr>
+	                        
+                    	</table>
+                    <% }else { %>	
+                    	
+                    <!--case2. 취소/환불내역이 있을 때 (if(취소상태 == 처리X))-->
                     <table class="orderList">
-                         <!--case1. 취소/환불내역이 없을 때-->
                         <tr>
                             <th width="130">주문일자<br>[주문번호]</th>
                             <th>상품명</th>
@@ -134,78 +165,113 @@
                             <th width="80">처리일자</th>
                             <th width="80">상세보기</th>
                         </tr>
-                        <tr>
-                            <td colspan="6" height="180">조회 내역이 없습니다.</td>
-                        </tr>
-                    </table>
-                    <table class="orderList">
-                       <!--case2. 취소/환불내역이 있을 때 (if(취소상태 == 처리X))-->
-                        <tr>
-                            <th width="130">주문일자<br>[주문번호]</th>
-                            <th>상품명</th>
-                            <th width="100">상품금액/수량</th>
-                            <th width="80">진행상태</th>
-                            <th width="80">처리일자</th>
-                            <th width="80">상세보기</th>
-                        </tr>
+                        
+                        <% for(MyOrders od : clist) { %>
                      
                         <tr>
-                            <td>2021-11-15<br>[20211115131234]</td>
-                            <td><a href="상품상세페이지"><img src="">닭가슴살 샐러드</a></td>
-                            <td>7,900원/1개</td>
-                            <td>취소/환불<br>진행중</td>
-                            <td>-</td>
+                            <td><%= od.getOrderDate() %><br>[<%= od.getOrderCode() %>]</td>
+                            
+                            <% if(od.getpName() == null) {  // 커스텀상품%>
+                            	<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"><%= od.getCuName() %></a></td>
+                            <% }else {  // 완제품%>
+								<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getFilePath() + od.getpMainImg() %>"><%= od.getpName() %></a></td>                            
+                            <% } %>
+                            
+                            <td><%= od.getPmTotalCost() %>원/<%= od.getOrderAmount() %>개</td>
+                            
+                            <% if(od.getCancelCode() == null) { %>
+                            	
+                            	<!-- 환불일경우 -->
+                            	<% if(od.getrStatus().equals("N")) { %>
+                            		<td>환불<br>진행중</td>
+                            	<% } else { %>
+                            		<td>환불<br>처리완료</td>
+                            		<td><%= od.getRcompDate() %></td>
+                            		
+                            	<% } %>
+                            	
+                            <% }else { %>
+                            	
+                            	<!-- 취소일경우 -->
+                            	<% if(od.getCancelStatus().equals("N")) { %>
+                            		<td>취소<br>진행중</td>
+                            	<% }else { %>
+                            		<td>취소<br>처리완료</td>
+                            		<td><%= od.getCancelCompDate() %></td>
+                            	<% } %>
+                            
+                            <% } %>
                             <td><button>상세보기</button></td>
                         </tr>
-                    </table>
-                    <table class="orderList">
-                         <!--case2. 취소/환불내역이 있을 때 (if(취소상태 == 처리O))-->
-                         <tr>
-                            <th width="130">주문일자<br>[주문번호]</th>
-                            <th>상품명</th>
-                            <th width="100">상품금액/수량</th>
-                            <th width="80">진행상태</th>
-                            <th width="80">처리일자</th>
-                            <th width="80">상세보기</th>
-                         </tr>
-                        <tr>
-                            <td>2021-11-15<br>[20211115131234]</td>
-                            <td><a href="상품상세페이지"><img src="">닭가슴살 샐러드</a></td>
-                            <td>7,900원/1개</td>
-                            <td>취소/환불<br>진행중</td>
-                            <td>-</td>
-                            <td><button>상세보기</button></td>
-                        </tr>
-                    </table>
-                    <table class="orderList">
-                        <!--case2. 주문내역이 있을 때 (if(sysdate-30일))-->
-                         <tr>
-                            <th width="130">주문일자<br>[주문번호]</th>
-                            <th>상품명</th>
-                            <th width="100">상품금액/수량</th>
-                            <th width="80">진행상태</th>
-                            <th width="80">처리일자</th>
-                            <th width="80">상세보기</th>
-                         </tr>
-                        <tr>
-                            <td>2021-11-15<br>[20211115131234]</td>
-                            <td><a href="상품상세페이지"><img src="">닭가슴살 샐러드</a></td>
-                            <td>7,900원/1개</td>
-                            <td>취소/환불<br>진행중</td>
-                            <td>-</td>
-                            <td><button>상세보기</button></td>
-                        </tr>
-                    </table>   
+                        <% } %>
+                    <% } %>
+                   
                    
             </div>
-
-
         </div>
-
-
-
-
     </div>
+    
+    
+    
+     <!-- 조회기간 버튼  -->
+    <script>
+    	// 조회기간 1 구하기
+    	
+    	// 1. 버튼으로 기간 클릭시
+    	function dateSub(day) {
+    		
+    		// 오늘날짜 
+    		var today = new Date();
+    		
+    		// 선택한날짜 == startDay
+    		var sday = today - day*24*60*60*1000; // n일 전
+    		var startDay = new Date(sday);
+    		
+		    var stYear = startDay.getFullYear();
+			var stMonth = ('0' + (startDay.getMonth() + 1)).slice(-2);
+			var stDay = ('0' + startDay.getDate()).slice(-2);
+			
+			var startDateString = stYear + '-' + stMonth  + '-' + stDay;
+    		$("#startDate").val(startDateString);
+    		console.log($("#startDate").val());
+    	}
+    	
+    	// 3. inputDate 시작날짜 미입력시! == 기본 7일
+    	$('#startDate').ready(function(){
+    		var today = new Date();
+			var sevenDay = new Date(today - 7*24*60*60*1000);
+			
+			var svYear = sevenDay.getFullYear();
+			var svMonth = ('0' + (sevenDay.getMonth() + 1)).slice(-2);
+			var svDay = ('0' + sevenDay.getDate()).slice(-2);
+			
+			var startDateString = svYear + '-' + svMonth  + '-' + svDay;
+			
+    		$("#startDate").val(startDateString);
+    		console.log($("#startDate").val());
+		
+		})
+		
+		
+		// 3. inputDate 끝날짜 미입력시! == 오늘날짜
+		$('#endDate').ready(function(){
+		
+			var today = new Date();
+		
+			var edYear = today.getFullYear();
+			var edMonth = ('0' + (today.getMonth() + 1)).slice(-2);
+			var edDay = ('0' + today.getDate()).slice(-2);
+			
+			var endDateString = edYear + '-' + edMonth + '-' + edDay;
+			
+			$("#endDate").val(endDateString);
+    		console.log($("#endDate").val());
+		
+		})
+		
+		
+    		
+    </script>
 
   
 </body>
