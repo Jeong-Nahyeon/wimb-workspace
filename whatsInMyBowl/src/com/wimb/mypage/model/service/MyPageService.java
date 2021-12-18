@@ -116,6 +116,28 @@ public class MyPageService {
 		return list;
 	}
 	
+	// 주문취소 요청
+	public int insertCancel(MyOrders mo) {
+		Connection conn = getConnection();
+		int result = new MyPageDao().insertCancel(conn, mo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	// 취소/환불조회 페이지
+	public ArrayList<MyOrders> selectCancelList(Member m, String startDay, String endDay) {
+		Connection conn = getConnection();
+		ArrayList<MyOrders> clist = new MyPageDao().selectCancelList(conn, m, startDay, endDay);
+		close(conn);
+		return clist;
+	
+	}
+	
 	
 	
 }

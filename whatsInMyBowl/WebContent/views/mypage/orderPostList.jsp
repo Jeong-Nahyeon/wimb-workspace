@@ -209,7 +209,8 @@
 	                        
 	                        <% for(MyOrders od : list) { %>
                         		<tr>
-                    				<td><%= od.getOrderDate() %><br>[<%= od.getOrderCode() %>]</td>
+                        			<td id="pmCode" style="display:none;"><label><%= od.getPmCode() %></label></td>
+                    				<td><%= od.getOrderDate() %><br>[<index id="orderCode"><%= od.getOrderCode() %></incdex>]</td>
                     				<% if(od.getpName() == null) { %>
                     					<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"><%= od.getCuName() %></a></td>
                    					<% }else { %>
@@ -221,7 +222,7 @@
                    						<% if(od.getOrderStatus().equals("결제대기") || od.getOrderStatus().equals("결제완료") || od.getOrderStatus().equals("배송준비")) { %>
 		                                	
 		                                	<!--주문상태가 결제완료, 상품준비중일 때만 가능-->
-		                                	<button type="button" onclick="cancelAlert()">즉시취소</button>
+		                                	<button type="button" id="cancel" onclick="cancelAlert()">즉시취소</button>
 	                                	
 	                                	<% }else if(od.getOrderStatus().equals("배송중")) { %>
 	                                		
@@ -250,20 +251,34 @@
 
     </div>
 	
-    <!-- 취소요청 모달창 -->
+    <!-- 취소요청 알람창 -->
 	<script>
-		function cancelAlert() {
-			 const cancelResult = confirm("해당 상품 주문을 취소하시겠습니까?");
-			 
-			 if(result == true) {
-				// 상품주문 취소O
+	$("#cancel").on("click",function(){
+		 if(confirm("해당 상품 주문을 취소하시겠습니까?")==true) {
 				
-				// 주문 취소 테이블 insert
-			 }else {
-				// 상품주문 취소 X 
-			 }
+			 	var orderCode = $("#orderCode").val();
+			 	var pmCode = $("#pmCode").val();
 			 
-		}
+				$.ajax({
+					
+					url:"cancelInsert.my",
+					data: {
+						orderCode:orderCode,
+						pmCode:pmCode
+					},
+					type:"post",
+					success:function(){
+						if(result>0) { // 취소 요청 성공 =>  
+							alert("상품이 취소되었습니다.");
+						}
+					}, error:function(){
+						console.log("취소요청 통신 실패");
+					}
+					
+		 }
+	})
+		
+		
 	</script>
     
     <!-- 환불요청 모달창 -->
@@ -321,6 +336,9 @@
         </div>
     </div>
     
+    
+    
+    <!-- 조회기간 버튼  -->
     <script>
     	// 조회기간 1 구하기
     	

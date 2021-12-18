@@ -15,17 +15,32 @@ public class MyOrders {
 	private String pName;		   // 완제품이름
 	private String pMainImg;	   // 완제품 이미지
 	private int pmTotalCost;       // 원결제금액
+	private String pmCode;		   // 결제번호
 	private String filePath;       // 저장경로
 	
+	// 메인페이지에서만 사용
 	private int statusCount;	   // 주문상태별 갯수
+	
+	// 취소|환불 조회시 사용
+	private int pmFinalCost;	   // 최종결제금액
+	private String cancelCode;	   // 취소코드
+	private String cancelStatus;    // 취소처리상태
+	private Date cancelCompDate;   // 처리일자
+	private String reCode;		   // 환불코드
+	private String rStatus;		   // 환불처리상태
+	private Date rcompDate;        // 처리일자
+	
+
+
+
+
 
 	public MyOrders() {}
 
-	
-
+	// 주문만조회시 사용
 	public MyOrders(String orderCode, int orderAmount, String orderCompany, String orderInvoice, String orderStatus,
 			Date orderDate, String cuName, String cuMainImg, String pName, String pMainImg, int pmTotalCost,
-			String filePath) {
+			String pmCode, String filePath) {
 		super();
 		this.orderCode = orderCode;
 		this.orderAmount = orderAmount;
@@ -38,16 +53,115 @@ public class MyOrders {
 		this.pName = pName;
 		this.pMainImg = pMainImg;
 		this.pmTotalCost = pmTotalCost;
+		this.pmCode = pmCode;
 		this.filePath = filePath;
 	}
 
+	
+	
+	// 취소|환불 조회시 사용
+	public MyOrders(String orderCode, int orderAmount, String orderStatus, Date orderDate, String cuName,
+			String cuMainImg, String pName, String pMainImg, int pmTotalCost, String filePath,
+			int pmFinalCost, String cancelCode, String cancelStatus, Date cancelCompDate, String reCode, String rStatus,
+			Date rcompDate) {
+		super();
+		this.orderCode = orderCode;
+		this.orderAmount = orderAmount;
+		this.orderStatus = orderStatus;
+		this.orderDate = orderDate;
+		this.cuName = cuName;
+		this.cuMainImg = cuMainImg;
+		this.pName = pName;
+		this.pMainImg = pMainImg;
+		this.pmTotalCost = pmTotalCost;
+		this.filePath = filePath;
+		this.pmFinalCost = pmFinalCost;
+		this.cancelCode = cancelCode;
+		this.cancelStatus = cancelStatus;
+		this.cancelCompDate = cancelCompDate;
+		this.reCode = reCode;
+		this.rStatus = rStatus;
+		this.rcompDate = rcompDate;
+	}
+
+	public String getReCode() {
+		return reCode;
+	}
+
+	public void setReCode(String reCode) {
+		this.reCode = reCode;
+	}
+
+	public String getrStatus() {
+		return rStatus;
+	}
+
+	public void setrStatus(String rStatus) {
+		this.rStatus = rStatus;
+	}
+
+	public Date getRcompDate() {
+		return rcompDate;
+	}
+
+	public void setRcompDate(Date rcompDate) {
+		this.rcompDate = rcompDate;
+	}
+
+	public String getCancelStatus() {
+		return cancelStatus;
+	}
+
+
+	public void setCancelStatus(String canceStatus) {
+		this.cancelStatus = cancelStatus;
+	}
 
 
 	public MyOrders(int statusCount) {
 		super();
 		this.statusCount = statusCount;
 	}
+	
+	
+	public int getPmFinalCost() {
+		return pmFinalCost;
+	}
+	
+	
+	public void setPmFinalCost(int pmFinalCost) {
+		this.pmFinalCost = pmFinalCost;
+	}
+	
+	
+	public String getCancelCode() {
+		return cancelCode;
+	}
+	
+	
+	public void setCancelCode(String cancelCode) {
+		this.cancelCode = cancelCode;
+	}
+	
+	
+	public Date getCancelCompDate() {
+		return cancelCompDate;
+	}
+	
+	
+	public void setCancelCompDate(Date cancelCompDate) {
+		this.cancelCompDate = cancelCompDate;
+	}
+	
 
+	public String getPmCode() {
+		return pmCode;
+	}
+	
+	public void setPmCode(String pmCode) {
+		this.pmCode = pmCode;
+	}
+	
 	public String getOrderCode() {
 		return orderCode;
 	}
@@ -157,7 +271,10 @@ public class MyOrders {
 		return "MyOrders [orderCode=" + orderCode + ", orderAmount=" + orderAmount + ", orderCompany=" + orderCompany
 				+ ", orderInvoice=" + orderInvoice + ", orderStatus=" + orderStatus + ", orderDate=" + orderDate
 				+ ", cuName=" + cuName + ", cuMainImg=" + cuMainImg + ", pName=" + pName + ", pMainImg=" + pMainImg
-				+ ", statusCount=" + statusCount + ", filePath=" + filePath + ", pmTotalCost=" + pmTotalCost + "]";
+				+ ", pmTotalCost=" + pmTotalCost + ", pmCode=" + pmCode + ", filePath=" + filePath + ", statusCount="
+				+ statusCount + ", pmFinalCost=" + pmFinalCost + ", cancelCode=" + cancelCode + ", cancelStatus="
+				+ cancelStatus + ", cancelCompDate=" + cancelCompDate + ", reCode=" + reCode + ", rStatus=" + rStatus
+				+ ", rcompDate=" + rcompDate + "]";
 	}
 
 	

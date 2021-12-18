@@ -104,9 +104,55 @@
 		     , P_NAME
 		     , P_MAINIMG
 		     , PM_TOTALCOST
+		     , PM_CODE
 		  FROM "ORDER" OD
 		  JOIN SUBORDER USING (ORDER_CODE)
 		  JOIN PAYMENT USING (PM_CODE)
+		  LEFT JOIN CUSTOM USING (CU_CODE)
+		  LEFT JOIN PRODUCT USING (P_CODE)
+		 WHERE OD.M_CODE = ?
+		 AND ORDER_DATE BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="insertCancel">
+		INSERT
+		  INTO CANCELATION
+		  (
+		    CANCEL_CODE
+		  , ORDER_CODE
+		  , PM_CODE
+		  )
+		  VALUES
+		  (
+		    SEQ_CANCEL.NEXTVAL
+		  , 주문번호
+		  , 결제번호
+		  )
+	</entry>
+	
+	<entry key="selectCancelList">
+		SELECT
+		       ORDER_CODE
+		     , ORDER_AMOUNT
+		     , ORDER_STATUS
+		     , ORDER_DATE
+		     , CU_NAME
+		     , CU_MAINIMG
+		     , P_NAME
+		     , P_MAINIMG
+		     , PM_TOTALCOST
+             , PM_FINALCOST
+             , CANCEL_CODE
+             , CANCEL_STATUS
+             , CANCEL_COMPLETEMENT
+             , RE_CODE
+             , RE_STATUS
+             , RE_COMPLETEMENT
+		  FROM "ORDER" OD
+		  JOIN SUBORDER USING (ORDER_CODE)
+		  JOIN PAYMENT USING (PM_CODE)
+          LEFT JOIN CANCELATION USING (ORDER_CODE)
+          LEFT JOIN REFUND USING (ORDER_CODE)
 		  LEFT JOIN CUSTOM USING (CU_CODE)
 		  LEFT JOIN PRODUCT USING (P_CODE)
 		 WHERE OD.M_CODE = ?

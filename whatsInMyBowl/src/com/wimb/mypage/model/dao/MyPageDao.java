@@ -57,6 +57,7 @@ public class MyPageDao {
 									  rset.getString("p_Name"),
 									  rset.getString("p_mainimg"),
 									  rset.getInt("pm_totalcost"),
+									  rset.getString("pm_code"),
 									  filePath));
 
 			}
@@ -288,6 +289,7 @@ public class MyPageDao {
 										   rset.getString("p_Name"),
 										   rset.getString("p_mainimg"),
 										   rset.getInt("pm_totalcost"),
+										   rset.getString("pm_code"),
 										   filePath));
 		} 
 		}catch (SQLException e) {
@@ -300,6 +302,71 @@ public class MyPageDao {
 		
 	}
 		
+	// 주문 취소 요청
+	public int insertCancel(Connection conn, MyOrders mo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertCancel");
 		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mo.getOrderCode());
+			pstmt.setString(2, mo.getPmCode());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	
+	// 취소/환불조회 페이지
+	public ArrayList<MyOrders> selectCancelList(Connection conn, Member m, String startDay, String endDay) {
+		ArrayList<MyOrders> clist = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectCancelList");
+		// 저장경로
+		String filePath = "resources/images/product_images/";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, m.getmCode());
+			pstmt.setString(2, startDay);
+			pstmt.setString(3, endDay);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				clist.add(new MyOrders(rset.getString("order_code"),
+									   rset.getInt("order_amount"),
+									   rset.getString("order_Status"),
+									   rset.getDate("order_date"),
+									   rset.getString("cu_name"),
+									   rset.getString("cu_mainimg"),
+									   rset.getString("p_name"),
+									   rset.getString("p_mainimg"),
+									   rset.getInt("pm_totalcost"),
+									   filePath,
+									   rset.getInt("pm_finalcost"),
+									   rset.getString("cancel_code"),
+									   rset.getString("cancel_status"),
+									   rset.getDate("cancel_completement"),
+									   rset.getString("re_code"),
+									   rset.getString("re_status"),
+									   rset.getDate("re_completement")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return clist;
+	}
 	
 }
