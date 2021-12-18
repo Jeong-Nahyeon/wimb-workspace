@@ -29,7 +29,7 @@
     /* 주문|배송조회 전체영역 */
     .orderPostList {
     	margin-top: 40px;
-        margin-left: 700px;
+        margin-left: 500px;
     }
     /* 주문|배송조회 기간 선택 영역 */
     .selectDate {
@@ -68,11 +68,13 @@
         padding: 8px 0px 8px 0px;
         font-size: 12px;
         background-color: rgba(240, 239, 233, 0.445);
+        
     }
     .orderList td {
         border-bottom: 1px solid rgba(179, 174, 174, 0.384);
         padding: 18px 0px 18px 0px;
         font-size: 13px;;
+        height: 100px;
     }
     .orderList {
         width: 700px;
@@ -140,6 +142,11 @@
     .selectBtn button:focus {
     	background-color: lightgrey;
     }
+    img {
+    	widt: 80px;
+    	height: 80px;
+    	margin-right: 20px;
+    }
 </style>
 </head>
 <body>
@@ -204,14 +211,14 @@
                         		<tr>
                     				<td><%= od.getOrderDate() %><br>[<%= od.getOrderCode() %>]</td>
                     				<% if(od.getpName() == null) { %>
-                    					<td><a href="상품상세페이지"><img src=""><%= od.getCuName() %></a></td>
+                    					<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"><%= od.getCuName() %></a></td>
                    					<% }else { %>
-                   						<td><a href="상품상세페이지"><img src=""><%= od.getpName() %></a></td>
+                   						<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getFilePath() + od.getpMainImg() %>"><%= od.getpName() %></a></td>
                  					<% } %>
                  					<td><%= od.getPmTotalCost() %>원/<%= od.getOrderAmount() %>개</td> 
                  					<td><a href="주문목록/배송조회 이동"><%= od.getOrderStatus() %></a></td> 
                    					<td>
-                   						<% if(od.getOrderStatus().equals("결제완료") || od.getOrderStatus().equals("상품준비중")) { %>
+                   						<% if(od.getOrderStatus().equals("결제대기") || od.getOrderStatus().equals("결제완료") || od.getOrderStatus().equals("배송준비")) { %>
 		                                	
 		                                	<!--주문상태가 결제완료, 상품준비중일 때만 가능-->
 		                                	<button type="button" onclick="cancelAlert()">즉시취소</button>
@@ -248,7 +255,7 @@
 		function cancelAlert() {
 			 const cancelResult = confirm("해당 상품 주문을 취소하시겠습니까?");
 			 
-			 if(result) {
+			 if(result == true) {
 				// 상품주문 취소O
 				
 				// 주문 취소 테이블 insert
@@ -352,21 +359,6 @@
 		
 		})
 		
-		/*
-		$('#startDate').change(function(){
-			var sday = today - day*24*60*60*1000; // n일 전
-    		var startDay = new Date(sday);
-			
-			var stYear = startDay.getFullYear();
-			var stMonth = ('0' + (startDay.getMonth() + 1)).slice(-2);
-			var stDay = ('0' + startDay.getDate()).slice(-2);
-			
-			var startDateString = stYear + '-' + stMonth  + '-' + stDay;
-    		$("#startDate").val(startDateString);
-    		console.log($("#startDate").val());
-		
-		})
-		*/
 		
 		// 3. inputDate 끝날짜 미입력시! == 오늘날짜
 		$('#endDate').ready(function(){

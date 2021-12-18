@@ -36,7 +36,8 @@ public class MyPageDao {
 		ArrayList<MyOrders> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("selectMainPageOrderList");
+		String filePath = "resources/images/product_images/";
+		String sql = prop.getProperty("selectOrderList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -45,17 +46,19 @@ public class MyPageDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				MyOrders mo = new MyOrders(rset.getString("order_code"),
-										   rset.getInt("order_amount"),
-										   rset.getString("order_company"),
-										   rset.getString("order_invoice"),
-										   rset.getString("order_status"),
-										   rset.getDate("order_date"),
-										   rset.getString("cu_Name"),
-										   rset.getString("p_Name"),
-										   rset.getString("p_mainimg"),
-										   rset.getInt("pm_totalcost"));
-				list.add(mo);	
+				list.add(new MyOrders(rset.getString("order_code"),
+									  rset.getInt("order_amount"),
+									  rset.getString("order_company"),
+									  rset.getString("order_invoice"),
+									  rset.getString("order_status"),
+									  rset.getDate("order_date"),
+									  rset.getString("cu_Name"),
+									  rset.getString("cu_mainimg"),
+									  rset.getString("p_Name"),
+									  rset.getString("p_mainimg"),
+									  rset.getInt("pm_totalcost"),
+									  filePath));
+
 			}
 			
 		} catch (SQLException e) {
@@ -261,6 +264,8 @@ public class MyPageDao {
 		ArrayList<MyOrders> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		// 저장경로
+		String filePath = "resources/images/product_images/";
 		String sql = prop.getProperty("orderListDetail");
 		
 		try {
@@ -272,17 +277,18 @@ public class MyPageDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				MyOrders mo = new MyOrders(rset.getString("order_code"),
+				list.add(new MyOrders(rset.getString("order_code"),
 										   rset.getInt("order_amount"),
 										   rset.getString("order_company"),
 										   rset.getString("order_invoice"),
 										   rset.getString("order_status"),
 										   rset.getDate("order_date"),
 										   rset.getString("cu_Name"),
+										   rset.getString("cu_mainimg"),
 										   rset.getString("p_Name"),
 										   rset.getString("p_mainimg"),
-										   rset.getInt("pm_totalcost"));
-				list.add(mo);
+										   rset.getInt("pm_totalcost"),
+										   filePath));
 		} 
 		}catch (SQLException e) {
 			e.printStackTrace();

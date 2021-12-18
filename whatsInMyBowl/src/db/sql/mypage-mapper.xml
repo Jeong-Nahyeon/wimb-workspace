@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
-	<entry key="selectMainPageOrderList">
+	<entry key="selectOrderList">
 		SELECT
 		       ORDER_CODE
 		     , ORDER_AMOUNT
@@ -11,6 +11,7 @@
 		     , ORDER_STATUS
 		     , ORDER_DATE
 		     , CU_NAME
+		     , CU_MAINIMG
 		     , P_NAME
 		     , P_MAINIMG
 		     , PM_TOTALCOST
@@ -99,6 +100,7 @@
 		     , ORDER_STATUS
 		     , ORDER_DATE
 		     , CU_NAME
+		     , CU_MAINIMG
 		     , P_NAME
 		     , P_MAINIMG
 		     , PM_TOTALCOST

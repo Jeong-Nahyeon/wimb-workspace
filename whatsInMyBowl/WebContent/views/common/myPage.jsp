@@ -92,6 +92,10 @@
         margin-top: 10px;
         float: left;
     }
+    a:link {
+    	text-decoration:none;
+    	color:black;
+    }
 </style>
 
 </head>
