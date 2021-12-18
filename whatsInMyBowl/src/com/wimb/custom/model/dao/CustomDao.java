@@ -283,6 +283,29 @@ public class CustomDao {
 		return list;
 	}
 
+	// 비밀번호 확인
+	public String pwdCheck(Connection conn) {
+		String checkPwd = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("pwdCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				checkPwd = rset.getString("m_pwd");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return checkPwd;
+	}
+
 	
 	
 	

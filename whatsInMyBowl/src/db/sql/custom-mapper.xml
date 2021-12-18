@@ -95,5 +95,11 @@
 		  FROM ITEM
 		 WHERE CI_CATEGORY = ?
 	</entry>
+	
+	<entry key="pwdCheck">
+		SELECT M_PWD
+		  FROM MEMBER
+		 WHERE M_CODE = 1
+	</entry>
 
 </properties>

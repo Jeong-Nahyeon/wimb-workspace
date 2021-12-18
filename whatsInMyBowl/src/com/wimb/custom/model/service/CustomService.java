@@ -1,7 +1,9 @@
 package com.wimb.custom.model.service;
 
-import static com.wimb.common.JDBCTemplate.*;
+import static com.wimb.common.JDBCTemplate.close;
+import static com.wimb.common.JDBCTemplate.commit;
 import static com.wimb.common.JDBCTemplate.getConnection;
+import static com.wimb.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -105,6 +107,15 @@ public class CustomService {
 		ArrayList<Item> list = new CustomDao().selecAdminCategoryList(conn, ciCategory);
 		close(conn);
 		return list;
+	}
+
+	// 관리자 비밀번호 체크
+	public String pwdCheck() {
+		Connection conn = getConnection();
+		String checkPwd = new CustomDao().pwdCheck(conn);
+		
+		close(conn);
+		return checkPwd;
 	}
 
 	

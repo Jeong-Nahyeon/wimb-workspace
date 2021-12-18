@@ -281,6 +281,21 @@
         #custom_insertTable input, #custom_insertTable select{
             border: 1px solid lightgrey;
         }
+        /*재료 삭제 모달*/
+        .delete_text{
+            text-align: center;
+        }
+        .delete_text span{
+            display: block;
+            margin: 10px 0;
+        }
+        .delete_btn{
+            margin: 40px 5px 5px 5px;
+            text-align: center;
+        }
+        .delete_btn button{
+            margin: 0 10px;
+        }
     </style>
 </head>
 <body>
@@ -372,7 +387,7 @@
                 </div>
                 <div class="custom_btn" align="right">
                     <!--<button type="button" style="margin-right: 10px;" data-toggle="modal" data-target="#title_img_Modal">대표 이미지 관리</button>-->
-                    <button type="button" data-toggle="modal" data-target="#costom_insert_Modal">선택 삭제</button>
+                    <button type="button" data-toggle="modal" data-target="#costom_delete_Modal">선택 삭제</button>
                 </div>
             </div>
 
@@ -607,8 +622,108 @@
                 </div>
             </div>
 
+            <!-- 상품 삭제 관련 모달-->
+            <!-- The Modal -->
+            <div class="modal" id="costom_delete_Modal">
+                <div class="modal-dialog">
+                <div class="modal-content">
             
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <!-- <form action="" >  -->
+                            <div class="delete_text">
+                                <span>선택하신 재료를 삭제합니다.</span>
+                                <span>정말 삭제하시겠습니까?</span>
+                                <span>(삭제 후 복구불가)</span>
+                            </div>
+                            <div class="delete_btn">
+                                <button class="btn btn-sm btn btn-outline-warning" data-toggle="modal" data-target="#adminPassword-Modal" >삭제</button>
+                                <button type="reset" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">취소</button>
+                            </div>
+                        <!-- </form>  -->
+                    </div>
+                </div>
+                </div>
+            </div>
 
+            <!-- 관리자 비밀번호 입력 모달 -->
+            <div class="modal" id="adminPassword-Modal">
+                <div class="modal-dialog">
+                <div class="modal-content">
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <!--<form action="" > -->
+                            <div class="delete_text">
+                                <span>관리자 비밀번호 입력</span>
+                                <input type="password" id="adminPassword" placeholder="비밀번호 입력">
+                            </div>
+                            <div class="delete_btn">
+                                <button class="btn btn-sm btn btn-outline-warning" onclick="pwdcheck();">삭제</button>
+                                <button type="reset" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">취소</button>
+                            </div>
+                        <!--</form>-->
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <script>
+                /*삭제안내 모달에서 비밀번호 입력 모달로 넘어갈 때 삭제안내 모달 닫아주기*/
+                $("#adminPassword-Modal").on('show.bs.modal', function(e){
+                    $("#costom_delete_Modal").modal("hide")
+                })
+                function pwdcheck(){
+                    var count = $("input[name='check']:checked").length;
+                    var checkArr = new Array();
+                    $("input[name='check']:checked").each(function(){
+                        checkArr.push($(this).parent().siblings(".ajaxCiCode").text())
+                    });
+                    console.log(checkArr);
+                    console.log(count);
+
+                    $.ajax({
+                        url:"aitempwdcheck.cu",
+                        data:{
+                            "adminPwd":$("#adminPassword").val()
+                        },
+                        async:false,
+                        success:function(result){
+                            if(result == 'Y'){
+                                console.log("일치");
+                            }else{
+                                console.log("불일치");
+                            }
+                        },
+                        error:function(){
+                            console.log("ajax 통신 실패");
+                        }
+                    })
+
+                    const promise1 = new Promise(function(resolve,reject){
+                        $.ajax({
+                            url:"aitemdelete.cu",
+                            dataType:"json",
+                            data:{
+                                "count":count,
+                                "checkArr":checkArr
+                            },
+                            async:false,
+                            success:function(){
+                                console.log("머야?")
+                                console.log(checkArr);
+                            },
+                            error:function(){
+                                console.log("ajax 통신 실패");
+                            }
+                        })
+                    });
+
+                    promise1().then()
+                    
+                }
+
+            </script>
         </div>
         
     </div>

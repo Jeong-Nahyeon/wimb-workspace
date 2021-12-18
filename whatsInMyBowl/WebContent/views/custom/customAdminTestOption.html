@@ -297,11 +297,28 @@
                 </div>
             </div>
 
-            <div>
-                <input type="text" id="address-code"><br>
-                <input type="text" id="address-main"><br>
-                <input type="text" id="address-sub"><br>
-                <input type="button" id="address-btn" value="주소검색" onclick="sample6_execDaumPostcode()"> 
+            <button data-toggle="modal" data-target="#adminPassword-Modal">관리자비번테스트</button>
+            <!-- 관리자 비밀번호 모달-->
+            <!-- The Modal -->
+            <div class="modal" id="adminPassword-Modal">
+                <div class="modal-dialog">
+                <div class="modal-content">
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="" >
+                            <div class="delete_text">
+                                <span>관리자 비밀번호 입력</span>
+                                <input type="password" id="adminPassword" placeholder="비밀번호 입력">
+                            </div>
+                            <div class="delete_btn">
+                                <button type="submit" class="btn btn-sm btn btn-outline-warning">삭제</button>
+                                <button type="reset" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">취소</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                </div>
             </div>
             
             <script>
