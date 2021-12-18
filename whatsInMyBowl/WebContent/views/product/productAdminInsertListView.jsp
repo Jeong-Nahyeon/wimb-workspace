@@ -18,6 +18,7 @@
 	
 	// 완제품 전체 조회
 	ArrayList<Product> totalList = (ArrayList<Product>)(request.getAttribute("totalList"));
+	// 상품번호, 상품명, 카테고리, 판매가격, 공급업체, 공급가격, 대표이미지, 노출여부, 재고수량
 	
 %>
     
@@ -283,12 +284,12 @@
         <div id="product-custom-button">
             <div id="left">
                 <div id="product-button">
-                    <a href="<%= contextPath%>/list.apr?cpage=1"><b>완제품</b></a>
+                    <a href="<%= contextPath %>/list.apr?cpage=1"><b>완제품</b></a>
                 </div>
             </div>
             <div id="right" align="right">
                 <div id="custom-button">
-                    <a href="<%= contextPath%>/aitem.cu?cupage=1"><b>커스텀</b></a>
+                    <a href="<%= contextPath %>/aitem.cu?cupage=1"><b>커스텀</b></a>
                 </div>
             </div>
         </div>
@@ -297,17 +298,70 @@
             <!-- 카테고리 -->
             <div id="list-1" align="left" style="margin-top:10px; margin-bottom:5px;">
                 <select name="productCategory">
-                    <option>카테고리 선택</option>
+                    <option>메뉴 선택</option>
                     <option>비건</option>
                     <option>육류</option>
                     <option>해산물</option>
                 </select>
             </div>
+            
+            <script>
+                
+                $("select[name=productCategory]").change(function(){
+                    
+                    const $option = $("option:selected", this).val();
+                    
+                    if($option == '메뉴 선택'){
+                    	location.href = "<%= contextPath %>/list.apr?cpage=1";
+                    } else {
+                    	
+                        $.ajax({
+                        	
+                            url:"optionListAjax.apr",
+                            data:{option:$option, cpage:1},
+                            success:function(list){
+                            	
+                            	$("#product-list tbody").html("");
+
+                            	let result = "";
+                            	
+                            	for(let i=0; i<list.length; i++){
+                            		
+                            		result += "<tr>"
+	                            				+ "<td><input type='checkbox' disabled></td>"
+			    	                            + "<td>" + list[i].pCode + "</td>"
+			        	                        + "<td><a class='product-name'>" + list[i].pName + "</a></td>"
+			        	                        + "<td>" + list[i].pProvider + "</td>"
+			        	                        + "<td>" + list[i].pProvidePrice + "</td>"
+			        	                        + "<td>" + list[i].pPrice + "</td>"
+			        	                        + "<td>" + list[i].pStock + "</td>"
+			        	                        + "<td>" + list[i].pShow + "</td>"
+		        	                    	+ "</tr>";
+		        	                        
+                            	}
+                            	
+                            	$("#list-2 span").text(list.length);
+                            	$("#product-list tbody").html(result);
+                            	$("#paging-bar").text("");
+                            	
+                            	
+                            }, error:function(){
+                            	console.log("ajax 통신 실패");
+                            }
+                            
+                        });
+                    	
+                    }
+
+                });
+
+            </script>
+            
 
             <div id="list-2">
                 <!-- 등록 개수 -->
                 <div align="left">
-                    총 <span style="color:orange; font-weight:bold;"><%= pi.getListCount() %></span> 건
+                  	  총 <span style="color:orange; font-weight:bold;"><%= pi.getListCount() %></span> 건
                 </div>
                 <!-- 상품등록 버튼 -->
                 <div align="right">
@@ -379,9 +433,10 @@
             
             	$(function(){
             		
-            		$(".product-name").click(function(){
+            		// 카테고리 옵션별 조회 시 해당 요소가 동적으로 새로 만들어지기 때문에 on메소드 3번 방법으로 작성해야 함!!!
+            		$("#product-list").on("click", ".product-name", (function(){
             			$.ajax({
-                            url:"detail.apr",
+                            url:"detailAjax.apr",
                             data:{
                                 pcode:$(this).parent().prev().text()
                             },
@@ -406,7 +461,7 @@
                                 console.log("ajax 통신 실패");
                             }
                         });
-            		});
+            		}));
             		
             	});
             

@@ -91,5 +91,37 @@
 		  FROM PRODUCT
 		 WHERE P_CODE = ?
 	</entry>
+	
+	<entry key="selectOptionListCount">
+		SELECT COUNT(*) COUNT
+		  FROM PRODUCT
+		 WHERE P_CATEGORY = ?
+	</entry>
+	
+	<entry key="selectOptionList">
+		SELECT *
+		  FROM (
+		         SELECT
+		                ROWNUM RNUM, A.*
+		           FROM (
+		                  SELECT
+		                         P_CODE
+		                       , P_NAME
+		                       , P_CATEGORY
+		                       , P_PRICE
+		                       , P_PROVIDER
+		                       , P_PROVIDEPRICE
+		                       , P_MAINIMG
+		                       , p_SHOW
+		                       , P_STOCK
+		                    FROM PRODUCT
+		                   WHERE p_SHOW = 'Y'
+		                     AND P_CATEGORY = ?
+		                   ORDER
+		                      BY P_CODE DESC
+		                 ) A
+		        )
+	</entry>
+	
 
 </properties>

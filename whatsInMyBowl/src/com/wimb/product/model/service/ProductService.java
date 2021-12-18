@@ -82,4 +82,41 @@ public class ProductService {
 		return p;
 		
 	}
+	
+	
+	/** 카테고리 옵션별 완제품 총 개수 반환해주는 메소드
+	 * @param option  :  사용자가 선택한 카테고리 옵션값
+	 * @return
+	 */
+	public int selectOptionListCount(String option) {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new ProductDao().selectOptionListCount(conn, option);
+		
+		close(conn);
+		
+		return listCount;
+		
+	}
+	
+	
+	/** 카테고리 옵션별 완제품 목록 조회해주는 메소드
+	 * @param option  :  사용자가 선택한 카테고리 옵션값
+	 * @param pi  :  사용자가 요청한 페이지 정보 담은 PageInfo 객체
+	 * @return
+	 */
+	public ArrayList<Product> selectOptionList(String option) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> optionList = new ProductDao().selectOptionList(conn, option);
+		
+		close(conn);
+		
+		return optionList;
+		
+	}
+	
+	
 }

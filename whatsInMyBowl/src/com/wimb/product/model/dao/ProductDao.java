@@ -25,7 +25,6 @@ public class ProductDao {
 			prop.loadFromXML(new FileInputStream(ProductDao.class.getResource("/db/sql/product-mapper.xml").getPath()));
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -54,7 +53,6 @@ public class ProductDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(rset);
@@ -111,7 +109,6 @@ public class ProductDao {
 			
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(rset);
@@ -161,7 +158,6 @@ public class ProductDao {
 		
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
@@ -216,7 +212,6 @@ public class ProductDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(rset);
@@ -224,6 +219,95 @@ public class ProductDao {
 		}
 		
 		return p;
+		
+	}
+	
+	
+		/** 카테고리 옵션별 완제품 총 개수 반환해주는 메소드
+		 * @param conn
+		 * @param option  :  사용자가 선택한 카테고리 옵션값
+		 * @return
+		 */
+		public int selectOptionListCount(Connection conn, String option) {
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectOptionListCount"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, option);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+		
+		
+	/** 카테고리 옵션별 완제품 목록 조회해주는 메소드
+	 * @param conn
+	 * @param option  :  사용자가 선택한 카테고리 옵션값
+	 * @param pi  :  사용자가 요청한 페이지 정보 담은 PageInfo 객체
+	 * @return
+	 */
+	public ArrayList<Product> selectOptionList(Connection conn, String option){
+		
+		ArrayList<Product> optionList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
+		String sql = prop.getProperty("selectOptionList"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, option);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				optionList.add(new Product(rset.getString("p_code"),
+						  rset.getString("p_name"),
+						  rset.getString("p_category"),
+						  rset.getInt("p_price"),
+						  rset.getString("p_provider"),
+						  rset.getInt("p_providePrice"),
+						  rset.getString("p_mainimg"),
+						  rset.getString("p_show"),
+						  rset.getInt("p_stock"),
+						  filePath));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return optionList;
 		
 	}
 
