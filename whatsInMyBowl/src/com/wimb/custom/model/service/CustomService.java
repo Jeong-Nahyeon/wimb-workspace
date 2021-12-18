@@ -20,6 +20,7 @@ public class CustomService {
 		return listCount;
 	}
 	
+	// 재료 목록 조회
 	public ArrayList<Item> selectItemList(){
 		Connection conn = getConnection();
 		ArrayList<Item> list = new CustomDao().selectItemList(conn);
@@ -69,6 +70,19 @@ public class CustomService {
 		
 		close(conn);
 		return i;
+	}
+	
+	// 재료 수정
+	public int updateItem(Item i) {
+		Connection conn = getConnection();
+		int result = new CustomDao().updateItem(conn, i);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
 	}
 	
 

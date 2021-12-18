@@ -327,15 +327,16 @@
             <table id="custom_table" class="table table-hover">
                 <thead>
                     <tr>
-                        <th width="4%"></th>
+                        <th width="3%"></th>
                         
                         <th width="15%">상품번호</th>
+                        <th width="15%">카테고리</th>
                         <th width="20%">상품명</th>
-                        <th width="20%">업체명</th>
+                        <th width="15%">업체명</th>
                         <th width="10%">공급가(원)</th>
                         <th width="10%">판매가(원)</th>
-                        <th width="10%">재고</th>
-                        <th width="10%">노출 여부</th>
+                        <th width="6%">재고</th>
+                        <th width="6%">노출 여부</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -346,6 +347,7 @@
 	                            <input type="checkbox">
 	                        </td>
 	                        <td><%= i.getCiCode() %></td>
+                            <td><%= i.getCiCategory() %></td>
 	                        <td><%= i.getCiName() %></td>
 	                        <td><%= i.getCiProvider() %></td>
 	                        <td><%= i.getCiProvidePrice() %></td>
@@ -500,6 +502,7 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                         <form action="<%= contextPath%>/aiteminsert.cu" method="post">
+                            
                             <table id="custom_insertTable">
                                 <tr>
                                     <td colspan="2">

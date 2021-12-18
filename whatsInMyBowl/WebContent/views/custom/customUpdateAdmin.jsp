@@ -335,15 +335,16 @@
             <table id="custom_table" class="table table-hover">
                 <thead>
                     <tr>
-                        <th width="4%"></th>
+                        <th width="3%"></th>
                         
                         <th width="15%">상품번호</th>
+                        <th width="15%">카테고리</th>
                         <th width="20%">상품명</th>
-                        <th width="20%">업체명</th>
+                        <th width="15%">업체명</th>
                         <th width="10%">공급가(원)</th>
                         <th width="10%">판매가(원)</th>
-                        <th width="10%">재고</th>
-                        <th width="10%">노출 여부</th>
+                        <th width="6%">재고</th>
+                        <th width="6%">노출 여부</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -354,6 +355,7 @@
 	                            <input type="checkbox">
 	                        </td>
 	                        <td class="ajaxCiCode"><%= i.getCiCode() %></td>
+	                        <td><%= i.getCiCategory() %></td>
 	                        <td>
                                 <a href="#" class="item_Name"><%= i.getCiName() %></a>
                             </td>
@@ -379,12 +381,14 @@
 							},
 							success:function(i){
 								console.log(i);
-								if($())
+                                $("#ci_code").val(i.ciCode);
+								$("#ci_category").val(i.ciCategory).prop("selected", true);
 								$("#ci_name").val(i.ciName);
                                 $("#ci_price").val(i.ciPrice);
                                 $("#ci_provider").val(i.ciProvider);
                                 $("#ci_providePrice").val(i.ciProvidePrice);
                                 $("#ci_stock").val(i.ciStock);
+                                $("#ci_show").val(i.ciShow).prop("selected", true);
 								$("#custom_update_Modal").modal('show');
 							},
 							error:function(){
@@ -466,58 +470,61 @@
             
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <!-- <form action="" id="item_update">  -->
+                        <form action="<%= contextPath %>/adminitemupdate.cu" id="item_update" method="post">
+                            <input type="hidden" name="ciCode" value="" id="ci_code">
                             <table id="custom_insertTable">
                                 <tr>
                                     <td colspan="2">
-                                        <select name="" id="">
+                                        <select name="" id="ci_category">
                                             <option>재료 구분</option>
-                                            <option value="">채소</option>
-                                            <option value="">메인토핑</option>
-                                            <option value="">사이드토핑</option>
-                                            <option value="">드레싱</option>
+                                            <option value="채소">채소</option>
+                                            <option value="메인토핑">메인토핑</option>
+                                            <option value="사이드토핑">사이드토핑</option>
+                                            <option value="드레싱">드레싱</option>
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th><span>재료명</span></th>
-                                    <td><input type="text" name="" value="" id="ci_name"> </td>
+                                    <td><input type="text" name="ciName" value="" id="ci_name"> </td>
                                 </tr>
                                 <tr>
                                     <th>판매금액</th>
-                                    <td><input type="number" name="" value="" id="ci_price" ></td>
+                                    <td><input type="number" name="ciPrice" value="" id="ci_price" ></td>
                                 </tr>
                                 <tr>
                                     <th>업체명</th>
-                                    <td><input type="text" name="" value="" id="ci_provider"></td>
+                                    <td><input type="text" name="ciProvider" value="" id="ci_provider"></td>
                                 </tr>
                                 <tr>
                                     <th>공급가</th>
-                                    <td><input type="number" name="" value="" id="ci_providePrice"></td>
+                                    <td><input type="number" name="ciProvidePrice" value="" id="ci_providePrice"></td>
                                 </tr>
                                 <tr>
                                     <th>입고수량</th>
-                                    <td><input type="number" name="" value="" id="ci_stock"></td>
+                                    <td><input type="number" name="ciStock" value="" id="ci_stock"></td>
                                 </tr>
                                 <tr>
                                     <th>노출여부</th>
                                     <td>
-                                        <select name="" value="">
-                                            <option value="">Y</option>
-                                            <option value="">N</option>
+                                        <select name="ciShow" id="ci_show">
+                                            <option value="Y">Y</option>
+                                            <option value="N">N</option>
                                         </select>
                                     </td>
                                 </tr>
                             </table>
-                       <!-- </form>  --> 
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <div id="insert_btn_right">
+                                    <button type="submit" class="btn btn-sm btn btn-outline-warning">등록</button>
+                                </div>
+                            </div>
+                       </form>
                     </div>
             
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <div id="insert_btn_right">
-                            <button type="submit" class="btn btn-sm btn btn-outline-warning">등록</button>
-                        </div>
-                    </div>
+                    
             
                 </div>
                 </div>

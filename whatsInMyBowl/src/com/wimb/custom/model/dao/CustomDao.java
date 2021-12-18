@@ -200,6 +200,33 @@ public class CustomDao {
 		return i;
 	}
 	
+	// 재료 수정
+	public int updateItem(Connection conn, Item i) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateItem");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, i.getCiName());
+			pstmt.setString(2, i.getCiCategory());
+			pstmt.setString(3, i.getCiProvider());
+			pstmt.setInt(4, i.getCiProvidePrice());
+			pstmt.setInt(5, i.getCiPrice());
+			pstmt.setString(6, i.getCiShow());
+			pstmt.setInt(7, i.getCiStock());
+			pstmt.setString(8, i.getCiCode());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	
 	
 	

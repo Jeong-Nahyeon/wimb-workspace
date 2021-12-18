@@ -66,5 +66,17 @@
 		  FROM ITEM
 		 WHERE CI_CODE = ?
 	</entry>
+	
+	<entry key="updateItem">
+		UPDATE ITEM
+		   SET CI_NAME = ?
+		     , CI_CATEGORY = ?
+		     , CI_PROVIDER = ?
+		     , CI_PROVIDEPRICE = ?
+		     , CI_PRICE = ?
+		     , CI_SHOW = ?
+		     , CI_STOCK = ?
+		 WHERE CI_CODE = ?
+	</entry>
 
 </properties>
