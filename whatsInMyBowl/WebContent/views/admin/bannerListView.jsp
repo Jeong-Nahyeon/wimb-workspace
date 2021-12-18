@@ -12,7 +12,7 @@
 	int maxPage = pi.getMaxPage();
 	
 	// 메인1 '변경하기'버튼 클릭 시 생성되는 리스트 정보를 담은 객체
-	//ArrayList<Banner> Firstlist = (ArrayList<Banner>)request.getAttribute("Firstlist");
+	ArrayList<Banner> Firstlist = (ArrayList<Banner>)request.getAttribute("Firstlist");
 %>
 <!DOCTYPE html>
 <html>
@@ -130,7 +130,7 @@
         position: absolute;
         content: "";
         width: 100%;
-        height: 1200px;
+        height: 2000px;
         background-color:rgba(0, 0,0, 0.5);
         top:0;
         left: 0;
@@ -527,8 +527,8 @@
      
         document.getElementById('insertbannerbtn').addEventListener('click', onClick);
         document.querySelector('.modal_close').addEventListener('click', offClick); 
-    	};
-		
+        
+    	}
     	// 등록하기 창에서 첨부파일 등록 시 썸네일로 띄워줄 js
         function loadImg(inputFile){
             // inputFile : 현재 변화가 생긴 input type=file 요소
@@ -549,14 +549,13 @@
             } else {
                 $(".inputImg").attr("src", null);
             }
-
-        }
+    	}
+        
     	
     	// 변경하기 버튼 시 띄워지는 메인등록1에 사용될 등록될 메인 리스트들
-    	/*
-        window.onload = function() {
-            
-            function onClick() {
+    	var main1 = document.getElementById('updatebtn1');
+    	if(main1.addEventListener){
+    		function onClick() {
                 document.querySelector('.mainmodal_wrap').style.display ='block';
                 document.querySelector('.mainblack_bg').style.display ='block';
             }   
@@ -566,9 +565,9 @@
             }
          
             document.getElementById('updatebtn1').addEventListener('click', onClick);
-            document.querySelector('.mainmodal_close').addEventListener('click', offClick); 
-        	};
-        	*/
+            document.querySelector('.mainmodal_close').addEventListener('click', offClick); 	  			
+    	}
+       	 
     </script>
     
     

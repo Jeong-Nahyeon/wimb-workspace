@@ -62,7 +62,7 @@ public class BannerInsertController extends HttpServlet {
 			
 			if(result > 0) { // 성공 => /wimb/list.banner 재요청
 				request.getSession().setAttribute("alertMsg", "배너 등록 완료");
-				response.sendRedirect(request.getContextPath() + "/list.banner");
+				response.sendRedirect(request.getContextPath() + "/list.banner?cpage=1");
 			} else { // 실패 => 에러페이지
 				request.setAttribute("errorMsg", "배너 등록 실패");
 				request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);

@@ -117,12 +117,11 @@
 		SELECT
 		       B_CODE
 		     , B_NAME
-		     , B_ORIGINNAME
 		     , B_PATH || B_CHANGENAME "FILEPATH"
 		  FROM BANNER
 		 WHERE B_STATUS = 'N'
 		 ORDER
-		    BY B_CODE DESC	
+		    BY B_CODE DESC
 	</entry>
 	
 
