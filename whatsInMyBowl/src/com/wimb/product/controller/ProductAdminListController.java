@@ -42,7 +42,7 @@ public class ProductAdminListController extends HttpServlet {
 		int endPage; // 끝 페이지 수
 		
 		
-		listCount = new ProductService().selectListCount();
+		listCount = new ProductService().selectAdminListCount();
 		
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
@@ -63,7 +63,7 @@ public class ProductAdminListController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
 		// 전체 샐러드 조회
-		ArrayList<Product> totalList = new ProductService().selectProductList(pi);
+		ArrayList<Product> totalList = new ProductService().selectAdminProductList(pi);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("totalList", totalList);

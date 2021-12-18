@@ -1,6 +1,7 @@
 package com.wimb.product.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,16 +14,16 @@ import com.wimb.product.model.service.ProductService;
 import com.wimb.product.model.vo.Product;
 
 /**
- * Servlet implementation class AjaxProductAdminDetailController
+ * Servlet implementation class AjaxProductAdminSearchListController
  */
-@WebServlet("/detailAjax.apr")
-public class AjaxProductAdminDetailController extends HttpServlet {
+@WebServlet("/search.apr")
+public class AjaxProductAdminSearchListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxProductAdminDetailController() {
+    public AjaxProductAdminSearchListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,13 +32,13 @@ public class AjaxProductAdminDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String searchKeyword = request.getParameter("searchKeyword");
 		
-		String pCode = request.getParameter("pcode");
+		ArrayList<Product> searchList = new ProductService().selectAdminSearchList(searchKeyword);
 		
-		Product p = new ProductService().selectAdminProductDetail(pCode);
-		
-		response.setContentType("application/json; charset=UTF-8"); 
-		new Gson().toJson(p, response.getWriter());
+		response.setContentType("application/json; charset=UTF-8");
+		new Gson().toJson(searchList, response.getWriter());
 		
 	}
 

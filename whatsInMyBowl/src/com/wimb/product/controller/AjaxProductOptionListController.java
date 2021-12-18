@@ -38,10 +38,10 @@ public class AjaxProductOptionListController extends HttpServlet {
 
 		String option = request.getParameter("option"); // 카테고리 옵션명
 		
-		int listCount = new ProductService().selectOptionListCount(option); // 카테고리 옵션별 완제품 총 개수
+		int listCount = new ProductService().selectAdminOptionListCount(option); // 카테고리 옵션별 완제품 총 개수
 		
 		// 카테고리 옵션별 완제품 목록 조회
-		ArrayList<Product> optionList = new ProductService().selectOptionList(option);
+		ArrayList<Product> optionList = new ProductService().selectAdminOptionList(option);
 		
 		response.setContentType("application/json; charset=UTF-8"); 
 		new Gson().toJson(optionList, response.getWriter());

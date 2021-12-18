@@ -133,24 +133,34 @@
         font-size:13px;
     }
 
-    #select-form span{
-        border:1px solid lightgray;
-        border-radius:3px;
-        padding:4px 15px;
+    #paging-bar, #product-search-area{
+        /* border:1px solid red; */
+        width:1500px;
+        margin-left: 150px;
+        text-align:center !important;
     }
 
-    #select-form input{
+    #product-search-area label{
+        border:1px solid lightgray;
+        border-radius:3px;
+        padding:3px 15px;
+        margin:0;
+    }
+
+    #product-search-area input{
         border:1px solid lightgray;
         border-radius:3px;
         width:250px;
         height:30px;
+        margin:0;
     }
 
-    #select-form button{
-        /* border-radius:3px; */
-        padding:5px 15px;
-        
+    #product-search-area button{
+        background:rgb(255, 225, 90);
+        padding:4px 15px;
+        margin:0;
     }
+
 
     /* 상품등록 모달창 */
 
@@ -452,7 +462,18 @@
                                 $("#detailKeyword").text(p.pKeyword);
                                 $("#detailStatus").text(p.pShow);
                                 $("#detailContent").text(p.pDetail);
-                                $("#detailSubImg").attr("src", p.filePath + p.pDetailImg);
+
+                        
+                                if(p.pDetailImg == null){
+                                    $("#detailSubImg").prev().show();
+                                    $("#detailSubImg").hide();
+                                } else {
+                                    $("#detailSubImg").prev().hide();
+                                    $("#detailSubImg").attr("src", p.filePath + p.pDetailImg);
+                                    $("#detailSubImg").show();
+                                }
+
+
                                 $("#detailDate").text(p.pDate);
 
                                 $("#product-detail-modal").modal({backdrop: "static"});
@@ -467,46 +488,81 @@
             
             </script>
 
-            <!-- 페이징바 -->
-            <div id="paging-bar" align="center">
-            	<ul class="pagination">
-            		<% if(currentPage != 1) { %>
-				   		 <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.apr?cpage=<%= currentPage - 1 %>">&lt;</a></li>
-				    <% } %>
-				    
-				    <% for(int p=startPage; p<=endPage; p++ ) { %>
-				    	<% if(p == currentPage) { %>
-					    	<li class="page-item active"><a class="page-link" href="#"><%= p %></a></li>
-					    <% } else { %>
-					  		 <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.apr?cpage=<%= p %>"><%= p %></a></li>
-					    <% } %>
-				    <% } %>
-				    
-				    <% if(currentPage != maxPage) { %>
-				 		   <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.apr?cpage=<%= currentPage + 1 %>">&gt;</a></li>
-				    <% } %>
-			    </ul>
-            </div>
-             
-            <br>
-
-            <!-- 상품 검색 -->
-            <form id="select-form" action="" method="get">
-                <table id="product-search">
-                    <tr>
-                        <td>
-                            <span>상품명</span>
-                        </td>
-                        <td>
-                            <input type="search">
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-sm" style="background-color:rgb(255, 225, 90); margin-left:5px;">조회</button>
-                        </td>
-                    </tr>
-                </table>
-            </form>
         </div>
+        <!-- 페이징바 -->
+        <div id="paging-bar">
+                <% if(currentPage != 1) { %>
+                        <a class ="btn btn-sm" onclick="location.href='<%= contextPath %>/list.apr?cpage=<%= currentPage - 1 %>';">&lt;</a>
+                <% } %>
+                
+                <% for(int p=startPage; p<=endPage; p++ ) { %>
+                    <% if(p == currentPage) { %>
+                        <button  class ="btn btn-sm" disabled><%= p %></button>
+                    <% } else { %>
+                        <button class ="btn btn-sm" onclick="location.href='<%= contextPath %>/list.apr?cpage=<%= p %>';"><%= p %></button>
+                    <% } %>
+                <% } %>
+                
+                <% if(currentPage != maxPage) { %>
+                        <buttob class ="btn btn-sm" onclick="location.href='<%= contextPath %>/list.apr?cpage=<%= currentPage + 1 %>';">&gt;</buttob>
+                <% } %>
+            </ul>
+        </div>
+        
+        <br>
+
+        <!-- 상품 검색 -->
+        <div id="product-search-area">
+            <label for="product-search">상품명</label>
+            <input type="search" id="product-search" name="searchKeyword">
+            <button id="product-search-btn" class="btn btn-sm">조회</button>
+         </div>
+         <script>
+             $(function(){
+
+                $("#product-search-btn").click(function(){
+
+                    $.ajax({
+                        url:"search.apr",
+                        data:{searchKeyword:$("#product-search").val()},
+                        success:function(list){
+                            
+                            $("#product-list tbody").html("");
+
+                            	let result = "";
+                            	
+                            	for(let i=0; i<list.length; i++){
+                            		
+                            		result += "<tr>"
+	                            				+ "<td><input type='checkbox' disabled></td>"
+			    	                            + "<td>" + list[i].pCode + "</td>"
+			        	                        + "<td><a class='product-name'>" + list[i].pName + "</a></td>"
+			        	                        + "<td>" + list[i].pProvider + "</td>"
+			        	                        + "<td>" + list[i].pProvidePrice + "</td>"
+			        	                        + "<td>" + list[i].pPrice + "</td>"
+			        	                        + "<td>" + list[i].pStock + "</td>"
+			        	                        + "<td>" + list[i].pShow + "</td>"
+		        	                    	+ "</tr>";
+		        	                        
+                            	}
+
+                                $("#list-2 span").text(list.length);
+                                $("#product-list tbody").html(result);
+                                $("#paging-bar").text("");
+
+
+                        }, error:function(){
+
+                        }
+
+                    });
+
+                });
+
+             });
+         </script>
+
+
     </div>
 
     
@@ -627,7 +683,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td align="center" style="width:100%; padding:0; border:1px solid lightgray;">
+                                            <td align="center" style="width:100%; padding:0;">
                                                 <img class="detail-img-area">
                                             </td>
                                         </tr>
@@ -710,15 +766,8 @@
 			</div>
 		</div>
 	</div>		
-	<!--  
-	<script>
-		$(document).ready(function(){
-			$("#insert-success-btn").click(function(){
-				$("#insert-success-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
-	-->
+
+
 
     <!-- 상품 상세정보 모달창 -->
 
@@ -807,10 +856,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td  align="center" style="width:100%; padding:0; border:1px solid lightgray;">
-                                <!-- case1. 상세이미지 없을 경우 -->
-                                <!-- <p>등록된 상세이미지가 없습니다</p> -->
-                                <!-- case2. 상세이미지 있을 경우 -->
+                            <td  align="center" style="width:100%; padding:0;">
+                            	<p><br>등록된 상세이미지가 없습니다<br></p>
                                 <img id="detailSubImg" class="detail-img-area">
                             </td>
                         </tr>
@@ -838,14 +885,6 @@
           </div>
         </div>
     </div>
-	<!-- <script>
-		$(document).ready(function(){
-			$(".product-name").click(function(){
-			$("#product-detail-modal").modal({backdrop: "static"});
-			});
-		});
-	</script> -->
-
 
 
 </body>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-
+	
 	<entry key="selectListCount">
 		SELECT
 		       COUNT(*) COUNT
 		  FROM PRODUCT
 		 WHERE P_SHOW = 'Y'
-		   AND P_STOCK > 0
+		   AND P_ADMINSHOW = 'Y'
 	</entry>
 	
 	<entry key="selectProductList">
@@ -21,19 +21,25 @@
 		                       , P_NAME
 		                       , P_CATEGORY
 		                       , P_PRICE
-		                       , P_PROVIDER
-		                       , P_PROVIDEPRICE
 		                       , P_MAINIMG
-		                       , p_SHOW
 		                       , P_STOCK
 		                    FROM PRODUCT
-		                   WHERE p_SHOW = 'Y'
+		                   WHERE P_SHOW = 'Y'
+		                     AND P_ADMINSHOW = 'Y'
 		                   ORDER
 		                      BY P_CODE DESC
 		                 ) A
 		        )
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -73,10 +79,41 @@
 		  )
 	</entry>
 	
-	<entry key="selectProductDetail">
+	<entry key="selectAdminListCount">
 		SELECT
-			   P_CODE
-		     , P_NAME
+		       COUNT(*) COUNT
+		  FROM PRODUCT
+		 WHERE P_ADMINSHOW = 'Y'
+	</entry>
+	
+	<entry key="selectAdminProductList">
+		SELECT *
+		  FROM (
+		         SELECT
+		                ROWNUM RNUM, A.*
+		           FROM (
+		                  SELECT
+		                         P_CODE
+		                       , P_NAME
+		                       , P_CATEGORY
+		                       , P_PRICE
+		                       , P_PROVIDER
+		                       , P_PROVIDEPRICE
+		                       , P_SHOW
+		                       , P_STOCK
+		                    FROM PRODUCT
+		                   WHERE P_ADMINSHOW = 'Y'
+		                   ORDER
+		                      BY P_CODE DESC
+		                 ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectAdminProductDetail">
+		SELECT
+		        P_CODE
+		     ,  P_NAME
 		     , P_CATEGORY
 		     , P_PRICE
 		     , P_PROVIDER
@@ -90,15 +127,17 @@
 		     , P_KEYWORD
 		  FROM PRODUCT
 		 WHERE P_CODE = ?
+		   AND P_ADMINSHOW = 'Y'
 	</entry>
 	
-	<entry key="selectOptionListCount">
+	<entry key="selectAdminOptionListCount">
 		SELECT COUNT(*) COUNT
 		  FROM PRODUCT
 		 WHERE P_CATEGORY = ?
+		   AND P_ADMINSHOW = 'Y'
 	</entry>
 	
-	<entry key="selectOptionList">
+	<entry key="selectAdminOptionList">
 		SELECT *
 		  FROM (
 		         SELECT
@@ -111,12 +150,35 @@
 		                       , P_PRICE
 		                       , P_PROVIDER
 		                       , P_PROVIDEPRICE
-		                       , P_MAINIMG
 		                       , p_SHOW
 		                       , P_STOCK
 		                    FROM PRODUCT
-		                   WHERE p_SHOW = 'Y'
-		                     AND P_CATEGORY = ?
+		                   WHERE P_CATEGORY = ?
+		                     AND P_ADMINSHOW = 'Y'
+		                   ORDER
+		                      BY P_CODE DESC
+		                 ) A
+		        )
+	</entry>
+	
+	<entry key="selectAdminSearchList">
+		SELECT *
+		  FROM (
+		         SELECT
+		                ROWNUM RNUM, A.*
+		           FROM (
+		                  SELECT
+		                         P_CODE
+		                       , P_NAME
+		                       , P_CATEGORY
+		                       , P_PRICE
+		                       , P_PROVIDER
+		                       , P_PROVIDEPRICE
+		                       , p_SHOW
+		                       , P_STOCK
+		                    FROM PRODUCT
+		                   WHERE P_NAME LIKE '%' || ? || '%'
+		                     AND P_ADMINSHOW = 'Y'
 		                   ORDER
 		                      BY P_CODE DESC
 		                 ) A

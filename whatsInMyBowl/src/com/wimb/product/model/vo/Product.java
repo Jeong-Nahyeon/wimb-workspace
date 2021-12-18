@@ -41,6 +41,19 @@ public class Product {
 		this.pKeyword = pKeyword;
 		this.filePath = filePath;
 	}
+	
+	
+	public Product(String pCode, String pName, String pCategory, int pPrice, String pMainImg, int pStock,
+			String filePath) {
+		super();
+		this.pCode = pCode;
+		this.pName = pName;
+		this.pCategory = pCategory;
+		this.pPrice = pPrice;
+		this.pMainImg = pMainImg;
+		this.pStock = pStock;
+		this.filePath = filePath;
+	}
 
 
 	public Product(String pCode, String pName, String pCategory, int pPrice, String pProvider, int pProvidePrice,
@@ -81,9 +94,9 @@ public class Product {
 		this.filePath = filePath;
 	}
 
-
+	
 	public Product(String pCode, String pName, String pCategory, int pPrice, String pProvider, int pProvidePrice,
-			String pMainImg, String pShow, int pStock, String filePath) {
+			String pShow, int pStock) {
 		super();
 		this.pCode = pCode;
 		this.pName = pName;
@@ -91,10 +104,8 @@ public class Product {
 		this.pPrice = pPrice;
 		this.pProvider = pProvider;
 		this.pProvidePrice = pProvidePrice;
-		this.pMainImg = pMainImg;
 		this.pShow = pShow;
 		this.pStock = pStock;
-		this.filePath = filePath;
 	}
 
 

@@ -11,7 +11,9 @@ import com.wimb.product.model.vo.Product;
 
 public class ProductService {
 	
-	/** 페이징바용 완제품 총 개수 반환해주는 메소드
+	// 회원용
+	
+	/** 회원용 페이징바용 완제품 총 개수 반환해주는 메소드
 	 * @return
 	 */
 	public int selectListCount() {
@@ -27,8 +29,8 @@ public class ProductService {
 	}
 	
 	
-	/** 완제품 목록 조회 해주는 메소드
-	 * @param pi  :  사용자가 요청한 페이지 정보 담은 PageInfo 객체 
+	/** 회원용 완제품 목록 조회 해주는 메소드
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
 	 * @return
 	 */
 	public ArrayList<Product> selectProductList(PageInfo pi){
@@ -44,8 +46,13 @@ public class ProductService {
 	}
 	
 	
-	/** 완제품 등록해주는 메소드
-	 * @param p  :  사용자가 작성한 등록할 완제품 정보
+	
+	
+	
+	// 관리자용
+	
+	/** 관리자용 완제품 등록해주는 메소드
+	 * @param p  :  관리자가 작성한 등록할 완제품 정보
 	 * @return
 	 */
 	public int insertProduct(Product p) {
@@ -65,34 +72,16 @@ public class ProductService {
 		return result;
 		
 	}
-
 	
-	/** 완제품 상세 조회해주는 메소드
-	 * @param pCode  :  상세 정보 조회할 상품의 상품번호
+	
+	/** 관리자용 페이징바용 완제품 총 개수 반환해주는 메소드
 	 * @return
 	 */
-	public Product selectProductDetail(String pCode) {
+	public int selectAdminListCount() {
 		
 		Connection conn = getConnection();
 		
-		Product p = new ProductDao().selectProductDetail(conn, pCode);
-		
-		close(conn);
-		
-		return p;
-		
-	}
-	
-	
-	/** 카테고리 옵션별 완제품 총 개수 반환해주는 메소드
-	 * @param option  :  사용자가 선택한 카테고리 옵션값
-	 * @return
-	 */
-	public int selectOptionListCount(String option) {
-		
-		Connection conn = getConnection();
-		
-		int listCount = new ProductDao().selectOptionListCount(conn, option);
+		int listCount = new ProductDao().selectAdminListCount(conn);
 		
 		close(conn);
 		
@@ -101,21 +90,89 @@ public class ProductService {
 	}
 	
 	
-	/** 카테고리 옵션별 완제품 목록 조회해주는 메소드
-	 * @param option  :  사용자가 선택한 카테고리 옵션값
-	 * @param pi  :  사용자가 요청한 페이지 정보 담은 PageInfo 객체
+	/** 관리자용 완제품 목록 조회 해주는 메소드
+	 * @param pi  :  관리자가 요청한 페이지 정보 담은 PageInfo 객체 
 	 * @return
 	 */
-	public ArrayList<Product> selectOptionList(String option) {
+	public ArrayList<Product> selectAdminProductList(PageInfo pi){
+		
+		Connection conn = getConnection();
+				
+		ArrayList<Product> totalList = new ProductDao().selectAdminProductList(conn, pi);
+		
+		close(conn);
+		
+		return totalList;
+		
+	}
+
+	
+	/** 관리자용 완제품 상세 조회해주는 메소드
+	 * @param pCode  :  상세 정보 조회할 상품의 상품번호
+	 * @return
+	 */
+	public Product selectAdminProductDetail(String pCode) {
 		
 		Connection conn = getConnection();
 		
-		ArrayList<Product> optionList = new ProductDao().selectOptionList(conn, option);
+		Product p = new ProductDao().selectAdminProductDetail(conn, pCode);
+		
+		close(conn);
+		
+		return p;
+		
+	}
+	
+	
+	/** 관리자용 카테고리 옵션별 완제품 총 개수 반환해주는 메소드
+	 * @param option  :  관리자가 선택한 카테고리 옵션값
+	 * @return
+	 */
+	public int selectAdminOptionListCount(String option) {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new ProductDao().selectAdminOptionListCount(conn, option);
+		
+		close(conn);
+		
+		return listCount;
+		
+	}
+	
+	
+	/** 관리자용 카테고리 옵션별 완제품 목록 조회해주는 메소드
+	 * @param option  :  관리자가 선택한 카테고리 옵션값
+	 * @param pi  :  관리자가 요청한 페이지 정보 담은 PageInfo 객체
+	 * @return
+	 */
+	public ArrayList<Product> selectAdminOptionList(String option) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> optionList = new ProductDao().selectAdminOptionList(conn, option);
 		
 		close(conn);
 		
 		return optionList;
 		
+	}
+	
+	
+	/** 관리자용 상품명으로 상품목록 검색해주는 메소드
+	 * @param searchKeyword  :  관리자가 입력한 상품명
+	 * @return
+	 */
+	public ArrayList<Product> selectAdminSearchList(String searchKeyword) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> searchList = new ProductDao().selectAdminSearchList(conn, searchKeyword);
+		
+		close(conn);
+		
+		return searchList;
+	
 	}
 	
 	

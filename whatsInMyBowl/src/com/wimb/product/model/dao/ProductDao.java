@@ -31,7 +31,7 @@ public class ProductDao {
 	}
 	
 	
-	/** 페이징바용 완제품 총 개수 반환해주는 메소드
+	/** 회원용 페이징바용 완제품 총 개수 반환해주는 메소드
 	 * @param conn
 	 * @return  :  완제품 총 개수
 	 */
@@ -64,9 +64,9 @@ public class ProductDao {
 	}
 	
 	
-	/** 완제품 목록 조회 해주는 메소드
+	/** 회원용 완제품 목록 조회 해주는 메소드
 	 * @param conn
-	 * @param pi  :  사용자가 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
 	 * @return
 	 */
 	public ArrayList<Product> selectProductList(Connection conn, PageInfo pi){
@@ -98,10 +98,7 @@ public class ProductDao {
 										  rset.getString("p_name"),
 										  rset.getString("p_category"),
 										  rset.getInt("p_price"),
-										  rset.getString("p_provider"),
-										  rset.getInt("p_providePrice"),
 										  rset.getString("p_mainimg"),
-										  rset.getString("p_show"),
 										  rset.getInt("p_stock"),
 										  filePath));
 				
@@ -120,9 +117,9 @@ public class ProductDao {
 	}
 	
 	
-	/** 완제품 등록해주는 메소드
+	/** 관리자용 완제품 등록해주는 메소드
 	 * @param conn
-	 * @param p  :  사용자가 작성한 등록할 완제품 정보
+	 * @param p  :  관리자가 등록한 완제품 정보
 	 * @return
 	 */
 	public int insertProduct(Connection conn, Product p) {
@@ -168,12 +165,96 @@ public class ProductDao {
 	}
 	
 	
-	/** 완제품 상세 조회해주는 메소드
+	/** 관리자용 페이징바용 완제품 총 개수 반환해주는 메소드
+	 * @param conn
+	 * @return  :  완제품 총 개수
+	 */
+	public int selectAdminListCount(Connection conn) {
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminListCount"); // 완성된 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	
+	/** 관리자용 완제품 목록 조회 해주는 메소드
+	 * @param conn
+	 * @param pi  :  관리자가 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @return
+	 */
+	public ArrayList<Product> selectAdminProductList(Connection conn, PageInfo pi){
+		
+		ArrayList<Product> totalList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminProductList"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1; // 시작값
+			int endRow = startRow + pi.getBoardLimit() - 1; // 끝값
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				
+				totalList.add(new Product(rset.getString("p_code"),
+										  rset.getString("p_name"),
+										  rset.getString("p_category"),
+										  rset.getInt("p_price"),
+										  rset.getString("p_provider"),
+										  rset.getInt("p_provideprice"),
+										  rset.getString("p_show"),
+										  rset.getInt("p_stock")));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalList;
+		
+	}
+	
+	
+	/** 관리자용 완제품 상세 조회해주는 메소드
 	 * @param conn
 	 * @param pCode  :  상세 정보 조회할 상품의 상품번호
 	 * @return
 	 */
-	public Product selectProductDetail(Connection conn, String pCode) {
+	public Product selectAdminProductDetail(Connection conn, String pCode) {
 		
 		Product p = null;
 		PreparedStatement pstmt = null;
@@ -182,7 +263,7 @@ public class ProductDao {
 		// 파일저장경로
 		String filePath = "resources/images/product_images/";
 		
-		String sql = prop.getProperty("selectProductDetail"); // 미완성 sql문
+		String sql = prop.getProperty("selectAdminProductDetail"); // 미완성 sql문
 		
 		try {
 			
@@ -223,18 +304,18 @@ public class ProductDao {
 	}
 	
 	
-		/** 카테고리 옵션별 완제품 총 개수 반환해주는 메소드
+		/** 관리자용 카테고리 옵션별 완제품 총 개수 반환해주는 메소드
 		 * @param conn
-		 * @param option  :  사용자가 선택한 카테고리 옵션값
+		 * @param option  :  관리자가 선택한 카테고리 옵션값
 		 * @return
 		 */
-		public int selectOptionListCount(Connection conn, String option) {
+		public int selectAdminOptionListCount(Connection conn, String option) {
 		
 		int listCount = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("selectOptionListCount"); // 미완성 sql문
+		String sql = prop.getProperty("selectAdminOptionListCount"); // 미완성 sql문
 		
 		try {
 			
@@ -260,22 +341,19 @@ public class ProductDao {
 	}
 		
 		
-	/** 카테고리 옵션별 완제품 목록 조회해주는 메소드
+	/** 관리자용 카테고리 옵션별 완제품 목록 조회해주는 메소드
 	 * @param conn
-	 * @param option  :  사용자가 선택한 카테고리 옵션값
-	 * @param pi  :  사용자가 요청한 페이지 정보 담은 PageInfo 객체
+	 * @param option  :  관리자가 선택한 카테고리 옵션값
+	 * @param pi  :  관리자가 요청한 페이지 정보 담은 PageInfo 객체
 	 * @return
 	 */
-	public ArrayList<Product> selectOptionList(Connection conn, String option){
+	public ArrayList<Product> selectAdminOptionList(Connection conn, String option){
 		
 		ArrayList<Product> optionList = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		
-		// 파일저장경로
-		String filePath = "resources/images/product_images/";
-		
-		String sql = prop.getProperty("selectOptionList"); // 미완성 sql문
+				
+		String sql = prop.getProperty("selectAdminOptionList"); // 미완성 sql문
 		
 		try {
 			
@@ -288,15 +366,13 @@ public class ProductDao {
 			while(rset.next()) {
 				
 				optionList.add(new Product(rset.getString("p_code"),
-						  rset.getString("p_name"),
-						  rset.getString("p_category"),
-						  rset.getInt("p_price"),
-						  rset.getString("p_provider"),
-						  rset.getInt("p_providePrice"),
-						  rset.getString("p_mainimg"),
-						  rset.getString("p_show"),
-						  rset.getInt("p_stock"),
-						  filePath));
+										   rset.getString("p_name"),
+										   rset.getString("p_category"),
+										   rset.getInt("p_price"),
+										   rset.getString("p_provider"),
+										   rset.getInt("p_providePrice"),
+									 	   rset.getString("p_show"),
+									 	   rset.getInt("p_stock")));
 				
 			}
 			
@@ -308,6 +384,53 @@ public class ProductDao {
 		}
 		
 		return optionList;
+		
+	}
+	
+	
+	/** 관리자용 상품명으로 상품목록 검색해주는 메소드
+	 * @param conn
+	 * @param searchKeyword  :  관리자가 입력한 상품명
+	 * @return
+	 */
+	public ArrayList<Product> selectAdminSearchList(Connection conn, String searchKeyword) {
+		
+		ArrayList<Product> searchList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminSearchList"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, searchKeyword);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				searchList.add(new Product(rset.getString("p_code"),
+										   rset.getString("p_name"),
+										   rset.getString("p_category"),
+										   rset.getInt("p_price"),
+										   rset.getString("p_provider"),
+										   rset.getInt("p_providePrice"),
+									 	   rset.getString("p_show"),
+									 	   rset.getInt("p_stock")));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return searchList;
 		
 	}
 
