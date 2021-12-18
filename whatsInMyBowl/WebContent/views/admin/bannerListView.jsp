@@ -10,9 +10,6 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
-	
-	// 메인1 '변경하기'버튼 클릭 시 생성되는 리스트 정보를 담은 객체 (배너번호, 배너명, 파일경로)
-	ArrayList<Banner> Firstlist = (ArrayList<Banner>)request.getAttribute("Firstlist");
 %>
 <!DOCTYPE html>
 <html>
@@ -179,6 +176,7 @@
     .inputMainImg{
         border: 1px solid black;
         width: 300px;
+        padding: 0px;
     }
     .mainBanner_box table{
         width: 300px;
@@ -291,10 +289,11 @@
                     </table>
                     <div class="checkboxandbtn">
                         <span class="mainName">메인1</span>
-                        <button type="button" id="updatebtn1" onclick="location.href='<%= contextPath %>/firstMainlist.banner';">변경하기</button>
+                        <button type="button" id="updatebtn1">변경하기</button>
                     </div>
 
                 </div>
+				
 				
 				<!-- 배너 메인 2 영역 -->
                 <div class="banner_box" align="center">
@@ -487,15 +486,12 @@
                     <button type="button" class="mainBanner_btn_left">취소</button>
                     <button type="button" class="mainBanner_btn_right">등록</button>
                 </div>
-	                <table>
-	                    <tr>
-		                    <td colspan="2"><img src="" class="inputMainImg" height="180" width="290px"></td>
-		                </tr>
-		                <tr>
-		                    <td><input type="radio" name="selectMainImg" style="margin: 0px 10px;"></td>
-		                    <td>배너명</td>
-		                </tr>
-		            </table>
+                <div class="innerAjax">
+                
+                <!-- ajax로 메인1에 등록하고자 하는 리스트 목록 띄워주는 위치 -->
+                
+                </div>
+		    
             </div>
 
 
@@ -543,7 +539,7 @@
     	}
         
     	
-    	// 변경하기 버튼 시 띄워지는 메인등록1에 사용될 등록될 메인 리스트들
+    	// 변경하기 버튼 시 띄워지는 메인등록1에 사용될 등록될 메인 리스트를 띄워줄 모달창
     	var main1 = document.getElementById('updatebtn1');
     	if(main1.addEventListener){
     		function onClick() {
@@ -557,10 +553,40 @@
          
             document.getElementById('updatebtn1').addEventListener('click', onClick);
             document.querySelector('.mainmodal_close').addEventListener('click', offClick); 	  			
-    	}
-       	 
+    	}  	
     	
-
+		//'변경하기'버튼 클릭 시 메인등록1에 띄워줄   AJAX 구문
+		$('#updatebtn1').click(function(){
+			selectFirstMainList();
+		});
+		
+		function selectFirstMainList(){
+			$.ajax({
+				url:"firstMainlist.banner",
+				data:{},
+				success:function(Firstlist){
+					
+					let result = "";
+					for(let i=0; i<Firstlist.length; i++){
+						result += "<table>"
+									+ "<tr>" 
+					            		+	"<td colspan='2'><img src='" + Firstlist[i].bOriginName + "' class='inputMainImg' height='180' width='250px'></td>" 
+									+ "</tr>"
+									+ "<tr>"
+										+	"<td style='width:5px;'><input type='radio' name='selectMainImg' style='margin: 0px 10px;'></td>"
+										+	"<td style='text-align:center;'>" + Firstlist[i].bName + "</td>"
+									+ "</tr>"
+								  "</table>"
+								  
+					}
+					
+					$(".innerAjax").html(result);
+					
+				},error:function(){
+					console.log("메인1 리스트 조회용 ajax 통신 실패");
+				}
+			})
+		}
     </script>
     
     
