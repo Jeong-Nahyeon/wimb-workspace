@@ -484,7 +484,7 @@
             <div class="mainBanner_box">
                 <div class="mainBanner_btn">
                     <button type="button" class="mainBanner_btn_left">취소</button>
-                    <button type="button" class="mainBanner_btn_right">등록</button>
+                    <button type="button" class="mainBanner_btn_right" onclick="selectMain();">등록</button>
                 </div>
                 <div class="innerAjax">
                 
@@ -552,41 +552,55 @@
             }
          
             document.getElementById('updatebtn1').addEventListener('click', onClick);
-            document.querySelector('.mainmodal_close').addEventListener('click', offClick); 	  			
+            document.querySelector('.mainmodal_close').addEventListener('click', offClick); 	
+            document.querySelector('.mainBanner_btn_left').addEventListener('click', offClick); 
     	}  	
     	
-		//'변경하기'버튼 클릭 시 메인등록1에 띄워줄   AJAX 구문
+		
+    	// AJAX구문의 success:function()의 값을 담을 전역변수 생성
+    	var ajaxlist;
+    	
+    	//'변경하기'버튼 클릭 시 메인등록1에 띄워줄   AJAX 구문
 		$('#updatebtn1').click(function(){
-			selectFirstMainList();
+			madeajaxlist();
 		});
 		
 		function selectFirstMainList(){
 			$.ajax({
 				url:"firstMainlist.banner",
 				data:{},
+				asynf:false,
 				success:function(Firstlist){
 					
-					let result = "";
-					for(let i=0; i<Firstlist.length; i++){
-						result += "<table>"
-									+ "<tr>" 
-					            		+	"<td colspan='2'><img src='" + Firstlist[i].bOriginName + "' class='inputMainImg' height='180' width='250px'></td>" 
-									+ "</tr>"
-									+ "<tr>"
-										+	"<td style='width:5px;'><input type='radio' name='selectMainImg' style='margin: 0px 10px;'></td>"
-										+	"<td style='text-align:center;'>" + Firstlist[i].bName + "</td>"
-									+ "</tr>"
-								  "</table>"
-								  
-					}
-					
-					$(".innerAjax").html(result);
+				ajaxlist = Firstlist;
 					
 				},error:function(){
 					console.log("메인1 리스트 조회용 ajax 통신 실패");
 				}
+				
 			})
 		}
+		
+		// AJAX구문의 success:function()의 값을 담은 전역변수 ajaxlist를 가지고 리스트를 만드는 함수
+		function madeajaxlist(){
+			
+			for(let i=0; i<ajaxlist.length; i++){
+				result += "<table>"
+							+ "<tr>" 
+			            		+	"<td colspan='2'><img src='" + ajaxlist[i].bOriginName + "' class='inputMainImg' height='180' width='250px'></td>" 
+							+ "</tr>"
+							+ "<tr>"
+								+	"<td style='width:5px;'><input type='radio' name='selectMainImg' value='"+ ajaxlist[i].bCode +"' style='margin: 0px 10px;'></td>"
+								+	"<td style='text-align:center;'>" + ajaxlist[i].bName + "</td>"
+							+ "</tr>"
+						  "</table>";
+			$(".innerAjax").html(result);
+			
+			}	
+		}
+			
+		madeajaxlist(ajaxlist);
+
     </script>
     
     
