@@ -40,7 +40,9 @@ public class AdminItemUpdateController extends HttpServlet {
 		String ciProvider = request.getParameter("ciProvider");
 		int ciProvidePrice = Integer.parseInt(request.getParameter("ciProvidePrice"));
 		int ciStock = Integer.parseInt(request.getParameter("ciStock"));
-		String ciShow = request.getParameter("ciStock");
+		String ciShow = request.getParameter("ciShow");
+		
+		System.out.println(ciShow);
 		
 		Item i = new Item(ciCode, ciName, ciCategory, ciProvider, ciProvidePrice, ciPrice, ciShow, ciStock);
 	

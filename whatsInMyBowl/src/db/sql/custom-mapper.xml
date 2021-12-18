@@ -22,7 +22,7 @@
 		           FROM (
 		                  SELECT *
 		                    FROM ITEM
-		                   WHERE CI_SHOW = 'Y'
+		                   
 		                )A
 		        )
 		 WHERE RNUM BETWEEN ? AND ?

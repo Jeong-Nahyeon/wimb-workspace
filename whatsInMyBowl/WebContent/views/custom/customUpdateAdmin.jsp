@@ -357,7 +357,7 @@
 	                        <td class="ajaxCiCode"><%= i.getCiCode() %></td>
 	                        <td><%= i.getCiCategory() %></td>
 	                        <td>
-                                <a href="#" class="item_Name"><%= i.getCiName() %></a>
+                                <a class="item_Name"><%= i.getCiName() %></a>
                             </td>
 	                        <td><%= i.getCiProvider() %></td>
 	                        <td><%= i.getCiProvidePrice() %></td>
@@ -475,7 +475,7 @@
                             <table id="custom_insertTable">
                                 <tr>
                                     <td colspan="2">
-                                        <select name="" id="ci_category">
+                                        <select name="ciCategory" id="ci_category">
                                             <option>재료 구분</option>
                                             <option value="채소">채소</option>
                                             <option value="메인토핑">메인토핑</option>
