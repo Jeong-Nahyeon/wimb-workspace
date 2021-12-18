@@ -67,7 +67,6 @@ public class CustomDao {
 						   rset.getString("ci_provider"),
 						   rset.getInt("ci_provideprice"),
 						   rset.getInt("ci_price"),
-						   rset.getString("ci_mainimg"),
 						   rset.getString("ci_show"),
 						   rset.getInt("ci_stock")
 					 	   ));
@@ -106,7 +105,6 @@ public class CustomDao {
 						   rset.getString("ci_provider"),
 						   rset.getInt("ci_provideprice"),
 						   rset.getInt("ci_price"),
-						   rset.getString("ci_mainimg"),
 						   rset.getString("ci_show"),
 						   rset.getInt("ci_stock")
 					 	   ));
@@ -186,7 +184,6 @@ public class CustomDao {
 							 rset.getString("ci_provider"),
 							 rset.getInt("ci_provideprice"),
 							 rset.getInt("ci_price"),
-							 rset.getString("ci_mainimg"),
 							 rset.getString("ci_show"),
 							 rset.getInt("ci_stock")
 							);
@@ -226,6 +223,67 @@ public class CustomDao {
 		}
 		return result;
 	}
+	
+	// 노출여부 수정
+	public int updateItemShow(Connection conn, Item i) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateItemShow");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, i.getCiShow());
+			pstmt.setString(2, i.getCiCode());
+			
+			
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
+	
+
+	// 카테고리별 목록 조회
+	public ArrayList<Item> selecAdminCategoryList(Connection conn, String ciCategory) {
+		ArrayList<Item> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selecAdminCategoryList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ciCategory);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()){
+				list.add(new Item(rset.getString("ci_code"),
+						   rset.getString("ci_name"),
+						   rset.getString("ci_category"),
+						   rset.getString("ci_provider"),
+						   rset.getInt("ci_provideprice"),
+						   rset.getInt("ci_price"),
+						   rset.getString("ci_show"),
+						   rset.getInt("ci_stock")
+					 	   ));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	
 	
 	
 	

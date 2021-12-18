@@ -29,8 +29,8 @@
 	</entry>
 	
 	<entry key="updateMainImg">
-		UPDATE ITEM
-  		   SET CI_MAINIMG = ?
+		UPDATE CUSTOM
+  		   SET CU_MAINIMG = ?
 	</entry>
 	
 	<entry key="insertItemAdmin">
@@ -43,7 +43,6 @@
 		  , CI_PROVIDER
 		  , CI_PROVIDEPRICE
 		  , CI_PRICE
-		  , CI_MAINIMG
 		  , CI_STOCK
 		  , CI_SHOW
 		  )
@@ -55,7 +54,6 @@
 		  , ?
 		  , ?
 		  , ?
-		  , (SELECT CI_MAINIMG FROM ITEM WHERE CI_CODE = 'CI1001')
 		  , ?
 		  , ?
 		  )
@@ -77,6 +75,25 @@
 		     , CI_SHOW = ?
 		     , CI_STOCK = ?
 		 WHERE CI_CODE = ?
+	</entry>
+	
+	<entry key="updateItemShow">
+		UPDATE ITEM
+		   SET CI_SHOW = ?
+		 WHERE CI_CODE = ?
+	</entry>
+	
+	<entry key="selectCategoryCount">
+		SELECT
+		       COUNT(*) count
+		  FROM ITEM
+		 WHERE CI_CATEGORY = ?
+	</entry>
+	
+	<entry key="selecAdminCategoryList">
+		SELECT *
+		  FROM ITEM
+		 WHERE CI_CATEGORY = ?
 	</entry>
 
 </properties>

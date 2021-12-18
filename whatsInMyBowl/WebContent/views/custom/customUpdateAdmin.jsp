@@ -312,18 +312,62 @@
             <div class="custom_category">
                 <select name="category" >
                     <option>메뉴 선택</option>
-	                <option value="">채소</option>
-	                <option value="">메인토핑</option>
-	                <option value="">사이드토핑</option>
-	                <option value="">드레싱</option>  
+	                <option value="채소">채소</option>
+	                <option value="메인토핑">메인토핑</option>
+	                <option value="사이드토핑">사이드토핑</option>
+	                <option value="드레싱">드레싱</option>  
                 </select>
             </div>
+
+            <!-- 카테고리 선택시 목록 조회 -->
+            <script>
+                $(function(){
+                    $("select[name=category]").change(function(){
+                        var category = $(this).val();
+                        if(category != "메뉴 선택"){
+                            $.ajax({
+                                url:"aitemCategorylist.cu",
+                                data:{
+                                    ciCategory:category
+                                },
+                                success:function(list){
+                                    var content = "";
+
+                                    for(var i=0; i<list.length; i++){
+                                        content += "<tr>" +
+                                                        "<td><input type='checkbox'></td>" +
+                                                        "<td class='ajaxCiCode'>" + list[i].ciCode + "</td>" +
+                                                        "<td>" + list[i].ciCategory + "</td>" +
+                                                        "<td><a class='item_Name'>" + list[i].ciName + "</a></td>" +
+                                                        "<td>" + list[i].ciProvider + "</td>" + 
+                                                        "<td>" + list[i].ciProvidePrice + "</td>" +
+                                                        "<td>" + list[i].ciPrice + "</td>" + 
+                                                        "<td>" + list[i].ciStock + "</td>" +
+                                                        "<td><a class='item_show'>" + list[i].ciShow + "</a></td>" + 
+                                                   "</tr>"
+                                    }
+
+                                    $("#custom_table tbody").html(content);
+                                    $("#totalCount").text(list.length);
+                                    $(".paging_area").text("");
+                                },
+                                error:function(){
+                                    console.log("ajax 통신 실패");
+                                }
+                            });
+                        }else{
+                            location.reload();
+                        }
+                        
+                    })
+                })
+            </script>
 
             <!-- 총 상품(재료) 개수 / 등록 버튼 -->
             <div class="custom_manage">
                 <div class="custom_info">
                     <span>총</span>
-                    <span style="color: orange;">12</span>
+                    <span style="color: orange;" id="totalCount"><%= pi.getListCount() %></span>
                     <span>건</span>
                 </div>
                 <div class="custom_btn" align="right">
@@ -337,22 +381,21 @@
                     <tr>
                         <th width="3%"></th>
                         
-                        <th width="15%">상품번호</th>
-                        <th width="15%">카테고리</th>
+                        <th width="14%">상품번호</th>
+                        <th width="14%">카테고리</th>
                         <th width="20%">상품명</th>
                         <th width="15%">업체명</th>
                         <th width="10%">공급가(원)</th>
                         <th width="10%">판매가(원)</th>
                         <th width="6%">재고</th>
-                        <th width="6%">노출 여부</th>
+                        <th width="8%">노출 여부</th>
                     </tr>
                 </thead>
                 <tbody>
-                    
                     <% for(Item i : list) { %>
                     	<tr>
 	                        <td>
-	                            <input type="checkbox">
+	                            <input type="checkbox" id="check_list" name="check">
 	                        </td>
 	                        <td class="ajaxCiCode"><%= i.getCiCode() %></td>
 	                        <td><%= i.getCiCategory() %></td>
@@ -363,7 +406,7 @@
 	                        <td><%= i.getCiProvidePrice() %></td>
 	                        <td><%= i.getCiPrice() %></td>
 	                        <td><%= i.getCiStock() %></td>
-	                        <td><a href="showModal" data-toggle="modal" data-target="#showModal"><%= i.getCiShow() %></a></td>
+	                        <td><a class="item_show"><%= i.getCiShow() %></a></td>
 	                    </tr>
                     <% } %>
                 </tbody>
@@ -399,6 +442,42 @@
 				})
 
 			</script>
+
+            <!-- 노출 여부 수정 -->
+			<script>
+                $(function(){
+                    $(".item_show").click(function(){
+                        var ciCode = $(this).parent().siblings(".ajaxCiCode").text();
+                        var ciShow = $(this).text();
+                        $("#status_select").val(ciShow).prop("selected", true);
+                        $("#show_ciCode").val(ciCode);
+                        $("#showModal").modal();
+                    })
+
+                    $("#update_show").click(function(){
+                        $.ajax({
+                            url:"aitemshowupdate.cu",
+                            data:{
+                                ciCode:$("#show_ciCode").val(),
+                                ciShow:$("#status_select").val()
+                            },
+                            success:function(result){
+                                if(result > 0){
+                                    console.log(result);
+                                    alert("노출상태를 변경했습니다.")
+                                    location.reload();
+                                }else{
+                                    console.log(result);
+                                }
+                            },
+                            error:function(){
+                                console.log("ajax 통신 실패");
+                            }
+                        });
+                    })
+                })
+
+            </script>
 
             <!-- 페이징바 -->
             <div class="paging_area">
@@ -444,13 +523,14 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <div class="status">
                             <span>노출 여부</span>
-                            <form action="" class="status_form">
+                            <!-- <form action="" class="status_form">  -->
+                                <input type="hidden" name="ciCode" id="show_ciCode">
                                 <select name="status" id="status_select">
-                                    <option>Y</option>
-                                    <option>N</option>
+                                    <option value="Y">Y</option>
+                                    <option value="N">N</option>
                                 </select>
-                                <button type="submit">수정</button>
-                            </form>
+                                <button id="update_show">수정</button>
+                            <!-- </form> -->
                         </div>
                     </div>
                 </div>
@@ -523,12 +603,11 @@
                             </div>
                        </form>
                     </div>
-            
-                    
-            
                 </div>
                 </div>
             </div>
+
+            
 
         </div>
         

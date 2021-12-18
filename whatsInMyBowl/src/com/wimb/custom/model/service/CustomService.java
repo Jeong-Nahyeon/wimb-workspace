@@ -85,5 +85,29 @@ public class CustomService {
 		return result;
 	}
 	
+	// 노출여부수정
+	public int updateItemShow(Item i) {
+		Connection conn =getConnection();
+		int result = new CustomDao().updateItemShow(conn, i);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
+	
+	
+	// 카테고리별 목록조회
+	public ArrayList<Item> selecAdminCategoryList(String ciCategory){
+		Connection conn = getConnection();
+		ArrayList<Item> list = new CustomDao().selecAdminCategoryList(conn, ciCategory);
+		close(conn);
+		return list;
+	}
+
+	
+	
 
 }
