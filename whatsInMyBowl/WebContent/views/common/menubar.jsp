@@ -193,7 +193,14 @@
             <a href="<%= contextPath %>"><img src="<%= contextPath %>/resources/images/LOGO.png"></a>
         </div>
         <div class="mypage-area">
-        	
+        
+        	<% if(alertMsg != null){ %>
+				<script>
+					alert("<%=alertMsg%>");
+				</script>
+				<% session.removeAttribute("alertMsg"); %>
+			<% } %>
+		        	
         	<% if(loginUser == null){ %>
             <!-- 로그인 전 -->
             <div class="login-area"> 
