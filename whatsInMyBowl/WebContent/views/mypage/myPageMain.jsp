@@ -185,10 +185,10 @@
                     <th>회원정보</th>
                 </tr>
                 <tr>
-                    <td><a href="">회원정보변경</a></td>
+                    <td><a href="<%=contextPath%>/memberUpdate.me">회원정보변경</a></td>
                 </tr>
                 <tr>
-                    <td id="sidebarmenu"><a href="">회원탈퇴</a></td>
+                    <td id="sidebarmenu"><a href="<%=contextPath%>/memberDelete.me">회원탈퇴</a></td>
                 </tr> 
                 <tr>
                     <th>혜택관리</th>
