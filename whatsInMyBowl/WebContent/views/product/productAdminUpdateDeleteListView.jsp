@@ -938,6 +938,33 @@
             </div>
         </div>
     </div>
+
+
+
+    <!-- 상품 삭제 모달창 -->
+
+    <div class="modal fade" id="delete-product-modal">
+		<div class="modal-dialog modal-dialog-centered" role="document" >
+			<div class="modal-content product-delete-modal" style="width:500px; height:200px; border-radius: 0;">
+				
+				<!-- Modal body -->
+				<div class="modal-body content-area" style="height:100%;">
+                    <div align="center" style="height:100%; line-height:200px;">
+                        <b>선택하신 상품을 삭제하시겠습니까? (삭제 후 복구 불가)</b>
+                    </div>
+				</div>
+				
+				<!-- Modal footer -->
+				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
+					<div align="center" style="width:100%;">
+						<button type="submit" class="btn" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
+						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">삭제</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>		
     
 
 
