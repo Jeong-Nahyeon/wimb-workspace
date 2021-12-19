@@ -232,5 +232,12 @@
 		     , P_KEYWORD = ?
 		 WHERE P_CODE = ?
 	</entry>
+	
+	<entry key="deleteAdminProduct">
+		UPDATE PRODUCT
+		   SET P_SHOW = 'N'
+		     , P_ADMINSHOW = 'N'
+		 WHERE P_CODE IN (?)
+	</entry>
 
 </properties>

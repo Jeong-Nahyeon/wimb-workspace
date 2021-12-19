@@ -435,7 +435,7 @@ public class ProductDao {
 	}
 	
 	
-	/** 완제품 수정 시 새로운 대표이미지만 있거나 둘다 있을 경우 실행할 메소드
+	/** 관리자용 완제품 수정 시 새로운 대표이미지만 있거나 둘다 있을 경우 실행할 메소드
 	 * @param conn
 	 * @param p  :  관리자가 수정 요청한 완제품 정보
 	 * @return
@@ -487,7 +487,7 @@ public class ProductDao {
 	}
 	
 	
-	/** 완제품 수정 시 새로운 상세이미지만 있을 경우 실행할 메소드
+	/** 관리자용 완제품 수정 시 새로운 상세이미지만 있을 경우 실행할 메소드
 	 * @param conn
 	 * @param p  :  관리자가 수정 요청한 완제품 정보
 	 * @return
@@ -528,7 +528,7 @@ public class ProductDao {
 	}
 	
 	
-	/** 완제품 수정 시 새로운 파일이 없을 경우 실행할 메소드
+	/** 관리자용 완제품 수정 시 새로운 파일이 없을 경우 실행할 메소드
 	 * @param conn
 	 * @param p  :  관리자가 수정 요청한 완제품 정보
 	 * @return
@@ -554,6 +554,36 @@ public class ProductDao {
 			pstmt.setInt(8, p.getpStock());
 			pstmt.setString(9, p.getpKeyword());
 			pstmt.setString(10, p.getpCode());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	/** 관리자용 완제품 삭제(노출여부 변경)해주는 메소드
+	 * @param conn
+	 * @param pCode  :  관리자가 선택한 완제품의 상품번호들을 하나의 문자열로 나열한 값 => P1023', 'P1022', 'P1021
+	 * @return
+	 */
+	public int deleteAdminProduct(Connection conn, String pCode) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteAdminProduct"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, pCode);
 			
 			result = pstmt.executeUpdate();
 			

@@ -176,7 +176,7 @@ public class ProductService {
 	}
 	
 	
-	/** 완제품 수정 시 새로운 대표이미지만 있거나 둘다 있을 경우 실행할 메소드
+	/** 관리자용 완제품 수정 시 새로운 대표이미지만 있거나 둘다 있을 경우 실행할 메소드
 	 * @param p  :  관리자가 수정 요청한 완제품 정보
 	 * @return
 	 */
@@ -199,7 +199,7 @@ public class ProductService {
 	}
 	
 	
-	/** 완제품 수정 시 새로운 상세이미지만 있을 경우 실행할 메소드
+	/** 관리자용 완제품 수정 시 새로운 상세이미지만 있을 경우 실행할 메소드
 	 * @param p  :  관리자가 수정 요청한 완제품 정보
 	 * @return
 	 */
@@ -222,7 +222,7 @@ public class ProductService {
 	}
 	
 	
-	/** 완제품 수정 시 새로운 파일이 없을 경우 실행할 메소드
+	/** 관리자용 완제품 수정 시 새로운 파일이 없을 경우 실행할 메소드
 	 * @param p  :  관리자가 수정 요청한 완제품 정보
 	 * @return
 	 */
@@ -244,5 +244,27 @@ public class ProductService {
 		
 	}
 	
+	
+	/** 관리자용 완제품 삭제(노출여부 변경)해주는 메소드
+	 * @param pCode  :  관리자가 선택한 완제품의 상품번호들을 하나의 문자열로 나열한 값 => P1023', 'P1022', 'P1021
+	 * @return
+	 */
+	public int deleteAdminProduct(String pCode) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().deleteAdminProduct(conn, pCode);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
 	
 }

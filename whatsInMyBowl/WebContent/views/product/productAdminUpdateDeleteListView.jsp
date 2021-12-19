@@ -337,7 +337,7 @@
                                 for(let i=0; i<list.length; i++){
                                     
                                     result += "<tr>"
-                                                + "<td><input type='checkbox' disabled></td>"
+                                                + "<td><input type='checkbox' class='check-delete' name='checkpCode'  value='" + list[i].pCode + "'></td>"
                                                 + "<td>" + list[i].pCode + "</td>"
                                                 + "<td><a class='product-name'>" + list[i].pName + "</a></td>"
                                                 + "<td>" + list[i].pProvider + "</td>"
@@ -377,11 +377,49 @@
                     <button type="button" id="delete-product-btn" class="btn btn-sm" style="background:rgb(255, 225, 90);">상품삭제</button>
                 </div>
             </div>
+            <!-- 상품 삭제용  -->
             <script>
                 $(function(){
-                    // $("#insert-product-btn").click(function(){
-                    // $("#insert-product-modal").modal({backdrop: "static"});
-                    // });
+                    
+                    $("#list-2").on("click", "#delete-product-btn", function(){
+
+                        let checkboxArr = [];
+    
+                        $(".check-delete:checked").each(function(){
+                            checkboxArr.push($(this).val());
+                        });
+                        
+                        const pCodeArr = checkboxArr.join("'', ''");/
+                        console.log(pCodeArr);
+
+                    	if(checkboxArr.length == 0){ // 상품 체크 안 하고 클릭했을 경우 => 경고 알람창
+                    		alert("삭제할 상품이 선택되지 않았습니다");
+                    	} else{ // 상품 체크 후 클릭했을 경우 => 상품 삭제 모달창
+
+                    		$("#delete-product-modal").modal("show");
+                            
+                            $("#delete-btn").click(function(){
+
+                                $.ajax({
+                                   url:"delete.apr",
+                                   data:{pCodeArr:pCodeArr},
+                                   success:function(result){
+                                    
+                                    console.log(result);
+
+
+                                   }, error:function(){
+                                       console.log("ajax 통신 실패");
+                                   } 
+                                });
+
+                            });
+                    	}   
+
+                    });
+
+
+                    
                 });
             </script>
 
@@ -421,7 +459,7 @@
                             --%>
                             <td>
                                 <!-- 상품 삭제용 체크박스 -->
-                                <input type="checkbox" name="" id="">
+                                <input type="checkbox" class="check-delete" name="checkpCode"  value="<%= totalList.get(i).getpCode() %>">
                             </td>
                             <td><%= totalList.get(i).getpCode() %></td>
                             <td>
@@ -950,7 +988,7 @@
 				<!-- Modal body -->
 				<div class="modal-body content-area" style="height:100%;">
                     <div align="center" style="height:100%; line-height:200px;">
-                        <b>선택하신 상품을 삭제하시겠습니까? (삭제 후 복구 불가)</b>
+                        <b>선택하신 상품을 삭제하시겠습니까?</b>
                     </div>
 				</div>
 				
@@ -958,7 +996,7 @@
 				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
 					<div align="center" style="width:100%;">
 						<button type="submit" class="btn" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
-						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">삭제</button>
+						<button type="submit" id="delete-btn" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">삭제</button>
 					</div>
 				</div>
 
