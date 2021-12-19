@@ -103,7 +103,18 @@
         margin-top: 20px;
         border: 0;
     }
-
+    .selectList{margin-bottom: 5px;}
+    .selectList, .two_btn, .back{
+        width: 1400px;
+        text-align: right;
+    }
+    .back button{
+        border: none;
+        background-color: #bdbdbd;
+        border-radius: 5px;
+        padding: 3px 10px;
+    }
+    .back button:focus{outline: none;}
 
     /*모달창 만드는 css*/
     .insert_banner_area{
@@ -175,139 +186,33 @@
     <%@ include file="../common/adminBar.jsp" %>
     <div class="outer">
         <div id="mainTitle">
-            <h2 id="mainTitle1">홈페이지관리</h2>
-            <h2>> 배너</h2>
+            <h2 id="mainTitle1">홈페이지관리 > 배너</h2>
+            <h2>> 배너관리</h2>
         </div>
 
-        <div class="banner-area">
-
-            <div class="banner">
-
-                <div class="banner_box" align="center">
-                    <table>
-                        <tr>
-                            <td colspan="3">
-                                <img src="" alt="" class="titleImg">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tableheader">상태</td>
-                            <td colspan="2" class="tableheader">게시일</td>
-                        </tr>
-                        <tr>
-                            <td>게시중</td>
-                            <td colspan="2">2021-11-02</td>
-                        </tr>
-                        <tr>
-                            <td class="tableheader">배너명</td>
-                            <td class="tableheader">배너번호</td>
-                            <td class="tableheader">위치</td>
-                        </tr>
-                        <tr>
-                            <td>이벤트배너임</td>
-                            <td>10</td>
-                            <td>메인1</td>
-                        </tr>
-                    
-                    </table>
-                    <div class="checkboxandbtn">
-                        <input type="checkbox">
-                        <button type="button" class="updatebtn">수정하기</button>
-                    </div>
-
-                </div>
-
-                <div class="banner_box" align="center">
-                    <table>
-                        <tr>
-                            <td colspan="3">
-                                <img src="" alt="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tableheader">상태</td>
-                            <td colspan="2" class="tableheader">게시일</td>
-                        </tr>
-                        <tr>
-                            <td>게시중</td>
-                            <td colspan="2">2021-11-02</td>
-                        </tr>
-                        <tr>
-                            <td class="tableheader">배너명</td>
-                            <td class="tableheader">배너번호</td>
-                            <td class="tableheader">위치</td>
-                        </tr>
-                        <tr>
-                            <td>이벤트배너임</td>
-                            <td>9</td>
-                            <td>메인2</td>
-                        </tr>
-                    
-                    </table>
-                    <div class="checkboxandbtn">
-                        <input type="checkbox">
-                        <button type="button" class="updatebtn">수정하기</button>
-                    </div>
-
-                </div>
-
-                <div class="banner_box" align="center">
-                    <table>
-                        <tr>
-                            <td colspan="3">
-                                <img src="" alt="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tableheader">상태</td>
-                            <td colspan="2" class="tableheader">게시일</td>
-                        </tr>
-                        <tr>
-                            <td>게시중</td>
-                            <td colspan="2">2021-11-02</td>
-                        </tr>
-                        <tr>
-                            <td class="tableheader">배너명</td>
-                            <td class="tableheader">배너번호</td>
-                            <td class="tableheader">위치</td>
-                        </tr>
-                        <tr>
-                            <td>이벤트배너임</td>
-                            <td>8</td>
-                            <td>메인3</td>
-                        </tr>
-                    
-                    </table>
-                    <div class="checkboxandbtn">
-                        <input type="checkbox">
-                        <button type="button" class="updatebtn">수정하기</button>
-                    </div>
-
-                </div>
-
-            </div>
-            
-        </div>
         
     </div>
-    
+        <div class="back">
+        <button type="button">뒤로가기</button>
+    </div>
     <!-- 하단의 배너목록 테이블 -->
     <div class="bannerList">
 
+        <div class="selectList">
+            <select name="sorting_banner" id="sorting_banner" onchange="window.open(value,'_self');">
+                <option value="<%= contextPath %>/list.banner?cpage=1">전체보기</option>
+                <option value="<%= contextPath %>/Postinglist.banner?cpage=1" selected>게시중</option>
+                <option value="<%= contextPath %>/EndOfPostinglist.banner?cpage=1">게시종료</option>
+            </select>
+        </div>
+        
+        <div class="two_btn">
+            <button type=submit id="deletebanner">선택삭제</button>
+            <button type="button" id="insertbannerbtn">등록하기</button>
+        </div>
         
         <table style="margin-left: 600px; margin-right: auto; width: 800px;" >
 
-            <div>
-                <select name="sorting_banner" id="sorting_banner" style="position: absolute; top:77%; right: 503px;" onchange="window.open(value,'_self');">
-                    <option value="<%= contextPath %>/list.banner?cpage=1">전체보기</option>
-                    <option value="<%= contextPath %>/Postinglist.banner?cpage=1" selected>게시중</option>
-                    <option value="<%= contextPath %>/EndOfPostinglist.banner?cpage=1">게시종료</option>
-                </select>
-            </div>
-            <div style="margin-left: 65%;" class="two_btn">
-                <button type="button" id="deletebanner">선택삭제</button>
-                <button type="button" id="insertbannerbtn">등록하기</button>
-            </div>
             <tr>
                 <td class="bannerList_header" style="position: relative;"></td>
                 <td class="bannerList_header">배너번호</td>
@@ -331,19 +236,19 @@
         <div class="paging-area">
             
             <% if(currentPage != 1) { %>
-            	<button onclick="location.href='<%= contextPath %>/list.banner?cpage=<%=currentPage-1%>';">&lt;</button>
+            	<button onclick="location.href='<%= contextPath %>/Postinglist.banner?cpage=<%=currentPage-1%>';">&lt;</button>
             <% } %>
             
             <% for(int p=startPage; p<=endPage; p++) { %>
             	<% if(p == currentPage) { %>
             		<button disabled><%= p %></button>
             	<% } else { %>
-            		<button onclick="location.href='<%= contextPath %>/list.banner?cpage=<%= p %>';"><%= p %></button>
+            		<button onclick="location.href='<%= contextPath %>/Postinglist.banner?cpage=<%= p %>';"><%= p %></button>
             	<% } %>
             <% } %>
             
             <% if(currentPage != maxPage) { %>
-            <button onclick="location.href='<%= contextPath %>/list.banner?cpage=<%=currentPage+1%>';">&gt;</button>
+            <button onclick="location.href='<%= contextPath %>/Postinglist.banner?cpage=<%=currentPage+1%>';">&gt;</button>
         	<% } %>
         </div>
 

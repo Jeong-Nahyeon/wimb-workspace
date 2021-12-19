@@ -72,7 +72,7 @@
     }
     .checkboxandbtn{margin-top: 20px;}
     .bannerList{
-        margin-top: 140px;
+        margin-top: 100px;
         width: 100%;
     }
     .bannerList table{
@@ -107,8 +107,18 @@
         margin-top: 20px;
         border: 0;
     }
-
-
+    .selectList{margin-bottom: 5px;}
+    .selectList, .two_btn, .back{
+        width: 1400px;
+        text-align: right;
+    }
+    .back button{
+        border: none;
+        background-color: #bdbdbd;
+        border-radius: 5px;
+        padding: 3px 10px;
+    }
+    .back button:focus{outline: none;}
     /*모달창 만드는 css*/
     .insert_banner_area{
         display: none;
@@ -147,6 +157,7 @@
         background:url(https://img.icons8.com/metro/26/000000/close-window.png);
         text-indent: -9999px;
     }
+    .titleImg img{padding: 0px;}
 
     /*모달창에 속한 테이블 css*/
     .insert_banner_area table{
@@ -252,141 +263,33 @@
     <%@ include file="../common/adminBar.jsp" %>
     <div class="outer">
         <div id="mainTitle">
-            <h2 id="mainTitle1">홈페이지관리</h2>
-            <h2>> 배너</h2>
+            <h2 id="mainTitle1">홈페이지관리 > 배너</h2>
+            <h2>> 배너관리</h2>
         </div>
 
-        <div class="banner-area">
-
-            <div class="banner">
-				
-				<!-- 배너 메인 1 영역 -->
-                <div class="banner_box" align="center">
-                    <table>
-                        <tr>
-                            <td colspan="3">
-                                <img src="" alt="" class="titleImg">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tableheader">상태</td>
-                            <td colspan="2" class="tableheader">게시일</td>
-                        </tr>
-                        <tr>
-                            <td>게시중</td>
-                            <td colspan="2">2021-11-02</td>
-                        </tr>
-                        <tr>
-                            <td class="tableheader">배너명</td>
-                            <td class="tableheader">배너번호</td>
-                            <td class="tableheader">위치</td>
-                        </tr>
-                        <tr>
-                            <td>이벤트배너임</td>
-                            <td>10</td>
-                            <td>메인1</td>
-                        </tr>     
-                    </table>
-                    <div class="checkboxandbtn">
-                        <span class="mainName">메인1</span>
-                        <button type="button" id="updatebtn1">변경하기</button>
-                    </div>
-
-                </div>
-				
-				
-				<!-- 배너 메인 2 영역 -->
-                <div class="banner_box" align="center">
-                    <table>
-                        <tr>
-                            <td colspan="3">
-                                <img src="" alt="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tableheader">상태</td>
-                            <td colspan="2" class="tableheader">게시일</td>
-                        </tr>
-                        <tr>
-                            <td>게시중</td>
-                            <td colspan="2">2021-11-02</td>
-                        </tr>
-                        <tr>
-                            <td class="tableheader">배너명</td>
-                            <td class="tableheader">배너번호</td>
-                            <td class="tableheader">위치</td>
-                        </tr>
-                        <tr>
-                            <td>이벤트배너임</td>
-                            <td>9</td>
-                            <td>메인2</td>
-                        </tr>
-                    
-                    </table>
-                    <div class="checkboxandbtn">
-                        <span class="mainName">메인2</span>
-                        <button type="button" id="updatebtn2">변경하기</button>
-                    </div>
-
-                </div>
-				
-				<!-- 배너 메인 3 영역 -->
-                <div class="banner_box" align="center">
-                    <table>
-                        <tr>
-                            <td colspan="3">
-                                <img src="" alt="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tableheader">상태</td>
-                            <td colspan="2" class="tableheader">게시일</td>
-                        </tr>
-                        <tr>
-                            <td>게시중</td>
-                            <td colspan="2">2021-11-02</td>
-                        </tr>
-                        <tr>
-                            <td class="tableheader">배너명</td>
-                            <td class="tableheader">배너번호</td>
-                            <td class="tableheader">위치</td>
-                        </tr>
-                        <tr>
-                            <td>이벤트배너임</td>
-                            <td>8</td>
-                            <td>메인3</td>
-                        </tr>
-                    
-                    </table>
-                    <div class="checkboxandbtn">
-                        <span class="mainName">메인3</span>
-                        <button type="button" id="updatebtn3">변경하기</button>
-                    </div>
-                </div>
-
-            </div>
-            
-        </div>
+   
         
     </div>
-    
+    <div class="back">
+        <button type="button">뒤로가기</button>
+    </div>
     <!-- 하단의 배너목록 테이블 -->
     <div class="bannerList">
-
+        <div class="selectList">
+            <select name="sorting_banner" id="sorting_banner" onchange="window.open(value,'_self');">
+                <option value="<%= contextPath %>/list.banner?cpage=1" selected>전체보기</option>
+                <option value="<%= contextPath %>/Postinglist.banner?cpage=1">게시중</option>
+                <option value="<%= contextPath %>/EndOfPostinglist.banner?cpage=1">게시종료</option>
+            </select>
+        </div>
+        
+        <div class="two_btn">
+            <button type=submit id="deletebanner">선택삭제</button>
+            <button type="button" id="insertbannerbtn">등록하기</button>
+        </div>
         
         <table style="margin-left: 600px; margin-right: auto; width: 800px;" >
 
-            <div>
-                <select name="sorting_banner" id="sorting_banner" style="position: absolute; top:81%; right: 503px;" onchange="window.open(value,'_self');">
-                    <option value="<%= contextPath %>/list.banner?cpage=1" selected>전체보기</option>
-                    <option value="<%= contextPath %>/Postinglist.banner?cpage=1">게시중</option>
-                    <option value="<%= contextPath %>/EndOfPostinglist.banner?cpage=1">게시종료</option>
-                </select>
-            </div>
-            <div style="margin-left: 65%;" class="two_btn">
-                <button type=submit id="deletebanner">선택삭제</button>
-                <button type="button" id="insertbannerbtn">등록하기</button>
-            </div>
             <tr>
                 <td class="bannerList_header" style="position: relative;"></td>
                 <td class="bannerList_header">배너번호</td>
@@ -425,6 +328,7 @@
             <button onclick="location.href='<%= contextPath %>/list.banner?cpage=<%=currentPage+1%>';">&gt;</button>
         	<% } %>
         </div>
+    
 
         
     </div>
@@ -448,9 +352,9 @@
                         <th>위치</th>
                         <td>
                             <select name="bannerPosition" id="bannerPosition">
-                                <option value="1">메인1</option>
-                                <option value="2">메인2</option>
-                                <option value="3">메인3</option>
+                                <option value="메인1">메인1</option>
+                                <option value="메인2">메인2</option>
+                                <option value="메인3">메인3</option>
                             </select>
                         </td>
                     </tr>
@@ -598,7 +502,7 @@
 								+ "<tr>"
 									+	"<td style='width:5px;'><input type='radio' name='selectMainImg' value='"+ ajaxlist[i].bCode +"' style='margin: 0px 10px;'></td>"
 									+	"<td style='text-align:center;'>" + ajaxlist[i].bName + "</td>"
-								+ "</tr>"
+								+ "</tr>" +
 						  	"</table>";
 						  	
 				$(".innerAjax").html(result);
@@ -618,10 +522,26 @@
 			$.ajax({
 				url:"selectFirstMain.banner",
 				data:{selectMainNum:selectMainNum},
-				success:function(){
+				success:function(FirstMain){
+          	
+					let FirstMainImg = FirstMain.mainImg;
+					let FirstStatus = FirstMain.status;
+					let FirstStartdate = FirstMain.startDate;
+					let FirstName = FirstMain.bName;
+					let FirstCode = FirstMain.bCode;
+					let FirstPosition = FirstMain.bPostion;
+					
+					
+					$(".titleImg img").attr("src", FirstMainImg);  // 메인이미지
+					$(".FirstStatus").html(FirstStatus);           // 게시여부
+					$(".FirstStartdate").html(FirstStartdate);     // 게시일
+					$(".FirstName").html(FirstName);               // 배너명
+					$(".FirstCode").html(FirstCode);               // 배너번호
+					$(".FirstPosition").html(FirstPosition);       // 위치
+					
 					
 				}, error:function(){
-					
+					console.log("통신 실패");
 				}
 				
 			})

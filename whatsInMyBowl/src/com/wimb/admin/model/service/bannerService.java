@@ -87,11 +87,32 @@ public class bannerService {
 	}	
 	
 	// 메인1에 등록하고자 하는 메인의 라디오버튼 선택 후 '등록'버튼 클릭 시 선택한 게시글 번호를 넘겨받아 화면에 띄우는 Service
-	public Banner selectFirstMain(int selectMainNum) {
+	public Banner selectUpdateFirstMain(int selectMainNum) {
 		Connection conn = getConnection();
-		Banner b = new bannerDao().selectFirstMain(conn, selectMainNum);
+		Banner b = new Banner();
+		
+		int result1 = new bannerDao().updateFirstMain(conn, selectMainNum);
+		
+		if(result1 > 0) {
+			 b = new bannerDao().selectFirstMain(conn, selectMainNum);
+			
+			if(result1 > 0) {
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+	
+		}
 		close(conn);
 		return b;
+	}
+	
+	// 메인1,2,3에 띄워줄 메인에 등록될 사진을 띄워주는 서비스
+	public ArrayList<Banner> selectMainBanner() {
+		Connection conn = getConnection();
+		ArrayList<Banner> list = new bannerDao().selectMainBanner(conn);
+		close(conn);
+		return list;
 	}
 	
 }

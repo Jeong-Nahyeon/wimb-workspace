@@ -270,18 +270,90 @@ public class bannerDao {
 	}
 	
 	// 메인1에 등록하고자 하는 메인의 라디오버튼 선택 후 '등록'버튼 클릭 시 선택한 게시글 번호를 넘겨받아 화면에 띄우는 DAO
-	public Banner selectFirstMain(Connection connm, int selectMainNum) {
-		Banner b = new Banner();
+	// step 1. 게시글 번호가 넘겨오면 게시여부 상태를 'N'에서 'Y'로 바꾸는 DAO
+	public int updateFirstMain(Connection conn, int selectMainNum) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateFirstMain");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, selectMainNum);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	// step 2. 'Y'바뀐 게시글의 정보를 조회해오는 dao
+	public Banner selectFirstMain(Connection conn, int selectMainNum) {
+		
+		Banner b = null;
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = prop.getProperty("");
+		String sql = prop.getProperty("selectFirstMain");
 		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, selectMainNum);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				b = new Banner();
+				b.setbCode(rset.getInt("b_code"));
+				b.setbName(rset.getString("b_name"));
+				b.setStartDate(rset.getDate("b_startdate"));
+				b.setStatus(rset.getString("b_status"));
+				b.setbPostion(rset.getString("b_position"));
+				b.setMainImg(rset.getString("filepath"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return b;
 		
 	}
 	
-	
-	
-	
+	public ArrayList<Banner> selectMainBanner(Connection conn){
+		
+		ArrayList<Banner> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("selectMainBanner");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Banner(rset.getInt("b_code"),
+						            rset.getString("b_name"),
+						            rset.getDate("b_startdate"),
+						            rset.getString("b_status"),
+						            rset.getString("b_position"),
+						            rset.getString("filepath")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 	
 }

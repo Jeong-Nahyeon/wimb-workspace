@@ -131,13 +131,42 @@
 		    BY B_CODE DESC
 	</entry>
 	
+	<entry key = "updateFirstMain">
+		 UPDATE 
+		        BANNER
+		    SET B_STATUS = 'Y'
+		  WHERE B_CODE = ?
+		    AND B_ADMINSHOW = 'Y'
+	</entry>
 
+	<entry key = "selectFirstMain">
+		SELECT
+		       B_CODE
+		     , B_NAME
+		     , B_STARTDATE
+		     , B_STATUS
+		     , B_POSITION
+		     , B_PATH || B_CHANGENAME "FILEPATH"
+		  FROM BANNER
+		 WHERE B_CODE = ?
+		   AND B_STATUS = 'Y'
+		   AND B_ADMINSHOW = 'Y'
+	</entry>
 
-
-
-
-
-
+	<entry key="selectMainBanner">
+    	SELECT
+		       B_CODE
+		     , B_NAME
+		     , B_STARTDATE
+		     , B_STATUS
+		     , B_POSITION
+		     , B_PATH || B_CHANGENAME "FILEPATH"
+		  FROM BANNER
+         WHERE B_STATUS = 'Y'
+		   AND B_ADMINSHOW = 'Y'
+         ORDER
+            BY B_POSITION
+	</entry>
 
 
 </properties>

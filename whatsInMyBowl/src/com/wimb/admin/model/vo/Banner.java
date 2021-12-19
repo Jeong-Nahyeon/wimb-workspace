@@ -55,6 +55,16 @@ public class Banner {
 		this.bName = bName;
 		this.bOriginName = bOriginName;
 	}
+	
+	public Banner(int bCode, String bName, Date startDate, String status, String bPostion, String mainImg) {
+		super();
+		this.bCode = bCode;
+		this.bName = bName;
+		this.startDate = startDate;
+		this.status = status;
+		this.bPostion = bPostion;
+		this.mainImg = mainImg;
+	}
 
 	public int getbCode() {
 		return bCode;
