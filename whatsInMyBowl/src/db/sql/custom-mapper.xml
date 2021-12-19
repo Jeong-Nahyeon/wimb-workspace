@@ -6,6 +6,7 @@
 		SELECT
 		       COUNT(*) count
 		  FROM ITEM
+		 WHERE CI_ADMINSHOW = 'Y'
 	</entry>
 
 	<entry key="selectItemList">
@@ -108,6 +109,13 @@
 		   SET CI_ADMINSHOW = 'N'
 		     , CI_SHOW = 'N'
 		 WHERE CI_CODE = ?
+	</entry>
+	
+	<entry key="searchItem">
+		SELECT *
+		  FROM ITEM
+		 WHERE CI_NAME LIKE '%' || ? || '%'
+		   AND CI_ADMINSHOW = 'Y' 
 	</entry>
 
 </properties>

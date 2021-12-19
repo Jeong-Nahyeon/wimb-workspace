@@ -514,19 +514,63 @@
             </div>
 
             <!-- 검색창 -->
-            <div class="search">
-                <form action="" id="product-list">
+            <div class="search" id="product-list">
+                <!--<form action="<%= contextPath %>/aitemSearch.cu" id="product-list">-->
                     <tr>
                         <td>
                             <span>상품명</span>
                         </td>
                         <td>
-                            <input type="text">
+                            <input type="text" name="searchWord" id="searchWord">
                         </td>
-                        <td><button type="submit">조회</button></td>
+                        <td><button id="search_btn">조회</button></td>
                     </tr>
-                </form>
+                <!--</form>-->
             </div>
+
+            <!-- 재료 검색 ajax -->
+            <script>
+                $(function(){
+                    $("#search_btn").click(function(){
+                        if($("#searchWord").val() == ""){
+                            location.reload();
+                        }else{
+                            $.ajax({
+                                url:"aitemSearch.cu",
+                                data:{
+                                    searchWord:$("#searchWord").val()
+                                },
+                                success:function(list){
+                                    var content = "";
+                                    $("#custom_table tbody").html("");
+                                    for(var i=0; i<list.length; i++){
+                                        content += "<tr>" +
+                                                        "<td><input type='checkbox'></td>" +
+                                                        "<td class='ajaxCiCode'>" + list[i].ciCode + "</td>" +
+                                                        "<td>" + list[i].ciCategory + "</td>" +
+                                                        "<td><a class='item_Name'>" + list[i].ciName + "</a></td>" +
+                                                        "<td>" + list[i].ciProvider + "</td>" + 
+                                                        "<td>" + list[i].ciProvidePrice + "</td>" +
+                                                        "<td>" + list[i].ciPrice + "</td>" + 
+                                                        "<td>" + list[i].ciStock + "</td>" +
+                                                        "<td><a class='item_show'>" + list[i].ciShow + "</a></td>" + 
+                                                    "</tr>"
+                                    }
+
+                                    $("#custom_table tbody").html(content);
+                                    $("#totalCount").text(list.length);
+                                    $(".paging_area").text("");
+                                },
+                                error:function(){
+                                    console.log("ajax 통신 실패");
+                                }
+                            });
+                        }
+                        
+                    });
+                });
+            </script>
+
 
             <!-- 노출 여부 Modal -->
             <div class="modal" id="showModal">

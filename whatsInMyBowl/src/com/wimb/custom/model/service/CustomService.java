@@ -131,6 +131,14 @@ public class CustomService {
 		return result;
 	}
 
+	// 재료 검색
+	public ArrayList<Item> searchItem(String searchWord) {
+		Connection conn = getConnection();
+		ArrayList<Item> list = new CustomDao().searchItem(conn, searchWord);
+		close(conn);
+		return list;
+	}
+
 	
 	
 

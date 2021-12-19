@@ -326,6 +326,36 @@ public class CustomDao {
 		return result;
 	}
 
+	// 재료 검색
+	public ArrayList<Item> searchItem(Connection conn, String searchWord) {
+		ArrayList<Item> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("searchItem");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, searchWord);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()){
+				list.add(new Item(rset.getString("ci_code"),
+						   rset.getString("ci_name"),
+						   rset.getString("ci_category"),
+						   rset.getString("ci_provider"),
+						   rset.getInt("ci_provideprice"),
+						   rset.getInt("ci_price"),
+						   rset.getString("ci_show"),
+						   rset.getInt("ci_stock")
+					 	   ));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
 	
 	
 	
