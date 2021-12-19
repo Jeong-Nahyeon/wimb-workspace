@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.custom.model.vo.Custom;
+import com.wimb.custom.model.vo.CustomItem;
 import com.wimb.custom.model.vo.Item;
 public class CustomDao {
 
@@ -358,9 +359,11 @@ public class CustomDao {
 	}
 
 	// 커스텀 테이블에 샐러드 등록
-	public int insertCustom(Connection conn, Custom c) {
+	public String insertCustom(Connection conn, Custom c) {
 		int result = 0;
+		String ciCode = null;
 		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		String sql = prop.getProperty("insertCustom");
 		
 		try {
@@ -368,6 +371,39 @@ public class CustomDao {
 			pstmt.setInt(1, c.getmCode());
 			pstmt.setString(2, c.getCuName());
 			pstmt.setInt(3, c.getCuPrice());
+			
+			result = pstmt.executeUpdate();
+			
+			// 삽입된 샐러드 코드 조회
+			if(result > 0) {
+				sql = prop.getProperty("selectCustomCode");
+				pstmt = conn.prepareStatement(sql);
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					ciCode = rset.getString("cu_code");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return ciCode;
+	}
+
+	public int insertCustomItem(Connection conn, CustomItem customItem) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertCustomItem");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, customItem.getCuCode());
+			pstmt.setString(2, customItem.getCiCode());
+			pstmt.setInt(3, customItem.getCiAmount());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {

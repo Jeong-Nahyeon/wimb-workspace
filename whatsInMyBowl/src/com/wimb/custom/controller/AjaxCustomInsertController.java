@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.wimb.custom.model.service.CustomService;
 import com.wimb.custom.model.vo.Custom;
+import com.wimb.custom.model.vo.CustomItem;
 
 /**
  * Servlet implementation class AjaxCustomInsertController
@@ -32,18 +34,36 @@ public class AjaxCustomInsertController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		String[] itemCode = request.getParameterValues("arrItemCode");
-		String[] itemCount = request.getParameterValues("arrItemCount");
-		int itemTotalPrice = Integer.parseInt(request.getParameter("utemPrice"));
+		String[] arrItemCode = request.getParameterValues("arrItemCode");
+		String[] arrItemCount = request.getParameterValues("arrItemCount");
+		int itemTotalPrice = Integer.parseInt(request.getParameter("itemPrice"));
 		String saladName = request.getParameter("saladName");
 		int userCode = Integer.parseInt(request.getParameter("userNum"));
+		System.out.println(arrItemCode[0]);
 		
 		Custom c = new Custom();
 		c.setmCode(userCode);
 		c.setCuName(saladName);
 		c.setCuPrice(itemTotalPrice);
 		
-		int result = new CustomService().insertCustom(c);
+		String ciCode = new CustomService().insertCustom(c);
+		int result = 0;
+		if(ciCode != null) {
+			for(int i=0; i<arrItemCode.length;i++) {
+				String itemCode = arrItemCode[i];
+				int itemCount = Integer.parseInt(arrItemCount[i]);
+				CustomItem customItem = new CustomItem(ciCode, itemCode, itemCount);
+				
+				result = new CustomService().insertCustomItem(customItem);
+			}
+		}
+		if(result > 0) {
+			//response.getWriter().print(ciCode);
+			new Gson().toJson(ciCode, response.getWriter());
+		}else {
+			request.setAttribute("errorMsg", "커스텀 샐러드 등록 실패");
+			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
+		}
 	
 	}
 

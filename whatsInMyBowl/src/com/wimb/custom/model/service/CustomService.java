@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.custom.model.dao.CustomDao;
 import com.wimb.custom.model.vo.Custom;
+import com.wimb.custom.model.vo.CustomItem;
 import com.wimb.custom.model.vo.Item;
 public class CustomService {
 	
@@ -140,16 +141,28 @@ public class CustomService {
 		return list;
 	}
 
-	public int insertCustom(Custom c) {
+	public String insertCustom(Custom c) {
 		Connection conn = getConnection();
-		int result = new CustomDao().insertCustom(conn, c);
+		String ciCode = new CustomDao().insertCustom(conn, c);
+		
+		if(ciCode != null) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		return ciCode;
+	}
+
+	public int insertCustomItem(CustomItem customItem) {
+		Connection conn = getConnection();
+		int result = new CustomDao().insertCustomItem(conn, customItem);
 		
 		if(result > 0) {
 			commit(conn);
 		}else {
 			rollback(conn);
 		}
-		
 		return result;
 	}
 

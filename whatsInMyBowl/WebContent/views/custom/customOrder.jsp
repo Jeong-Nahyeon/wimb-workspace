@@ -290,7 +290,7 @@
                         <!--<form action="" method="">-->
                             <div class="customlist_name">
                                 <span>샐러드 이름</span>
-                                <input type="text" name="saladName" id="saladName">
+                                <input type="text" name="saladName" id="saladName" required>
                                 <input type="hidden" name="userNum" id="userNum" value="<%= loginUser.getmCode() %>">
                             </div>
                             
@@ -713,12 +713,13 @@
                         console.log(arrItemCode);
                         console.log(arrItemCount);
                         console.log(itemPrice);
-                        console.log(saladNeme);
+                        console.log(saladName);
                         console.log(userNum);
                         
                         $.ajax({
                             url:"customInsert.cu",
-                            type:"post",
+                            dataType:"json",
+                            traditional:true,
                             data:{
                                 arrItemCode:arrItemCode,
                                 arrItemCount:arrItemCount,
@@ -726,8 +727,9 @@
                                 saladName:saladName,
                                 userNum:userNum
                             },
-                            success:function(){
-
+                            success:function(result){
+                                console.log("통신성공")
+                                console.log(result);
                             },
                             error:function(){
                                 console.log("ajax 통신 실패");

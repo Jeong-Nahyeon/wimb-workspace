@@ -137,5 +137,26 @@
 		  , (SELECT CU_MAINIMG FROM CUSTOM WHERE CU_CODE = 'CU1001')
 		  )
 	</entry>
+	
+	<entry key="selectCustomCode">
+		SELECT 'CU' || SEQ_CUSTOM.CURRVAL "CU_CODE"
+  		  FROM DUAL
+	</entry>
+	
+	<entry key="insertCustomItem">
+		INSERT 
+		  INTO CUSTOM_ITEM
+		  (
+		    CU_CODE
+		  , CI_CODE
+		  , CI_AMOUNT
+		  )
+		  VALUES
+		  (
+		    ?
+		  , ?
+		  , ?
+		  )
+	</entry>
 
 </properties>
