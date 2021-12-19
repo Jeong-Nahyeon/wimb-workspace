@@ -118,6 +118,19 @@ public class CustomService {
 		return checkPwd;
 	}
 
+	// 재료 삭제
+	public int deleteItem(String ciCode) {
+		Connection conn = getConnection();
+		int result = new CustomDao().deleteItem(conn, ciCode);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
+
 	
 	
 

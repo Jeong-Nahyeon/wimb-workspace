@@ -22,7 +22,7 @@
 		           FROM (
 		                  SELECT *
 		                    FROM ITEM
-		                   
+		                   WHERE CI_ADMINSHOW = 'Y'
 		                )A
 		        )
 		 WHERE RNUM BETWEEN ? AND ?
@@ -94,12 +94,20 @@
 		SELECT *
 		  FROM ITEM
 		 WHERE CI_CATEGORY = ?
+		   AND CI_ADMINSHOW = 'Y'
 	</entry>
 	
 	<entry key="pwdCheck">
 		SELECT M_PWD
 		  FROM MEMBER
 		 WHERE M_CODE = 1
+	</entry>
+	
+	<entry key="deleteItem">
+		UPDATE ITEM
+		   SET CI_ADMINSHOW = 'N'
+		     , CI_SHOW = 'N'
+		 WHERE CI_CODE = ?
 	</entry>
 
 </properties>

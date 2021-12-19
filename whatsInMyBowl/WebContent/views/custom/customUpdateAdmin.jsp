@@ -679,48 +679,70 @@
                     $("input[name='check']:checked").each(function(){
                         checkArr.push($(this).parent().siblings(".ajaxCiCode").text())
                     });
-                    console.log(checkArr);
-                    console.log(count);
 
-                    $.ajax({
-                        url:"aitempwdcheck.cu",
-                        data:{
-                            "adminPwd":$("#adminPassword").val()
-                        },
-                        async:false,
-                        success:function(result){
-                            if(result == 'Y'){
-                                console.log("일치");
-                            }else{
-                                console.log("불일치");
-                            }
-                        },
-                        error:function(){
-                            console.log("ajax 통신 실패");
-                        }
-                    })
+                    
 
-                    const promise1 = new Promise(function(resolve,reject){
+                    promise1()
+                    .then(promise2)
+                    .then(successCheck);
+                    
+                }
+
+                function promise1(){
+                    return new Promise(function(resolve, reject){
                         $.ajax({
-                            url:"aitemdelete.cu",
-                            dataType:"json",
+                            url:"aitempwdcheck.cu",
                             data:{
-                                "count":count,
-                                "checkArr":checkArr
+                                adminPwd:$("#adminPassword").val()
                             },
-                            async:false,
-                            success:function(){
-                                console.log("머야?")
-                                console.log(checkArr);
+                            success:function(result){
+                                if(result == 'Y'){
+                                    console.log("일치");
+                                    resolve(result);
+                                }else{
+                                    console.log("불일치");
+                                    reject(result);
+                                }
                             },
                             error:function(){
                                 console.log("ajax 통신 실패");
                             }
                         })
-                    });
+                    })
+                }
 
-                    promise1().then()
-                    
+                function promise2(){
+                    var count = $("input[name='check']:checked").length;
+                    var checkArr = new Array();
+                    $("input[name='check']:checked").each(function(){
+                        checkArr.push($(this).parent().siblings(".ajaxCiCode").text())
+                    }); 
+
+                    console.log(checkArr);
+                    console.log(count);
+                    return new Promise(function(resolve, reject){
+                        $.ajax({
+                            url:"aitemdelete.cu",
+                            dataType:"json",
+                            traditional:true,
+                            data:{
+                                count:count,
+                                checkArr:checkArr
+                            },
+                            success:function(result){
+                                console.log("프로미스2 성공")
+                                    resolve(result);
+                            },
+                            error:function(){
+                                console.log("ajax 통신 실패");
+                            }
+                        })
+                    })
+                }
+
+                function successCheck(){
+                    alert("재료를 삭제했습니다.")
+                    location.reload();
                 }
 
             </script>

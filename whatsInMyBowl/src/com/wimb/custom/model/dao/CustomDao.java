@@ -306,6 +306,26 @@ public class CustomDao {
 		return checkPwd;
 	}
 
+	// 재료삭제
+	public int deleteItem(Connection conn, String ciCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteItem");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ciCode);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
 	
 	
 	

@@ -1,11 +1,15 @@
 package com.wimb.custom.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+import com.wimb.custom.model.service.CustomService;
 
 /**
  * Servlet implementation class AjaxAdminItemDeleteController
@@ -32,7 +36,26 @@ public class AjaxAdminItemDeleteController extends HttpServlet {
 		String[] arr = request.getParameterValues("checkArr");
 		
 		System.out.println(count);
-		System.out.println(arr);
+		System.out.println(arr[0]);
+		
+		int result = 0;
+		if(arr != null && count > 0) {
+			for(int i=0; i<count; i++) {
+				String ciCode = arr[i];
+				result = new CustomService().deleteItem(ciCode);
+			}
+		}
+		
+		if(result > 0) {
+			//response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().print(result);
+		}else {
+			request.setAttribute("errorMsg", "재료 삭제 실패");
+			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
+		}
+		
+		
+		
 		
 	}
 
