@@ -20,7 +20,7 @@
             height: 200px;
 			   
 			margin: auto;
-			margin-top: 20%;
+			margin-top: 10%;
 			
             background: rgb(245, 243, 243);
         }
