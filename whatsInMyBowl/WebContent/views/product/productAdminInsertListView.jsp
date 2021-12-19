@@ -4,9 +4,8 @@
 <%@ page import="com.wimb.common.model.vo.PageInfo, java.util.ArrayList, com.wimb.product.model.vo.Product" %>
     
 <%	
-
-// 요청처리 완료 모달창 메시지
-	String productMsg = (String)(session.getAttribute("productMsg"));
+    // 완제품 페이지 요청처리 알람창용
+    String productMsg = (String)(session.getAttribute("productMsg"));
 
 	// 페이징바 처리
 	PageInfo pi = (PageInfo)(request.getAttribute("pi"));
@@ -314,7 +313,6 @@
                     <option>해산물</option>
                 </select>
             </div>
-            
             <script>
                 
                 $("select[name=productCategory]").change(function(){

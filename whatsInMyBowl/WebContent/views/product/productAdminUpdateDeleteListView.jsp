@@ -4,8 +4,7 @@
 <%@ page import="com.wimb.common.model.vo.PageInfo, java.util.ArrayList, com.wimb.product.model.vo.Product" %>
 
 <%	
-
-// 요청처리 완료 모달창 메시지
+    // 완제품 페이지 요청처리 알람창용
     String productMsg = (String)(session.getAttribute("productMsg"));
 
     // 페이징바 처리
@@ -262,23 +261,22 @@
 </head>
 <body>
 
-    <%--
-	<!-- 요청처리 성공 알림 -->
+	<!-- 완제품용 요청처리 성공 알림 -->
 	<% if(productMsg != null) { %>
         <script>
             
             $(function(){
                 
-                $("#insert-success-modal b").text("<%= productMsg %>");
-                $("#insert-success-modal").modal({backdrop: "static"});
+                $("#request-success-modal b").text("<%= productMsg %>");
+                $("#request-success-modal").modal({backdrop: "static"});
                 
             });
             
             <% session.removeAttribute("productMsg"); %>
         
         </script>
-        <% } %>
-        --%>
+    <% } %>
+
         <%@ include file="../common/adminBar.jsp" %>
     
         
@@ -318,7 +316,7 @@
             
             <script>
                 
-                $("select[name=productCategory]").change(function(){
+                $("#list-1 select").change(function(){
                     
                     const $option = $("option:selected", this).val();
                     
@@ -380,12 +378,12 @@
                 </div>
             </div>
             <script>
-                    $(function(){
-                        // $("#insert-product-btn").click(function(){
-                        // $("#insert-product-modal").modal({backdrop: "static"});
-                        // });
-                    });
-                </script>
+                $(function(){
+                    // $("#insert-product-btn").click(function(){
+                    // $("#insert-product-modal").modal({backdrop: "static"});
+                    // });
+                });
+            </script>
 
 
             <!-- 완제품 목록 -->
@@ -454,7 +452,7 @@
                             },
                             success:function(p){
                                 
-                                $("input[name=productCode]").val(p.pCode);
+                                $("#product-detail-modal input:hidden").val(p.pCode);
 
                                 $("#detailMainImg").attr("src", p.filePath + p.pMainImg);
                                 $("#detailName").text(p.pName);
@@ -697,13 +695,44 @@
 
                             $.ajax({
                                 url:"<%= contextPath %>/updateForm.apr",
-                                data:{productCode:$("input[name=productCode]").val()},
+                                data:{productCode:$("#product-detail-modal input:hidden").val()},
                                 success:function(p){
 
-                                    $("#update-form input:hidden").val(p.pCode);
+                                    console.log(p);
 
-                                    // $("#update-product-modal").modal({backdrop:"static"});
+                                    $("#product-detail-modal").modal("hide");
+                                    $("#update-product-modal").modal("show");
+                                    
+                                    $("#update-form input[name=productCode]").val(p.pCode);
+                                    $("#update-form input[name=existingMainImg]").val(p.pMainImg);
+                                    $("#update-form input[name=existingDetailImg]").val(p.pDetailImg);
 
+                                    $("#update-form select[name=productCategory] option").each(function(){
+                                        if($(this).text() == p.pCategory){
+                                            $(this).attr("selected", true);
+                                        }
+                                    });
+
+                                    $("#update-form .main-img-area").attr("src", p.filePath + p.pMainImg);        
+                                    $("#update-form input[name=productName]").val(p.pName);
+                                    $("#update-form input[name=productPrice]").val(p.pPrice);
+                                    $("#update-form input[name=provider]").val(p.pProvider);
+                                    $("#update-form input[name=supplyPrice]").val(p.pProvidePrice);
+                                    $("#update-form input[name=productAmount]").val(p.pStock);
+                                    $("#update-form input[name=productKeyword]").val(p.pKeyword);
+                                    
+                                    $("#update-form select[name=productStatus] option").each(function(){
+                                        if($(this).text == p.pShow){
+                                            $(this).attr("selected", true);
+                                        }
+                                    });
+                                    
+                                    $("#update-form textarea").text(p.pDetail);
+
+                                    if(p.pDetailImg != null){
+                                        $("#update-form .detail-img-area").attr("src", p.filePath + p.pDetailImg);   
+                                    }
+                                       
                                 }, error:function(){
                                     console.log("ajax 통신 실패");
                                 }
@@ -739,7 +768,9 @@
                     <form action="<%= contextPath %>/update.apr" id="update-form" method="post" enctype="multipart/form-data">
                        
                         <!-- 상품코드 -->
-                         <input type="hidden" name="productCode" value="">
+                         <input type="hidden" name="productCode">
+                         <input type="hidden" name="existingMainImg">
+                         <input type="hidden" name="existingDetailImg">
 
                         <!-- 상품 설명 영역 -->
                             <div id="main">
@@ -762,7 +793,7 @@
                                         <tr>
                                             <th>사진등록</th>
                                             <td colspan="2">
-                                                <input type="file" name="mainImg" onchange="loadImg(this, 1);" required>
+                                                <input type="file" name="mainImg" onchange="loadImg(this, 1);">
                                             </td>
                                         </tr>
                                 </table>
@@ -862,8 +893,8 @@
                             reader.onload = function(e){ // 읽어들인 파일 => 매개변수 e
 
                                 switch(num){
-                                    case 1 : $(".main-img-area").attr("src", e.target.result); break;
-                                    case 2 : $(".detail-img-area").attr("src", e.target.result); break;
+                                    case 1 : $("#update-form .main-img-area").attr("src", e.target.result); break;
+                                    case 2 : $("#update-form .detail-img-area").attr("src", e.target.result); break;
                                 }
     
                             }
@@ -871,8 +902,8 @@
                         } else { // 선택된 파일이 취소된 경우 => 미리보기된 것도 사라지게
     
                             switch(num){
-                                case 1 : $(".main-img-area").attr("src", null); break;
-                                case 2 : $(".detail-img-area").attr("src", null); break;
+                                case 1 : $("#update-form .main-img-area").attr("src", null); break;
+                                case 2 : $("#update-form .detail-img-area").attr("src", null); break;
                             }
     
                         }
@@ -884,12 +915,25 @@
                 <!-- Modal footer -->
                 <div class="modal-footer button-area">
                     <div id="button-left-area">
-                        <button type="reset" class="btn btn-sm btn-outline-dark" form="update-form">초기화</button>
+                        <button type="reset" class="btn btn-sm btn-outline-dark">취소</button>
                     </div>
                     <div id="button-right-area">
                         <button type="submit" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);" form="update-form">수정</button>
                     </div>
                 </div>
+                <script>
+                    $(function(){
+                        
+                        $("#button-left-area button").click(function(){
+                            
+                            $("#update-product-modal").modal("hide");
+                            $("#product-detail-modal").modal("show");
+
+                        });
+
+                    });
+                </script>
+            
                 
             </div>
         </div>
@@ -897,112 +941,33 @@
     
 
 
-    <!-- 상품등록 성공 모달창 -->
+    <!-- 요청처리 성공 모달창 -->
 
-    <div class="modal fade" id="insert-success-modal">
-        <div class="modal-dialog modal-dialog-centered" role="document" >
-            <div class="modal-content success-insert-modal" style="width:500px; height:200px; border-radius: 0;">
-                
-                <!-- Modal body -->
-                <div class="modal-body content-area" style="height:100%;">
-                    <div class="insert-success-img" align="center" style=" height:60%; line-height:150px;">
+	<div class="modal fade" id="request-success-modal">
+		<div class="modal-dialog modal-dialog-centered" role="document" >
+			<div class="modal-content success-request-modal" style="width:500px; height:200px; border-radius: 0;">
+				
+				<!-- Modal body -->
+				<div class="modal-body content-area" style="height:100%;">
+					<div class="request-success-img" align="center" style=" height:60%; line-height:150px;">
                         <i class="fas fa-check fa-4x" style="color:rgb(255, 225, 90);"></i>
                     </div>
 
-                    <div class="insert-success-content" align="center" style="height:40%; line-height:60px;">
+                    <div class="request-success-content" align="center" style="height:40%; line-height:60px;">
                         <b> </b>
                     </div>
-                </div>
-                
-                <!-- Modal footer -->
-                <div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
-                    <div align="center" style="width:100%;">
-                        <button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;" data-dismiss="modal">확인</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>		
-
-
-
-    
-
-
-
-
-
-
-
-
-    <!-- 상품 삭제 모달창 -->
-
-    <div class="modal fade" id="delete-product-modal">
-		<div class="modal-dialog modal-dialog-centered" role="document" >
-			<div class="modal-content product-delete-modal" style="width:500px; height:200px; border-radius: 0;">
-				
-				<!-- Modal body -->
-				<div class="modal-body content-area" style="height:100%;">
-                    <div align="center" style="height:100%; line-height:200px;">
-                        <b>선택하신 상품을 삭제하시겠습니까? (삭제 후 복구 불가)</b>
-                    </div>
 				</div>
 				
 				<!-- Modal footer -->
 				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
 					<div align="center" style="width:100%;">
-						<button type="submit" class="btn" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
-						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">삭제</button>
+						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;" data-dismiss="modal">확인</button>
 					</div>
 				</div>
 
 			</div>
 		</div>
-	</div>		
-	<script>
-		$(document).ready(function(){
-			$("#delete-prodcut-btn").click(function(){
-			$("#delete-product-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
-
-
-    <!-- 상품삭제 성공 모달창 -->
-
-	<div class="modal fade" id="delete-success-modal">
-		<div class="modal-dialog modal-dialog-centered" role="document" >
-			<div class="modal-content success-delete-modal" style="width:500px; height:200px; border-radius: 0;">
-				
-				<!-- Modal body -->
-				<div class="modal-body content-area" style="height:100%;">
-					<div class="delete-success-img" align="center" style=" height:60%; line-height:150px;">
-                        <i class="fas fa-check fa-4x" style="color:rgb(255, 225, 90);"></i>
-                    </div>
-
-                    <div align="center" style="height:40%; line-height:60px;">
-                        <b>상품 삭제를 완료했습니다.</b>
-                    </div>
-				</div>
-				
-				<!-- Modal footer -->
-				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
-					<div align="center" style="width:100%;">
-						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">확인</button>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>		
-	<script>
-		$(document).ready(function(){
-			$("#delete-success-btn").click(function(){
-			$("#delete-success-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
+	</div>
 
     
 </body>
