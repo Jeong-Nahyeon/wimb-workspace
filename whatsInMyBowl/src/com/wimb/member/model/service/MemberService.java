@@ -55,6 +55,30 @@ public class MemberService {
 		
 	}
 	
+	public int pwdCheck(String userId, String checkPwd) {
+		
+		Connection conn = getConnection();
+		int count = new MemberDao().pwdCheck(conn, userId, checkPwd);
+		
+		close(conn);
+		return count;
+	}
+	
+	public int deleteMember(String userId, String userPwd, String reason) {
+		
+		Connection conn = getConnection();
+		int result = new MemberDao().deleteMember(conn, userId, userPwd, reason);
+		
+		close(conn);
+		return result;
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 
 }

@@ -85,9 +85,22 @@
 	    )
 	</entry>
 
+	<entry key="pwdCheck">
+		 SELECT 
+		 		COUNT(*) "COUNT"
+		   FROM MEMBER
+		  WHERE M_ID = ?
+		    AND M_PWD = ?
+	</entry>
 
-
-
+	<entry key="deleteMember">
+		UPDATE MEMBER
+		   SET M_STATUS = 'N'
+		     , M_QUITREASON = ?
+		     , M_QUITDATE = SYSDATE
+		 WHERE M_ID = ?
+		   AND M_PWD = ?
+	</entry>
 
 
 
