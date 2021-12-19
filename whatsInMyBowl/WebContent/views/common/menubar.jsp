@@ -235,7 +235,11 @@
                     <li><a href="#" id="whole"><i class="fas fa-bars"></i></a></li>
                     <li><a href="">Best메뉴</a></li>
                     <li><a href="">세일</a></li>
-                    <li><a href="<%= contextPath %>/item.cu">커스텀</a></li>
+                    <% if(loginUser != null){%>
+                        <li><a href="<%= contextPath %>/item.cu">커스텀</a></li>
+                    <% }else{ %>
+                        <li><a href="<%= contextPath %>/loginInput.me">커스텀</a></li>
+                    <% }%>    
                     <li><a href="<%= contextPath %>/list.pr?cpage=1">샐러드</a>
                         <ul>
                             <li><a href="">비건샐러드</a></li>
@@ -308,6 +312,8 @@
             }, 1200);
         }).scroll();
     </script>
+    
+    
 </body>
 </html>
 
