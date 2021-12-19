@@ -674,18 +674,10 @@
                     $("#costom_delete_Modal").modal("hide")
                 })
                 function pwdcheck(){
-                    var count = $("input[name='check']:checked").length;
-                    var checkArr = new Array();
-                    $("input[name='check']:checked").each(function(){
-                        checkArr.push($(this).parent().siblings(".ajaxCiCode").text())
-                    });
-
-                    
-
                     promise1()
                     .then(promise2)
-                    .then(successCheck);
-                    
+                    .then(successCheck)
+                    .catch(pwdcheckFail);
                 }
 
                 function promise1(){
@@ -731,7 +723,7 @@
                             },
                             success:function(result){
                                 console.log("프로미스2 성공")
-                                    resolve(result);
+                                resolve(result);
                             },
                             error:function(){
                                 console.log("ajax 통신 실패");
@@ -743,6 +735,12 @@
                 function successCheck(){
                     alert("재료를 삭제했습니다.")
                     location.reload();
+                }
+
+                function pwdcheckFail(){
+                    alert("비밀번호가 일치하지 않습니다.")
+                    $("#adminPassword").val("")
+                    $("#adminPassword").focus();
                 }
 
             </script>
