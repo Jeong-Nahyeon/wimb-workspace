@@ -93,8 +93,26 @@ public class Product {
 		this.pKeyword = pKeyword;
 		this.filePath = filePath;
 	}
+	
 
 	
+	public Product(String pName, String pCategory, int pPrice, String pProvider, int pProvidePrice, String pMainImg,
+			String pDetailImg, String pDetail, String pShow, int pStock, String pKeyword) {
+		super();
+		this.pName = pName;
+		this.pCategory = pCategory;
+		this.pPrice = pPrice;
+		this.pProvider = pProvider;
+		this.pProvidePrice = pProvidePrice;
+		this.pMainImg = pMainImg;
+		this.pDetailImg = pDetailImg;
+		this.pDetail = pDetail;
+		this.pShow = pShow;
+		this.pStock = pStock;
+		this.pKeyword = pKeyword;
+	}
+
+
 	public Product(String pCode, String pName, String pCategory, int pPrice, String pProvider, int pProvidePrice,
 			String pShow, int pStock) {
 		super();
@@ -106,6 +124,41 @@ public class Product {
 		this.pProvidePrice = pProvidePrice;
 		this.pShow = pShow;
 		this.pStock = pStock;
+	}
+	
+
+	public Product(String pCode, String pName, String pCategory, int pPrice, String pProvider, int pProvidePrice,
+			String pMainImg, String pDetailImg, String pDetail, String pShow, int pStock, String pKeyword) {
+		super();
+		this.pCode = pCode;
+		this.pName = pName;
+		this.pCategory = pCategory;
+		this.pPrice = pPrice;
+		this.pProvider = pProvider;
+		this.pProvidePrice = pProvidePrice;
+		this.pMainImg = pMainImg;
+		this.pDetailImg = pDetailImg;
+		this.pDetail = pDetail;
+		this.pShow = pShow;
+		this.pStock = pStock;
+		this.pKeyword = pKeyword;
+	}
+	
+
+	public Product(String pCode, String pName, String pCategory, int pPrice, String pProvider, int pProvidePrice,
+			String pDetail, String pShow, int pStock, String pKeyword, String filePath) {
+		super();
+		this.pCode = pCode;
+		this.pName = pName;
+		this.pCategory = pCategory;
+		this.pPrice = pPrice;
+		this.pProvider = pProvider;
+		this.pProvidePrice = pProvidePrice;
+		this.pDetail = pDetail;
+		this.pShow = pShow;
+		this.pStock = pStock;
+		this.pKeyword = pKeyword;
+		this.filePath = filePath;
 	}
 
 

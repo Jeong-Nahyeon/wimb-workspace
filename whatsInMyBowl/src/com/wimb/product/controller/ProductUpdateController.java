@@ -17,16 +17,16 @@ import com.wimb.product.model.service.ProductService;
 import com.wimb.product.model.vo.Product;
 
 /**
- * Servlet implementation class ProductInsertController
+ * Servlet implementation class ProductUpdateController
  */
-@WebServlet("/insert.apr")
-public class ProductInsertController extends HttpServlet {
+@WebServlet("/update.apr")
+public class ProductUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductInsertController() {
+    public ProductUpdateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,14 +40,15 @@ public class ProductInsertController extends HttpServlet {
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
 			
-			// 최대파일용량
-			int maxSize = 100 * 1024 * 1024; // 100MB
+			System.out.println("잘 실행되나?");
 			
-			// 저장경로
+			int maxSize = 100 * 1024 * 1024; //100mb
+			
 			String savePath = request.getSession().getServletContext().getRealPath("/resources/images/product_images/");
 			
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new WimbFileRenamePolicy());
 			
+			String productCode = multiRequest.getParameter("productCode");
 			String productCategory = multiRequest.getParameter("productCategory");
 			String productName = multiRequest.getParameter("productName");
 			int productPrice = Integer.parseInt(multiRequest.getParameter("productPrice"));
@@ -58,27 +59,57 @@ public class ProductInsertController extends HttpServlet {
 			String productStatus = multiRequest.getParameter("productStatus");
 			String detailContent = multiRequest.getParameter("detailContent");
 			
+			// 기존에 존재하는 상세이미지 => Dao에서 조건 검사할 때 필요
+			String existingDetailImg = "";
+			
+			if(multiRequest.getParameter("existingDetailImg") != null) {
+				existingDetailImg = multiRequest.getParameter("existingDetailImg");
+			}
+			
+			// 대표이미지
 			String mainImg = "";
+			
 			if(multiRequest.getOriginalFileName("mainImg") != null) {
 				mainImg = multiRequest.getFilesystemName("mainImg");
 			}
 			
+			// 상세이미지
 			String detailImg = "";
+			
 			if(multiRequest.getOriginalFileName("detailImg") != null) {
 				detailImg = multiRequest.getFilesystemName("detailImg");
 			}
 			
+			Product p = new Product(productCode, productName, productCategory, productPrice,
+									provider, supplyPrice, mainImg, detailImg, detailContent,
+									productStatus, productAmount, productKeyword);
 			
-			Product p = new Product(productName, productCategory, productPrice, provider, supplyPrice,
-									mainImg, detailImg, detailContent, productStatus, productAmount, productKeyword);
+			int result = 0;
 			
-			int result = new ProductService().insertProduct(p);
-		
-			if(result > 0) { // 성공
-				request.getSession().setAttribute("productMsg", "성공적으로 상품을 등록했습니다.");
-				response.sendRedirect(request.getContextPath() + "/list.apr?cpage=1");
+			if(!mainImg.equals("") || !detailImg.equals("")) { // 대표이미지와 상세이미지 둘 중에 하나라도 새로운 파일 있을 경우
 				
-			} else { // 실패
+				// 대표이미지만 있거나 둘다 있을 경우
+				if(!mainImg.equals("")) {
+					result = new ProductService().updateAdminProductNewMainImg(p, existingDetailImg);
+				}
+				
+				// 상세이미지만 있을 경우
+				if(!detailImg.contentEquals("")) {
+					result = new ProductService().updateAdminProductNewDetailImg(p);
+				}
+				
+			} else {
+				// 대표이미지와 상세이미지 둘 다 새로운 파일 없을 경우
+				result = new ProductService().updateAdminProduct(p);
+				
+			}
+			
+			if(result > 0) {
+					
+				request.getSession().setAttribute("productMsg", "성공적으로 수정되었습니다");
+				response.sendRedirect(request.getContextPath() + "/updateDeleteList.apr?cpage=1");
+				
+			} else {
 				
 				if(p.getpMainImg() != null) { // 대표이미지가 있을 경우
 					new File(savePath + p.getpMainImg()).delete();
@@ -88,7 +119,7 @@ public class ProductInsertController extends HttpServlet {
 					new File(savePath + p.getpDetailImg()).delete();
 				}
 				
-				request.setAttribute("errorMsg", "상품 등록 실패");
+				request.setAttribute("errorMsg", "상품 수정 실패");
 				request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
 			
 			}

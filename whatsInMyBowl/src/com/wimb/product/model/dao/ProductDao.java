@@ -140,9 +140,9 @@ public class ProductDao {
 			pstmt.setInt(5, p.getpProvidePrice()); // 공급가격
 			pstmt.setString(6, p.getpMainImg()); // 대표이미지
 			
-			if(p.getpDetailImg() != null) { // 상세이미지 => null이 아닌 경우
+			if(!p.getpDetailImg().contentEquals("")) { // 상세이미지 있을 경우
 				pstmt.setString(7, p.getpDetailImg()); // 상세이미지
-			} else { // 상세이미지 => null인 경우
+			} else { // 상세이미지 없을 경우
 				pstmt.setNull(7, java.sql.Types.VARCHAR); // 과연 null처리 해줄 것인가????????
 			}
 			
@@ -431,6 +431,139 @@ public class ProductDao {
 		}
 		
 		return searchList;
+		
+	}
+	
+	
+	/** 완제품 수정 시 새로운 대표이미지만 있거나 둘다 있을 경우 실행할 메소드
+	 * @param conn
+	 * @param p  :  관리자가 수정 요청한 완제품 정보
+	 * @return
+	 */
+	public int updateAdminProductNewMainImg(Connection conn, Product p, String existingDetailImg) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateAdminProductNewMainImg"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, p.getpName());
+			pstmt.setString(2, p.getpCategory());
+			pstmt.setInt(3, p.getpPrice());
+			pstmt.setString(4, p.getpProvider());
+			pstmt.setInt(5, p.getpProvidePrice());
+			pstmt.setString(6, p.getpMainImg());
+			
+			if(!p.getpDetailImg().equals("")) { // 새로운 상세이미지가 있을 경우
+				pstmt.setString(7, p.getpDetailImg());
+			} else { // 새로운 상세이미지가 없을 경우
+				if(existingDetailImg.equals("")) { // 기존의 상세이미지가 없을 경우
+					pstmt.setNull(7, java.sql.Types.VARCHAR);
+				} else { // 기존의 상세이미지가 있을 경우
+					pstmt.setString(7, existingDetailImg);
+				}
+			}
+			
+			pstmt.setString(8, p.getpDetail());
+			pstmt.setString(9, p.getpShow());
+			pstmt.setInt(10, p.getpStock());
+			pstmt.setString(11, p.getpKeyword());
+			pstmt.setString(12, p.getpCode());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	/** 완제품 수정 시 새로운 상세이미지만 있을 경우 실행할 메소드
+	 * @param conn
+	 * @param p  :  관리자가 수정 요청한 완제품 정보
+	 * @return
+	 */
+	public int updateAdminProductNewDetailImg(Connection conn, Product p) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateAdminProductNewDetailImg"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, p.getpName());
+			pstmt.setString(2, p.getpCategory());
+			pstmt.setInt(3, p.getpPrice());
+			pstmt.setString(4, p.getpProvider());
+			pstmt.setInt(5, p.getpProvidePrice());
+			pstmt.setString(6, p.getpDetailImg());
+			pstmt.setString(7, p.getpDetail());
+			pstmt.setString(8, p.getpShow());
+			pstmt.setInt(9, p.getpStock());
+			pstmt.setString(10, p.getpKeyword());
+			pstmt.setString(11, p.getpCode());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	/** 완제품 수정 시 새로운 파일이 없을 경우 실행할 메소드
+	 * @param conn
+	 * @param p  :  관리자가 수정 요청한 완제품 정보
+	 * @return
+	 */
+	public int updateAdminProduct(Connection conn, Product p) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateAdminProduct"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, p.getpName());
+			pstmt.setString(2, p.getpCategory());
+			pstmt.setInt(3, p.getpPrice());
+			pstmt.setString(4, p.getpProvider());
+			pstmt.setInt(5, p.getpProvidePrice());
+			pstmt.setString(6, p.getpDetail());
+			pstmt.setString(7, p.getpShow());
+			pstmt.setInt(8, p.getpStock());
+			pstmt.setString(9, p.getpKeyword());
+			pstmt.setString(10, p.getpCode());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 		
 	}
 

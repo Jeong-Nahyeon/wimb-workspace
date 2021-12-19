@@ -176,4 +176,73 @@ public class ProductService {
 	}
 	
 	
+	/** 완제품 수정 시 새로운 대표이미지만 있거나 둘다 있을 경우 실행할 메소드
+	 * @param p  :  관리자가 수정 요청한 완제품 정보
+	 * @return
+	 */
+	public int updateAdminProductNewMainImg(Product p, String existingDetailImg) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().updateAdminProductNewMainImg(conn, p, existingDetailImg);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	
+	/** 완제품 수정 시 새로운 상세이미지만 있을 경우 실행할 메소드
+	 * @param p  :  관리자가 수정 요청한 완제품 정보
+	 * @return
+	 */
+	public int updateAdminProductNewDetailImg(Product p) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().updateAdminProductNewDetailImg(conn, p);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	
+	/** 완제품 수정 시 새로운 파일이 없을 경우 실행할 메소드
+	 * @param p  :  관리자가 수정 요청한 완제품 정보
+	 * @return
+	 */
+	public int updateAdminProduct(Product p) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().updateAdminProduct(conn, p);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	
 }
