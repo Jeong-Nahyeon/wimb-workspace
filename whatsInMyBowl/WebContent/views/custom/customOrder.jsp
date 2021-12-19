@@ -291,6 +291,7 @@
                             <div class="customlist_name">
                                 <span>샐러드 이름</span>
                                 <input type="text" name="saladName" id="saladName">
+                                
                             </div>
                             
                             <table class="itemCustom_table">
@@ -535,7 +536,7 @@
                     
                 </div>
 
-                <!--  -->
+                <!-- 재료 선택시 왼쪽 화면에 띄우기 -->
                 <script>
                     $(".pro_btn_up").click(function(){
                         //console.log("플러스클릭됨");
@@ -698,6 +699,9 @@
                     function insertCustomOrder(){
                         var arrItemCode = [];
                         var arrItemCount = [];
+                        var itemPrice = $("#total_sum").text();
+                        var saladNeme = $("#saladName").val();
+                        /*var userNum = $("#userNum").val();*/
 
                         $(".ci_getCode").each(function(){
                             arrItemCode.push($(this).val());
@@ -708,6 +712,9 @@
 
                         console.log(arrItemCode);
                         console.log(arrItemCount);
+                        console.log(itemPrice);
+                        console.log(saladNeme);
+                        /*console.log(userNum);*/
                     }
                 </script>
                 
