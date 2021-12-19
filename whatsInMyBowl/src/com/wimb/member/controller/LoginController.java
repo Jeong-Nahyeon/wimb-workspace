@@ -40,10 +40,13 @@ public class LoginController extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		if(loginUser == null) {
-			request.setAttribute("errorMsg", "로그인 실패했습니다. <br> 아이디 또는 비밀번호를 확인해주세요.");
-			request.getRequestDispatcher("/views/common/errorPage.jsp").forward(request, response);
+			session.setAttribute("alertMsg", "로그인 실패했습니다. 아이디 또는 비밀번호를 확인해주세요.");
+			request.getRequestDispatcher("/views/member/memberLoginForm.jsp").forward(request, response);
 			
-		}else {
+		}else if(loginUser.getStatus().equals("A")){
+			session.setAttribute("loginUser", loginUser);
+			response.sendRedirect(request.getContextPath() + "/views/common/adminBar.jsp");
+		}else if(loginUser.getStatus().equals("Y")){
 			
 			session.setAttribute("loginUser", loginUser);
 			response.sendRedirect(request.getContextPath());
