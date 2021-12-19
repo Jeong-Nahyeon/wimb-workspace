@@ -69,9 +69,10 @@
         height: 600px;
         margin-left: 50px;
     }
+    /*마이페이지 사이드바 끝*/
     #title-area{border-bottom: 1px solid black; text-align: left;}
     #main-area{
-        margin-top:130px;
+        margin-top:10px;
         text-align: center;    
     }
     #button-area{margin: 50px;}
@@ -89,23 +90,30 @@
         background-color: rgb(155, 213, 189);
         color:white;
     }
-    #input-area{
-        background-color: rgba(241, 238, 238, 0.432);
+    #title-area span{
+        font-size: x-small;
+        color: rgb(214, 34, 34);
+        width:200px;
+        
+    }
+    i {font-size:x-small; color:rgb(214, 34, 34);}
+    #info-area th{
+        text-align: left;
+        font-size: small;
+    }
+    #info-area td, #info-area label{font-size: small;}
+    #info-area input{width:100%;}
+    #info-area{
         width: 500px;
-        height: 50px;
-        line-height: 50px;
-        margin:auto;
+        height: 400px;
     }
-    #input-area>div{
-        float:left;
-        margin:auto;
-        width: 200px;
-        margin-left:20px
-    }
-    #input-area input[type="password"]{
-        width:100px;
-        height: 30px;
-    }
+    #info-area input[type="checkbox"]{
+		width: 70px;
+		height: 15px;
+		font-size: small;
+		margin-left: -20px;
+		margin-right: -20px;
+	}
 </style>
 </head>
 <body style="height:100%">
@@ -174,19 +182,83 @@
                     <p>
                         <h4> 회원정보 변경</h4>
                     </p>
+                    <div align="right">
+                        <span>*표시는 반드시 입력해야하는 항목입니다.</span>
+                    </div>
                 </div>
                 <div id="main-area">
-                    <p>
-                        회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한 번 입력해주세요
-                    </p>
-                    <div id="input-area">
-                        <div>
-                            아이디 <b><%=userId%></b> 
-                        </div>
-                        <div>
-                            비밀번호 <input type="password" name="userPwd" required>
-                        </div>
-                    </div>
+                    <table id="info-area" class="table-hover" align="center">
+                        <tr>
+                            <th>아이디<i class="fas fa-star-of-life"></i></th>
+                            <td align="left">
+                                <span>
+                                    <%=userId%>
+                                </span>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호<i class="fas fa-star-of-life"></i></th>
+                            <td><input type="password" name="userPwd" id="userPwd" class="req" placeholder="영문자와 숫자, 6~16글자내로 입력" required><br>
+                                <div id="checkPwd">
+        
+                                </div></td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호 확인<i class="fas fa-star-of-life"></i></th>
+                            <td><input type="password" name="userPwdChk" id="userPwdChk" class="req" required><br>
+                                <div id="checkPwdchk">
+        
+                                </div></td>
+                        </tr>
+                        <tr>
+                            <th>이름<i class="fas fa-star-of-life"></i></th>
+                            <td><input type="text" name="userName" id="userName" class="req" required><br>
+                                <div id="checkName">
+        
+                                </div></td>
+                        </tr>
+                        <tr>
+                            <th>전화번호<i class="fas fa-star-of-life"></i></th>
+                            <td><input type="tel" name="userPhone" id="userPhone" class="req" placeholder="숫자만 입력" required><br>
+                                <div id="checkPhone">
+        
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>이메일<i class="fas fa-star-of-life"></i></th>
+                            <td><input type="email" name="userEmail" id="userEmail" class="req" required><br>
+                                <div id="checkEmail">
+        
+                                </div></td>
+                            <td>
+                                <input type="button" style="width:100px;" value="중복확인" onclick="doubleEmailChk();">
+                                <input type="hidden" id="emailDupleChk" name="emailDupleChk" value="emailN">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>주소<i class="fas fa-star-of-life"></i></th>
+                            <td><input type="text" name="userAddress1" id="userAddress1" class="req" autocomplete="off"></td>
+                            <td><input type="button" style="width:100px;" value="주소찾기" onclick="Postcode();"></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td><input type="text" name="userAddress2" id="userAddress2" class="req" placeholder="상세주소입력" required></td>
+                            <td><input type="text" name="postcode" id="postcode" style="width:100px" placeholder="우편번호"></td>
+                        </tr>
+                        <tr>
+                            <th>마케팅수신동의<i class="fas fa-star-of-life"></i></th>
+                            <td>
+                                <input type="checkbox" id="agreeSms" class="agree" name="ad" value="M">
+                                <label for="agreeSms">SMS</label>
+                                <input type="checkbox" id="agreeEmail" class="agree" name="ad" value="E">
+                                <label for="agreeEmail">EMAIL</label>
+                                <input type="checkbox" id="disagree" class="agree" name="ad" value="N">
+                                <label for="disagree">선택안함</label>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <div id="button-area">
                     <button type="button" id="cancelBtn" onclick="back();">취소</button>
