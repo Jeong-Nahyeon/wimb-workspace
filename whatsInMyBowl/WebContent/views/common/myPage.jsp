@@ -153,7 +153,7 @@
                     <td><a href="<%=contextPath%>/orderList.my">주문목록/배송조회</a></td>
                 </tr>
                 <tr>
-                    <td><a href="">취소/환불내역</a></td>
+                    <td><a href="<%=contextPath%>/cancelList.my">취소/환불내역</a></td>
                 </tr>
                 <tr>
                     <td id="sidebarmenu"><a href="">찜리스트</a></td>

@@ -29,7 +29,8 @@ public class MyOrders {
 	private String reCode;		   // 환불코드
 	private String rStatus;		   // 환불처리상태
 	private Date rcompDate;        // 처리일자
-	
+	private String cReason;        // 취소사유
+	private String rReason;        // 환불사유
 
 
 
@@ -82,6 +83,45 @@ public class MyOrders {
 		this.reCode = reCode;
 		this.rStatus = rStatus;
 		this.rcompDate = rcompDate;
+	}
+
+
+	// 취소|환불 상세조회시 사용
+	public MyOrders(String orderCode, int orderAmount, Date orderDate, String cuName, String pName, int pmTotalCost,
+			 int pmFinalCost, String cancelCode, String cancelStatus,
+			Date cancelCompDate, String reCode, String rStatus, Date rcompDate, String cReason, String rReason) {
+		super();
+		this.orderCode = orderCode;
+		this.orderAmount = orderAmount;
+		this.orderDate = orderDate;
+		this.cuName = cuName;
+		this.pName = pName;
+		this.pmTotalCost = pmTotalCost;
+		this.pmFinalCost = pmFinalCost;
+		this.cancelCode = cancelCode;
+		this.cancelStatus = cancelStatus;
+		this.cancelCompDate = cancelCompDate;
+		this.reCode = reCode;
+		this.rStatus = rStatus;
+		this.rcompDate = rcompDate;
+		this.cReason = cReason;
+		this.rReason = rReason;
+	}
+
+	public String getcReason() {
+		return cReason;
+	}
+
+	public void setcReason(String cReason) {
+		this.cReason = cReason;
+	}
+
+	public String getrReason() {
+		return rReason;
+	}
+
+	public void setrReason(String rReason) {
+		this.rReason = rReason;
 	}
 
 	public String getReCode() {
@@ -274,7 +314,7 @@ public class MyOrders {
 				+ ", pmTotalCost=" + pmTotalCost + ", pmCode=" + pmCode + ", filePath=" + filePath + ", statusCount="
 				+ statusCount + ", pmFinalCost=" + pmFinalCost + ", cancelCode=" + cancelCode + ", cancelStatus="
 				+ cancelStatus + ", cancelCompDate=" + cancelCompDate + ", reCode=" + reCode + ", rStatus=" + rStatus
-				+ ", rcompDate=" + rcompDate + "]";
+				+ ", rcompDate=" + rcompDate + ", cReason=" + cReason + ", rReason=" + rReason + "]";
 	}
 
 	

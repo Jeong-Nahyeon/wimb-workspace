@@ -138,6 +138,13 @@ public class MyPageService {
 	
 	}
 	
+	// 취소/환불 상세조회
+	public MyOrders selectRCDetail(String orderCode) {
+		Connection conn = getConnection();
+		MyOrders mo = new MyPageDao().selectRCDetail(conn, orderCode);
+		close(conn);
+		return mo;
+	}
 	
 	
 }

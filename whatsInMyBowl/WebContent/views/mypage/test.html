@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<style>
+     
+    .modal-footer button {
+        border: 0px;
+        border-radius: 5px;
+        width: 100px;
+        height: 40px;
+        margin-right: 185px;
+        font-size: smaller;
+        background-color: rgb(155, 213, 189); ;
+    }
+    
+    .selectBtn button:focus {
+    	background-color: lightgrey;
+    }
+    img {
+    	width: 80px;
+    	height: 80px;
+    	margin-right: 20px;
+    }
+    #area1 th{
+        height: 30px;
+        text-align: center;
+        font-size: 13px;
+        border-top: 2px solid rgba(133, 136, 139, 0.548);
+        border-bottom: 1px solid rgba(179, 174, 174, 0.384);
+        font-weight: bold;
+    }
+    #area1 td{
+        height: 60px;
+        text-align: center;
+        font-size: 13px;
+        border-bottom: 2px solid rgba(133, 136, 139, 0.548);
+        font-weight: bold;
+    }
+    #area2 th {
+        height: 40px;
+        text-align: center;
+        font-size: 13px;
+        background-color: rgba(199, 197, 197, 0.233);
+    }
+    #area2 td {
+        text-align: left;
+        font-size: 13px;
+        padding-left: 20px;
+    }
+    label {
+        margin: 0px; 
+        font-size: 14px;
+    }
+    .area3 * {
+        font-size: 14px;
+        height: 35px;
+        text-align: center;
+    }
+</style>
+<body>
+    
+    <button type="button" data-toggle="modal" data-target="#this-modal">상세보기</button>
+
+
+        <!-- 환불/취소 상세보기 모달창 -->
+        <div class="modal" id="this-modal">
+            <div class="modal-dialog">
+            <div class="modal-content">
+        
+                    <!-- Modal Header -->
+                    <div class="modal-header" style="font-size:large; background-color: rgba(240, 239, 233, 0.445);">
+                        <div>
+                            <b>취소 요청</b>
+                        </div>
+                    </div>
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                    <table id="area1" style="margin-bottom: 30px;">
+                        <tr>
+                            <th width="90px;">주문번호</th>
+                            <th width="180px;">상품명</th>
+                            <th width="90px;">주문수량</th>
+                            <th width="90px;">진행상태</th>
+                        </tr>
+                        <tr>
+                            <td>-주문번호</td>
+                            <td>-상품명</td>
+                            <td>-주문수량</td>
+                            <td>-진행상태</td>
+                        </tr>
+                    </table>
+                    <div id="area2" style="margin-bottom: 30px;">
+                        <label style="margin: 0px; font-size: 14px;">취소사유</label>
+                        <table>
+                            <tr style="border-top: 1px solid rgba(179, 174, 174, 0.384); border-bottom: 1px solid rgba(133, 136, 139, 0.61);">
+                                <th width="150">취소요청사유</th>
+                                <td width="300">사용자요청취소</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(179, 174, 174, 0.384);">
+                                <th>상세사유</th>
+                                <td>-</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <label>취소/환불 정보</label>
+                        <table class="area3">
+                            <tr>
+                                <td width="150px;">상품금액</td>
+                                <td style="text-align: right; width: 300px; padding-right: 30px;">토탈금액</td>
+                            </tr>
+                            <tr>
+                                <td>적립금할인</td>
+                                <td style="text-align: right; width: 300px; padding-right: 30px;">토탈-파이널</td>
+                            </tr>
+                        </table>
+                        <table class="area3">
+                            <th width="150px;">총 환불금액</th>
+                            <th style="text-align: right; width: 300px; padding-right: 30px;">파이널</th>
+                        </table>
+                        </div>
+                    </div>
+            
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                    <button type="button" data-dismiss="modal">확인</button>
+                    </div>
+        
+            </div>
+            </div>
+        </div>
+
+  
+
+</body>
+</html>

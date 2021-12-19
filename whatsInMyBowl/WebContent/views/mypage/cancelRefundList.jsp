@@ -27,8 +27,8 @@
 <style>
     /* 교환|환불조회 전체영역 */
     .cancelList {
-        margin-left: 18px;
-        margin-top: 50px;
+       	margin-top: 40px;
+        margin-left: 500px;
     }
     /* 주문|배송조회 기간 선택 영역 */
     .selectDate {
@@ -71,9 +71,10 @@
         background-color: rgba(240, 239, 233, 0.445);
     }
     .orderList td {
-        border-bottom: 2px solid rgba(133, 136, 139, 0.548);
+        border-bottom: 1px solid rgba(179, 174, 174, 0.384);
         padding: 18px 0px 18px 0px;
         font-size: 13px;
+        height: 100px;
     }
     .orderList {
         width: 700px;
@@ -81,6 +82,7 @@
         border-spacing: 0px;
         box-sizing: border-box;
         margin-bottom:30px;
+        border-bottom: 2px solid rgba(133, 136, 139, 0.548);
     }
     .orderList button {
         display: block;
@@ -109,7 +111,7 @@
 </head>
 <body>
 
-    <%@ include file="../mypage/myPageMain.jsp" %>
+    <%@ include file="../common/myPage.jsp" %>
 
     <div class="cancelList">
 
@@ -138,7 +140,7 @@
             <div class="listView">
             
                     <!--case1. 최근 주문내역이 없을 때-->
-            		<% if(list.isEmpty()) { %>
+            		<% if(clist.isEmpty()) { %>
             		
                    		<table class="orderList">
 	                        <tr>
@@ -154,64 +156,203 @@
 	                        
                     	</table>
                     <% }else { %>	
-                    	
-                    <!--case2. 취소/환불내역이 있을 때 (if(취소상태 == 처리X))-->
-                    <table class="orderList">
-                        <tr>
-                            <th width="130">주문일자<br>[주문번호]</th>
-                            <th>상품명</th>
-                            <th width="100">상품금액/수량</th>
-                            <th width="80">진행상태</th>
-                            <th width="80">처리일자</th>
-                            <th width="80">상세보기</th>
-                        </tr>
-                        
-                        <% for(MyOrders od : clist) { %>
-                     
-                        <tr>
-                            <td><%= od.getOrderDate() %><br>[<%= od.getOrderCode() %>]</td>
-                            
-                            <% if(od.getpName() == null) {  // 커스텀상품%>
-                            	<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"><%= od.getCuName() %></a></td>
-                            <% }else {  // 완제품%>
-								<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getFilePath() + od.getpMainImg() %>"><%= od.getpName() %></a></td>                            
-                            <% } %>
-                            
-                            <td><%= od.getPmTotalCost() %>원/<%= od.getOrderAmount() %>개</td>
-                            
-                            <% if(od.getCancelCode() == null) { %>
-                            	
-                            	<!-- 환불일경우 -->
-                            	<% if(od.getrStatus().equals("N")) { %>
-                            		<td>환불<br>진행중</td>
-                            	<% } else { %>
-                            		<td>환불<br>처리완료</td>
-                            		<td><%= od.getRcompDate() %></td>
-                            		
-                            	<% } %>
-                            	
-                            <% }else { %>
-                            	
-                            	<!-- 취소일경우 -->
-                            	<% if(od.getCancelStatus().equals("N")) { %>
-                            		<td>취소<br>진행중</td>
-                            	<% }else { %>
-                            		<td>취소<br>처리완료</td>
-                            		<td><%= od.getCancelCompDate() %></td>
-                            	<% } %>
-                            
-                            <% } %>
-                            <td><button>상세보기</button></td>
-                        </tr>
-                        <% } %>
+                    
+	                    <!--case2. 취소/환불내역이 있을 때 (if(취소상태 == 처리X))-->
+	                    <table class="orderList">
+	                        <tr>
+	                            <th width="130">주문일자<br>[주문번호]</th>
+	                            <th>상품명</th>
+	                            <th width="100">상품금액/수량</th>
+	                            <th width="80">진행상태</th>
+	                            <th width="80">처리일자</th>
+	                            <th width="80">상세보기</th>
+	                        </tr>
+	                        
+	                        <% for(MyOrders od : clist) { %>
+	                     
+	                        <tr>
+	                            <td><%= od.getOrderDate() %><br>[<label id="orderCode" name="orderCode"><%= od.getOrderCode() %></label>]</td>
+	                            
+	                            <% if(od.getpName() == null) {  // 커스텀상품%>
+	                            	<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"><%= od.getCuName() %></a></td>
+	                            <% }else {  // 완제품%>
+									<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getFilePath() + od.getpMainImg() %>"><%= od.getpName() %></a></td>                            
+	                            <% } %>
+	                            
+	                            <td><%= od.getPmTotalCost() %>원/<%= od.getOrderAmount() %>개</td>
+	                            
+	                            <% if(od.getCancelCode() == null) { %>
+	                            	
+	                            	<!-- 환불일경우 -->
+	                            	<% if(od.getrStatus().equals("N")) { %>
+	                            		<td>환불<br>진행중</td>
+	                            	<% } else if(od.getrStatus().equals("Y")) { %>
+	                            		<td>환불<br>처리완료</td>
+	                            		<td><%= od.getRcompDate() %></td>
+	                            	<% } %>
+	                            	
+	                            <% }else { %>
+	                            	
+	                            	<!-- 취소일경우 -->
+	                            	<% if(od.getCancelStatus().equals("N")) { %>
+	                            		<td>취소<br>진행중</td>
+	                            		<td>-</td>
+	                            	<% }else { %>
+	                            		<td>취소<br>처리완료</td>
+	                            		<td><%= od.getCancelCompDate() %></td>
+	                            	<% } %>
+	                            
+	                            <% } %>
+	                            <td><button id="detailBtn" type="button" data-toggle="modal" data-target="#this-modal">상세보기</button></td>
+	                        </tr>
+	                        <% } %>
+	                        
                     <% } %>
-                   
-                   
+                    
             </div>
         </div>
     </div>
-    
-    
+	
+	   <!-- 환불/취소 상세보기 모달창 -->
+        <div class="modal" id="this-modal">
+            <div class="modal-dialog">
+            <div class="modal-content">
+        
+                    <!-- Modal Header -->
+                    <div class="modal-header" style="font-size:large; background-color: rgba(240, 239, 233, 0.445);">
+                        <div>
+                            <b>취소/환불 상세정보</b>
+                        </div>
+                    </div>
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                    <table id="area1" style="margin-bottom: 30px;">
+                        <tr>
+                            <th width="90px;">주문번호</th>
+                            <th width="180px;">상품명</th>
+                            <th width="90px;">주문수량</th>
+                            <th width="90px;">진행상태</th>
+                        </tr>
+                        <tr id="detail1">
+                            
+                        </tr>
+                    </table>
+                    <div id="area2" style="margin-bottom: 30px;">
+                        <label style="margin: 0px; font-size: 14px;">취소/환불 요청사유</label>
+                        <table>
+                            <tr style="border-top: 1px solid rgba(179, 174, 174, 0.384); border-bottom: 1px solid rgba(133, 136, 139, 0.61);">
+                                <th width="150">요청사유</th>
+                                <td width="300" id="detail2"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <label>취소/환불 정보</label>
+                        <table class="area3">
+                            <tr>
+                                <td width="150px;">상품금액</td>
+                                <td id="detail3" style="text-align: right; width: 300px; padding-right: 30px;"></td>
+                            </tr>
+                            <tr>
+                                <td>할인금액</td>
+                                <td id="detail4" style="text-align: right; width: 300px; padding-right: 30px;"></td>
+                            </tr>
+                        </table>
+                        <table>
+                            <th width="150px;">총 환불금액</th>
+                            <th id="detail5" style="text-align: right; width: 300px; padding-right: 30px;"></th>
+                        </table>
+                        </div>
+                    </div>
+            
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                    <button type="button" data-dismiss="modal">확인</button>
+                    </div>
+        
+            </div>
+            </div>
+        </div>
+	
+	
+	
+	<script>
+		$("#detailBtn").click(function(e){
+			
+			var orderCode = $("#orderCode").text();
+			console.log(orderCode);
+			
+			$.ajax({
+				url:"crDetail.my",
+				type:"post",
+				data:{orderCode:orderCode},
+				success:function(mo){
+					console.log(mo);
+					
+					// 첫번째 표 자리
+					var result1 = "";
+					if(mo.pName == null) { // 커스텀일 경우
+						result1 +=
+							  "<td>" + mo.orderCode + "</td>"
+							+ "<td>" + mo.cuName + "</td>"
+							+ "<td>" + mo.orderAmount + "</td>";
+							if(mo.rStatus == "Y" || mo.cancelStatus == "Y") {
+								result1 += "<td>" + "처리완료" + "<td>";
+							}else {
+								result1 += "<td>" + "처리진행중" + "<td>";
+							}
+					}else { // 완제품일 경우
+						result1 +=
+							  "<td>" + mo.orderCode + "</td>"
+							+ "<td>" + mo.pName + "</td>"
+							+ "<td>" + mo.orderAmount + "</td>";
+							if(mo.rStatus == "Y" || mo.cancelStatus == "Y") {
+								result1 += "<td>" + "처리완료" + "<td>";
+							}else {
+								result1 += "<td>" + "처리진행중" + "<td>";
+							}	
+					}
+					$('#detail1').html(result1);
+					
+					// 두번째 표 자리
+					var result2 = "";
+					if(mo.cancelCode == null) { // 환불일 경우
+						result2 +=
+							mo.rReason;
+					}else { // 취소일 경우
+						result2 +=
+							mo.cReason;
+					}
+					$('#detail2').html(result2);
+					
+					// 세번째 표 자리
+					var result3 = "";
+					result3 += mo.pmTotalCost;
+					$("#detail3").html(result3);
+					
+					// 네번째 표 자리
+					var result4 = "";
+					result4 += (mo.pmFinalCost - mo.pmTotalCost);
+					$("#detail4").html(result4);
+					
+					// 마지막 표 자리
+					var result5 = "";
+					result5 += mo.pmFinalCost;
+					$("#detail5").html(result5);
+					
+					
+				},error:function(){
+					console.log("상세정보 불러오기 통신 실패");
+				}
+			})
+			
+		})
+	</script>
+	
+ 
+   
+   
     
      <!-- 조회기간 버튼  -->
     <script>
@@ -272,6 +413,10 @@
 		
     		
     </script>
+
+    
+   
+
 
   
 </body>

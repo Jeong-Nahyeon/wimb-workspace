@@ -369,4 +369,44 @@ public class MyPageDao {
 		return clist;
 	}
 	
+	// 취소/환불 상세조회
+	public MyOrders selectRCDetail(Connection conn, String orderCode) {
+		MyOrders mo = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectRCDetail");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, orderCode);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				mo = new MyOrders(rset.getString("order_code"),
+						   rset.getInt("order_amount"),
+						   rset.getDate("order_date"),
+						   rset.getString("cu_name"),
+						   rset.getString("p_name"),
+						   rset.getInt("pm_totalcost"),
+						   rset.getInt("pm_finalcost"),
+						   rset.getString("cancel_code"),
+						   rset.getString("cancel_status"),
+						   rset.getDate("cancel_completement"),
+						   rset.getString("re_code"),
+						   rset.getString("re_status"),
+						   rset.getDate("re_completement"),
+						   rset.getString("cancel_reason"),
+						   rset.getString("re_reason"));
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return mo;
+	}
+	
 }

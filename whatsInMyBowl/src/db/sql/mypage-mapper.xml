@@ -156,7 +156,37 @@
 		  LEFT JOIN CUSTOM USING (CU_CODE)
 		  LEFT JOIN PRODUCT USING (P_CODE)
 		 WHERE OD.M_CODE = ?
-		 AND ORDER_DATE BETWEEN ? AND ?
+		   AND ORDER_DATE BETWEEN ? AND ?
+		   AND (ORDER_STATUS = '제품환불' OR ORDER_STATUS = '주문취소')
 	</entry>
 	
+	<entry key="selectRCDetail">
+		SELECT
+		       ORDER_CODE
+		     , ORDER_AMOUNT
+		     , ORDER_STATUS
+		     , ORDER_DATE
+		     , CU_NAME
+		     , CU_MAINIMG
+		     , P_NAME
+		     , P_MAINIMG
+		     , PM_TOTALCOST
+             , PM_FINALCOST
+             , CANCEL_CODE
+             , CANCEL_STATUS
+             , CANCEL_COMPLETEMENT
+             , CANCEL_REASON
+             , RE_CODE
+             , RE_STATUS
+             , RE_COMPLETEMENT
+             , RE_REASON
+		  FROM "ORDER" OD
+		  JOIN SUBORDER USING (ORDER_CODE)
+		  JOIN PAYMENT USING (PM_CODE)
+          LEFT JOIN CANCELATION USING (ORDER_CODE)
+          LEFT JOIN REFUND USING (ORDER_CODE)
+		  LEFT JOIN CUSTOM USING (CU_CODE)
+		  LEFT JOIN PRODUCT USING (P_CODE)
+		 WHERE ORDER_CODE = ?
+	</entry>
 </properties>
