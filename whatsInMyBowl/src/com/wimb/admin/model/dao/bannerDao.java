@@ -269,7 +269,16 @@ public class bannerDao {
 		
 	}
 	
-	
+	// 메인1에 등록하고자 하는 메인의 라디오버튼 선택 후 '등록'버튼 클릭 시 선택한 게시글 번호를 넘겨받아 화면에 띄우는 DAO
+	public Banner selectFirstMain(Connection connm, int selectMainNum) {
+		Banner b = new Banner();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("");
+		
+		
+	}
 	
 	
 	

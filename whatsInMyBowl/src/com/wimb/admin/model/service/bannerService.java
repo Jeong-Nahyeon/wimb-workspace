@@ -85,6 +85,13 @@ public class bannerService {
 		close(conn);
 		return Firstlist;
 	}	
-
+	
+	// 메인1에 등록하고자 하는 메인의 라디오버튼 선택 후 '등록'버튼 클릭 시 선택한 게시글 번호를 넘겨받아 화면에 띄우는 Service
+	public Banner selectFirstMain(int selectMainNum) {
+		Connection conn = getConnection();
+		Banner b = new bannerDao().selectFirstMain(conn, selectMainNum);
+		close(conn);
+		return b;
+	}
 	
 }
