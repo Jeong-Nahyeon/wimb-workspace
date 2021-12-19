@@ -117,5 +117,25 @@
 		 WHERE CI_NAME LIKE '%' || ? || '%'
 		   AND CI_ADMINSHOW = 'Y' 
 	</entry>
+	
+	<entry key="insertCustom">
+		INSERT 
+		  INTO CUSTOM
+		  (
+		    CU_CODE
+		  , M_CODE
+		  , CU_NAME
+		  , CU_PRICE
+		  , CU_MAINIMG
+		  )
+		  VALUES
+		  (
+		    'CU' || SEQ_CUSTOM.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , (SELECT CU_MAINIMG FROM CUSTOM WHERE CU_CODE = 'CU1001')
+		  )
+	</entry>
 
 </properties>

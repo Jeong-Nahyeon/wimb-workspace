@@ -291,7 +291,7 @@
                             <div class="customlist_name">
                                 <span>샐러드 이름</span>
                                 <input type="text" name="saladName" id="saladName">
-                                
+                                <input type="hidden" name="userNum" id="userNum" value="<%= loginUser.getmCode() %>">
                             </div>
                             
                             <table class="itemCustom_table">
@@ -700,8 +700,8 @@
                         var arrItemCode = [];
                         var arrItemCount = [];
                         var itemPrice = $("#total_sum").text();
-                        var saladNeme = $("#saladName").val();
-                        /*var userNum = $("#userNum").val();*/
+                        var saladName = $("#saladName").val();
+                        var userNum = $("#userNum").val();
 
                         $(".ci_getCode").each(function(){
                             arrItemCode.push($(this).val());
@@ -714,7 +714,25 @@
                         console.log(arrItemCount);
                         console.log(itemPrice);
                         console.log(saladNeme);
-                        /*console.log(userNum);*/
+                        console.log(userNum);
+                        
+                        $.ajax({
+                            url:"customInsert.cu",
+                            type:"post",
+                            data:{
+                                arrItemCode:arrItemCode,
+                                arrItemCount:arrItemCount,
+                                itemPrice:itemPrice,
+                                saladName:saladName,
+                                userNum:userNum
+                            },
+                            success:function(){
+
+                            },
+                            error:function(){
+                                console.log("ajax 통신 실패");
+                            }
+                        });
                     }
                 </script>
                 

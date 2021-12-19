@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.wimb.common.model.vo.PageInfo;
+import com.wimb.custom.model.vo.Custom;
 import com.wimb.custom.model.vo.Item;
 public class CustomDao {
 
@@ -354,6 +355,28 @@ public class CustomDao {
 		}
 		
 		return list;
+	}
+
+	// 커스텀 테이블에 샐러드 등록
+	public int insertCustom(Connection conn, Custom c) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertCustom");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c.getmCode());
+			pstmt.setString(2, c.getCuName());
+			pstmt.setInt(3, c.getCuPrice());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	
