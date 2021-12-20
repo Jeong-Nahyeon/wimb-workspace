@@ -72,12 +72,11 @@
 
     /* 은지 */
     .outer{
-        width: 1000px;
-        height: 500px;
-        margin-top: 30px;
-        display: inline-block;
+        width: 600px;
+        height: 800px;
+        margin: auto;
     }
-    a {
+    #usertable a, #plus a{
         text-decoration: none;
         color:black;
     }
@@ -97,9 +96,9 @@
        
         border-top: 2px solid black ;
     }
-    a:link { 
+    #usertable a:hover, #plus a:hover { 
     	text-decoration:none;
-    	color:black;
+    	color:lightgrey;
     }
     #like{text-align: center;}
     #userImage #userName{
@@ -129,17 +128,17 @@
             <tr>
                 <td rowspan="2" colspan="2" align="right" width="200">
                    <div id="userImage"><img src="https://www.w3schools.com/howto/img_avatar.png" alt="userImg" class="userImg"></div>
-                    <div id="userName"><h5><a href=""><%= loginUser.getmName() %></a>님</h5></div>
+                    <div id="userName"><h5><a href=""><b><%= loginUser.getmName() %>님</b></a></h5></div>
                 </td>
                 <td colspan="2" rowspan="2" width="80px" >
                     <div id="point">적립금<br><br>
-                        <a href=""><%= loginUser.getmPoint() %></a>원
+                        <a href=""><b><%= loginUser.getmPoint() %>원</b></a>
                     </div>
                 </td>
                 
                 <td colspan="2"  rowspan="2" width="80px">
                     <div id="like">찜하기<br><br>
-                        <a href="">0</a>원
+                        <a href=""><b>0원</b></a>
                     </div>
                 </td>
             </tr>

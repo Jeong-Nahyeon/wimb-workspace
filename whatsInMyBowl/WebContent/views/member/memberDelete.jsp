@@ -21,55 +21,16 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
     
-    /* 은지 */
-    .outer{
-        width: 1000px;
-        height: 600px;
-        margin: auto;
-        margin-top: 90px;
-    }
-    .outer>div{float:left;}
-    .mypageSidebar{
-        width: 200px;
-        height: 600px;
-        margin-right: 30px;
-    }
-    .mypageSidebar .title{
-        margin: 5px;
-        display: block;
-    }
-    .mypageSidebar .menu{
-        border: 3px solid lightgray;
-        border-top: 3px solid black;
-        padding: 10px;
-    }
-    .mypageSidebar .menu th{
-        color: black;
-        text-align: left;
-        padding-bottom: 8px;
-        font-size: 15px;
-        border-bottom: 1px solid grey;
-    }
-    .mypageSidebar .menu td{
-        padding-bottom: 8px;
-    }
-    #sidebarmenu{
-        padding-bottom: 45px;
-    }
-    a {
-        text-decoration: none;
-        color:black;
-    }
-    a:link { 
-    	text-decoration:none;
-    	color:black;
-    }
-    /*사이드바 끝*/
    
+    .outer-delete{
+        width: 600px;
+        height:800px;
+        margin: auto;
+    }
     #title-area{
         border-bottom: 1px solid black; 
         text-align: left; 
-        width:700px;
+        width:600px;
     }
   
     #button-area{margin: 50px;}
@@ -109,63 +70,13 @@
 </head>
 <body style="height:100%">
 
-	<%@ include file="../common/menubar.jsp" %>
+	<%@ include file="../common/myPage.jsp" %>
 	<% 
 		String userId = loginUser.getmId();
 		
 	%>
 	
-    <div class="outer">
- 
-         
-        <!-- 마이페이지 사이드바 시작-->
-        <div class="mypageSidebar">
-            <div class="title"><h3>마이페이지</h3></div>
-            <div class="menu">
-            <table>
-                <tr>
-                    <th>회원정보</th>
-                </tr>
-                <tr>
-                    <td><a href="<%=contextPath%>/memberUpdate.me">회원정보변경</a></td>
-                </tr>
-                <tr>
-                    <td id="sidebarmenu"><a href="<%=contextPath%>/memberDelete.me">회원탈퇴</a></td>
-                </tr> 
-                <tr>
-                    <th>혜택관리</th>
-                </tr>
-                <tr>
-                    <td id="sidebarmenu"><a href="">적립금</a></td>
-                </tr>
-                <tr>
-                    <th>쇼핑정보</th>
-                </tr>
-                <tr>
-                    <td><a href="<%=contextPath%>/orderList.my">주문목록/배송조회</a></td>
-                </tr>
-                <tr>
-                    <td><a href="<%=contextPath%>/cancelList.my">취소/환불내역</a></td>
-                </tr>
-                <tr>
-                    <td id="sidebarmenu"><a href="">찜리스트</a></td>
-                </tr>
-                <tr>
-                    <th>나의 게시글관리</th>
-                </tr>
-                <tr>
-                    <td><a href="<%=contextPath%>/inquiryList.my">1:1문의</a></td>
-                </tr>
-                <tr>
-                    <td><a href="">상품문의</a></td>
-                </tr>
-                <tr>
-                    <td><a href="">내가 작성한 리뷰</a></td>
-                </tr>
-            </table>
-            </div>
-        </div>
-        <!-- 마이페이지 사이드바 끝-->
+    <div class="outer-delete">
 
         <div class="main">
             <form action="<%=contextPath %>/delete.me" id="inputPwd-area" method="post" align="center" >

@@ -20,48 +20,47 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
     /* 은지 */
-  	.outer {
-  		width: 1000px;
-  		height: 1000px;
-  		margin:auto;
-  	}
+    #mypageNav{
+        width:1000px;
+        height:50px;
+        margin:auto;
+        position: relative;
+    }
     .mypageSidebar{
         width: 200px;
         height: 600px;
-        margin-left: 450px;
-        margin-top: 80px;
-        margin-right: 30px;
+        position: absolute;
+        top:50px;
+        left:-70px;
+        float:left;
     }
-    .mypageSidebar .title{
+    .title{
         margin: 5px;
         display: block;
     }
-    .mypageSidebar .menu{
+    .menu{
         border: 3px solid lightgray;
         border-top: 3px solid black;
         padding: 10px;
     }
-    .mypageSidebar .menu th{
+    .menu th{
         color: black;
         text-align: left;
         padding-bottom: 8px;
         font-size: 15px;
         border-bottom: 1px solid grey;
     }
-    .mypageSidebar .menu td{
+    .menu td{
         padding-bottom: 8px;
     }
-    #sidebarmenu{
-        padding-bottom: 45px;
-    }
-    .mypageSidebar {display: inline-block;}
-    a {
+    .menu a {
         text-decoration: none;
         color:black;
+        font-size: small;
     }
-    a:link {
+    .menu a:hover {
     	text-decoration:none;
-    	color:black;
+    	color:lightgrey;
     }
 </style>
 
@@ -69,56 +68,78 @@
 <body>
     <%@ include file="../common/menubar.jsp" %>
     
-         
-        <!-- 마이페이지 사이드바 시작-->
+    
+    <!-- 마이페이지 사이드바 시작-->
+    <div id="mypageNav">
         <div class="mypageSidebar">
-            <div class="title"><h3>마이페이지</h3></div>
+            <div class="title">
+                <h3>마이페이지</h3>
+            </div>
             <div class="menu">
-            <table>
-                <tr>
-                    <th>회원정보</th>
-                </tr>
-                <tr>
-                    <td><a href="<%=contextPath%>/memberUpdate.me">회원정보변경</a></td>
-                </tr>
-                <tr>
-                    <td id="sidebarmenu"><a href="<%=contextPath%>/memberDelete.me">회원탈퇴</a></td>
-                </tr> 
-                <tr>
-                    <th>혜택관리</th>
-                </tr>
-                <tr>
-                    <td id="sidebarmenu"><a href="">적립금</a></td>
-                </tr>
-                <tr>
-                    <th>쇼핑정보</th>
-                </tr>
-                <tr>
-                    <td><a href="<%=contextPath%>/orderList.my">주문목록/배송조회</a></td>
-                </tr>
-                <tr>
-                    <td><a href="<%=contextPath%>/cancelList.my">취소/환불내역</a></td>
-                </tr>
-                <tr>
-                    <td id="sidebarmenu"><a href="">찜리스트</a></td>
-                </tr>
-                <tr>
-                    <th>나의 게시글관리</th>
-                </tr>
-                <tr>
-                    <td><a href="<%=contextPath%>/inquiryList.my">1:1문의</a></td>
-                </tr>
-                <tr>
-                    <td><a href="">상품문의</a></td>
-                </tr>
-                <tr>
-                    <td><a href="">내가 작성한 리뷰</a></td>
-                </tr>
-            </table>
+                <table>
+                    <tr>
+                        <th>회원정보</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="<%=contextPath%>/memberUpdate.me">회원정보변경</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 45px;">
+                            <a href="<%=contextPath%>/memberDelete.me">회원탈퇴</a>
+                        </td>
+                    </tr> 
+                    <tr>
+                        <th>혜택관리</th>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 45px;">
+                            <a href="">적립금</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>쇼핑정보</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="<%=contextPath%>/orderList.my">주문목록/배송조회</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="<%=contextPath%>/cancelList.my">취소/환불내역</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 45px;">
+                            <a href="">찜리스트</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>나의 게시글관리</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="<%=contextPath%>/inquiryList.my">1:1문의</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="">상품문의</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 45px;">
+                            <a href="">내가 작성한 리뷰</a>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
-        <!-- 마이페이지 사이드바 끝-->
-       
+    </div>  
+    <!-- 마이페이지 사이드바 끝-->
+     
    
 </body>
 </html>
