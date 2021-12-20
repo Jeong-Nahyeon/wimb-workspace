@@ -52,6 +52,7 @@
             padding: 0 20px; 
             margin-bottom: 50px;
             vertical-align: middle;
+            width: 100%;
         }
         #order-list img{
             width: 70px;
@@ -178,6 +179,9 @@
     </style>
     </head>
     <body>
+        <div id="header">
+            <%@ include file="../common/menubar.jsp" %>
+        </div>
         <div class="wrap">
             <div id="order-process">
                 <span>01장바구니 &gt; </span>
@@ -358,6 +362,9 @@
     
                 
             </div>
+        </div>
+        <div id="footer">
+        	<%@ include file="../common/footer.jsp" %>
         </div>
     
         <!-- script -->

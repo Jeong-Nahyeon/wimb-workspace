@@ -372,7 +372,16 @@
                         
                     </div>
                 </div>
-                
+                <!-- 주문서로 이동시 실행되는 script-->
+                <script>
+                    $("#customOrder_order").click(function(){
+                        var ciCode = "";
+                        $(".customlist_price").each(function(){
+                            ciCode += ($(this).val());
+                        })
+                        location.href = '<%=contextPath%>/order.pay?ciCode='+ciCode;
+                    })
+                </script>
 
                 <!-- 가운데 세로선-->
                 <div id="main_line"></div>
@@ -752,34 +761,12 @@
 
                     function successSelect(list){
                         console.log(list)
-                        var contentTh = "<tr>" +
-                                            "<th colspan='3' style='text-align: left;'>"+ list[0].cuName +"</th>" +
-                                            " <th style='text-align: right;''><button id='customOrder_btn_cancle'><i class='fas fa-times fa-lg'></i></button></th>"+
-                                       "</tr>" +
-                                       "<tr>" +
-                                            "<td style='width: 100px; padding-left: 10px;'>" + "채소" + "</td>" +
-                                            "<td colspan='3' style='width: 220px; text-align: right;'' class='listVagetagle'></td>"+
-                                       "</tr>" +
-                                       "<tr>" +
-                                            "<td style='width: 100px; padding-left: 10px;'>" + "메인토핑" + "</td>" +
-                                            "<td colspan='3' style='width: 220px; text-align: right;'' class='listMain'></td>"+
-                                       "</tr>" +
-                                       "<tr>" +
-                                            "<td style='width: 100px; padding-left: 10px;'>" + "사이드토핑" + "</td>" +
-                                            "<td colspan='3' style='width: 220px; text-align: right;'' class='listSide'></td>"+
-                                       "</tr>" +
-                                       "<tr>" +
-                                            "<td style='width: 100px; padding-left: 10px;'>" + "드레싱" + "</td>" +
-                                            "<td colspan='3' style='width: 220px; text-align: right;'' class='listDressing'></td>"+
-                                       "</tr>"
-
-                        $(".customOrder_table").html("<table class='customlist_table'></table>");
-                        $(".customlist_table").html(contentTh);
 
                         var vagetable_text = "";
                         var main_text = "";
                         var side_text = "";
                         var dressing_text = "";
+                        var total_price = 0;
                         
                         for(var i=0;i<list.length;i++){
                             if(list[i].ciCategory == '채소'){
@@ -792,13 +779,58 @@
                                 dressing_text += list[i].ciName + "/";
                             }         
                         }
+                        
 
-                        $(".listVagetagle").text(vagetable_text); 
-                        $(".listMain").text(main_text); 
-                        $(".listSide").text(side_text); 
-                        $(".listDressing").text(dressing_text); 
-                        $("#total_price").text(list[0].cuPrice);
+                        var contentTh = "<table class='customlist_table'>"+
+                                            "<tr>" +
+                                                    "<th colspan='3' style='text-align: left;'>"+ list[0].cuName +"</th>" +
+                                                    " <th style='text-align: right;''><button id='customOrder_btn_cancle'><i class='fas fa-times fa-lg'></i></button></th>"+
+                                            "</tr>" +
+                                            "<tr>" +
+                                                    "<td style='width: 100px; padding-left: 10px;'>" + "채소" + "</td>" +
+                                                    "<td colspan='3' style='width: 220px; text-align: right;'' class='listVagetagle'>"+ vagetable_text +"</td>"+
+                                            "</tr>" +
+                                            "<tr>" +
+                                                    "<td style='width: 100px; padding-left: 10px;'>" + "메인토핑" + "</td>" +
+                                                    "<td colspan='3' style='width: 220px; text-align: right;'' class='listMain'>"+ main_text +"</td>"+
+                                            "</tr>" +
+                                            "<tr>" +
+                                                    "<td style='width: 100px; padding-left: 10px;'>" + "사이드토핑" + "</td>" +
+                                                    "<td colspan='3' style='width: 220px; text-align: right;'' class='listSide'>"+ side_text +"</td>"+
+                                            "</tr>" +
+                                            "<tr>" +
+                                                    "<td style='width: 100px; padding-left: 10px;'>" + "드레싱" + "</td>" +
+                                                    "<td colspan='3' style='width: 220px; text-align: right;'' class='listDressing'>"+ dressing_text +"</td>"+
+                                            "</tr>" +
+                                            "<input type='hidden' class='order_ciCode' value='"+ list[0].cuCode +"'>" +
+                                            "<input type='hidden' class='custom_price' value='"+ list[0].cuPrice +"'>" +
+                                       "</table>"
+                                            
+                        $(".customOrder_table").append(contentTh);
+                        
+
+                        // 선택부분 초기화
+                        $(".count_text").val(0);
+                        $("#saladName").val("");
+                        $("#vagetable_name").html("");
+                        $("#vagetable_price").html("");
+                        $("#maintopping_name").html("");
+                        $("#maintopping_price").html("");
+                        $("#sidetopping_name").html("");
+                        $("#sidetopping_price").html("");
+                        $("#dressing_name").html("");
+                        $("#dressing_price").html("");
+                        $("#total_sum").text("");
+                        
+                        $(".custom_price").each(function(){
+                            total_price += parseInt($(this).val());
+                        });
+                        console.log(total_price);
+                        $("#total_price").text(total_price);
+                        
                     }
+
+                    
                 </script>
                 
                 
