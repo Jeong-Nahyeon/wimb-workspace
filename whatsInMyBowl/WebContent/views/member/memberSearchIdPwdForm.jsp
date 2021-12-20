@@ -14,7 +14,7 @@
         width: 400px;
         height: 250px;
     }
-    .wrap{border: 1px solid lightgrey; width: 500px; height:400px; margin: auto; margin-top: 50px;}
+    .outer{border: 1px solid lightgrey; width: 500px; height:400px; margin: auto; margin-top: 50px;}
         
     .findtap>ul>li{
         list-style: none;
@@ -67,7 +67,7 @@
 </head>
 <body>
 
-	 <div class="wrap" align="center">
+	 <div class="outer" align="center">
     
         <div class="findtap">
             <ul align="center">
@@ -80,7 +80,7 @@
         <br clear="both">
         <br>
         <div id="findwrap">
-            <form action="search.me" method="post" class="infoForm" id="infoForm">
+            <form action="<%=contextPath%>/searchIdClick.me" method="post" class="infoForm" id="infoForm" onsubmit="return searchId();">
             <div class="optiontap">
             
                 <input type="radio" class="methodOption" id="radioEmail" value="email" name="radio" checked="checked">
@@ -101,17 +101,9 @@
                         
                         <tr>
                             <td>
-                                <input type="text" class="userEmailInput" name="userId" id="userId" required placeholder="가입메일주소">
+                                <input type="text" class="userEmailInput" name="userEmail" id="userEmail" required placeholder="가입메일주소">
                             </td>
-                            <td>
-                                <input type="text" class="userEmailInput" list="emailAddress" id="userEmail" required placeholder="직접입력">
-                                <datalist name="userEmail" id="emailAddress">
-                                    <option value="google">google.com</option>
-                                    <option value="naver">naver.com</option>
-                                    <option value="daum">daum.net</option>
-                                    <option value="kakao">kakao.com</option>
-                                </datalist>                    
-                            </td>
+                            
                         </tr>
                         <tr></tr> 
                         <tr>
@@ -143,7 +135,7 @@
                         <tr></tr> 
                         <tr>
                             <td colspan="2">
-                                <button type="submit" id="confirmbtn" onclick="searchId();">확인</button>
+                                <button type="submit" id="confirmbtn">확인</button>
                             </td>
                         </tr>     
                         <tr>
@@ -153,39 +145,42 @@
                         </tr>
                     </table>
                 </div>
-                <script>
-                    function loginPage(){
-                        
-                        location.href = "<%=contextPath%>/loginForm.me";
-                    }
-
-                
-                    $('input[type=radio][name=radio]').on('click',function(){
-                        
-                        var chkValue = $('input[type=radio][name=radio]:checked').val();
-
-                        if(chkValue == 'email'){
-                            $('#clickemail').css('display', 'block');
-                            $('#clickphone').css('display', 'none');
-                        }else{
-                            $('#clickemail').css('display', 'none');
-                            $('#clickphone').css('display', 'block');
-                        }
-                            
-                    }); 
-                    
-                    function searchId(){
-                        var myform = document.getElementById("infoForm");
-                        document.getElementById("confirmbtn").addEventListener("click", function(){
-                            myform.submit();
-                        })
-                    }
-                </script>   
+            
 
             </form>
         </div>
-       
+        
     
     </div>
+
+    <script>
+        function loginPage(){
+            
+            location.href = "<%=contextPath%>/loginForm.me";
+        }
+
+    
+        $('input[type=radio][name=radio]').on('click',function(){
+            
+            var chkValue = $('input[type=radio][name=radio]:checked').val();
+
+            if(chkValue == 'email'){
+                $('#clickemail').css('display', 'block');
+                $('#clickphone').css('display', 'none');
+            }else{
+                $('#clickemail').css('display', 'none');
+                $('#clickphone').css('display', 'block');
+            }
+                
+        }); 
+        
+        function searchId(){
+            $("#loginbtn").submit();
+        }
+    </script>  
+
+    <footer>
+        <%@ include file="../common/footer.jsp"%>
+    </footer>
 </body>
 </html>
