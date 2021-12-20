@@ -29,12 +29,13 @@
 <style>
     /* 주문|배송조회 전체영역 */
     .orderPostList {
-    	margin-top: 40px;
-        margin-left: 500px;
+    	width: 600px;
+    	height: 800px;
+    	margin: auto;
     }
     /* 주문|배송조회 기간 선택 영역 */
     .selectDate {
-        width:700px;
+    	width: 600px;
         padding: 35px 20px 35px 20px;
         border: 1px solid #ebebeb;
         box-sizing: border-box;
@@ -78,7 +79,7 @@
         height: 100px;
     }
     .orderList {
-        width: 700px;
+        width: 600px;
         text-align: center;
         border-spacing: 0px;
         box-sizing: border-box;

@@ -28,13 +28,14 @@
 <style>
     /* 교환|환불조회 전체영역 */
     .cancelList {
-       	margin-top: 40px;
-        margin-left: 500px;
+    	width: 600px;
+    	height: 800px;
+    	margin: auto;
     }
     /* 주문|배송조회 기간 선택 영역 */
     .selectDate {
-        width:700px;
-        padding: 35px 20px 35px 20px;
+        width:600px;
+        padding: 20px 20px 20px 20px;
         border: 1px solid #ebebeb;
         box-sizing: border-box;
         margin-bottom: 50px;
@@ -78,7 +79,7 @@
         height: 100px;
     }
     .orderList {
-        width: 700px;
+        width: 600px;
         text-align: center;
         border-spacing: 0px;
         box-sizing: border-box;
@@ -182,7 +183,7 @@
                         <button type="button" onclick="dateSub(365);">1년</button>
                     </div>
                 </div>
-                <div class="selectCalendar" style="display: inline-block;">
+                <div class="selectCalendar">
                     <input type="date" id="startDate" name="startDate">
                     <label>~</label>
                     <input type="date" id="endDate" name="endDate">
@@ -223,9 +224,13 @@
 	                        </tr>
 	                        
 	                        <% for(MyOrders od : clist) { %>
-	                     
 	                        <tr>
-	                            <td><%= od.getOrderDate() %><br>[<label class="oCode" name="oCode"><%= od.getOrderCode() %></label>]</td>
+	                        
+	                             <td class="oC">
+	                             	<span><%= od.getOrderDate() %></span>
+	                             	<br>
+	                             	[<span class="oCode"><%= od.getOrderCode() %></span>]
+	                             </td>
 	                            
 	                            <% if(od.getpName() == null) {  // 커스텀상품%>
 	                            	<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"><%= od.getCuName() %></a></td>
@@ -259,8 +264,7 @@
 	                            
 	                            <% } %>
 	                            <td><button id="detailBtn" type="button" data-toggle="modal" data-target="#this-modal">상세보기</button></td>
-	                            <td style="display:hidden;"><%= od.getOrderCode() %></td>
-	                        </tr>
+	                         </tr>
 	                        <% } %>
 	                    </table>  
                           
@@ -305,7 +309,7 @@
                     <div id="area2" style="margin-bottom: 30px;">
                         <label style="margin: 0px; font-size: 14px;">취소/환불 요청사유</label>
                         <table>
-                            <tr style="border-top: 1px solid rgba(179, 174, 174, 0.384); border-bottom: 1px solid rgba(133, 136, 139, 0.61);">
+                            <tr style="border-top: 1px solid rgba(133, 136, 139, 0.61); border-bottom: 1px solid rgba(133, 136, 139, 0.61);">
                                 <th width="150">요청사유</th>
                                 <td width="300" id="detail2"></td>
                             </tr>
@@ -313,7 +317,7 @@
                     </div>
 
                     <label>취소/환불 정보</label>
-                    <table class="area3">
+                    <table class="area3" style="border-top: 1px solid rgba(133, 136, 139, 0.61);">
                         <tr>
                             <td width="150px;">상품금액</td>
                             <td id="detail3" style="text-align: right; width: 300px; padding-right: 30px;"></td>
@@ -324,7 +328,7 @@
                         </tr>
                     </table>
                     <table>
-                        <th width="150px;">총 환불금액</th>
+                        <th width="150px;" style="text-align: center;">총 환불금액</th>
                         <th id="detail5" style="text-align: right; width: 300px; padding-right: 30px;"></th>
                     </table>
                 </div>
@@ -332,7 +336,7 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button id="ok" type="button" data-dismiss="modal">확인</button>
-                    <label></label>
+                    
                 </div>
 
             </div>
@@ -344,13 +348,13 @@
 	<script>
 		$(document).on('click', "#detailBtn", function(){
 			
-			const orderCode = $(this).next();
-			console.log(orderCode);
+			var oCode = $(this).parent().siblings(".oC").find(".oCode").text();
+			console.log(oCode);
 			
 			$.ajax({
 				url:"crDetail.my",
 				type:"post",
-				data:{orderCode:orderCode.text()},
+				data:{orderCode:oCode},
 				success:function(mo){
 					console.log(mo);
 					
@@ -395,17 +399,17 @@
 					
 					// 세번째 표 자리
 					var result3 = "";
-					result3 += mo.pmTotalCost * mo.orderAmount;
+					result3 += mo.pmTotalCost * mo.orderAmount + "원";
 					$("#detail3").html(result3);
 					
 					// 네번째 표 자리
 					var result4 = "";
-					result4 += ((mo.pmFinalCost* mo.orderAmount) - (mo.pmTotalCost * mo.orderAmount));
+					result4 += ((mo.pmFinalCost* mo.orderAmount) - (mo.pmTotalCost * mo.orderAmount)) + "원";
 					$("#detail4").html(result4);
 					
 					// 마지막 표 자리
 					var result5 = "";
-					result5 += mo.pmFinalCost * mo.orderAmount;
+					result5 += mo.pmFinalCost * mo.orderAmount + "원";
 					$("#detail5").html(result5);
 					
 					
