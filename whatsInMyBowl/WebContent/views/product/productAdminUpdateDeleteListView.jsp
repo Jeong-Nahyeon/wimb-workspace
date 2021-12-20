@@ -374,10 +374,11 @@
                 </div>
                 <!-- 상품삭제 버튼 -->
                 <div align="right">
+                    <input type="hidden" name="loginAdminPwd" value="<%= loginUser.getmPwd() %>"> <!-- 로그인한 관리자의 비밀번호를 input:hidden의 value에 담기 => 상품 삭제 시 필요 -->
                     <button type="button" id="delete-product-btn" class="btn btn-sm" style="background:rgb(255, 225, 90);">상품삭제</button>
                 </div>
             </div>
-            <!-- 상품 삭제용  -->
+            <!-- 상품 삭제용 ajax -->
             <script>
                 $(function(){
                     
@@ -389,29 +390,85 @@
                             checkboxArr.push($(this).val());
                         });
                         
-                        const pCodeArr = checkboxArr.join("'', ''");/
-                        console.log(pCodeArr);
+                        const pCodeArr = checkboxArr.join(",");
 
                     	if(checkboxArr.length == 0){ // 상품 체크 안 하고 클릭했을 경우 => 경고 알람창
                     		alert("삭제할 상품이 선택되지 않았습니다");
-                    	} else{ // 상품 체크 후 클릭했을 경우 => 상품 삭제 모달창
+                    	} else{ // 상품 체크 후 클릭했을 경우 => 상품 삭제 모달창 => 관리자 비밀번호 확인 모달창
 
+                            // 상품 삭제 모달창 열기
                     		$("#delete-product-modal").modal("show");
                             
+                            // 상품 삭제 모달창  => 취소 버튼 클릭 시
+                            $("#delete-cancel-btn").click(function(){
+                                location.reload();
+                            });
+                            
+                            // 상품 삭제 모달창  => 삭제 버튼 클릭 시
                             $("#delete-btn").click(function(){
+                                
+                                console.log(pCodeArr);
+                                // 상품 삭제 모달창 닫기
+                                $("#delete-product-modal").modal("hide");
+                                
+                                // 관리자 비밀번호 확인 모달창 열기
+                                $("#delete-checkPwd-modal").modal("show");
 
-                                $.ajax({
-                                   url:"delete.apr",
-                                   data:{pCodeArr:pCodeArr},
-                                   success:function(result){
-                                    
-                                    console.log(result);
-
-
-                                   }, error:function(){
-                                       console.log("ajax 통신 실패");
-                                   } 
+                                // 관리자 비밀번호 확인 모달창  => 취소 버튼 클릭 시
+                                $("#checkPwd-cancel-btn").click(function(){
+                                    location.reload();
                                 });
+
+                                // 관리자 비밀번호 확인 모달창 => 확인 버튼 클릭 시
+                                $("#checkPwd-btn").click(function(){
+
+                                    if($("input[name=adminPwd]").val() == ""){ // 비밀번호 입력하지 않았을 경우
+                                        alert("관리자 비밀번호를 입력해주세요");
+                                    } else{ // 비밀번호 입력했을 경우
+
+                                        if($("input[name=adminPwd]").val() == $("input[name=loginAdminPwd]").val()){ // 입력값이 관리자 비밀번호와 일치할 경우 => 요청처리 후 성공 모달창
+
+                                            $.ajax({
+                                               url:"delete.apr",
+                                               data:{pCodeArr:pCodeArr},
+                                               success:function(result){ // 매개변수 result로 처리된 행수를 담은 응답 데이터 받아주기
+                                                
+                                                
+
+                                                if(result > 0){ // 삭제 성공
+                                                    console.log(result);
+                                                    // 관리자 비밀번호 확인 모달창 닫기
+                                                    $("#delete-checkPwd-modal").modal("hide");
+
+                                                    // 요청처리 성공 모달창 열기
+                                                    $("#request-success-modal").modal("show");
+                                                    $("#request-success-modal b").text("성공적으로 삭제되었습니다");
+
+                                                    $("#reload-btn").click(function(){
+                                                        location.reload();
+                                                    });
+                                                    
+                                                } else{ // 삭제 실패
+                                                    alert("상품 삭제 실패");
+                                                    location.reload();
+                                                }
+            
+                                               }, error:function(){
+                                                   console.log("ajax 통신 실패");
+                                               } 
+                                            });
+
+                                        } else{ // 입력값이 관리자 비밀번호와 일치하지 않을 경우 => 알람창 => 다시 입력 유도
+                                            alert("비밀번호가 일치하지 않습니다. 다시입력해주세요.");
+                                            $("input[name=adminPwd]").val("");
+                                            $("input[name=adminPwd]").focus();
+                                        }
+
+
+                                    }
+
+                                });
+
 
                             });
                     	}   
@@ -562,40 +619,46 @@
 
                 $("#product-search-btn").click(function(){
 
-                    $.ajax({
-                        url:"search.apr",
-                        data:{searchKeyword:$("#product-search").val()},
-                        success:function(list){
-                            
-                            $("#product-list tbody").html("");
+                    if($("#product-search").val() == ""){
+                        alert("검색할 상품명을 입력해 주세요");
+                    } else {
 
-                                let result = "";
+                        $.ajax({
+                            url:"search.apr",
+                            data:{searchKeyword:$("#product-search").val()},
+                            success:function(list){
                                 
-                                for(let i=0; i<list.length; i++){
+                                $("#product-list tbody").html("");
+
+                                    let result = "";
                                     
-                                    result += "<tr>"
-                                                + "<td><input type='checkbox' disabled></td>"
-                                                + "<td>" + list[i].pCode + "</td>"
-                                                + "<td><a class='product-name'>" + list[i].pName + "</a></td>"
-                                                + "<td>" + list[i].pProvider + "</td>"
-                                                + "<td>" + list[i].pProvidePrice + "</td>"
-                                                + "<td>" + list[i].pPrice + "</td>"
-                                                + "<td>" + list[i].pStock + "</td>"
-                                                + "<td>" + list[i].pShow + "</td>"
-                                            + "</tr>";
-                                            
-                                }
+                                    for(let i=0; i<list.length; i++){
+                                        
+                                        result += "<tr>"
+                                                    + "<td><input type='checkbox' disabled></td>"
+                                                    + "<td>" + list[i].pCode + "</td>"
+                                                    + "<td><a class='product-name'>" + list[i].pName + "</a></td>"
+                                                    + "<td>" + list[i].pProvider + "</td>"
+                                                    + "<td>" + list[i].pProvidePrice + "</td>"
+                                                    + "<td>" + list[i].pPrice + "</td>"
+                                                    + "<td>" + list[i].pStock + "</td>"
+                                                    + "<td>" + list[i].pShow + "</td>"
+                                                + "</tr>";
+                                                
+                                    }
 
-                                $("#list-2 span").text(list.length);
-                                $("#product-list tbody").html(result);
-                                $("#paging-bar").text("");
+                                    $("#list-2 span").text(list.length);
+                                    $("#product-list tbody").html(result);
+                                    $("#paging-bar").text("");
 
 
-                        }, error:function(){
+                            }, error:function(){
 
                         }
 
                     });
+
+                }
 
                 });
 
@@ -818,18 +881,19 @@
                                             <td colspan="2" style="font-size:12px;">회원이 상품 클릭 시 맨 위에 보여지는 화면입니다.</td>
                                         </tr>
                                         <tr>
-                                            <th>카테고리</th>
-                                            <td colspan="2">
-                                                <select name="productCategory"  required>
-                                                    <option>카테고리 선택</option>
+                                            <th>* 카테고리</th>
+                                            <td>
+                                                <select name="productCategory" required>
+                                                    <option selected disabled>카테고리 선택</option>
                                                     <option>비건</option>
                                                     <option>육류</option>
                                                     <option>해산물</option>
                                                 </select>
+                                                <th style="text-align:right;">* 필수입력사항</th>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>사진등록</th>
+                                            <th>* 사진등록</th>
                                             <td colspan="2">
                                                 <input type="file" name="mainImg" onchange="loadImg(this, 1);">
                                             </td>
@@ -843,11 +907,11 @@
                                             <td rowspan="8" style="width:300px; height:300px; padding:0; border:1px solid lightgray;">
                                                 <img 	class="main-img-area">
                                             </td>
-                                            <th>제품명</th>
+                                            <th>* 제품명</th>
                                             <td><input type="text" name="productName" placeholder="ex) 닭가슴살샐러드" required></td>
                                         </tr>
                                         <tr>
-                                            <th>판매가격</th>
+                                            <th>* 판매가격</th>
                                             <td><input type="number" name="productPrice" placeholder="ex) 3000" required></td>
                                         </tr>
                                         <tr>
@@ -856,19 +920,19 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>공급업체</th>
+                                            <th>* 공급업체</th>
                                             <td><input type="text" name="provider" placeholder="ex) (주)OO식품" required></td>
                                         </tr>
                                         <tr>
-                                            <th>공급가격</th>
+                                            <th>* 공급가격</th>
                                             <td><input type="number" name="supplyPrice" placeholder="ex) 2000" required></td>
                                         </tr>
                                         <tr>
-                                            <th>입고수량</th>
+                                            <th>* 입고수량</th>
                                             <td><input type="number" name="productAmount" placeholder="ex) 30" required></td>
                                         </tr>
                                         <tr>
-                                            <th>키워드</th>
+                                            <th>* 키워드</th>
                                             <td><input type="text" name="productKeyword" placeholder="ex) 비건,채소" required></td>
                                         </tr>
                                         <tr>
@@ -901,7 +965,7 @@
                                 <table id="detail-2" class="table-borderless">
                                     <tr>
                                         <td>
-                                            <textarea name="detailContent" rows="10" style="resize:none; overflow-y:scroll; overflow-x:hidden;" required>상세내용을 입력해주세요</textarea>
+                                            <textarea name="detailContent" rows="10" style="resize:none; overflow-y:scroll; overflow-x:hidden;" required>* 상세내용을 입력해주세요</textarea>
                                         </td>
                                     </tr>
                                     <tr>
@@ -995,8 +1059,37 @@
 				<!-- Modal footer -->
 				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
 					<div align="center" style="width:100%;">
-						<button type="submit" class="btn" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
+						<button type="submit" id="delete-cancel-btn" class="btn" style="border:1px solid lightgray; margin:0px 5px;">취소</button>
 						<button type="submit" id="delete-btn" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">삭제</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+    
+    
+
+    <!-- 상품 삭제 관리자 비밀번호 확인 모달창 -->
+
+    <div class="modal fade" id="delete-checkPwd-modal">
+		<div class="modal-dialog modal-dialog-centered" role="document" >
+			<div class="modal-content checkPwd-delete-modal" style="width:500px; height:200px; border-radius: 0;">
+				
+				<!-- Modal body -->
+				<div class="modal-body content-area" style="height:100%;">
+                    <div align="center" style="height:100%;">
+                        <br>
+                        <h6>관리자 비밀번호 입력</h6>
+                        <input type="password" name="adminPwd" required> 
+                    </div>
+				</div>
+				
+				<!-- Modal footer -->
+				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
+					<div align="center" style="width:100%;">
+						<button type="submit" id="checkPwd-cancel-btn" class="btn" style="border:1px solid lightgray; margin:0px 5px;">취소</button>
+						<button type="submit" id="checkPwd-btn" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">확인</button>
 					</div>
 				</div>
 
@@ -1026,7 +1119,7 @@
 				<!-- Modal footer -->
 				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
 					<div align="center" style="width:100%;">
-						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;" data-dismiss="modal">확인</button>
+						<button type="submit" id="reload-btn" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;" data-dismiss="modal">확인</button>
 					</div>
 				</div>
 
@@ -1034,6 +1127,35 @@
 		</div>
 	</div>
 
+
+
+    <!-- 요청처리 실패 모달창 -->
+
+	<div class="modal fade" id="request-fail-modal">
+		<div class="modal-dialog modal-dialog-centered" role="document" >
+			<div class="modal-content fail-request-modal" style="width:500px; height:200px; border-radius: 0;">
+				
+				<!-- Modal body -->
+				<div class="modal-body content-area" style="height:100%;">
+					<div class="request-fail-img" align="center" style=" height:60%; line-height:150px;">
+                        <i class="fas fa-times fa-4x" style="color:rgb(255, 225, 90);"></i>
+                    </div>
+
+                    <div class="request-fail-content" align="center" style="height:40%; line-height:60px;">
+                        <b> </b>
+                    </div>
+				</div>
+				
+				<!-- Modal footer -->
+				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
+					<div align="center" style="width:100%;">
+						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">확인</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
     
 </body>
 </html>

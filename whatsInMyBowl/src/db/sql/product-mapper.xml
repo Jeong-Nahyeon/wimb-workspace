@@ -237,7 +237,7 @@
 		UPDATE PRODUCT
 		   SET P_SHOW = 'N'
 		     , P_ADMINSHOW = 'N'
-		 WHERE P_CODE IN (?)
+		 WHERE P_CODE = ?
 	</entry>
 
 </properties>

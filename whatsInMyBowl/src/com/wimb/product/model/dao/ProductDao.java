@@ -573,7 +573,7 @@ public class ProductDao {
 	 * @param pCode  :  관리자가 선택한 완제품의 상품번호들을 하나의 문자열로 나열한 값 => P1023', 'P1022', 'P1021
 	 * @return
 	 */
-	public int deleteAdminProduct(Connection conn, String pCode) {
+	public int deleteAdminProduct(Connection conn, String[] pCode) {
 		
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -583,9 +583,13 @@ public class ProductDao {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, pCode);
+			for(String s : pCode) {
+				
+				pstmt.setString(1, s);
+				
+				result += pstmt.executeUpdate();
+			}
 			
-			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

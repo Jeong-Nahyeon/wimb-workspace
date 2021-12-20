@@ -29,15 +29,12 @@ public class AjaxProductAdminDeleteController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//get 방식으로 전송해서 인코딩 안 해줘도 되지만 일단 혹시 모르니까 인코딩 설정
 		
-		String pCode = request.getParameter("pCodeArr");
-		
-		System.out.println(pCode);
+		String[] pCode = request.getParameter("pCodeArr").split(",");
 		
 		int result = new ProductService().deleteAdminProduct(pCode);
 		
-		// 처리된 행 수(0|1) 응답 데이터로 전달
+		// 처리된 행 수(0 || 0 이상) 응답 데이터로 전달
 		response.getWriter().print(result);
 		
 	}

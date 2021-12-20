@@ -520,40 +520,46 @@
 
                 $("#product-search-btn").click(function(){
 
-                    $.ajax({
-                        url:"search.apr",
-                        data:{searchKeyword:$("#product-search").val()},
-                        success:function(list){
-                            
-                            $("#product-list tbody").html("");
+                    if($("#product-search").val() == ""){
+                        alert("검색할 상품명을 입력해 주세요");
+                    } else {
 
-                            	let result = "";
-                            	
-                            	for(let i=0; i<list.length; i++){
-                            		
-                            		result += "<tr>"
-	                            				+ "<td><input type='checkbox' disabled></td>"
-			    	                            + "<td>" + list[i].pCode + "</td>"
-			        	                        + "<td><a class='product-name'>" + list[i].pName + "</a></td>"
-			        	                        + "<td>" + list[i].pProvider + "</td>"
-			        	                        + "<td>" + list[i].pProvidePrice + "</td>"
-			        	                        + "<td>" + list[i].pPrice + "</td>"
-			        	                        + "<td>" + list[i].pStock + "</td>"
-			        	                        + "<td>" + list[i].pShow + "</td>"
-		        	                    	+ "</tr>";
-		        	                        
-                            	}
+                        $.ajax({
+                            url:"search.apr",
+                            data:{searchKeyword:$("#product-search").val()},
+                            success:function(list){
+                                
+                                $("#product-list tbody").html("");
 
-                                $("#list-2 span").text(list.length);
-                                $("#product-list tbody").html(result);
-                                $("#paging-bar").text("");
+                                    let result = "";
+                                    
+                                    for(let i=0; i<list.length; i++){
+                                        
+                                        result += "<tr>"
+                                                    + "<td><input type='checkbox' disabled></td>"
+                                                    + "<td>" + list[i].pCode + "</td>"
+                                                    + "<td><a class='product-name'>" + list[i].pName + "</a></td>"
+                                                    + "<td>" + list[i].pProvider + "</td>"
+                                                    + "<td>" + list[i].pProvidePrice + "</td>"
+                                                    + "<td>" + list[i].pPrice + "</td>"
+                                                    + "<td>" + list[i].pStock + "</td>"
+                                                    + "<td>" + list[i].pShow + "</td>"
+                                                + "</tr>";
+                                                
+                                    }
+
+                                    $("#list-2 span").text(list.length);
+                                    $("#product-list tbody").html(result);
+                                    $("#paging-bar").text("");
 
 
-                        }, error:function(){
+                            }, error:function(){
 
-                        }
+                            }
 
-                    });
+                        });
+
+                    }
 
                 });
 
@@ -574,7 +580,7 @@
                     
                     <!-- Modal Header -->
                     <div class="modal-header title-area">
-                        <h3 class="modal-title">상품 등록</h3>
+                        <h6 class="modal-title" style="margin-left:350px; font-weight:bolder;">상품 등록</h6>
                         <button type="button" class="close" data-dismiss="modal">×</button>
                     </div>
                     
@@ -589,18 +595,19 @@
                                                 <td colspan="2" style="font-size:12px;">회원이 상품 클릭 시 맨 위에 보여지는 화면입니다.</td>
                                             </tr>
                                             <tr>
-                                                <th>카테고리</th>
-                                                <td colspan="2">
-                                                    <select name="productCategory"  required>
-                                                        <option>카테고리 선택</option>
+                                                <th>* 카테고리</th>
+                                                <td>
+                                                    <select name="productCategory" required="required">
+                                                        <option selected disabled>카테고리 선택</option>
                                                         <option>비건</option>
                                                         <option>육류</option>
                                                         <option>해산물</option>
                                                     </select>
                                                 </td>
+                                                <th style="text-align:right;">* 필수입력사항</th>
                                             </tr>
                                             <tr>
-                                                <th>사진등록</th>
+                                                <th>* 대표사진등록</th>
                                                 <td colspan="2">
                                                     <input type="file" name="mainImg" onchange="loadImg(this, 1);" required>
                                                 </td>
@@ -614,11 +621,11 @@
                                                 <td rowspan="8" style="width:300px; height:300px; padding:0; border:1px solid lightgray;">
                                                     <img 	class="main-img-area">
                                                 </td>
-                                                <th>제품명</th>
+                                                <th>* 제품명</th>
                                                 <td><input type="text" name="productName" placeholder="ex) 닭가슴살샐러드" required></td>
                                             </tr>
                                             <tr>
-                                                <th>판매가격</th>
+                                                <th>* 판매가격</th>
                                                 <td><input type="number" name="productPrice" placeholder="ex) 3000" required></td>
                                             </tr>
                                             <tr>
@@ -627,19 +634,19 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th>공급업체</th>
+                                                <th>* 공급업체</th>
                                                 <td><input type="text" name="provider" placeholder="ex) (주)OO식품" required></td>
                                             </tr>
                                             <tr>
-                                                <th>공급가격</th>
+                                                <th>* 공급가격</th>
                                                 <td><input type="number" name="supplyPrice" placeholder="ex) 2000" required></td>
                                             </tr>
                                             <tr>
-                                                <th>입고수량</th>
+                                                <th>* 입고수량</th>
                                                 <td><input type="number" name="productAmount" placeholder="ex) 30" required></td>
                                             </tr>
                                             <tr>
-                                                <th>키워드</th>
+                                                <th>* 키워드</th>
                                                 <td><input type="text" name="productKeyword" placeholder="ex) 비건,채소" required></td>
                                             </tr>
                                             <tr>
@@ -664,7 +671,7 @@
                                             <td style="font-size:12px;">상품에 대한 상세 설명을 작성하는 화면입니다.</td>
                                         </tr>
                                         <tr>
-                                            <th>사진등록</th>
+                                            <th>상세사진등록</th>
                                             <td><input type="file" name="detailImg" onchange="loadImg(this, 2);"></td>
                                         </tr>
                                     </table>
@@ -672,7 +679,7 @@
                                     <table id="detail-2" class="table-borderless">
                                         <tr>
                                             <td>
-                                                <textarea name="detailContent" rows="10" style="resize:none; overflow-y:scroll; overflow-x:hidden;" required>상세내용을 입력해주세요</textarea>
+                                                <textarea name="detailContent" rows="10" style="resize:none; overflow-y:scroll; overflow-x:hidden;" required>* 상세내용을 입력해주세요</textarea>
                                             </td>
                                         </tr>
                                         <tr>
@@ -724,7 +731,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer button-area">
                         <div id="button-left-area">
-                            <button type="reset" class="btn btn-sm btn-outline-dark" form="insert-form">취소</button>
+                            <button type="reset" class="btn btn-sm btn-outline-dark" form="insert-form">초기화</button>
                         </div>
                         <div id="button-right-area">
                             <button type="submit" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);" form="insert-form">등록</button>

@@ -49,6 +49,7 @@ public class ProductInsertController extends HttpServlet {
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new WimbFileRenamePolicy());
 			
 			String productCategory = multiRequest.getParameter("productCategory");
+			
 			String productName = multiRequest.getParameter("productName");
 			int productPrice = Integer.parseInt(multiRequest.getParameter("productPrice"));
 			String provider = multiRequest.getParameter("provider");

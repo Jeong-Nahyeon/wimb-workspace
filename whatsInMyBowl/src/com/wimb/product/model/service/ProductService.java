@@ -249,7 +249,7 @@ public class ProductService {
 	 * @param pCode  :  관리자가 선택한 완제품의 상품번호들을 하나의 문자열로 나열한 값 => P1023', 'P1022', 'P1021
 	 * @return
 	 */
-	public int deleteAdminProduct(String pCode) {
+	public int deleteAdminProduct(String[] pCode) {
 		
 		Connection conn = getConnection();
 		
