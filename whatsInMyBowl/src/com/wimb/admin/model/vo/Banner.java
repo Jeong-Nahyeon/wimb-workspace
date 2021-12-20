@@ -40,13 +40,22 @@ public class Banner {
 		this.bChangeName = bChangeName;
 	}
  
-	public Banner(int bCode, String bName, Date startDate, String status, String bPostion) {
+	
+	public Banner(int bCode, String bName, Date startDate, String status, String mainImg) {
 		super();
 		this.bCode = bCode;
 		this.bName = bName;
 		this.startDate = startDate;
 		this.status = status;
-		this.bPostion = bPostion;
+		this.mainImg = mainImg;
+	}
+
+	public Banner(int bCode, String bName, Date startDate, String status) {
+		super();
+		this.bCode = bCode;
+		this.bName = bName;
+		this.startDate = startDate;
+		this.status = status;
 	}
 
 	public Banner(int bCode, String bName, String bOriginName) {

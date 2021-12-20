@@ -38,10 +38,9 @@ public class bannerDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, b.getbName());
-			pstmt.setString(2, b.getbPostion());
-			pstmt.setString(3, b.getbPath());
-			pstmt.setString(4, b.getbOriginName());
-			pstmt.setString(5, b.getbChangeName());
+			pstmt.setString(2, b.getbPath());
+			pstmt.setString(3, b.getbOriginName());
+			pstmt.setString(4, b.getbChangeName());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -73,8 +72,8 @@ public class bannerDao {
 				list.add(new Banner(rset.getInt("b_code"),
 						            rset.getString("b_name"),
 						            rset.getDate("b_startdate"),
-						            rset.getString("b_status"),
-						            rset.getString("b_position")));				
+						            rset.getString("b_status")
+						           ));				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -107,8 +106,7 @@ public class bannerDao {
 				list.add(new Banner(rset.getInt("b_code"),
 						            rset.getString("b_name"),
 						            rset.getDate("b_startdate"),
-						            rset.getString("b_status"),
-						            rset.getString("b_position")));				
+						            rset.getString("b_status")));				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -141,8 +139,7 @@ public class bannerDao {
 				list.add(new Banner(rset.getInt("b_code"),
 						            rset.getString("b_name"),
 						            rset.getDate("b_startdate"),
-						            rset.getString("b_status"),
-						            rset.getString("b_position")));				
+						            rset.getString("b_status")));			
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -232,100 +229,6 @@ public class bannerDao {
 		return listCount;
 	}
 	
-	// 체크박스에 선택된 다수의 값을 한꺼번에 삭제시켜주는 dao
-	/*
-	public int deleteSelectAll(Connection conn) {
-		int result = 0;
-	}
-	*/
-	
-	
-	// 메인1 글씨 오른쪽 '변경하기'버튼 클릭 시 생성되는 모달창 안에 띄워줄 게시종료 상태 리스트
-	public ArrayList<Banner> selectFisrtMainList(Connection conn){
-		
-		ArrayList<Banner> Firstlist = new ArrayList<>();
-		ResultSet rset = null;
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("selectFisrtMainList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				Firstlist.add(new Banner(rset.getInt("b_code"),
-						                 rset.getString("b_name"),
-						                 rset.getString("filepath")));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return Firstlist;
-		
-		
-	}
-	
-	// 메인1에 등록하고자 하는 메인의 라디오버튼 선택 후 '등록'버튼 클릭 시 선택한 게시글 번호를 넘겨받아 화면에 띄우는 DAO
-	// step 1. 게시글 번호가 넘겨오면 게시여부 상태를 'N'에서 'Y'로 바꾸는 DAO
-	public int updateFirstMain(Connection conn, int selectMainNum) {
-		
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("updateFirstMain");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, selectMainNum);
-			
-			result = pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
-	
-	// step 2. 'Y'바뀐 게시글의 정보를 조회해오는 dao
-	public Banner selectFirstMain(Connection conn, int selectMainNum) {
-		
-		Banner b = null;
-		ResultSet rset = null;
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("selectFirstMain");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, selectMainNum);
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				b = new Banner();
-				b.setbCode(rset.getInt("b_code"));
-				b.setbName(rset.getString("b_name"));
-				b.setStartDate(rset.getDate("b_startdate"));
-				b.setStatus(rset.getString("b_status"));
-				b.setbPostion(rset.getString("b_position"));
-				b.setMainImg(rset.getString("filepath"));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return b;
-		
-	}
 	
 	public ArrayList<Banner> selectMainBanner(Connection conn){
 		
@@ -344,7 +247,6 @@ public class bannerDao {
 						            rset.getString("b_name"),
 						            rset.getDate("b_startdate"),
 						            rset.getString("b_status"),
-						            rset.getString("b_position"),
 						            rset.getString("filepath")));
 			}
 		} catch (SQLException e) {
@@ -355,5 +257,57 @@ public class bannerDao {
 		}
 		return list;
 	}
+	
+	// 배너 '변경'클릭 시 상태 Y로 변경해주는 서비스
+	public int statusChangeY(Connection conn, int bCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("statusChangeY");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bCode);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	// 배너 '변경'클릭 시 상태 n로 변경해주는 서비스
+	public int statusChangeN(Connection conn, int bCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("statusChangeN");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bCode);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

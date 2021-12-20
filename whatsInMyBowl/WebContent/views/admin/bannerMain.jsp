@@ -81,7 +81,10 @@
         padding: 3px 17px;
         font-size: 15px;
     }
-
+    .cls1{
+        font-size: 25px;
+        font-weight: bold;
+    }
 
     /*메인1 변경하기 클릭 시 생성되는 모달창 내부 css*/
      .mainBanner_Outer{
@@ -184,6 +187,7 @@
 
             <div class="banner">
 				
+        	<div class="cls1">현재 등록중인 배너</div>
 				<!-- 배너 메인 1 영역 -->
                 <% for(Banner b : list) { %>
                     <div class="banner_box" align="center">     
@@ -195,26 +199,26 @@
                             </tr>
                             <tr>
                                 <td class="tableheader">상태</td>
-                                <td colspan="2" class="tableheader">게시일</td>
+                                <td class="tableheader">배너명</td>
                             </tr>
                             <tr>
                                 <td class="FirstStatus"><%= b.getStatus() %></td>
-                                <td colspan="2" class="FirstStartdate"><%= b.getStartDate() %></td>
-                            </tr>
-                            <tr>
-                                <td class="tableheader">배너명</td>
-                                <td class="tableheader">배너번호</td>
-                                <td class="tableheader">위치</td>
-                            </tr>
-                            <tr>
                                 <td class="FirstName"><%= b.getbName() %></td>
+                            </tr>
+                            <tr>
+                                <td class="tableheader">게시일</td>
+                                <td class="tableheader">배너번호</td>
+                            </tr>
+                            <tr>
+                                <td class="FirstStartdate"><%= b.getStartDate() %></td>
                                 <td class="FirstCode"><%= b.getbCode() %></td>
-                                <td class="FirstPosition"><%= b.getbPostion() %></td>
                             </tr>
                         </table>
-                        <div class="checkboxandbtn">
-                            <button type="button" id="updatebtn1">변경하기</button>
-                        </div>
+                        <!--
+                            <div class="checkboxandbtn">
+                                <button type="button" id="updatebtn1">변경하기</button>
+                            </div>
+                        -->
                         
                         
                     </div>
@@ -248,7 +252,7 @@
 
 
     <script>
-    	
+    	/*
     	// 변경하기 버튼 시 띄워지는 메인등록1에 사용될 등록될 메인 리스트를 띄워줄 모달창
     	var main1 = document.getElementById('updatebtn1');
     	if(main1.addEventListener){
@@ -313,13 +317,13 @@
 						  	
 				$(".innerAjax").html(result);
 			
-			
-				
-				
 			}
 		}
-			
 		madeajaxlist(ajaxlist);
+			
+				
+				
+			
 		
 		// 메인1에 등록하고자 하는 메인의 라디오버튼 선택 후 '등록'버튼 클릭 시 실행할 함수
 		function selectMain(){
@@ -352,6 +356,8 @@
 				
 			})
 		}
+		
+		*/
     </script>
     
     

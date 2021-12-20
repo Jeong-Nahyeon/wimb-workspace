@@ -78,41 +78,37 @@ public class bannerService {
 		 return listCount;
 	}
 	
-	// 메인1 글씨 오른쪽 '변경하기'버튼 클릭 시 생성되는 모달창 안에 띄워줄 게시종료 상태 리스트
-	public ArrayList<Banner> selectFisrtMainList(){
-		Connection conn = getConnection();
-		ArrayList<Banner> Firstlist = new bannerDao().selectFisrtMainList(conn);
-		close(conn);
-		return Firstlist;
-	}	
 	
-	// 메인1에 등록하고자 하는 메인의 라디오버튼 선택 후 '등록'버튼 클릭 시 선택한 게시글 번호를 넘겨받아 화면에 띄우는 Service
-	public Banner selectUpdateFirstMain(int selectMainNum) {
-		Connection conn = getConnection();
-		Banner b = new Banner();
-		
-		int result1 = new bannerDao().updateFirstMain(conn, selectMainNum);
-		
-		if(result1 > 0) {
-			 b = new bannerDao().selectFirstMain(conn, selectMainNum);
-			
-			if(result1 > 0) {
-				commit(conn);
-			} else {
-				rollback(conn);
-			}
-	
-		}
-		close(conn);
-		return b;
-	}
-	
-	// 메인1,2,3에 띄워줄 메인에 등록될 사진을 띄워주는 서비스
+	// 메인배너에 등록된 사진을 띄워주는 서비스
 	public ArrayList<Banner> selectMainBanner() {
 		Connection conn = getConnection();
 		ArrayList<Banner> list = new bannerDao().selectMainBanner(conn);
 		close(conn);
 		return list;
 	}
+	
+	// 배너 '변경'클릭 시 상태 변경해주는 서비스
+	public int statusChange(int bCode) {
+		Connection conn = getConnection();
+		
+		int result1 = new bannerDao().statusChangeY(conn, bCode);
+		int result2 = new bannerDao().statusChangeN(conn, bCode); 
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result1 * result2;
+		
+			
+		
+		
+	}
+	
+	
 	
 }

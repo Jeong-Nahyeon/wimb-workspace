@@ -294,18 +294,18 @@
                 <td class="bannerList_header" style="position: relative;"></td>
                 <td class="bannerList_header">배너번호</td>
                 <td class="bannerList_header">배너명</td>
-                <td class="bannerList_header">위치</td>
                 <td class="bannerList_header">게시일</td>
-                <td class="bannerList_header">상태</td>
+                <td colspan="2" class="bannerList_header">상태</td>
             </tr>
             <% for(Banner b : listAll) { %>
+	         	<input type="hidden" value="<%= b.getbCode() %>" name="bCode">
 	            <tr>
 	                <td><input type="checkbox" name="reportChkBxRow"></td>
-	                <td><%= b.getbCode() %></td>
+	                <td><label class="bannerCode" name="bannerCode"><%= b.getbCode() %></label></td>
 	                <td><%= b.getbName() %></td>
-	                <td><%= b.getbPostion() %></td>
 	                <td><%= b.getStartDate() %></td>
 	                <td><%= b.getStatus() %></td>
+                    <td><button type="button" class="statusChangebtn" style="border: none; border-radius: 5px; font-size: 13px; margin-top: 5px; background-color: #ffee58; outline: none;">변경</button></td>
 	            </tr>
             <% } %>
         </table>
@@ -341,26 +341,8 @@
             <form action="<%= contextPath %>/insert.banner" id="enroll-form" method="post" enctype="multipart/form-data">
                 <table>
                     <tr>
-                        <th>배너번호</th>
-                        <td>10</td>
-                    </tr>
-                    <tr>
                         <th>배너명</th>
                         <td><input type="text" name="bannerTitle" id="bannerTitle" placeholder="배너명 입력" required style="width: 90%;"></td>
-                    </tr>
-                    <tr>
-                        <th>위치</th>
-                        <td>
-                            <select name="bannerPosition" id="bannerPosition">
-                                <option value="메인1">메인1</option>
-                                <option value="메인2">메인2</option>
-                                <option value="메인3">메인3</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>게시일</th>
-                        <td>2021-11-02</td>
                     </tr>
                     <tr>
                         <th>이미지</th>
@@ -380,23 +362,6 @@
         </div>
     </div>
     
-    <!-- 메인 베너에서 메인1 변경하기 클릭 시 나타나는 등록된 베너 리스트 모달창 -->
-        <div class="mainblack_bg"></div>
-        <div class="mainmodal_wrap">
-
-            <div class="mainmodal_close"><a href="#">close</a></div>
-            <div class="mainBanner_box">
-                <div class="mainBanner_btn">
-                    <button type="button" class="mainBanner_btn_left">취소</button>
-                    <button type="button" class="mainBanner_btn_right" onclick="selectMain();">등록</button>
-                </div>
-                <div class="innerAjax">
-                
-                <!-- ajax로 메인1에 등록하고자 하는 리스트 목록 띄워주는 위치 -->
-                
-                </div>
-		    
-            </div>
 
 
 
@@ -420,132 +385,27 @@
         document.querySelector('.modal_close').addEventListener('click', offClick); 
         
     	}
-    	// 등록하기 창에서 첨부파일 등록 시 썸네일로 띄워줄 js
-        function loadImg(inputFile){
-            // inputFile : 현재 변화가 생긴 input type=file 요소
-            
-            if(inputFile.files.length == 1){
-                // 파일을 읽어들이는 FileReader 객체 생성
-                const reader = new FileReader()
-
-                // 파일 읽어들이는 메소드
-                reader.readAsDataURL(inputFile.files[0]);
-                // 해당 파일을 읽어들이는 순간 해당 이 파일만의 고유한 url 부여
-
-                // 파일 읽어들이기가 완료됐을 때 알아서 실행할 함수
-                reader.onload = function(e){
-                    // e.target.result => 읽어들인 파일의 고유한 url
-                    $(".inputImg").attr("src", e.target.result);
-                }
-            } else {
-                $(".inputImg").attr("src", null);
-            }
-    	}
+		
+    	
+    	// 상태 '변경' 버튼 클릭 시 호출되는 상태변경 ajax 
+        $(document).on('click', ".statusChangebtn", function(){
+        	
+        	
+        	var bannerCode = $(this).parent().siblings().children('.bannerCode').text();
+        	console.log(bannerCode);
+        	
+        	$.ajax({
+        		url:"StatusChange.banner",
+        		data:{bCode:bannerCode},
+        		success:function(result){
+        			location.href = location.href;
+        		}, error:function(){
+        			console.log("통신 실패");
+        		}
+        	});
         
-    	
-    	// 변경하기 버튼 시 띄워지는 메인등록1에 사용될 등록될 메인 리스트를 띄워줄 모달창
-    	var main1 = document.getElementById('updatebtn1');
-    	if(main1.addEventListener){
-    		function onClick() {
-                document.querySelector('.mainmodal_wrap').style.display ='block';
-                document.querySelector('.mainblack_bg').style.display ='block';
-            }   
-            function offClick() {
-                document.querySelector('.mainmodal_wrap').style.display ='none';
-                document.querySelector('.mainblack_bg').style.display ='none';
-            }
-         
-            document.getElementById('updatebtn1').addEventListener('click', onClick);
-            document.querySelector('.mainmodal_close').addEventListener('click', offClick); 	
-            document.querySelector('.mainBanner_btn_left').addEventListener('click', offClick); 
-    	}  	
-    	
-		
-    	// AJAX구문의 success:function()의 값을 담을 전역변수 생성
-    	var ajaxlist = [];
-    	
-    	//'변경하기'버튼 클릭 시 메인등록1에 띄워줄   AJAX 구문
-		$('#updatebtn1').click(function(){
-			madeajaxlist();
-		});
-		
-    	// 페이지 로딩 후 실행되는 ajax구문
-		$(document).ready(function selectFirstMainList(){
-			$.ajax({
-				url:"firstMainlist.banner",
-				data:{},
-				asynf:false,
-				success:function(Firstlist){
-					
-				ajaxlist = Firstlist;
-				
-				
-				
-				},error:function(){
-					console.log("메인1 리스트 조회용 ajax 통신 실패");
-				}
-				
-			});
-		});
-		
-		// AJAX구문의 success:function()의 값을 담은 전역변수 ajaxlist를 가지고 리스트를 만드는 함수
-		function madeajaxlist(){
-			
-			let result = ""
-			if(ajaxlist.length == 0) return;
-				
-				for(let i=0; i<ajaxlist.length; i++){
-					result += "<table>"
-								+ "<tr>" 
-			            			+	"<td colspan='2'><img src='" + ajaxlist[i].bOriginName + "' class='inputMainImg' height='180' width='250px'></td>" 
-								+ "</tr>"
-								+ "<tr>"
-									+	"<td style='width:5px;'><input type='radio' name='selectMainImg' value='"+ ajaxlist[i].bCode +"' style='margin: 0px 10px;'></td>"
-									+	"<td style='text-align:center;'>" + ajaxlist[i].bName + "</td>"
-								+ "</tr>" +
-						  	"</table>";
-						  	
-				$(".innerAjax").html(result);
-			
-			
-				
-				
-			}
-		}
-			
-		madeajaxlist(ajaxlist);
-		
-		// 메인1에 등록하고자 하는 메인의 라디오버튼 선택 후 '등록'버튼 클릭 시 실행할 함수
-		function selectMain(){
-			var selectMainNum = $('input[name=selectMainImg]:checked').val();
-			
-			$.ajax({
-				url:"selectFirstMain.banner",
-				data:{selectMainNum:selectMainNum},
-				success:function(FirstMain){
-          	
-					let FirstMainImg = FirstMain.mainImg;
-					let FirstStatus = FirstMain.status;
-					let FirstStartdate = FirstMain.startDate;
-					let FirstName = FirstMain.bName;
-					let FirstCode = FirstMain.bCode;
-					let FirstPosition = FirstMain.bPostion;
-					
-					
-					$(".titleImg img").attr("src", FirstMainImg);  // 메인이미지
-					$(".FirstStatus").html(FirstStatus);           // 게시여부
-					$(".FirstStartdate").html(FirstStartdate);     // 게시일
-					$(".FirstName").html(FirstName);               // 배너명
-					$(".FirstCode").html(FirstCode);               // 배너번호
-					$(".FirstPosition").html(FirstPosition);       // 위치
-					
-					
-				}, error:function(){
-					console.log("통신 실패");
-				}
-				
-			})
-		}
+        })
+        
     </script>
     
     

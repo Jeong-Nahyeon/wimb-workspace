@@ -9,7 +9,6 @@
 		     (
 		       B_CODE
 		     , B_NAME
-		     , B_POSITION
 		     , B_PATH
 		     , B_ORIGINNAME
 		     , B_CHANGENAME
@@ -17,7 +16,6 @@
 		     VALUES
 		     (
 		       SEQ_BANNER.NEXTVAL
-		     , ?
 		     , ?
 		     , ?
 		     , ?
@@ -36,11 +34,10 @@
                              , B_NAME
                              , B_STARTDATE
                              , B_STATUS
-                             , B_POSITION
                           FROM BANNER
                          WHERE B_ADMINSHOW = 'Y'
                          ORDER 
-                            BY DECODE(B_STATUS, 'Y', 1), B_POSITION ASC
+                            BY DECODE(B_STATUS, 'Y', 1)
                              , B_CODE DESC
                         ) A
                 )
@@ -58,12 +55,11 @@
                              , B_NAME
                              , B_STARTDATE
                              , B_STATUS
-                             , B_POSITION
                           FROM BANNER
                          WHERE B_STATUS = 'Y' 
                            AND B_ADMINSHOW = 'Y'
                          ORDER 
-                            BY B_CODE 
+                            BY B_CODE DESC
                         ) A
                 )
         WHERE RNUM BETWEEN ? AND ?
@@ -80,12 +76,11 @@
                              , B_NAME
                              , B_STARTDATE
                              , B_STATUS
-                             , B_POSITION
                           FROM BANNER
                          WHERE B_STATUS = 'N'
                            AND B_ADMINSHOW = 'Y' 
                          ORDER 
-                            BY B_CODE 
+                            BY B_CODE DESC
                         ) A
                 )
         WHERE RNUM BETWEEN ? AND ?
@@ -118,55 +113,35 @@
            AND B_ADMINSHOW = 'Y' 
 	</entry>
 	
-	<!-- 메인1 글씨 오른쪽 '변경하기'버튼 클릭 시 생성되는 모달창 안에 띄워줄 게시종료 상태 리스트 -->
-	<entry key="selectFisrtMainList">
-		SELECT
-		       B_CODE
-		     , B_NAME
-		     , B_PATH || B_CHANGENAME "FILEPATH"
-		  FROM BANNER
-		 WHERE B_STATUS = 'N'
-           AND B_ADMINSHOW = 'Y'
-		 ORDER
-		    BY B_CODE DESC
-	</entry>
-	
-	<entry key = "updateFirstMain">
-		 UPDATE 
-		        BANNER
-		    SET B_STATUS = 'Y'
-		  WHERE B_CODE = ?
-		    AND B_ADMINSHOW = 'Y'
-	</entry>
-
-	<entry key = "selectFirstMain">
-		SELECT
-		       B_CODE
-		     , B_NAME
-		     , B_STARTDATE
-		     , B_STATUS
-		     , B_POSITION
-		     , B_PATH || B_CHANGENAME "FILEPATH"
-		  FROM BANNER
-		 WHERE B_CODE = ?
-		   AND B_STATUS = 'Y'
-		   AND B_ADMINSHOW = 'Y'
-	</entry>
-
+	<!-- 현재 게시중인 리스트 -->
 	<entry key="selectMainBanner">
     	SELECT
 		       B_CODE
 		     , B_NAME
 		     , B_STARTDATE
 		     , B_STATUS
-		     , B_POSITION
 		     , B_PATH || B_CHANGENAME "FILEPATH"
 		  FROM BANNER
          WHERE B_STATUS = 'Y'
 		   AND B_ADMINSHOW = 'Y'
-         ORDER
-            BY B_POSITION
 	</entry>
-
+	
+	<entry key="statusChangeY">
+		UPDATE
+		       BANNER
+		   SET B_STATUS = 'Y'
+		 WHERE BOARD_NO = ?
+           AND B_STATUS = 'N'
+           AND B_ADMINSHOW = 'Y'
+	</entry>
+	
+	<entry key="statusChangeN">
+		UPDATE
+		       BANNER
+		   SET B_STATUS = 'N'
+		 WHERE BOARD_NO = ?
+           AND B_STATUS = 'Y'
+           AND B_ADMINSHOW = 'Y'
+	</entry>
 
 </properties>

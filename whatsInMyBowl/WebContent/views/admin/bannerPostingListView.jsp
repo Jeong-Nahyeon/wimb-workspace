@@ -217,18 +217,18 @@
                 <td class="bannerList_header" style="position: relative;"></td>
                 <td class="bannerList_header">배너번호</td>
                 <td class="bannerList_header">배너명</td>
-                <td class="bannerList_header">위치</td>
                 <td class="bannerList_header">게시일</td>
-                <td class="bannerList_header">상태</td>
+                <td colspan="2" class="bannerList_header">상태</td>
             </tr>
             <% for(Banner b : Postinglist) { %>
 	            <tr>
 	                <td><input type="checkbox"></td>
 	                <td><%= b.getbCode() %></td>
 	                <td><%= b.getbName() %></td>
-	                <td><%= b.getbPostion() %></td>
 	                <td><%= b.getStartDate() %></td>
 	                <td><%= b.getStatus() %></td>
+                    <td><button type="button" style="border: none; border-radius: 5px; font-size: 13px; margin-top: 5px; background-color: #ffee58; outline: none;">변경</button></td>
+	            </tr>
 	            </tr>
             <% } %>
         </table>
@@ -263,26 +263,8 @@
             <form action="<%= contextPath %>/insert.banner" id="enroll-form" method="post" enctype="multipart/form-data">
                 <table>
                     <tr>
-                        <th>배너번호</th>
-                        <td>10</td>
-                    </tr>
-                    <tr>
                         <th>배너명</th>
                         <td><input type="text" name="bannerTitle" id="bannerTitle" placeholder="배너명 입력" required style="width: 90%;"></td>
-                    </tr>
-                    <tr>
-                        <th>위치</th>
-                        <td>
-                            <select name="bannerPosition" id="bannerPosition">
-                                <option value="1">메인1</option>
-                                <option value="2">메인2</option>
-                                <option value="3">메인3</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>게시일</th>
-                        <td>2021-11-02</td>
                     </tr>
                     <tr>
                         <th>이미지</th>
