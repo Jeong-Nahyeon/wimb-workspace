@@ -26,8 +26,10 @@ public class IdSearchClickController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		// 아이디 비번 찾는 화면으로 넘겨주는 컨트롤러
+		request.getRequestDispatcher("/views/member/memberSearchIdPwdForm.jsp").forward(request, response);
+		
 	}
 
 	/**

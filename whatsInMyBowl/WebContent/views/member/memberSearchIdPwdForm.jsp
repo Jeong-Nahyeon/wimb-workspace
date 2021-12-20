@@ -67,7 +67,7 @@
 </head>
 <body>
 
-	 <div class="outer" align="center">
+	<div class="outer" align="center">
     
         <div class="findtap">
             <ul align="center">
@@ -79,7 +79,7 @@
         
         <br clear="both">
         <br>
-        <div id="findwrap">
+        <div id="findwrap" style="display:none">
             <form action="<%=contextPath%>/searchIdClick.me" method="post" class="infoForm" id="infoForm" onsubmit="return searchId();">
             <div class="optiontap">
             
@@ -150,6 +150,41 @@
             </form>
         </div>
         
+        <div>
+            <form action="" id="searchPwd">
+                <div  id="clickemail" class="checked">
+                    <table class="infoInputTable"  align="center">
+                        <tr>
+                            <td colspan="2">
+                                <input type="text" class="userNameInput" name="userId" id="userId" required placeholder="이름">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="text" class="userNameInput" name="userName" id="userName" required placeholder="이름">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" class="userEmailInput" name="userEmail" id="userEmail" required placeholder="가입메일주소">
+                            </td>
+                            
+                        </tr>
+                        <tr></tr> 
+                        <tr>
+                            <td colspan="2">
+                                <button type="submit" id="confirmbtn" onclick="searchId();">확인</button>
+                            </td>
+                        </tr>                        
+                        <tr>
+                            <td colspan="2">
+                                <button type="button" id="loginbtn" onclick="loginPage();">로그인</button>
+                            </td>
+                        </tr>           
+                    </table>
+                </div>
+            </form>
+        </div>
     
     </div>
 

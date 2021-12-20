@@ -122,7 +122,7 @@
                     </td>
                     <td align="right" style="vertical-align: top">
                         <div class="findIdPwd">
-                            <a href="<%=contextPath%>/">아이디 | 비밀번호 찾기</a>
+                            <a href="<%=contextPath%>/searchIdClick.me">아이디 | 비밀번호 찾기</a>
                         </div>
                     </td>
                 </tr>
