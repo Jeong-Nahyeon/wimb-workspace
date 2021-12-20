@@ -40,11 +40,6 @@ public class AjaxCustomInsertOrderController extends HttpServlet {
 		int result1 = 1;
 		
 		
-		System.out.println(cuName);
-		System.out.println(totalPrice);
-		System.out.println(ciCode);
-		System.out.println(ciCount);
-		
 		response.setContentType("text/html; charset=UTF-8");
 		response.getWriter().print(ciCode);
 	
