@@ -130,7 +130,7 @@
 		UPDATE
 		       BANNER
 		   SET B_STATUS = 'Y'
-		 WHERE BOARD_NO = ?
+		 WHERE B_CODE = ?
            AND B_STATUS = 'N'
            AND B_ADMINSHOW = 'Y'
 	</entry>
@@ -139,9 +139,16 @@
 		UPDATE
 		       BANNER
 		   SET B_STATUS = 'N'
-		 WHERE BOARD_NO = ?
+		 WHERE B_CODE = ?
            AND B_STATUS = 'Y'
            AND B_ADMINSHOW = 'Y'
+	</entry>
+	
+	<entry key="deletebanner">
+		UPDATE BANNER
+		   SET B_ADMINSHOW = 'N'
+		     , B_STATUS = 'N'
+		 WHERE B_CODE = ?		
 	</entry>
 
 </properties>

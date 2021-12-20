@@ -249,6 +249,23 @@
         background:url(https://img.icons8.com/metro/26/000000/close-window.png);
         text-indent: -9999px;
     }
+    
+ 	/*배너 삭제 모달*/
+
+     .delete_text{
+         text-align: center;
+      }
+     .delete_text span{
+         display: block;
+         margin: 10px 0;
+     }
+     .delete_btn{
+         margin: 40px 5px 5px 5px;
+         text-align: center;
+     }
+     .delete_btn button{
+         margin: 0 10px;
+     }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -271,7 +288,7 @@
         
     </div>
     <div class="back">
-        <button type="button">뒤로가기</button>
+        <button type="button"  onclick="location.href='<%= contextPath %>/main.banner;'">뒤로가기</button>
     </div>
     <!-- 하단의 배너목록 테이블 -->
     <div class="bannerList">
@@ -284,7 +301,7 @@
         </div>
         
         <div class="two_btn">
-            <button type=submit id="deletebanner">선택삭제</button>
+            <button type=submit id="deletebanner" data-toggle="modal" data-target="#banner_delete_Modal">선택삭제</button>
             <button type="button" id="insertbannerbtn">등록하기</button>
         </div>
         
@@ -300,11 +317,11 @@
             <% for(Banner b : listAll) { %>
 	         	<input type="hidden" value="<%= b.getbCode() %>" name="bCode">
 	            <tr>
-	                <td><input type="checkbox" name="reportChkBxRow"></td>
-	                <td><label class="bannerCode" name="bannerCode"><%= b.getbCode() %></label></td>
+	                <td><input type="checkbox" name="check" id="check_list"></td>
+	                <td class="bannerCode"><%= b.getbCode() %></td>
 	                <td><%= b.getbName() %></td>
 	                <td><%= b.getStartDate() %></td>
-	                <td><%= b.getStatus() %></td>
+	                <td class="bannerStatus"><%= b.getStatus() %></td>
                     <td><button type="button" class="statusChangebtn" style="border: none; border-radius: 5px; font-size: 13px; margin-top: 5px; background-color: #ffee58; outline: none;">변경</button></td>
 	            </tr>
             <% } %>
@@ -362,14 +379,36 @@
         </div>
     </div>
     
-
+            <!-- 배너 삭제 관련 모달-->
+            <!-- The Modal -->
+            <div class="modal" id="banner_delete_Modal">
+                <div class="modal-dialog">
+                <div class="modal-content">
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <!-- <form action="" >  -->
+                            <div class="delete_text">
+                                <span>선택하신 배너를 삭제합니다.</span>
+                                <span>정말 삭제하시겠습니까?</span>
+                                <span>(삭제 후 복구불가)</span>
+                            </div>
+                            <div class="delete_btn">
+                                <button class="btn btn-sm btn btn-outline-warning" data-toggle="modal" onclick="deletecheck();">삭제</button>
+                                <button type="reset" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">취소</button>
+                            </div>
+                        <!-- </form>  -->
+                    </div>
+                </div>
+                </div>
+            </div>
 
 
 
 
 
     <script>
-    	// 등록 버튼 클릭 시 띄워지는 화면 등록 모달창
+    	// 등록 버튼 클릭 시 띄워지는 화면 등록 모달창----------------------------------
         window.onload = function() {
      
         function onClick() {
@@ -385,27 +424,92 @@
         document.querySelector('.modal_close').addEventListener('click', offClick); 
         
     	}
-		
+    	//--------------------------------------------------------------
     	
-    	// 상태 '변경' 버튼 클릭 시 호출되는 상태변경 ajax 
+    	
+    	// 등록 화면에서 사진 등록 시 썸네일을 띄워주는 함수 ------------------------------
+        function loadImg(inputFile){
+            // inputFile : 현재 변화가 생긴 input type=file 요소
+            
+            if(inputFile.files.length == 1){
+                // 파일을 읽어들이는 FileReader 객체 생성
+                const reader = new FileReader()
+
+                // 파일 읽어들이는 메소드
+                reader.readAsDataURL(inputFile.files[0]);
+                // 해당 파일을 읽어들이는 순간 해당 이 파일만의 고유한 url 부여
+
+                // 파일 읽어들이기가 완료됐을 때 알아서 실행할 함수
+                reader.onload = function(e){
+                    // e.target.result => 읽어들인 파일의 고유한 url
+                    $(".inputImg").attr("src", e.target.result);
+                }
+            } else {
+                $(".inputImg").attr("src", null);
+            }
+
+        }
+		// -----------------------------------------------------------------------
+    	
+    	// 상태 '변경' 버튼 클릭 시 호출되는 상태변경 ajax --------------------------------------
         $(document).on('click', ".statusChangebtn", function(){
         	
         	
-        	var bannerCode = $(this).parent().siblings().children('.bannerCode').text();
+        	var bannerCode = $(this).parent().siblings('.bannerCode').text();
+        	var bannerStatus = $(this).parent().siblings('.bannerStatus').text();
         	console.log(bannerCode);
+        	console.log(bannerStatus);
         	
         	$.ajax({
         		url:"StatusChange.banner",
-        		data:{bCode:bannerCode},
+        		data:{bCode:bannerCode, 
+        			  bStatus:bannerStatus
+        		},
         		success:function(result){
-        			location.href = location.href;
+        			alert("상태변경 성공");
+        			location.reload();
         		}, error:function(){
         			console.log("통신 실패");
         		}
         	});
         
         })
+        //-------------------------------------------------------------------------
         
+        function deletecheck(){
+    		promise1()
+    	}
+    	
+    	function promise1(){
+    		var count = $("input[name='check']:checked").length;
+    		var checkArr = new Array();
+    		 $("input[name='check']:checked").each(function(){
+                 checkArr.push($(this).parent().siblings(".bannerCode").text())
+             });
+    		 
+    		 console.log(checkArr);
+             console.log(count);
+             return new Promise(function(resolve, reject){
+                 $.ajax({
+                     url:"delete.banner",
+                     dataType:"json",
+                     traditional:true,
+                     data:{
+                         count:count,
+                         checkArr:checkArr
+                     },
+                     success:function(result){
+                         console.log("프로미스1 성공")
+                         resolve(result);
+                     },
+                     error:function(){
+                         console.log("ajax 통신 실패");
+                     }
+                 })
+             })
+    	}
+    	
+    	
     </script>
     
     

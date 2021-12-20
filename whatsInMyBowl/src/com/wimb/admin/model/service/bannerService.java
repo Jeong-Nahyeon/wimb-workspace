@@ -88,11 +88,17 @@ public class bannerService {
 	}
 	
 	// 배너 '변경'클릭 시 상태 변경해주는 서비스
-	public int statusChange(int bCode) {
+	public int statusChange(int bCode, String bStatus) {
 		Connection conn = getConnection();
 		
-		int result1 = new bannerDao().statusChangeY(conn, bCode);
-		int result2 = new bannerDao().statusChangeN(conn, bCode); 
+		int result1 = 0;
+		int result2 = 0;
+		System.out.println(bStatus);
+		if(bStatus.equals("Y")) { // 게시여부가 Y일 경우 N으로 바꿔주는 DAO실행
+			result1 = new bannerDao().statusChangeN(conn, bCode);
+		} else { // 게시여부가 N일 경우 Y으로 바꿔주는 DAO실행
+			result2 = new bannerDao().statusChangeY(conn, bCode);
+		}
 		
 		if(result1 > 0 && result2 > 0) {
 			commit(conn);
@@ -103,10 +109,20 @@ public class bannerService {
 		close(conn);
 		
 		return result1 * result2;
-		
 			
+	}
+	
+	// 선택삭제 시 체크된 만큼의 배너를 삭제하는 서비스
+	public int deletebanner(String bCode) {
+		Connection conn = getConnection();
+		int result = new bannerDao().deletebanner(conn, bCode);
 		
-		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
 	}
 	
 	

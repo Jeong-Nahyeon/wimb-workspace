@@ -266,6 +266,7 @@ public class bannerDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bCode);
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -282,6 +283,7 @@ public class bannerDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bCode);
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -291,8 +293,24 @@ public class bannerDao {
 	}
 	
 	
-	
-	
+	public int deletebanner(Connection conn, String bCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deletebanner");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bCode);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
 	
 	
 	

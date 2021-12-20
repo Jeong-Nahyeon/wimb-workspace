@@ -32,7 +32,7 @@ public class BannerMainController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		// 메인1,2,3에 띄워줄 메인에 등록될 사진을 띄워주는 컨트롤러
+		// 메인에 등록될 사진을 띄워주는 컨트롤러
 		ArrayList<Banner> list = new bannerService().selectMainBanner();
 		
 		request.setAttribute("list", list);

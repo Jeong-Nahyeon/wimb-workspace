@@ -1,11 +1,14 @@
 package com.wimb.admin.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.wimb.admin.model.service.bannerService;
 
 /**
  * Servlet implementation class BannerDeleteController
@@ -27,7 +30,28 @@ public class BannerDeleteController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-
+		request.setCharacterEncoding("UTF-8");
+		int count =  Integer.parseInt( request.getParameter("count"));
+		String[] arr = request.getParameterValues("checkArr");
+		
+		System.out.println(count);
+		System.out.println(arr[0]);
+		
+		int result = 0;
+		if(arr != null && count > 0) {
+			for(int i=0; i<count; i++) {
+				String bCode = arr[i];
+				result = new bannerService().deletebanner(bCode);
+			}
+		}
+		
+		if(result > 0) {
+			//response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().print(result);
+		}else {
+			request.setAttribute("errorMsg", "배너 삭제 실패");
+			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
+		}
 		
 	}
 

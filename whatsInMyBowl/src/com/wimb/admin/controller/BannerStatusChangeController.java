@@ -33,7 +33,9 @@ public class BannerStatusChangeController extends HttpServlet {
 		
 		// 상태 '변경' 버튼 클릭 시 게시여부 상태를 (Y일경우 N, N일경우 Y) 변경해주는 컨트롤러
 		int bCode = Integer.parseInt(request.getParameter("bCode"));
-		int result = new bannerService().statusChange(bCode);
+		String bStatus = request.getParameter("bStatus");
+		
+		int result = new bannerService().statusChange(bCode, bStatus);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(result, response.getWriter());
