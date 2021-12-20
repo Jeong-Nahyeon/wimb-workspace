@@ -12,6 +12,7 @@ import com.wimb.common.model.vo.PageInfo;
 import com.wimb.custom.model.dao.CustomDao;
 import com.wimb.custom.model.vo.Custom;
 import com.wimb.custom.model.vo.CustomItem;
+import com.wimb.custom.model.vo.CustomItemList;
 import com.wimb.custom.model.vo.Item;
 public class CustomService {
 	
@@ -165,6 +166,16 @@ public class CustomService {
 		}
 		return result;
 	}
+
+	// 커스텀 샐러드, 샐러드별 재료 조회
+	public ArrayList<CustomItemList> selectCustomItem(String cuCode) {
+		Connection conn = getConnection();
+		ArrayList<CustomItemList> list = new CustomDao().selectCustomItem(conn, cuCode);
+		close(conn);
+		return list;
+	}
+
+	
 
 	
 	

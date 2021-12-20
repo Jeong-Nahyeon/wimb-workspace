@@ -158,5 +158,26 @@
 		  , ?
 		  )
 	</entry>
+	
+	<entry key="selectCustom">
+		SELECT *
+		  FROM CUSTOM
+		 WHERE CU_CODE = ?
+	</entry>
+	
+	<entry key="selectCustomItem">
+		SELECT 
+		       CU_CODE  
+		     , CI_CODE
+		     , CI_NAME
+		     , CI_CATEGORY
+		     , CU_NAME
+		     , CU_PRICE
+		     , M_CODE
+		  FROM CUSTOM_ITEM
+		  JOIN ITEM USING (CI_CODE)
+		  JOIN CUSTOM USING (CU_CODE)
+		 WHERE CU_CODE = ?
+	</entry>
 
 </properties>

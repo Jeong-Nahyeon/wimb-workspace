@@ -14,6 +14,7 @@ import java.util.Properties;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.custom.model.vo.Custom;
 import com.wimb.custom.model.vo.CustomItem;
+import com.wimb.custom.model.vo.CustomItemList;
 import com.wimb.custom.model.vo.Item;
 public class CustomDao {
 
@@ -414,6 +415,39 @@ public class CustomDao {
 		
 		return result;
 	}
+
+	public ArrayList<CustomItemList> selectCustomItem(Connection conn, String cuCode) {
+		ArrayList<CustomItemList> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectCustomItem");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, cuCode);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new CustomItemList(rset.getString("cu_code"),
+										rset.getString("ci_code"),
+										rset.getString("ci_Name"),
+										rset.getString("ci_category"),
+										rset.getString("cu_name"),
+										rset.getInt("cu_Price"),
+										rset.getInt("m_code")
+									   ));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	
 
 	
 	

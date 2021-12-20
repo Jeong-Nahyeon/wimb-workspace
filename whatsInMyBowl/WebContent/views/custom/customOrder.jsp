@@ -355,32 +355,14 @@
                     </div>
 
                     <div class="custom_order">
-                        <table>
-                            <tr>
-                                <th colspan="3" style="text-align: left;">나만의 샐러드</th>
-                                <th style="text-align: right;"><button id="customOrder_btn_cancle"><i class="fas fa-times fa-lg"></i></button></th>
-                            </tr>
-                            <tr>
-                                <td style="width: 100px; padding-left: 10px;">채소</td>
-                                <td colspan="3" style="width: 220px; text-align: right;">가가가/나나나나/가가가/나나나나/나나나</td>
-                            </tr>
-                            
-                        </table>
-                        <table>
-                            <tr>
-                                <th colspan="3" style="text-align: left;">나만의 샐러드</th>
-                                <th style="text-align: right;"><button id="customOrder_btn_cancle"><i class="fas fa-times fa-lg"></i></button></th>
-                            </tr>
-                            <tr>
-                                <td style="width: 100px; padding-left: 10px;">채소</td>
-                                <td colspan="3" style="width: 220px; text-align: right;">가가가/나나나나/가가가/나나나나/나나나</td>
-                            </tr>
-                            
-                        </table>
+                        
+                        <div class="customOrder_table">
 
+                        </div>
+                        
                         <div class="customlist_price" align="right">
                             <span style="padding: 0 70px 0 20px;">총 금액</span>
-                            <span id="total_sum" style="padding: 0 15px 0 0;"></span>
+                            <span id="total_price" style="padding: 0 15px 0 0;"> </span>
                         </div>
 
                         <div class="customOrder_btn" align="right">
@@ -622,7 +604,7 @@
                                     //itemTotalPrice += "<input type='hidden' class='vagetable_sum' value='"+itemPrice+"'></input>";
                                     //console.log($(this).val);
                                     //sum(itemPrice);
-                                    console.log(itemNameStr)
+                                    //console.log(itemNameStr)
                                 }
                                 
                             });
@@ -696,7 +678,15 @@
                         
                     }
 
+                    /* 커스텀 DB 등록, 화면에 뿌리기 */
                     function insertCustomOrder(){
+
+                        insertCoustomItemPRo()
+                        .then(selectCustom)
+                        .then(successSelect)
+                    }
+
+                    function insertCoustomItemPRo(){
                         var arrItemCode = [];
                         var arrItemCount = [];
                         var itemPrice = $("#total_sum").text();
@@ -710,31 +700,104 @@
                             arrItemCount.push($(this).val());
                         })
 
-                        console.log(arrItemCode);
-                        console.log(arrItemCount);
-                        console.log(itemPrice);
-                        console.log(saladName);
-                        console.log(userNum);
+                        return new Promise(function(resolve, reject){
+                            $.ajax({
+                                url:"customInsert.cu",
+                                dataType:"json",
+                                traditional:true,
+                                data:{
+                                    arrItemCode:arrItemCode,
+                                    arrItemCount:arrItemCount,
+                                    itemPrice:itemPrice,
+                                    saladName:saladName,
+                                    userNum:userNum
+                                },
+                                success:function(result){
+                                    //console.log("통신성공")
+                                    //console.log(result);
+                                    if(result != null){
+                                        resolve(result);
+                                    }else{
+                                        reject(result);
+                                    }
+                                },
+                                error:function(){
+                                    console.log("ajax 통신 실패");
+                                }
+                            });
+                        })
+                    }
+
+                    /* 조회 */
+                    function selectCustom(result){
+                        return new Promise(function(resolve, rejext){
+                            //console.log(result);
+
+                            $.ajax({
+                                url:"selectCustom.cu",
+                                data:{
+                                    cuCode:result
+                                },
+                                dataType:"json",
+                                traditional:true,
+                                success:function(list){
+                                    resolve(list);
+                                },
+                                error:function(){
+                                    console.log("ajax 통신 실패");
+                                }
+                            })
+                        })
+                    }
+
+                    function successSelect(list){
+                        console.log(list)
+                        var contentTh = "<tr>" +
+                                            "<th colspan='3' style='text-align: left;'>"+ list[0].cuName +"</th>" +
+                                            " <th style='text-align: right;''><button id='customOrder_btn_cancle'><i class='fas fa-times fa-lg'></i></button></th>"+
+                                       "</tr>" +
+                                       "<tr>" +
+                                            "<td style='width: 100px; padding-left: 10px;'>" + "채소" + "</td>" +
+                                            "<td colspan='3' style='width: 220px; text-align: right;'' class='listVagetagle'></td>"+
+                                       "</tr>" +
+                                       "<tr>" +
+                                            "<td style='width: 100px; padding-left: 10px;'>" + "메인토핑" + "</td>" +
+                                            "<td colspan='3' style='width: 220px; text-align: right;'' class='listMain'></td>"+
+                                       "</tr>" +
+                                       "<tr>" +
+                                            "<td style='width: 100px; padding-left: 10px;'>" + "사이드토핑" + "</td>" +
+                                            "<td colspan='3' style='width: 220px; text-align: right;'' class='listSide'></td>"+
+                                       "</tr>" +
+                                       "<tr>" +
+                                            "<td style='width: 100px; padding-left: 10px;'>" + "드레싱" + "</td>" +
+                                            "<td colspan='3' style='width: 220px; text-align: right;'' class='listDressing'></td>"+
+                                       "</tr>"
+
+                        $(".customOrder_table").html("<table class='customlist_table'></table>");
+                        $(".customlist_table").html(contentTh);
+
+                        var vagetable_text = "";
+                        var main_text = "";
+                        var side_text = "";
+                        var dressing_text = "";
                         
-                        $.ajax({
-                            url:"customInsert.cu",
-                            dataType:"json",
-                            traditional:true,
-                            data:{
-                                arrItemCode:arrItemCode,
-                                arrItemCount:arrItemCount,
-                                itemPrice:itemPrice,
-                                saladName:saladName,
-                                userNum:userNum
-                            },
-                            success:function(result){
-                                console.log("통신성공")
-                                console.log(result);
-                            },
-                            error:function(){
-                                console.log("ajax 통신 실패");
-                            }
-                        });
+                        for(var i=0;i<list.length;i++){
+                            if(list[i].ciCategory == '채소'){
+                                vagetable_text += list[i].ciName + "/";
+                            }else if(list[i].ciCategory == '메인토핑'){
+                                main_text += list[i].ciName + "/";
+                            }else if(list[i].ciCategory == '사이드토핑'){
+                                side_text += list[i].ciName + "/";
+                            }else{
+                                dressing_text += list[i].ciName + "/";
+                            }         
+                        }
+
+                        $(".listVagetagle").text(vagetable_text); 
+                        $(".listMain").text(main_text); 
+                        $(".listSide").text(side_text); 
+                        $(".listDressing").text(dressing_text); 
+                        $("#total_price").text(list[0].cuPrice);
                     }
                 </script>
                 
