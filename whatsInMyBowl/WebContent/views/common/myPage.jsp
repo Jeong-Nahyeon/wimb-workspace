@@ -28,7 +28,7 @@
     .mypageSidebar{
         width: 200px;
         height: 600px;
-         margin-left: 300px;
+        margin-left: 450px;
         margin-top: 80px;
         margin-right: 30px;
     }
