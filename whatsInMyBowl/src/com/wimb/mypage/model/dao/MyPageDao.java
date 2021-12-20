@@ -303,15 +303,15 @@ public class MyPageDao {
 	}
 		
 	// 주문 취소 요청
-	public int insertCancel(Connection conn, MyOrders mo) {
+	public int insertCancel(Connection conn, String oCode, String payCode) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertCancel");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, mo.getOrderCode());
-			pstmt.setString(2, mo.getPmCode());
+			pstmt.setString(1, oCode);
+			pstmt.setString(2, payCode);
 			
 			result = pstmt.executeUpdate();
 			

@@ -117,9 +117,9 @@ public class MyPageService {
 	}
 	
 	// 주문취소 요청
-	public int insertCancel(MyOrders mo) {
+	public int insertCancel(String oCode, String payCode) {
 		Connection conn = getConnection();
-		int result = new MyPageDao().insertCancel(conn, mo);
+		int result = new MyPageDao().insertCancel(conn, oCode, payCode);
 		if(result>0) {
 			commit(conn);
 		}else {

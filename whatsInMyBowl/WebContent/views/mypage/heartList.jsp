@@ -19,9 +19,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
     .heart {
-        margin-left: 18px;
-        margin-top: 50px;
-        
+        width: 600px;
+    	height: 800px;
+    	margin: auto;
     }
     .listForm {
         width:700px;
@@ -31,15 +31,17 @@
         margin-bottom: 15px;
     }
     .listForm th {
-        border-bottom: 1px solid rgba(133, 136, 139, 0.548);
-        padding: 8px 0px 8px 0px;
-        font-size: 13px;
+        border-top: 2px solid rgba(133, 136, 139, 0.548);
+        border-bottom: 1px solid rgba(179, 174, 174, 0.384);
+        padding: 10px 0px 10px 0px;
+        font-size: 12px;
         background-color: rgba(240, 239, 233, 0.445);
     }
     .listForm td {
-        border-bottom: 1px solid #ebebeb;
-        padding: 8px 0px 8px 0px;
-        font-size: 13px;;
+        border-bottom: 1px solid rgba(179, 174, 174, 0.384);
+        padding: 10px 0px 10px 0px;
+        font-size: 13px;
+        height: 0px;
     }
     .delete {
         display: block;
@@ -68,6 +70,10 @@
         font-size: smaller;
         margin-right:10px;
     }
+    img {
+        width:60px;
+        height: 60px;
+    }
 </style>
 
 </head>
@@ -80,13 +86,13 @@
         <label style="font-size: 18px;"><b>주문목록/배송조회</b></label>
         <div class="heartList">
 
-            <table class="listForm">
+            <table class="listForm" border="1">
                 <tbody>
                     <tr>
-                        <th width="80">
+                        <th width="70">
                             <input type="checkbox">
                         </th>
-                        <th>상품명</th>
+                        <th colspan="2">상품명</th>
                         <th width="150">상품금액</th>
                         <th width="120">선택</th>
                     </tr>
@@ -96,7 +102,8 @@
                         <td>
                             <input type="checkbox">
                         </td>
-                        <td><img src="">닭가슴살샐러드1</td>
+                        <td width="120"><img src=""></td>
+                        <td>닭가슴살샐러드1</td>
                         <td>7,900원</td>
                         <td>
                             <button type="button" class="cart" onclick="클릭메소드">장바구니</button>
@@ -107,7 +114,8 @@
                         <td>
                             <input type="checkbox">
                         </td>
-                        <td><img src="">닭가슴살샐러드1</td>
+                        <td><img src=""></td>
+                        <td>닭가슴살샐러드1</td>
                         <td>7,900원</td>
                         <td>
                             <button type="button" class="cart" onclick="클릭메소드">장바구니</button>
@@ -118,7 +126,8 @@
                         <td>
                             <input type="checkbox">
                         </td>
-                        <td><img src="">닭가슴살샐러드1</td>
+                        <td><img src=""></td>
+                        <td>닭가슴살샐러드1</td>
                         <td>7,900원</td>
                         <td>
                             <button type="button" class="cart" onclick="클릭메소드">장바구니</button>
@@ -129,7 +138,8 @@
                         <td>
                             <input type="checkbox">
                         </td>
-                        <td><img src="">닭가슴살샐러드1</td>
+                        <td><img src=""></td>
+                        <td>닭가슴살샐러드1</td>
                         <td>7,900원</td>
                         <td>
                             <button type="button" class="cart" onclick="클릭메소드">장바구니</button>

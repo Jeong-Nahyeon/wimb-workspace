@@ -5,7 +5,6 @@
 %>
 <%
 	ArrayList<MyOrders> clist = (ArrayList<MyOrders>)request.getAttribute("clist");
-	System.out.println(clist);
  %>    
 
 <!DOCTYPE html>
@@ -35,7 +34,7 @@
     /* 주문|배송조회 기간 선택 영역 */
     .selectDate {
         width:600px;
-        padding: 20px 20px 20px 20px;
+        padding: 35px 20px 35px 20px;
         border: 1px solid #ebebeb;
         box-sizing: border-box;
         margin-bottom: 50px;
@@ -102,12 +101,6 @@
         text-decoration: none;
         color:black;
     }
-    img {
-    	widt: 80px;
-    	height: 80px;
-    	margin-right: 20px;
-    }
-	     
     .modal-footer button {
         border: 0px;
         border-radius: 5px;
@@ -183,7 +176,7 @@
                         <button type="button" onclick="dateSub(365);">1년</button>
                     </div>
                 </div>
-                <div class="selectCalendar">
+                <div class="selectCalendar" style="display: inline-block;">
                     <input type="date" id="startDate" name="startDate">
                     <label>~</label>
                     <input type="date" id="endDate" name="endDate">
@@ -317,7 +310,7 @@
                     </div>
 
                     <label>취소/환불 정보</label>
-                    <table class="area3" style="border-top: 1px solid rgba(133, 136, 139, 0.61);">
+                    <table class="area3">
                         <tr>
                             <td width="150px;">상품금액</td>
                             <td id="detail3" style="text-align: right; width: 300px; padding-right: 30px;"></td>
@@ -349,14 +342,14 @@
 		$(document).on('click', "#detailBtn", function(){
 			
 			var oCode = $(this).parent().siblings(".oC").find(".oCode").text();
-			console.log(oCode);
+			//console.log(oCode);
 			
 			$.ajax({
 				url:"crDetail.my",
 				type:"post",
 				data:{orderCode:oCode},
 				success:function(mo){
-					console.log(mo);
+					//console.log(mo);
 					
 					// 첫번째 표 자리
 					var result1 = "";

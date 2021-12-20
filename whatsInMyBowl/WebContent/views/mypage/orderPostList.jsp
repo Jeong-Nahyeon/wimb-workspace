@@ -6,7 +6,6 @@
     
 <%
 	ArrayList<MyOrders> list = (ArrayList<MyOrders>)request.getAttribute("list");
-	System.out.println(list);	
  %>
 <!DOCTYPE html>
 <html>
@@ -145,7 +144,7 @@
     	background-color: lightgrey;
     }
     img {
-    	widt: 80px;
+    	width: 80px;
     	height: 80px;
     	margin-right: 20px;
     }
@@ -211,8 +210,12 @@
 	                        
 	                        <% for(MyOrders od : list) { %>
                         		<tr>
-                        			<td id="pmCode" style="display:none;"><label><%= od.getPmCode() %></label></td>
-                    				<td><%= od.getOrderDate() %><br>[<index id="orderCode"><%= od.getOrderCode() %></index>]</td>
+                        			<td class="pmCode" style="display:none;"><%= od.getPmCode() %></td>
+                    				<td class="oC">
+		                             	<span><%= od.getOrderDate() %></span>
+		                             	<br>
+		                             	[<span class="oCode"><%= od.getOrderCode() %></span>]
+	                            	</td>
                     				<% if(od.getpName() == null) { %>
                     					<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"><%= od.getCuName() %></a></td>
                    					<% }else { %>
@@ -224,7 +227,7 @@
                    						<% if(od.getOrderStatus().equals("결제대기") || od.getOrderStatus().equals("결제완료") || od.getOrderStatus().equals("배송준비")) { %>
 		                                	
 		                                	<!--주문상태가 결제완료, 상품준비중일 때만 가능-->
-		                                	<button type="button" id="cancelDo">즉시취소</button>
+		                                	<button type="button" class="cancelDo">즉시취소</button>
 	                                	
 	                                	<% }else if(od.getOrderStatus().equals("배송중")) { %>
 	                                		
@@ -235,7 +238,7 @@
                                 			
                                 			<!--주문상태가 배송완료일 때만 가능-->
                                 			<button type="button"  onclick="location.href='리뷰작성페이지이동'">리뷰작성</button>
-                                			<button id="refundDo" type="button" data-toggle="modal" data-target="#refundModal">환불요청</button>
+                                			<button class="refundDo" type="button" data-toggle="modal" data-target="#refundModal">환불요청</button>
                                 		
                                 		<% }else { %>
                                 			
@@ -256,29 +259,39 @@
     
     <!-- 취소요청 -->
     <script>
-    	$("#cancelDo").on('click', function(){
+    	$(".cancelDo").on('click', function(){
     		
+    		
+    		
+    		// confirm통해 의사 확인
     		const result = confirm("해당 상품을 취소하시겠습니까?");
     		
-    		if(result) {
+    		if(result) { // 취소 요청시
     			
-    			var orderCode = $("#orderCode").text();
-        		console.log(orderCode);
+    			var oCode = $(this).parent().siblings(".oC").find(".oCode").text();
+        		var pmCode = $(this).parent().siblings(".pmCode").text();
+        		console.log(oCode);
+        		console.log(pmCode);
         		
         		$.ajax({
         			url:"cancelInsert.my",
         			type:"post",
-        			data:{orderCode:orderCode},
-        			success:function(){
-        				alert("상품이 취소되었습니다.");
+        			data:{
+        				orderCode:oCode,
+        				pmCode:pmCode
+       				},
+        			success:function(result){
+        				
+        				if(result>0) {
+        					alert("상품이 취소되었습니다.");
+        				}
+        				
+        				
         			}, error:function(){
-        				console.log("ajax통신실패");
+        				alert("요청에 실패했습니다.\n관리자에게 문의하세요.");
         			}
         		})
         		
-    			
-    		}else {
-    			alert("요청에 실패했습니다.");
     		}
     		
     	})
@@ -308,10 +321,10 @@
 				data:{orderCode:orderCode},
 				success:function(mo){
 					console.log(mo)
-				},error:finction(){
+				},error:function(){
 					console.log("ajax 통신 실패")
-				};
-			
+				}
+            });
 		})
 		
 		

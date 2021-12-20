@@ -30,14 +30,10 @@ public class AjaxCancelInsertController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		String orderCode = request.getParameter("orderCode");
-		String pmCode = request.getParameter("pmCode");
+		String oCode = request.getParameter("orderCode");
+		String payCode = request.getParameter("pmCode");
 		
-		MyOrders mo = new MyOrders();
-		mo.setOrderCode(orderCode);
-		mo.setPmCode(pmCode);
-		
-		int result = new MyPageService().insertCancel(mo);
+		int result = new MyPageService().insertCancel(oCode, payCode);
 		
 		response.getWriter().print(result);
 	}
