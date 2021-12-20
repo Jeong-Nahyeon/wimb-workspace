@@ -218,7 +218,83 @@ public class MemberDao {
 		
 	}
 	
+	public int updateMember(Connection conn, Member m) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getmPwd());
+			pstmt.setString(2, m.getmName());
+			pstmt.setString(3, m.getmPhone());
+			pstmt.setString(4, m.getmEmail());
+			pstmt.setString(5, m.getmAddress());
+			pstmt.setString(6, m.getSubAddress());
+			pstmt.setString(7, m.getPostcode());
+			pstmt.setString(8, m.getmAd());
+			pstmt.setString(9, m.getmId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
 	
 	
+	public Member selectMember(Connection conn, String userId) {
+		
+		Member m = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getInt("m_code"),
+							   rset.getString("m_name"),
+							   rset.getString("m_id"),
+							   rset.getString("m_pwd"),
+							   rset.getString("m_phone"),
+							   rset.getString("m_birth"),
+							   rset.getString("m_gender"),
+							   rset.getString("m_address"),
+							   rset.getString("m_subaddress"),
+							   rset.getString("m_postcode"),
+							   rset.getString("m_email"),
+							   rset.getDate("m_enrolldate"),
+							   rset.getString("m_introducer"),
+							   rset.getString("m_status"),
+							   rset.getString("m_quitreason"),
+							   rset.getDate("m_quitdate"),
+							   rset.getString("m_ad"),
+							   rset.getDate("m_blackdate"),
+							   rset.getString("m_blackreason"),
+							   rset.getInt("m_point"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return m;
+	}
 	
 }

@@ -27,6 +27,7 @@ public class memberUpdateClickController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		
 		// 회원정보 변경 비밀번호 입력 창으로 이동
 		request.getRequestDispatcher("views/member/memberUpdate.jsp").forward(request, response);
 		

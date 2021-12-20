@@ -71,8 +71,39 @@ public class Member {
 		this.introducer = introducer;
 		this.mAd = mAd;
 	}
+	
+	
 
 	
+	public Member(String mId, String mPwd, String mName, String mPhone, String mEmail, String mAddress, String subAddress,
+			String postcode, String mAd) {
+		super();
+		this.mName = mName;
+		this.mId = mId;
+		this.mPwd = mPwd;
+		this.mPhone = mPhone;
+		this.mAddress = mAddress;
+		this.subAddress = subAddress;
+		this.postcode = postcode;
+		this.mEmail = mEmail;
+		this.mAd = mAd;
+	}
+	
+
+	public Member(String mId, String mName, String mPhone, String mEmail, String mAddress, String subAddress,
+			String postcode, String mAd) {
+		super();
+		this.mName = mName;
+		this.mId = mId;
+		this.mPhone = mPhone;
+		this.mAddress = mAddress;
+		this.subAddress = subAddress;
+		this.postcode = postcode;
+		this.mEmail = mEmail;
+		this.mAd = mAd;
+	}
+
+
 	public int getmCode() {
 		return mCode;
 	}

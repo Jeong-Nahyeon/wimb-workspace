@@ -169,7 +169,7 @@
         <!-- 마이페이지 사이드바 끝-->
 
         <div class="main">
-            <form id="inputPwd-area" align="center" method="post">
+            <form action="<%=contextPath %>/update.me" id="inputPwd-area" align="center" method="post">
                 <div id="title-area" >
                     <p>
                         <h4> 회원정보 변경</h4>
@@ -181,10 +181,11 @@
                     </p>
                     <div id="input-area">
                         <div>
-                            아이디 <b><%=userId%></b> 
+                            아이디 <b><%=userId%></b>
+             <input type="hidden" id="userId" name="userId" value="<%=userId%>"> 
                         </div>
                         <div>
-                            비밀번호 <input type="password" name="userPwd" required>
+                            비밀번호 <input type="password" id="userPwd" name="userPwd" required>
                         </div>
                     </div>
                 </div>
@@ -201,7 +202,7 @@
            location.href="<%=contextPath%>/myPage.my"
        }
        function update(){
-    	   location.href="<%=contextPath%>/update.me"
+    	   $("#inputPwd-area").submit();
        }
    </script>
    <footer>

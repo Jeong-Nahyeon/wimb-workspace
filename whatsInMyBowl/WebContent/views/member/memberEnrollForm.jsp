@@ -240,7 +240,7 @@
 					$('#checkId').text("아이디를 확인해주세요");
 					$('#checkId').css('color', 'red');
 				}
-			})
+			});
 			$("#userPwd").blur(function(){
 				if(pwdExp.test($(this).val())){
 					console.log(pwdExp.test($(this).val()));
@@ -250,7 +250,7 @@
 					$('#checkPwd').text("비밀번호를 확인해주세요");
 					$('#checkPwd').css('color', 'red');
 				}
-			})
+			});
 			$("#userPwdChk").blur(function(){
 				if($("#userPwd").val() == $("#userPwdChk").val()){
 					console.log($("#userPwd").val() == $("#userPwdChk").val());
@@ -260,7 +260,7 @@
 					$('#checkPwdchk').text("비밀번호가 일치하지 않습니다.");
 					$('#checkPwdchk').css('color', 'red');
 				}
-			})
+			});
 			$("#userName").blur(function(){
 				if(nameExp.test($(this).val())){
 					console.log(nameExp.test($(this).val()));
@@ -270,7 +270,7 @@
 					$('#checkName').text("이름을 확인해주세요");
 					$('#checkName').css('color', 'red');
 				}
-			})
+			});
 			$("#userPhone").blur(function(){
 				if(phoneExp.test($(this).val())){
 					console.log(phoneExp.test($(this).val()));
@@ -280,7 +280,7 @@
 					$('#checkPhone').text("전화번호를 확인해주세요");
 					$('#checkPhone').css('color', 'red');
 				}
-			})
+			});
 			$("#userEmail").blur(function(){
 				if(emailExp.test($(this).val())){
 					console.log(emailExp.test($(this).val()));
@@ -290,7 +290,7 @@
 					$('#checkEmail').text("이메일 주소를 확인해주세요");
 					$('#checkEmail').css('color', 'red');
 				}
-			})
+			});
 			$("#userBirth").blur(function(){
 				if(birthExp.test($(this).val())){
 					console.log(birthExp.test($(this).val()));
@@ -300,7 +300,7 @@
 					$('#checkBirth').text("생년월일을 확인해주세요");
 					$('#checkBirth').css('color', 'red');
 				}
-			})
+			});
 		
 		
 			// 아이디 중복 체크
@@ -432,7 +432,7 @@
 		    }
 
 			
-
+			// 체크박스 선택안함 선택시 기존 체크 해제 기능(반대도)
 			$("#disagree").click(function(){
 				if($("#disagree").prop("checked")){
 					$("#agreeEmail").prop("checked", false);
