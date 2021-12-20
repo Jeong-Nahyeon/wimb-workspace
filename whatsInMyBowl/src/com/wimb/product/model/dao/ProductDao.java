@@ -71,7 +71,7 @@ public class ProductDao {
 	 */
 	public ArrayList<Product> selectProductList(Connection conn, PageInfo pi){
 		
-		ArrayList<Product> totalList = new ArrayList<>();
+		ArrayList<Product> productList = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
@@ -94,7 +94,7 @@ public class ProductDao {
 			
 			while(rset.next()){
 				
-				totalList.add(new Product(rset.getString("p_code"),
+				productList.add(new Product(rset.getString("p_code"),
 										  rset.getString("p_name"),
 										  rset.getString("p_category"),
 										  rset.getInt("p_price"),
@@ -112,9 +112,157 @@ public class ProductDao {
 			close(pstmt);
 		}
 		
-		return totalList;
+		return productList;
 		
 	}
+	
+	
+	public ArrayList<Product> selectOptionListHot(Connection conn, PageInfo pi){
+		
+		ArrayList<Product> productList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
+		String sql = prop.getProperty("selectOptionListHot");
+		
+		try {
+			
+				pstmt = conn.prepareStatement(sql);
+				
+				int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1; // 시작값
+				int endRow = startRow + pi.getBoardLimit() - 1; // 끝값
+				
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()){
+					
+					productList.add(new Product(rset.getString("p_code"),
+											  rset.getString("p_name"),
+											  rset.getString("p_category"),
+											  rset.getInt("p_price"),
+											  rset.getString("p_mainimg"),
+											  rset.getInt("p_stock"),
+											  filePath));
+					
+				}
+				
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+		
+		return productList;
+		
+	}
+	
+	
+	public ArrayList<Product> selectOptionListMin(Connection conn, PageInfo pi){
+			
+			ArrayList<Product> productList = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			// 파일저장경로
+			String filePath = "resources/images/product_images/";
+			
+			String sql = prop.getProperty("selectOptionListMin");
+			
+			try {
+					
+					pstmt = conn.prepareStatement(sql);
+					
+					int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1; // 시작값
+					int endRow = startRow + pi.getBoardLimit() - 1; // 끝값
+					
+					pstmt.setInt(1, startRow);
+					pstmt.setInt(2, endRow);
+					
+					rset = pstmt.executeQuery();
+					
+					while(rset.next()){
+						
+						productList.add(new Product(rset.getString("p_code"),
+												  rset.getString("p_name"),
+												  rset.getString("p_category"),
+												  rset.getInt("p_price"),
+												  rset.getString("p_mainimg"),
+												  rset.getInt("p_stock"),
+												  filePath));
+						
+					}
+					
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					close(rset);
+					close(pstmt);
+				}
+			
+			return productList;
+			
+		}
+	
+		
+	public ArrayList<Product> selectOptionListMax(Connection conn, PageInfo pi){
+		
+		ArrayList<Product> productList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
+		String sql = prop.getProperty("selectOptionListMax");
+		
+		try {
+					
+				pstmt = conn.prepareStatement(sql);
+				
+				int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1; // 시작값
+				int endRow = startRow + pi.getBoardLimit() - 1; // 끝값
+				
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()){
+					
+					productList.add(new Product(rset.getString("p_code"),
+											  rset.getString("p_name"),
+											  rset.getString("p_category"),
+											  rset.getInt("p_price"),
+											  rset.getString("p_mainimg"),
+											  rset.getInt("p_stock"),
+											  filePath));
+					
+				}
+				
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+		return productList;
+		
+	}
+	
+	
+	
+	
 	
 	
 	/** 관리자용 완제품 등록해주는 메소드

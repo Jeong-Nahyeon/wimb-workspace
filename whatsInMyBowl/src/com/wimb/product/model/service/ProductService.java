@@ -37,11 +37,50 @@ public class ProductService {
 		
 		Connection conn = getConnection();
 				
-		ArrayList<Product> totalList = new ProductDao().selectProductList(conn, pi);
+		ArrayList<Product> productList = new ProductDao().selectProductList(conn, pi);
 		
 		close(conn);
 		
-		return totalList;
+		return productList;
+		
+	}
+	
+	
+	public ArrayList<Product> selectOptionListHot(PageInfo pi){
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> productList = new ProductDao().selectOptionListHot(conn, pi);
+		
+		close(conn);
+		
+		return productList;
+		
+	}
+	
+	
+	public ArrayList<Product> selectOptionListMin(PageInfo pi){
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> productList = new ProductDao().selectOptionListMin(conn, pi);
+		
+		close(conn);
+		
+		return productList;
+		
+	}
+	
+	
+	public ArrayList<Product> selectOptionListMax(PageInfo pi){
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> productList = new ProductDao().selectOptionListMax(conn, pi);
+		
+		close(conn);
+		
+		return productList;
 		
 	}
 	

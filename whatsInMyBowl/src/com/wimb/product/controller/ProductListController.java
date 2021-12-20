@@ -62,13 +62,45 @@ public class ProductListController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		// 전체 샐러드 조회
-		ArrayList<Product> totalList = new ProductService().selectProductList(pi);
+		// 카테고리 옵션별 완제품 조회
+		String selectOrder = "";
+		ArrayList<Product> productList = new ArrayList<>();
+		
+		if(request.getParameter("selectOrder") != null) {
+			
+			selectOrder = request.getParameter("selectOrder");
+			
+			if(selectOrder.equals("hot")) { // 인기상품순
+				
+				productList = new ProductService().selectOptionListHot(pi);
+				
+			} else if(selectOrder.equals("min")) { // 낮은가격순
+				
+				productList = new ProductService().selectOptionListMin(pi);
+				
+			} else if(selectOrder.equals("max")) { // 높은가격순
+				
+				productList = new ProductService().selectOptionListMax(pi);
+				
+			}
+			
+			request.setAttribute("selectOrder", selectOrder);
+			request.setAttribute("pi", pi);
+			request.setAttribute("productList", productList);
+			
+			request.getRequestDispatcher("views/product/productListView.jsp").forward(request, response);
+			
+		} else {
+		// 전체 완제품 조회
+		productList = new ProductService().selectProductList(pi);
 		
 		request.setAttribute("pi", pi);
-		request.setAttribute("totalList", totalList);
+		request.setAttribute("productList", productList);
 		
 		request.getRequestDispatcher("views/product/productListView.jsp").forward(request, response);
+		}
+		
+		
 		
 	}
 

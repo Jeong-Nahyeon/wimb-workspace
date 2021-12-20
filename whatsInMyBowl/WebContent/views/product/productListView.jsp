@@ -12,8 +12,9 @@
 	int maxPage = pi.getMaxPage();
 	
 	// 전체 샐러드 조회 => 상품코드, 상품명, 카테고리, 판매가격, 대표이미지, 재고수량
-	ArrayList<Product> totalList = (ArrayList<Product>)(request.getAttribute("totalList"));
+	ArrayList<Product> productList = (ArrayList<Product>)(request.getAttribute("productList"));
 	
+	String selectOrder = (String)(request.getAttribute("selectOrder"));
 	
 %>
 
@@ -68,11 +69,11 @@
 		text-decoration: none;
 	}
 
-	.title-area>a:{
+	/* .title-area>a:{
 		font-weight: border;
 		font-size: large;
 		color:#9BD5BD;
-	}
+	} */
 
 	/* 상품 정렬 목록 */
 	.sort-list-area{
@@ -227,6 +228,23 @@
 </style>
 </head>
 <body>
+	<% if(selectOrder != null) { %>
+	<script>
+	
+		//console.log("<%= selectOrder %>");
+		
+		
+		const $option = $("select[name=selectOrder]").children();
+		
+		$option.each(function(){
+			
+			console.log($(this).val());
+			
+		});
+	
+	</script>
+	<% } %>
+	
 	
 	<%@ include file="../common/menubar.jsp" %>
 
@@ -242,17 +260,35 @@
 			</div>
 
 			<div class="sort-list-area" align="right">
-				<select class="selectpicker" name="select-sort" style="border:1px solid lightgray;">
-					<option value="">신상품순</option>
-					<option value="">인기상품순</option>
-					<option value="">낮은가격순</option>
-					<option value="">높은가격순</option>
+				<select name="selectOrder" style="border:1px solid lightgray;">
+					<option value="new">신상품순</option>
+					<option value="hot">인기상품순</option>
+					<option value="min">낮은가격순</option>
+					<option value="max">높은가격순</option>
 				</select>
 			</div>
 
+			<!-- 카테고리 옵션별 정렬 ajax -->
+			<script>
+				$(function(){
+
+					$("select[name=selectOrder]").change(function(){
+						const $option = $("option:selected").val();
+
+						if($option == "new"){ // 신상품순일 경우
+							location.reload();
+						} else { // 그 외일 경우
+							location.href="<%= contextPath %>/list.pr?cpage=1&selectOrder=" + $option;
+						}
+
+					});
+
+				});
+			</script>
+
 			<div class="product-area">
 				
-					<% for (Product p : totalList) { %>
+					<% for (Product p : productList) { %>
 						<div class="product">
 							<div class="product-img">
 								<img src="<%= contextPath %>/<%= p.getFilePath() + p.getpMainImg() %>">
@@ -386,13 +422,6 @@
             </div>
         </div>
     </div>
-	<script>
-		$(document).ready(function(){
-			$(".cart-btn").click(function(){
-			$("#cart-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
 
 
 		   
@@ -434,13 +463,6 @@
 			</div>
 		</div>
 	</div>		
-	<script>
-		$(document).ready(function(){
-			$("#cart-success-btn").click(function(){
-			$("#cart-success-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
 
 </body>
 </html>
