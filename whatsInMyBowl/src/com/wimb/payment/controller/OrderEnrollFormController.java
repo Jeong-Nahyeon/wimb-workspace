@@ -1,11 +1,17 @@
 package com.wimb.payment.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.wimb.payment.model.service.PaymentService;
+import com.wimb.payment.model.vo.PaymentCustom;
+import com.wimb.payment.model.vo.PaymentProduct;
 
 /**
  * Servlet implementation class OrderEnrollFormController
@@ -27,6 +33,41 @@ public class OrderEnrollFormController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		//String[] saladCode = request.getParameterValues("saladCode");
+		//String[] saladCount = request.getParameterValues("saladCount");
+		//String[] saladPrice = request.getParameterValues("saladPrice");
+		
+		String[] saladCode = {"CU1001", "CU1002", "P1001", "P1001"};
+		String[] saladCount = {"1", "1", "2", "3"};
+		String[] saladPrice = {"10000", "15000", "9000", "13000"};
+		
+		
+		PaymentCustom custom = new PaymentCustom();
+		PaymentProduct product = new PaymentProduct(); 
+		
+		ArrayList<PaymentCustom> customList = new ArrayList<PaymentCustom>();
+		ArrayList<PaymentProduct> productList = new ArrayList<PaymentProduct>();
+		
+		for(int i=0; i<saladCode.length; i++) {
+			if(saladCode[i].startsWith("CU")) {
+				custom = new PaymentService().selectCustom(saladCode[i]);
+				custom.setCuCount(Integer.parseInt(saladCount[i]));
+				customList.add(custom);
+			}else if(saladCode[i].startsWith("P")) {
+				product = new PaymentService().selectProduct(saladCode[i]);
+				product.setpCount(Integer.parseInt(saladCount[i]));
+				product.setpPrice(Integer.parseInt(saladPrice[i]));
+				productList.add(product);
+			}
+		}
+		//System.out.println(saladCode.length);
+		//System.out.println(saladCode[1]);
+		//System.out.println(custom);
+		//System.out.println(product);
+		System.out.println(customList);
+		System.out.println(productList);
+		
+		
 		request.getRequestDispatcher("views/payment/orderForm.jsp").forward(request, response);
 	}
 

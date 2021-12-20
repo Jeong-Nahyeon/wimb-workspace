@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="selectCustom">
+		SELECT 
+		       CU_CODE
+		     , CU_NAME
+		     , CU_PRICE
+		     , CU_MAINIMG
+		  FROM CUSTOM
+		 WHERE CU_CODE = ?
+	</entry>
+	
+	<entry key="selectProduct">
+		SELECT 
+		       P_CODE
+		     , P_NAME
+		     , P_MAINIMG
+		  FROM PRODUCT
+		 WHERE P_CODE = ?
+	</entry>
+</properties>

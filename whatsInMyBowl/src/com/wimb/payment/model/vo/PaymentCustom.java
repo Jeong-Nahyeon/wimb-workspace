@@ -1,25 +1,27 @@
-package com.wimb.custom.model.vo;
+package com.wimb.payment.model.vo;
 
-public class Custom {
-
+public class PaymentCustom {
+	
 	private String cuCode;
-	private int mCode;
 	private String cuName;
 	private int cuPrice;
+	private int cuCount;
 	private String cuMainImg;
 	
-	public Custom() {}
-
-	public Custom(String cuCode, int mCode, String cuName, int cuPrice, String cuMainImg) {
+	public PaymentCustom() {}
+	
+	public PaymentCustom(String cuCode, String cuName, int cuPrice, int cuCount, String cuMainImg) {
 		super();
 		this.cuCode = cuCode;
-		this.mCode = mCode;
 		this.cuName = cuName;
 		this.cuPrice = cuPrice;
+		this.cuCount = cuCount;
 		this.cuMainImg = cuMainImg;
 	}
 	
-	public Custom(String cuCode, String cuName, int cuPrice, String cuMainImg) {
+	
+
+	public PaymentCustom(String cuCode, String cuName, int cuPrice, String cuMainImg) {
 		super();
 		this.cuCode = cuCode;
 		this.cuName = cuName;
@@ -33,14 +35,6 @@ public class Custom {
 
 	public void setCuCode(String cuCode) {
 		this.cuCode = cuCode;
-	}
-
-	public int getmCode() {
-		return mCode;
-	}
-
-	public void setmCode(int mCode) {
-		this.mCode = mCode;
 	}
 
 	public String getCuName() {
@@ -59,6 +53,14 @@ public class Custom {
 		this.cuPrice = cuPrice;
 	}
 
+	public int getCuCount() {
+		return cuCount;
+	}
+
+	public void setCuCount(int cuCount) {
+		this.cuCount = cuCount;
+	}
+
 	public String getCuMainImg() {
 		return cuMainImg;
 	}
@@ -69,8 +71,10 @@ public class Custom {
 
 	@Override
 	public String toString() {
-		return "Custom [cuCode=" + cuCode + ", mCode=" + mCode + ", cuName=" + cuName + ", cuPrice=" + cuPrice
-				+ ", cuMainImg=" + cuMainImg + "]";
+		return "PaymentCustom [cuCode=" + cuCode + ", cuName=" + cuName + ", cuPrice=" + cuPrice + ", cuCount="
+				+ cuCount + ", cuMainImg=" + cuMainImg + "]";
 	}
 	
+	
+
 }

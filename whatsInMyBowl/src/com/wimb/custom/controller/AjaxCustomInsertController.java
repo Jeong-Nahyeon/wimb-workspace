@@ -39,7 +39,7 @@ public class AjaxCustomInsertController extends HttpServlet {
 		int itemTotalPrice = Integer.parseInt(request.getParameter("itemPrice"));
 		String saladName = request.getParameter("saladName");
 		int userCode = Integer.parseInt(request.getParameter("userNum"));
-		System.out.println(arrItemCode[0]);
+		
 		
 		Custom c = new Custom();
 		c.setmCode(userCode);

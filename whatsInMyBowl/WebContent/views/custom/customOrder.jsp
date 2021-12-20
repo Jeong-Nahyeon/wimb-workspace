@@ -355,33 +355,26 @@
                     </div>
 
                     <div class="custom_order">
-                        
-                        <div class="customOrder_table">
+                        <form action="<%=contextPath%>/order.pay" method="post" id="orderEnroll-form">
+                            <div class="customOrder_table">
 
-                        </div>
-                        
-                        <div class="customlist_price" align="right">
-                            <span style="padding: 0 70px 0 20px;">총 금액</span>
-                            <span id="total_price" style="padding: 0 15px 0 0;"> </span>
-                        </div>
+                            </div>
+                            
+                            <div class="customlist_price" align="right">
+                                <span style="padding: 0 70px 0 20px;">총 금액</span>
+                                <span id="total_price" style="padding: 0 15px 0 0;"> </span>
+                            </div>
+    
+                            <div class="customOrder_btn" align="right">
+                                <button id="customOrder_order">주문하기</button>
+                                <button type="submit" id="customOrder_cart">장바구니</button>
+                            </div>
+                        </form>
 
-                        <div class="customOrder_btn" align="right">
-                            <button id="customOrder_order">주문하기</button>
-                            <button id="customOrder_cart">장바구니</button>
-                        </div>
-                        
                     </div>
                 </div>
-                <!-- 주문서로 이동시 실행되는 script-->
-                <script>
-                    $("#customOrder_order").click(function(){
-                        var ciCode = "";
-                        $(".customlist_price").each(function(){
-                            ciCode += ($(this).val());
-                        })
-                        location.href = '<%=contextPath%>/order.pay?ciCode='+ciCode;
-                    })
-                </script>
+                <!-- form의 데이터를 배열로 전달 -->
+                
 
                 <!-- 가운데 세로선-->
                 <div id="main_line"></div>
@@ -802,8 +795,9 @@
                                                     "<td style='width: 100px; padding-left: 10px;'>" + "드레싱" + "</td>" +
                                                     "<td colspan='3' style='width: 220px; text-align: right;'' class='listDressing'>"+ dressing_text +"</td>"+
                                             "</tr>" +
-                                            "<input type='hidden' class='order_ciCode' value='"+ list[0].cuCode +"'>" +
-                                            "<input type='hidden' class='custom_price' value='"+ list[0].cuPrice +"'>" +
+                                            "<input type='hidden' class='order_ciCode' name='saladCode' value='"+ list[0].cuCode +"'>" +
+                                            "<input type='hidden' class='custom_price' name='saladPrice' value='"+ list[0].cuPrice +"'>" +
+                                            "<input type='hidden' name='saladCount' value='1'>" +
                                        "</table>"
                                             
                         $(".customOrder_table").append(contentTh);
