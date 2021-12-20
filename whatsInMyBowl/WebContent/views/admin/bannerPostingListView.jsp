@@ -172,6 +172,22 @@
         padding: 0;
         margin-right: 10px;
     }
+ 	/*배너 삭제 모달*/
+
+     .delete_text{
+         text-align: center;
+      }
+     .delete_text span{
+         display: block;
+         margin: 10px 0;
+     }
+     .delete_btn{
+         margin: 40px 5px 5px 5px;
+         text-align: center;
+     }
+     .delete_btn button{
+         margin: 0 10px;
+     }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -207,7 +223,7 @@
         </div>
         
         <div class="two_btn">
-            <button type=submit id="deletebanner">선택삭제</button>
+            <button type=submit id="deletebanner" data-toggle="modal" data-target="#banner_delete_Modal">선택삭제</button>
             <button type="button" id="insertbannerbtn">등록하기</button>
         </div>
         
@@ -222,7 +238,7 @@
             </tr>
             <% for(Banner b : Postinglist) { %>
 	            <tr>
-	                <td><input type="checkbox"></td>
+	                <td><input type="checkbox" name="check" id="check_list"></td>
 	                <td class="bannerCode"><%= b.getbCode() %></td>
 	                <td><%= b.getbName() %></td>
 	                <td><%= b.getStartDate() %></td>
@@ -283,7 +299,31 @@
 
         </div>
     </div>
-
+          
+          
+            <!-- 배너 삭제 관련 모달-->
+            <!-- The Modal -->
+            <div class="modal" id="banner_delete_Modal">
+                <div class="modal-dialog">
+                <div class="modal-content">
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <!-- <form action="" >  -->
+                            <div class="delete_text">
+                                <span>선택하신 배너를 삭제합니다.</span>
+                                <span>정말 삭제하시겠습니까?</span>
+                                <span>(삭제 후 복구불가)</span>
+                            </div>
+                            <div class="delete_btn">
+                                <button class="btn btn-sm btn btn-outline-warning" data-toggle="modal" onclick="deletecheck();">삭제</button>
+                                <button type="reset" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">취소</button>
+                            </div>
+                        <!-- </form>  -->
+                    </div>
+                </div>
+                </div>
+            </div>
 
 
     <script>
@@ -354,7 +394,51 @@
     
     })
     //-------------------------------------------------------------------------
-        
+
+        // 선택 삭제 ------------------------------------------------------------------
+        function deletecheck(){
+    		promise1()
+    		.then(successCheck)
+    		.catch(failCheck);
+    	}
+    	
+    	function promise1(){
+    		var count = $("input[name='check']:checked").length;
+    		var checkArr = new Array();
+    		 $("input[name='check']:checked").each(function(){
+                 checkArr.push($(this).parent().siblings(".bannerCode").text())
+             });
+    		 
+    		 console.log(checkArr);
+             console.log(count);
+             return new Promise(function(resolve, reject){
+                 $.ajax({
+                     url:"delete.banner",
+                     dataType:"json",
+                     traditional:true,
+                     data:{
+                         count:count,
+                         checkArr:checkArr
+                     },
+                     success:function(result){
+                         console.log("프로미스1 성공")
+                         resolve(result);
+                     },
+                     error:function(){
+                         console.log("ajax 통신 실패");
+                     }
+                 })
+             })
+    	}
+    	  function successCheck(){
+              alert("배너 삭제 완료")
+              location.reload();
+          }
+
+          function failCheck(){
+              alert("삭제에 실패하였습니다.")
+          }    	
+    	// ------------------------------------------------------------------------
         
     </script>
     

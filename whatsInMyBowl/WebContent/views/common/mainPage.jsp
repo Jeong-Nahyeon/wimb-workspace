@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="menubar.jsp" %>
+<%@ page import="java.util.ArrayList, com.wimb.admin.model.vo.Banner" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,9 +63,9 @@
 <body>
 	<div id="mainBannerBox">
 		<ul class="bxslider" style="width:800px">
-			<li><a href="#"><img src="<%= contextPath %>/resources/images/LOGO.png"></a></li>
-			<li><a href="#"><img src="<%= contextPath %>/resources/images/LOGO.png"></a></li>
-			<li><a href="#"><img src="<%= contextPath %>/resources/images/LOGO.png"></a></li>
+		
+				<!-- ajax로 메인배너 띄워주는 위치 -->
+			
 		</ul>
 	</div>
 	<br clear="both">
@@ -154,6 +155,32 @@
 		</table>
 
 	</div>
+	<script>
+	function test4(){
+		$.ajax({
+			url:"mainPage.banner",
+			data:{},
+			success:function(list){ 
+				
+				console.log(list);
+				
+				let result = "";
+				for(let i=0; i<list.length; i++){
+					result += "<li><a href='#'><img src='" + list[i].mainImg + "></a></li>";
+				}
 	
+				
+				$(".bxslider").html(result);
+				
+				
+			},error:function(){
+				console.log("ajax 통신 실패");
+			}
+		});
+		
+		
+	}
+	
+	</script>
 </body>
 </html>
