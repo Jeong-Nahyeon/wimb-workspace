@@ -5,7 +5,8 @@
 %>
     
 <%
-	ArrayList<MyOrders> list = (ArrayList<MyOrders>)session.getAttribute("list");
+	ArrayList<MyOrders> list = (ArrayList<MyOrders>)request.getAttribute("list");
+	System.out.println(list);	
  %>
 <!DOCTYPE html>
 <html>
@@ -210,7 +211,7 @@
 	                        <% for(MyOrders od : list) { %>
                         		<tr>
                         			<td id="pmCode" style="display:none;"><label><%= od.getPmCode() %></label></td>
-                    				<td><%= od.getOrderDate() %><br>[<index id="orderCode"><%= od.getOrderCode() %></incdex>]</td>
+                    				<td><%= od.getOrderDate() %><br>[<index id="orderCode"><%= od.getOrderCode() %></index>]</td>
                     				<% if(od.getpName() == null) { %>
                     					<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"><%= od.getCuName() %></a></td>
                    					<% }else { %>
@@ -222,7 +223,7 @@
                    						<% if(od.getOrderStatus().equals("결제대기") || od.getOrderStatus().equals("결제완료") || od.getOrderStatus().equals("배송준비")) { %>
 		                                	
 		                                	<!--주문상태가 결제완료, 상품준비중일 때만 가능-->
-		                                	<button type="button" id="cancel" onclick="cancelAlert()">즉시취소</button>
+		                                	<button type="button" id="cancelDo">즉시취소</button>
 	                                	
 	                                	<% }else if(od.getOrderStatus().equals("배송중")) { %>
 	                                		
@@ -233,12 +234,12 @@
                                 			
                                 			<!--주문상태가 배송완료일 때만 가능-->
                                 			<button type="button"  onclick="location.href='리뷰작성페이지이동'">리뷰작성</button>
-                                			<button type="button" data-toggle="modal" data-target="#refundModal">환불요청</button>
+                                			<button id="refundDo" type="button" data-toggle="modal" data-target="#refundModal">환불요청</button>
                                 		
                                 		<% }else { %>
                                 			
                                 			<!--주문상태가 환불/취소일 때만 가능-->
-                                			<button type="button"  onclick="location.href='취소/환불내역페이지이동'">상세보기</button>
+                                			<button type="button"  onclick="location.href='<%= contextPath %>/cancelList.my'">상세보기</button>
                                 			
                                 		<% } %>	
 		                            </td>
@@ -250,33 +251,67 @@
         </div>
 
     </div>
+    
+    
+    <!-- 취소요청 -->
+    <script>
+    	$("#cancelDo").on('click', function(){
+    		
+    		const result = confirm("해당 상품을 취소하시겠습니까?");
+    		
+    		if(result) {
+    			
+    			var orderCode = $("#orderCode").text();
+        		console.log(orderCode);
+        		
+        		$.ajax({
+        			url:"cancelInsert.my",
+        			type:"post",
+        			data:{orderCode:orderCode},
+        			success:function(){
+        				alert("상품이 취소되었습니다.");
+        			}, error:function(){
+        				console.log("ajax통신실패");
+        			}
+        		})
+        		
+    			
+    		}else {
+    			alert("요청에 실패했습니다.");
+    		}
+    		
+    	})
+    
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	
-    <!-- 취소요청 알람창 -->
 	<script>
-	$("#cancel").on("click",function(){
-		 if(confirm("해당 상품 주문을 취소하시겠습니까?")==true) {
-				
-			 	var orderCode = $("#orderCode").val();
-			 	var pmCode = $("#pmCode").val();
-			 
-				$.ajax({
-					
-					url:"cancelInsert.my",
-					data: {
-						orderCode:orderCode,
-						pmCode:pmCode
-					},
-					type:"post",
-					success:function(){
-						if(result>0) { // 취소 요청 성공 =>  
-							alert("상품이 취소되었습니다.");
-						}
-					}, error:function(){
-						console.log("취소요청 통신 실패");
-					}
-					
-		 }
-	})
+		
+		$("#refundDo").click(function(){
+			
+			var orderCode = $("#orderCode").text();
+			console.log(orderCode);
+			
+			$.ajax({
+				url:"crDetail.my",
+				type:"post",
+				data:{orderCode:orderCode},
+				success:function(mo){
+					console.log(mo)
+				},error:finction(){
+					console.log("ajax 통신 실패")
+				};
+			
+		})
 		
 		
 	</script>
@@ -289,7 +324,7 @@
                 <!-- Modal Header -->
                 <div class="modal-header" style="font-size:large; background-color: rgba(240, 239, 233, 0.445);">
                     <div>
-                        <b>취소 요청</b>
+                        <b>환불 요청</b>
                     </div>
                 </div>
         
@@ -312,17 +347,17 @@
                     <div>
                         <table class="cancelReason">
                             <tr>
-                                <td><button type="button" name="cancelReason">단순변심</button></td>
-                                <td><button type="button" name="cancelReason">상품불량</button></td>
+                                <td><button type="button" value="단순변심" name="cancelReason">단순변심</button></td>
+                                <td><button type="button" value="상품불량" name="cancelReason">상품불량</button></td>
                             </tr>
                             <tr>
-                                <td><button type="button" name="cancelReason">상품오배송</button></td>
-                                <td><button type="button" name="cancelReason">사이트 불만족</button></td>
+                                <td><button type="button" value="상품오배송" name="cancelReason">상품오배송</button></td>
+                                <td><button type="button" value="사이트불만족" name="cancelReason">사이트 불만족</button></td>
                             </tr>
                         </table>
                     </div>
                     <hr>
-                    <p>* 취소완료 후에는 철회가 불가능합니다.</p>
+                    <p>* 환불요청 후에는 철회가 불가능합니다.</p>
                 </div>
                 
         

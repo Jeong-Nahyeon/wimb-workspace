@@ -42,7 +42,9 @@ public class CancelListController extends HttpServlet {
 		ArrayList<MyOrders> clist = new MyPageService().selectCancelList(m, startDay, endDay);
 		
 		// 응답뷰
-		request.getSession().setAttribute("clist", clist);
+		request.setAttribute("clist", clist);
+		request.setAttribute("startDay", startDay);
+		
 		request.getRequestDispatcher("views/mypage/cancelRefundList.jsp").forward(request, response);
 	
 	}

@@ -154,8 +154,6 @@
 		</table>
 
 	</div>
-	<footer>
-		<%@ include file="../common/footer.jsp" %>
-	</footer>
+	
 </body>
 </html>

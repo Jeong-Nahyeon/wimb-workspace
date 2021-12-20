@@ -4,7 +4,8 @@
 	page import="com.wimb.mypage.model.vo.MyOrders, java.util.ArrayList"
 %>
 <%
-	ArrayList<MyOrders> clist = (ArrayList<MyOrders>)session.getAttribute("clist");
+	ArrayList<MyOrders> clist = (ArrayList<MyOrders>)request.getAttribute("clist");
+	System.out.println(clist);
  %>    
 
 <!DOCTYPE html>
@@ -105,7 +106,60 @@
     	height: 80px;
     	margin-right: 20px;
     }
-
+	     
+    .modal-footer button {
+        border: 0px;
+        border-radius: 5px;
+        width: 100px;
+        height: 40px;
+        margin-right: 185px;
+        font-size: smaller;
+        background-color: rgb(155, 213, 189); ;
+    }
+    
+    .selectBtn button:focus {
+    	background-color: lightgrey;
+    }
+    img {
+    	width: 80px;
+    	height: 80px;
+    	margin-right: 20px;
+    }
+    #area1 th{
+        height: 30px;
+        text-align: center;
+        font-size: 13px;
+        border-top: 2px solid rgba(133, 136, 139, 0.548);
+        border-bottom: 1px solid rgba(179, 174, 174, 0.384);
+        font-weight: bold;
+    }
+    #area1 td{
+        height: 60px;
+        text-align: center;
+        font-size: 13px;
+        border-bottom: 2px solid rgba(133, 136, 139, 0.548);
+        font-weight: bold;
+    }
+    #area2 th {
+        height: 40px;
+        text-align: center;
+        font-size: 13px;
+        background-color: rgba(199, 197, 197, 0.233);
+    }
+    #area2 td {
+        text-align: left;
+        font-size: 13px;
+        padding-left: 20px;
+    }
+    label {
+        margin: 0px; 
+        font-size: 14px;
+    }
+    .area3 * {
+        font-size: 14px;
+        height: 35px;
+        text-align: center;
+    }
 </style>
 
 </head>
@@ -171,7 +225,7 @@
 	                        <% for(MyOrders od : clist) { %>
 	                     
 	                        <tr>
-	                            <td><%= od.getOrderDate() %><br>[<label id="orderCode" name="orderCode"><%= od.getOrderCode() %></label>]</td>
+	                            <td><%= od.getOrderDate() %><br>[<label class="oCode" name="oCode"><%= od.getOrderCode() %></label>]</td>
 	                            
 	                            <% if(od.getpName() == null) {  // 커스텀상품%>
 	                            	<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"><%= od.getCuName() %></a></td>
@@ -186,6 +240,7 @@
 	                            	<!-- 환불일경우 -->
 	                            	<% if(od.getrStatus().equals("N")) { %>
 	                            		<td>환불<br>진행중</td>
+	                            		<td>-</td>
 	                            	<% } else if(od.getrStatus().equals("Y")) { %>
 	                            		<td>환불<br>처리완료</td>
 	                            		<td><%= od.getRcompDate() %></td>
@@ -204,29 +259,38 @@
 	                            
 	                            <% } %>
 	                            <td><button id="detailBtn" type="button" data-toggle="modal" data-target="#this-modal">상세보기</button></td>
+	                            <td style="display:hidden;"><%= od.getOrderCode() %></td>
 	                        </tr>
 	                        <% } %>
-	                        
+	                    </table>  
+                          
                     <% } %>
                     
             </div>
+
+
         </div>
     </div>
+
+
+
+
+
 	
-	   <!-- 환불/취소 상세보기 모달창 -->
-        <div class="modal" id="this-modal">
-            <div class="modal-dialog">
+	 <!-- 환불/취소 상세보기 모달창 -->
+    <div class="modal" id="this-modal">
+
+        <div class="modal-dialog">
             <div class="modal-content">
-        
-                    <!-- Modal Header -->
-                    <div class="modal-header" style="font-size:large; background-color: rgba(240, 239, 233, 0.445);">
-                        <div>
-                            <b>취소/환불 상세정보</b>
-                        </div>
+                <!-- Modal Header -->
+                <div class="modal-header" style="font-size:large; background-color: rgba(240, 239, 233, 0.445);">
+                    <div>
+                        <b>취소/환불 상세정보</b>
                     </div>
-            
-                    <!-- Modal body -->
-                    <div class="modal-body">
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body">
                     <table id="area1" style="margin-bottom: 30px;">
                         <tr>
                             <th width="90px;">주문번호</th>
@@ -247,69 +311,72 @@
                             </tr>
                         </table>
                     </div>
-                    <div>
-                        <label>취소/환불 정보</label>
-                        <table class="area3">
-                            <tr>
-                                <td width="150px;">상품금액</td>
-                                <td id="detail3" style="text-align: right; width: 300px; padding-right: 30px;"></td>
-                            </tr>
-                            <tr>
-                                <td>할인금액</td>
-                                <td id="detail4" style="text-align: right; width: 300px; padding-right: 30px;"></td>
-                            </tr>
-                        </table>
-                        <table>
-                            <th width="150px;">총 환불금액</th>
-                            <th id="detail5" style="text-align: right; width: 300px; padding-right: 30px;"></th>
-                        </table>
-                        </div>
-                    </div>
-            
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                    <button type="button" data-dismiss="modal">확인</button>
-                    </div>
+
+                    <label>취소/환불 정보</label>
+                    <table class="area3">
+                        <tr>
+                            <td width="150px;">상품금액</td>
+                            <td id="detail3" style="text-align: right; width: 300px; padding-right: 30px;"></td>
+                        </tr>
+                        <tr>
+                            <td>할인금액</td>
+                            <td id="detail4" style="text-align: right; width: 300px; padding-right: 30px;"></td>
+                        </tr>
+                    </table>
+                    <table>
+                        <th width="150px;">총 환불금액</th>
+                        <th id="detail5" style="text-align: right; width: 300px; padding-right: 30px;"></th>
+                    </table>
+                </div>
         
-            </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="ok" type="button" data-dismiss="modal">확인</button>
+                    <label></label>
+                </div>
+
             </div>
         </div>
+    </div>
 	
 	
 	
 	<script>
-		$("#detailBtn").click(function(e){
+		$(document).on('click', "#detailBtn", function(){
 			
-			var orderCode = $("#orderCode").text();
+			const orderCode = $(this).next();
 			console.log(orderCode);
 			
 			$.ajax({
 				url:"crDetail.my",
 				type:"post",
-				data:{orderCode:orderCode},
+				data:{orderCode:orderCode.text()},
 				success:function(mo){
 					console.log(mo);
 					
 					// 첫번째 표 자리
 					var result1 = "";
-					if(mo.pName == null) { // 커스텀일 경우
+					// 커스텀
+					if(mo.pName == null) { 
 						result1 +=
 							  "<td>" + mo.orderCode + "</td>"
 							+ "<td>" + mo.cuName + "</td>"
 							+ "<td>" + mo.orderAmount + "</td>";
-							if(mo.rStatus == "Y" || mo.cancelStatus == "Y") {
+							if(mo.rStatus == "Y" || mo.cancelStatus == "Y") { // 환불|취소 완료
 								result1 += "<td>" + "처리완료" + "<td>";
-							}else {
+							}else { // 환불|취소 처리중
 								result1 += "<td>" + "처리진행중" + "<td>";
 							}
-					}else { // 완제품일 경우
+							
+					// 완제품
+					}else { 
 						result1 +=
 							  "<td>" + mo.orderCode + "</td>"
 							+ "<td>" + mo.pName + "</td>"
 							+ "<td>" + mo.orderAmount + "</td>";
-							if(mo.rStatus == "Y" || mo.cancelStatus == "Y") {
+							if(mo.rStatus == "Y" || mo.cancelStatus == "Y") { // 환불|취소 완료
 								result1 += "<td>" + "처리완료" + "<td>";
-							}else {
+							}else { // 환불|취소 처리중
 								result1 += "<td>" + "처리진행중" + "<td>";
 							}	
 					}
@@ -317,10 +384,10 @@
 					
 					// 두번째 표 자리
 					var result2 = "";
-					if(mo.cancelCode == null) { // 환불일 경우
+					if(mo.cancelCode == null) { // 환불
 						result2 +=
 							mo.rReason;
-					}else { // 취소일 경우
+					}else { // 취소
 						result2 +=
 							mo.cReason;
 					}
@@ -328,17 +395,17 @@
 					
 					// 세번째 표 자리
 					var result3 = "";
-					result3 += mo.pmTotalCost;
+					result3 += mo.pmTotalCost * mo.orderAmount;
 					$("#detail3").html(result3);
 					
 					// 네번째 표 자리
 					var result4 = "";
-					result4 += (mo.pmFinalCost - mo.pmTotalCost);
+					result4 += ((mo.pmFinalCost* mo.orderAmount) - (mo.pmTotalCost * mo.orderAmount));
 					$("#detail4").html(result4);
 					
 					// 마지막 표 자리
 					var result5 = "";
-					result5 += mo.pmFinalCost;
+					result5 += mo.pmFinalCost * mo.orderAmount;
 					$("#detail5").html(result5);
 					
 					
@@ -347,6 +414,14 @@
 				}
 			})
 			
+		})
+		
+		$("#ok").click(function(){
+			$("#detail1").children().remove();
+			$("#detail2").children().remove();
+			$("#detail3").children().remove();
+			$("#detail4").children().remove();
+			$("#detail5").children().remove();
 		})
 	</script>
 	
@@ -388,8 +463,16 @@
 			
 			var startDateString = svYear + '-' + svMonth  + '-' + svDay;
 			
-    		$("#startDate").val(startDateString);
-    		console.log($("#startDate").val());
+			var startDay = '<%=request.getAttribute("startDay") %>';
+			if(startDay != 'null'){
+				$("#startDate").val(startDay);
+			}else{
+				$("#startDate").val(startDateString);
+			}
+    		
+    		
+    		
+    		//console.log($("#startDate").val());
 		
 		})
 		

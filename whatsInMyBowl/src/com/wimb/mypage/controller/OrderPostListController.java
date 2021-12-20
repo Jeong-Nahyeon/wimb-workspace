@@ -44,7 +44,7 @@ public class OrderPostListController extends HttpServlet {
 		ArrayList<MyOrders> list = new MyPageService().orderListDetail(m, startDay, endDay);
 		
 		// 응답뷰
-		request.getSession().setAttribute("list", list);
+		request.setAttribute("list", list);
 		request.getRequestDispatcher("views/mypage/orderPostList.jsp").forward(request, response);
 	}
 

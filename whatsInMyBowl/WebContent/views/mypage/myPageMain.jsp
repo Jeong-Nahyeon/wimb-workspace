@@ -73,38 +73,8 @@
     /* 은지 */
     .outer{
         width: 1000px;
-        height: 100px;
-        margin: auto;
-        margin-top: 90px;
-    }
-    .mypageSidebar{
-        width: 200px;
-        height: 600px;
-        margin-right: 30px;
-    }
-    .mypageSidebar .title{
-        margin: 5px;
-        display: block;
-    }
-    .mypageSidebar .menu{
-        border: 3px solid lightgray;
-        border-top: 3px solid black;
-        padding: 10px;
-    }
-    .mypageSidebar .menu th{
-        color: black;
-        text-align: left;
-        padding-bottom: 8px;
-        font-size: 15px;
-        border-bottom: 1px solid grey;
-    }
-    .mypageSidebar .menu td{
-        padding-bottom: 8px;
-    }
-    #sidebarmenu{
-        padding-bottom: 45px;
-    }
-    .nearestOrder, .mypageSidebar {
+        height: 500px;
+        margin-top: 30px;
         display: inline-block;
     }
     a {
@@ -124,7 +94,7 @@
     }
     #usertable{
         border: 1px solid gray;
-        margin-left: 230px;
+       
         border-top: 2px solid black ;
     }
     a:link { 
@@ -150,7 +120,7 @@
 </head>
 <body style="height:100%">
 
-	<%@ include file="../common/menubar.jsp" %>
+	<%@ include file="../common/myPage.jsp" %>
 		
     <div class="outer">
 		
@@ -175,56 +145,8 @@
             </tr>
          </table>
         <!-- 사용자 적립금/찜하기 테이블 끝-->
-         
-        <!-- 마이페이지 사이드바 시작-->
-        <div class="mypageSidebar">
-            <div class="title"><h3>마이페이지</h3></div>
-            <div class="menu">
-            <table>
-                <tr>
-                    <th>회원정보</th>
-                </tr>
-                <tr>
-                    <td><a href="<%=contextPath%>/memberUpdate.me">회원정보변경</a></td>
-                </tr>
-                <tr>
-                    <td id="sidebarmenu"><a href="<%=contextPath%>/memberDelete.me">회원탈퇴</a></td>
-                </tr> 
-                <tr>
-                    <th>혜택관리</th>
-                </tr>
-                <tr>
-                    <td id="sidebarmenu"><a href="">적립금</a></td>
-                </tr>
-                <tr>
-                    <th>쇼핑정보</th>
-                </tr>
-                <tr>
-                    <td><a href="<%=contextPath%>/orderList.my">주문목록/배송조회</a></td>
-                </tr>
-                <tr>
-                    <td><a href="<%=contextPath%>/cancelList.my">취소/환불내역</a></td>
-                </tr>
-                <tr>
-                    <td id="sidebarmenu"><a href="">찜리스트</a></td>
-                </tr>
-                <tr>
-                    <th>나의 게시글관리</th>
-                </tr>
-                <tr>
-                    <td><a href="<%=contextPath%>/inquiryList.my">1:1문의</a></td>
-                </tr>
-                <tr>
-                    <td><a href="">상품문의</a></td>
-                </tr>
-                <tr>
-                    <td><a href="">내가 작성한 리뷰</a></td>
-                </tr>
-            </table>
-            </div>
-        </div>
-        <!-- 마이페이지 사이드바 끝-->
-
+      
+		<!-- 사용자 최근 주문목록 시작 -->
         <div class="nearestOrder">
             <div style="margin-bottom: 8px; width: 700px;">
                 <span style="font-size: 12pt;"><b>최근 주문 정보</b></span>
@@ -235,7 +157,7 @@
             
 
             
-            <table class="orderStatus" align="center">
+            <table class="orderStatus">
                 <tr>
                 		
            			 <th rowspan="2"><%= od1.getStatusCount() %></th>
@@ -263,7 +185,7 @@
                     <th>배송완료</th>
                 </tr>
             </table>
-            <table class="orderList" align="center">
+            <table class="orderList">
                 <thead>
                 <tr>
                     <th style="width:110px;">주문일자/주문번호</th>
@@ -300,13 +222,13 @@
                 <% } %>
             </table>
         </div>
-
+		<!-- 사용자 최근 주문목록 끝 -->
     
-        
+     </div>
+   </div>
 
-    
-    <%@ include file="../common/footer.jsp" %>
- 
-   </div>    
 </body>
+	<footer>
+		<%@ include file="../common/footer.jsp" %>
+	</footer>
 </html>

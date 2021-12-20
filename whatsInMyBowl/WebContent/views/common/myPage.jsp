@@ -20,15 +20,16 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
     /* 은지 */
-    .outer{
-        width: 1000px;
-        height: 100px;
-        margin: auto;
-        margin-top: 90px;
-    }
+  	.outer {
+  		width: 1000px;
+  		height: 1000px;
+  		margin:auto;
+  	}
     .mypageSidebar{
         width: 200px;
         height: 600px;
+         margin-left: 300px;
+        margin-top: 80px;
         margin-right: 30px;
     }
     .mypageSidebar .title{
@@ -53,44 +54,10 @@
     #sidebarmenu{
         padding-bottom: 45px;
     }
-    .nearestOrder, .mypageSidebar {
-        display: inline-block;
-    }
+    .mypageSidebar {display: inline-block;}
     a {
         text-decoration: none;
         color:black;
-    }
-    .userImg{
-            vertical-align: middle;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-    }
-    #point{
-        border-right: 2px solid lightgray;
-        border-left: 2px solid lightgray;
-        text-align: center;
-    }
-    #usertable{
-        border: 1px solid gray;
-        margin-left: 230px;
-        border-top: 2px solid black ;
-    }
-    a { text-decoration:none}
-    #like{text-align: center;}
-    #userImage #userName{
-        display: inline-block;
-    }
-    #userImage{
-        width: 50px;
-        height: 50px;
-        float: left;
-        margin-left: 100px;
-    }
-    #userName{
-        width: 100px;
-        margin-top: 10px;
-        float: left;
     }
     a:link {
     	text-decoration:none;
@@ -102,29 +69,6 @@
 <body>
     <%@ include file="../common/menubar.jsp" %>
     
-    <div class="outer">
-
-        <!-- 사용자 적립금/찜하기 테이블 시작-->
-        <table id="usertable"  width="700" height="100">
-            <tr>
-                <td rowspan="2" colspan="2" align="right" width="200">
-                   <div id="userImage"><img src="https://www.w3schools.com/howto/img_avatar.png" alt="userImg" class="userImg"></div>
-                    <div id="userName"><h5><a href=""><%= loginUser.getmName() %></a>님</h5></div>
-                </td>
-                <td colspan="2" rowspan="2" width="80px" >
-                    <div id="point">적립금<br><br>
-                        <a href=""><%= loginUser.getmPoint() %></a>원
-                    </div>
-                </td>
-                
-                <td colspan="2"  rowspan="2" width="80px">
-                    <div id="like">찜하기<br><br>
-                        <a href="">0</a>원
-                    </div>
-                </td>
-            </tr>
-         </table>
-        <!-- 사용자 적립금/찜하기 테이블 끝-->
          
         <!-- 마이페이지 사이드바 시작-->
         <div class="mypageSidebar">
@@ -174,10 +118,7 @@
             </div>
         </div>
         <!-- 마이페이지 사이드바 끝-->
-         
-
-    <%@ include file="../common/footer.jsp" %>
- 
-  </div>     
+       
+   
 </body>
 </html>
