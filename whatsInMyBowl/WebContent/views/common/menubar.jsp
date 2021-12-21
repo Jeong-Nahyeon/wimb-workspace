@@ -208,7 +208,7 @@
                 <a href="<%=contextPath%>/enrollTerms.me">회원가입</a> 
                 <a href="<%= contextPath %>/loginInput.me">로그인</a>
                 <a href="<%= contextPath %>/loginInput.me">마이페이지</a>
-                <a href="">고객센터</a>
+                <a href="<%= contextPath %>/userView.no?cpage=1">고객센터</a>
                 <a href="">장바구니</a>
             </div> 
             <%}else { %>

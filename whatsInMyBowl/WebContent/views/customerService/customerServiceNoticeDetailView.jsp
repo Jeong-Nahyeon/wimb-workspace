@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.wimb.customerService.model.vo.Notice"%>
+<%
+	Notice n = (Notice)request.getAttribute("notice");
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +20,7 @@
         width: 1000px;
         box-sizing: border-box;
         margin: auto;
-        margin-top: 130px;
+        margin-top: 100px;
     }
 
     .noticeSideBar{
@@ -51,6 +55,9 @@
         margin-left: 230px;
         text-align: center;
         position: relative;
+    }
+    .noticeDetail table{
+    	width: 730px;
     }
 
     .noticeDetail table tr td{
@@ -94,7 +101,7 @@
                 <h2>고객센터</h2>
                 <ul>
                     <li>
-                        <a href="">공지사항</a>
+                        <a href="<%= contextPath %>/userView.no?cpage=1">공지사항</a>
                     </li>
                     <li>
                         <a href="">자주묻는 질문</a>
@@ -123,37 +130,25 @@
             <table style="padding: 10px;">
                 <tr style="border-top: 2px solid gray">
                     <th>제목</th>
-                    <td colspan="3">
-                        <input type="text" name="title" required value="공지사항41">
-                    </td>
+                    <td colspan="3" style="text-align: left;"><%= n.getNoticeTitle() %></td>
                 </tr>
                 <tr style="border-top: 1px solid gray">
                     <th style="width: 90px;">작성일</th>
-                    <td style="text-align: left;">2021.11.14</td>
+                    <td style="text-align: left;"><%= n.getNoticeDate() %></td>
                     <th style="width: 90px;">조회수</th>
-                    <td style="text-align: left;">100</td>
+                    <td style="text-align: left;"><%= n.getNoticeView() %></td>
                 </tr>
                 <tr style="border-top: 1px solid gray">
                     <td colspan="4" style="padding: 0;">
                         <p style="height: 150px; border-bottom: 2px solid gray; height: auto; padding: 20px 20px; text-align: left;">
-                            찾아다녀도 목숨이 있는 때까지 방황하여도 보이는 것은 거친 모래뿐일 것이다<br>
-                            이상의 꽃이 없으면 쓸쓸한 인간에 남는 것은 영락과 부패 뿐이다 <br>
-                            낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴?<br>
-
-                            찾아다녀도 목숨이 있는 때까지 방황하여도 보이는 것은 거친 모래뿐일 것이다 <br>
-                            이상의 꽃이 없으면 쓸쓸한 인간에 남는 것은 영락과 부패 뿐이다 <br>
-                            낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴?<br>
-
-                            찾아다녀도 목숨이 있는 때까지 방황하여도 보이는 것은 거친 모래뿐일 것이다 <br>
-                            이상의 꽃이 없으면 쓸쓸한 인간에 남는 것은 영락과 부패 뿐이다 <br>
-                            낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴?<br>
+                    	<%= n.getNoticeContent() %>
                         </p>
                     </td>
                 </tr>
 
             </table>
             <div id="list-btn" align="center">
-                <button style="font-weight: 900;">목록가기</button>
+                <button style="font-weight: 900;" onclick="location.href='<%= contextPath %>/userView.no?cpage=1'">목록가기</button>
             </div>
 
 

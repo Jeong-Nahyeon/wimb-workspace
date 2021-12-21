@@ -24,6 +24,7 @@
         background-color: #f5f5f5;
         width: 1200px;
         padding: 50px;
+
     }
     .sttt_top{
         display: inline-block;
@@ -103,7 +104,7 @@
                     <tr>
                         <th>연령별</th>
                         <th>성별</th>
-                        <th>순방문자수</th>
+                        <th>회원수</th>
                         <th>비율</th>
                     </tr>
     

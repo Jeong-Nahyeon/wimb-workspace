@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.wimb.customerService.model.vo.Notice, com.wimb.common.model.vo.PageInfo"%>
+<%
+	
+	ArrayList<Notice> noticeList = (ArrayList<Notice>)request.getAttribute("noticeList");
+	// 조회된 공지사항 리스트가 담겨있는 list
+	
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +27,7 @@
         width: 1000px;
         box-sizing: border-box;
         margin: auto;
-        margin-top: 130px;
+        margin-top: 100px;
     }
 
     .noticeSideBar{
@@ -56,11 +67,24 @@
         padding: 10px;
     }
 
-    .paging-area button{
-        margin-top: 20px;
-        border: 0;
+    .paging-area{
+        /*border: 1px solid coral;*/
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
     }
-
+    .paging-area>button{
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+        border: none;
+        border-radius: 5%;
+    }
+	.noticeList tr:hover{
+    	background: lightgrey;
+    	cursor: pointer;
+    }
     
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -83,7 +107,7 @@
                     <h2>고객센터</h2>
                     <ul>
                         <li>
-                            <a href="">공지사항</a>
+                            <a href="<%= contextPath %>/userView.no?cpage=1">공지사항</a>
                         </li>
                         <li>
                             <a href="">자주묻는 질문</a>
@@ -116,86 +140,57 @@
                         <th class="tableDate" style="width: 120px; padding: 10px;">날짜</th>
                         <th class="tableCount" style="width: 90px; padding: 10px;">조회수</th>
                     </tr>
+                    <tbody>
+                 	<% for(Notice n : noticeList) { %>
                     <tr style="border-bottom: 1px solid gray;">
-                        <td class="tableNum">41</td>
-                        <td class="tableTitle">공지사항41</td>
-                        <td class="tableDate">2021.12.07</td>
-                        <td class="tableCount">100</td>
+                        <td class="tableNum"><%= n.getNoticeCode() %></td>
+                        <td class="tableTitle"><%= n.getNoticeTitle() %></td>
+                        <td class="tableDate"><%= n.getNoticeDate() %></td>
+                        <td class="tableCount"><%= n.getNoticeView() %></td>
                     </tr>
-                    <tr style="border-bottom: 1px solid gray;">
-                        <td class="tableNum">40</td>
-                        <td class="tableTitle">공지사항40</td>
-                        <td class="tableDate">2021.12.07</td>
-                        <td class="tableCount">100</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid gray;">
-                        <td class="tableNum">39</td>
-                        <td class="tableTitle">공지사항39</td>
-                        <td class="tableDate">2021.12.07</td>
-                        <td class="tableCount">100</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid gray;">
-                        <td class="tableNum">38</td>
-                        <td class="tableTitle">공지사항38</td>
-                        <td class="tableDate">2021.12.07</td>
-                        <td class="tableCount">100</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid gray;">
-                        <td class="tableNum">37</td>
-                        <td class="tableTitle">공지사항37</td>
-                        <td class="tableDate">2021.12.07</td>
-                        <td class="tableCount">100</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid gray;">
-                        <td class="tableNum">36</td>
-                        <td class="tableTitle">공지사항36</td>
-                        <td class="tableDate">2021.12.07</td>
-                        <td class="tableCount">100</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid gray;">
-                        <td class="tableNum">35</td>
-                        <td class="tableTitle">공지사항35</td>
-                        <td class="tableDate">2021.12.07</td>
-                        <td class="tableCount">100</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid gray;">
-                        <td class="tableNum">34</td>
-                        <td class="tableTitle">공지사항34</td>
-                        <td class="tableDate">2021.12.07</td>
-                        <td class="tableCount">100</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid gray;">
-                        <td class="tableNum">33</td>
-                        <td class="tableTitle">공지사항33</td>
-                        <td class="tableDate">2021.12.07</td>
-                        <td class="tableCount">100</td>
-                    </tr>
-                    <tr style="border-bottom: 2px solid gray;">
-                        <td class="tableNum">32</td>
-                        <td class="tableTitle">공지사항32</td>
-                        <td class="tableDate">2021.12.07</td>
-                        <td class="tableCount">100</td>
-                    </tr>
-    
-    
+                    <% } %>               
+                    </tbody>
                 </table>
 
-                <div class="paging-area">
-                    <button>&lt;</button>
-                    <button>1</button>
-                    <button>2</button>
-                    <button>3</button>
-                    <button>4</button>
-                    <button>5</button>
-                    <button>&gt;</button>
-                </div>
+        <div class="paging-area">
+            
+            <% if(currentPage != 1) { %>
+            	<button onclick="location.href='<%= contextPath %>/userView.no?cpage=<%=currentPage-1%>';">&lt;</button>
+            <% } %>
+            
+            <% for(int p=startPage; p<=endPage; p++) { %>
+            	<% if(p == currentPage) { %>
+            		<button disabled><%= p %></button>
+            	<% } else { %>
+            		<button onclick="location.href='<%= contextPath %>/userView.no?cpage=<%= p %>';"><%= p %></button>
+            	<% } %>
+            <% } %>
+            
+            <% if(currentPage != maxPage) { %>
+            <button onclick="location.href='<%= contextPath %>/userView.no?cpage=<%=currentPage+1%>';">&gt;</button>
+        	<% } %>
+        </div>
+    
 
 
 
             </div>
 
         </div>
-
+		<script>
+		
+		// 상세보기 시 필요한 게시판 번호를 넘기는 함수 ------------------------------------------
+    	$(function(){
+    		$(".noticeList table tr").click(function(){
+    			
+    			const num =  $(this).children().eq(0).text(); 			
+    			location.href='<%= contextPath %>/detailUserView.no?num=' + num;
+    	// ----------------------------------------------------------------------		
+    			
+    		})
+    	})		
+		
+		</script>
 
     </main>
 </body>

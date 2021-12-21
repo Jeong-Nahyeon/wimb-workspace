@@ -81,6 +81,8 @@
         </div>
 
         <script>
+        
+        	/*
             const search_Form = document.querySelector('.search_Form')
             const searchBox = document.querySelector('.search_category_input')
             const searchHistory = document.querySelector('search_btn')
@@ -116,6 +118,7 @@
             $(document).ready(function(){
                 $(":button")
             });
+            */
         </script>
 
     </div>

@@ -457,8 +457,6 @@
         	
         	var bannerCode = $(this).parent().siblings('.bannerCode').text();
         	var bannerStatus = $(this).parent().siblings('.bannerStatus').text();
-        	console.log(bannerCode);
-        	console.log(bannerStatus);
         	
         	$.ajax({
         		url:"StatusChange.banner",
@@ -489,8 +487,6 @@
                  checkArr.push($(this).parent().siblings(".bannerCode").text())
              });
     		 
-    		 console.log(checkArr);
-             console.log(count);
              return new Promise(function(resolve, reject){
                  $.ajax({
                      url:"delete.banner",

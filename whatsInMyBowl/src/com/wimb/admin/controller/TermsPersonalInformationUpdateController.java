@@ -35,6 +35,7 @@ public class TermsPersonalInformationUpdateController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		int termsCode = Integer.parseInt(request.getParameter("num"));
 		String termsContent = request.getParameter("termsContent");
+		termsContent = termsContent.replace("\r\n","<br>");   // textarea영역에 적힌 띄어쓰기나 개행을 그대로 적용시켜주는 구문
 		
 		Terms t = new Terms();
 		t.setTermsCode(termsCode);

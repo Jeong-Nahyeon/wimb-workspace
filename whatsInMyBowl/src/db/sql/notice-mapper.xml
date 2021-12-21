@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<!-- 공지사항 사용자화면 -->
+	<entry key="selectNoticeUserView">
+		SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT
+                               NOTICE_CODE
+                             , NOTICE_TITLE
+                             , NOTICE_DATE
+                             , NOTICE_VIEW
+                          FROM NOTICE
+                         WHERE NOTICE_STATUS = 'Y'
+                         ORDER
+                            BY NOTICE_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectListCount">
+		SELECT 
+		       COUNT(*) count
+		  FROM NOTICE
+		 WHERE NOTICE_STATUS = 'Y'	
+	</entry>
+	
+	<entry key="increaseCount">
+		UPDATE
+		       NOTICE 
+		   SET NOTICE_VIEW = NOTICE_VIEW+1
+		 WHERE NOTICE_CODE = ?
+		   AND NOTICE_STATUS = 'Y'	
+	</entry>
+	
+	<entry key="selectNotice">
+		SELECT 
+		       NOTICE_CODE
+		     , NOTICE_TITLE
+		     , NOTICE_CONTENT
+		     , NOTICE_DATE
+		     , NOTICE_VIEW
+		  FROM NOTICE
+		 WHERE NOTICE_STATUS = 'Y'
+		   AND NOTICE_CODE = ?
+	</entry>
+	
+	
+	
+</properties>

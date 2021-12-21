@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.wimb.customerService.model.vo.Notice, com.wimb.common.model.vo.PageInfo"%>
+<%
+	
+	ArrayList<Notice> noticeList = (ArrayList<Notice>)request.getAttribute("noticeList");
+	// 조회된 공지사항 리스트가 담겨있는 list
+	
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,6 +88,23 @@
         padding: 4px 20px;
         border-radius: 5px;
     }
+    .paging-area{
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .paging-area>button{
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+        border: none;
+        border-radius: 5%;
+    }
+	.notice_Box table tr:hover{
+    	background: #efefef;
+    	cursor: pointer;
+    }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -109,148 +137,41 @@
                     <th class="noticeList_enroll_date">작성일</th>
                     <th class="noticeList_count">조회수</th>
                 </tr>
+                <% for(Notice n : noticeList) { %>
                 <tr>
                     <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1"></td>
-                    <td class="noticeList_num">33</td>
-                    <td class="noticeList_title">글제목입니다33</td>
+                    <td class="noticeList_num"><%= n.getNoticeCode() %></td>
+                    <td class="noticeList_title"><%= n.getNoticeTitle() %></td>
                     <td class="noticeList_update_delete">
                         <div class="two_btn">
                             <button>수정</button>
                             <button>삭제</button>
                         </div>
                     </td>
-                    <td class="noticeList_enroll_date">21-12-12</td>
-                    <td  class="noticeList_count">100</td>
+                    <td class="noticeList_enroll_date"><%= n.getNoticeDate() %></td>
+                    <td  class="noticeList_count"><%= n.getNoticeView() %></td>
                 </tr>
-                <tr>
-                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1"></td>
-                    <td class="noticeList_num">33</td>
-                    <td class="noticeList_title">글제목입니다33</td>
-                    <td class="noticeList_update_delete">
-                        <div class="two_btn">
-                            <button>수정</button>
-                            <button>삭제</button>
-                        </div>
-                    </td>
-                    <td class="noticeList_enroll_date">21-12-12</td>
-                    <td  class="noticeList_count">100</td>
-                </tr>
-                <tr>
-                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1"></td>
-                    <td class="noticeList_num">33</td>
-                    <td class="noticeList_title">글제목입니다33</td>
-                    <td class="noticeList_update_delete">
-                        <div class="two_btn">
-                            <button>수정</button>
-                            <button>삭제</button>
-                        </div>
-                    </td>
-                    <td class="noticeList_enroll_date">21-12-12</td>
-                    <td  class="noticeList_count">100</td>
-                </tr>
-                <tr>
-                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1"></td>
-                    <td class="noticeList_num">33</td>
-                    <td class="noticeList_title">글제목입니다33</td>
-                    <td class="noticeList_update_delete">
-                        <div class="two_btn">
-                            <button>수정</button>
-                            <button>삭제</button>
-                        </div>
-                    </td>
-                    <td class="noticeList_enroll_date">21-12-12</td>
-                    <td  class="noticeList_count">100</td>
-                </tr>
-                <tr>
-                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1"></td>
-                    <td class="noticeList_num">33</td>
-                    <td class="noticeList_title">글제목입니다33</td>
-                    <td class="noticeList_update_delete">
-                        <div class="two_btn">
-                            <button>수정</button>
-                            <button>삭제</button>
-                        </div>
-                    </td>
-                    <td class="noticeList_enroll_date">21-12-12</td>
-                    <td  class="noticeList_count">100</td>
-                </tr>
-                <tr>
-                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1"></td>
-                    <td class="noticeList_num">33</td>
-                    <td class="noticeList_title">글제목입니다33</td>
-                    <td class="noticeList_update_delete">
-                        <div class="two_btn">
-                            <button>수정</button>
-                            <button>삭제</button>
-                        </div>
-                    </td>
-                    <td class="noticeList_enroll_date">21-12-12</td>
-                    <td  class="noticeList_count">100</td>
-                </tr>
-                <tr>
-                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1"></td>
-                    <td class="noticeList_num">33</td>
-                    <td class="noticeList_title">글제목입니다33</td>
-                    <td class="noticeList_update_delete">
-                        <div class="two_btn">
-                            <button>수정</button>
-                            <button>삭제</button>
-                        </div>
-                    </td>
-                    <td class="noticeList_enroll_date">21-12-12</td>
-                    <td  class="noticeList_count">100</td>
-                </tr>
-                <tr>
-                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1"></td>
-                    <td class="noticeList_num">33</td>
-                    <td class="noticeList_title">글제목입니다33</td>
-                    <td class="noticeList_update_delete">
-                        <div class="two_btn">
-                            <button>수정</button>
-                            <button>삭제</button>
-                        </div>
-                    </td>
-                    <td class="noticeList_enroll_date">21-12-12</td>
-                    <td  class="noticeList_count">100</td>
-                </tr>
-                <tr>
-                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1"></td>
-                    <td class="noticeList_num">33</td>
-                    <td class="noticeList_title">글제목입니다33</td>
-                    <td class="noticeList_update_delete">
-                        <div class="two_btn">
-                            <button>수정</button>
-                            <button>삭제</button>
-                        </div>
-                    </td>
-                    <td class="noticeList_enroll_date">21-12-12</td>
-                    <td  class="noticeList_count">100</td>
-                </tr>
-                <tr>
-                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1"></td>
-                    <td class="noticeList_num">33</td>
-                    <td class="noticeList_title">글제목입니다33</td>
-                    <td class="noticeList_update_delete">
-                        <div class="two_btn">
-                            <button>수정</button>
-                            <button>삭제</button>
-                        </div>
-                    </td>
-                    <td class="noticeList_enroll_date">21-12-12</td>
-                    <td  class="noticeList_count">100</td>
-                </tr>
-
+				<% } %>
             </table>
 
-            <div class="paging-area" align="center">
-                <button>&lt;</button>
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>4</button>
-                <button>5</button>
-                <button>&gt;</button>
-            </div>
+        <div class="paging-area">
+            
+            <% if(currentPage != 1) { %>
+            	<button onclick="location.href='<%= contextPath %>/adminListView.no?cpage=<%=currentPage-1%>';">&lt;</button>
+            <% } %>
+            
+            <% for(int p=startPage; p<=endPage; p++) { %>
+            	<% if(p == currentPage) { %>
+            		<button disabled><%= p %></button>
+            	<% } else { %>
+            		<button onclick="location.href='<%= contextPath %>/adminListView.no?cpage=<%= p %>';"><%= p %></button>
+            	<% } %>
+            <% } %>
+            
+            <% if(currentPage != maxPage) { %>
+            <button onclick="location.href='<%= contextPath %>/adminListView.no?cpage=<%=currentPage+1%>';">&gt;</button>
+        	<% } %>
+        </div>
 
             <div class="search_box" align="center">
                 <form action="" method="get" class="search_form">
@@ -264,6 +185,24 @@
             </div>
 
             <script>
+            
+    		// 상세보기 시 필요한 게시판 번호를 넘기는 함수 ------------------------------------------
+        	$(function(){
+        		$(".notice_Box table tr").click(function(){
+        			
+        			const num =  $(this).children().eq(1).text();
+        			location.href='<%= contextPath %>/detailAdminView.no?num=' + num;
+        	// ----------------------------------------------------------------------		
+        			
+        		})
+        	})
+            
+            
+            
+            
+            
+            
+            /*
                 const search_Form = document.querySelector('.search_Form')
                 const searchBox = document.querySelector('.search_category_input')
                 const searchHistory = document.querySelector('search_btn')
@@ -299,6 +238,8 @@
                 $(document).ready(function(){
                     $(":button")
                 });
+                
+              */
             </script>
 
         </div>

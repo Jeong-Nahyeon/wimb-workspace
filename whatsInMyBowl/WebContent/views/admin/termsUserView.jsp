@@ -14,18 +14,19 @@
     main{
         margin-top: 20px;
         margin-left: 25%;
-        width: 950px
+        width: 900px
 
     }
 
     #mainTitle{margin-bottom: 60px;}
+    .content{margin:auto;}
     table{
         border-collapse: collapse;
         margin-top: 100px;
     }
 
     h2{
-        width: 950px;
+        width: 900px;
         border-bottom: 1px solid black;
         padding-bottom: 15px;
     }
@@ -59,7 +60,7 @@
 	<%@ include file="../common/menubar.jsp" %>
 	
     <main>
-        <div id="content">
+        <div id="">
             <h2 style="font-size: 23px; font-weight: 600; padding-top: 100px;" >이용약관</h2>
 
             <table>

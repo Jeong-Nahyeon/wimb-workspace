@@ -86,7 +86,7 @@
                 </table>
 
                 <div id="addTermsbtns">
-                    <button type="button" class="addTerms" style="margin-right: 20px; background-color: lightgray;">취소하기</button>
+                    <button type="button" class="addTerms" style="margin-right: 20px; background-color: lightgray;" onclick="history.back();">취소하기</button>
                     <button type="submit" class="addTerms" style="background-color: #ffee58;">수정하기</button>
                 </div>
 

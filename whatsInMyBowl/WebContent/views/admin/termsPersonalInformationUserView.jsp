@@ -14,7 +14,7 @@
     main{
         margin-top: 20px;
         margin-left: 25%;
-        width: 950px;
+        width: 900px;
     }
 
     #mainTitle{margin-bottom: 60px;}
@@ -24,7 +24,7 @@
     }
 
     h2{
-        width: 950px;
+        width: 900px;
         border-bottom: 1px solid black;
         padding-bottom: 15px;
     }
