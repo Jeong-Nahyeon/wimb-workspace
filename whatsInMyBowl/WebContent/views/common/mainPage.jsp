@@ -153,9 +153,13 @@
 				</td>
 			</tr>
 		</table>
-
+		
+		<footer>
+			<%@ include file="../common/footer.jsp" %>
+		</footer>
 	</div>
 	<script>
+	
 	function test4(){
 		$.ajax({
 			url:"mainPage.banner",
@@ -168,11 +172,9 @@
 				for(let i=0; i<list.length; i++){
 					result += "<li><a href='#'><img src='" + list[i].mainImg + "></a></li>";
 				}
-	
-				
+
 				$(".bxslider").html(result);
-				
-				
+			
 			},error:function(){
 				console.log("ajax 통신 실패");
 			}
