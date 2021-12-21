@@ -232,14 +232,36 @@
 	                                	<% }else if(od.getOrderStatus().equals("배송중")) { %>
 	                                		
 	                                		<!--주문상태가 배송중일 때만 가능-->
-	                                		<button>배송조회</button>
+                                            <form action="http://info.sweettracker.co.kr/tracking/5" method="post">
+									            <div class="form-group" style="display:none;">
+									              <input type="text" class="form-control" id="t_key" name="t_key" value="3CAIZnOaR4lWXQulWSJlUg">
+									            </div>
+									            <div class="form-group" style="display:none;">
+									              <input type="text" class="form-control" name="t_code" id="t_code" value="05">
+									            </div>
+									            <div class="form-group" style="display:none;">
+									              <input type="text" class="form-control" name="t_invoice" id="t_invoice" value="530012125005">
+									            </div>
+									            <button type="submit">배송조회</button>
+									        </form>
                                 		
                                 		<% }else if(od.getOrderStatus().equals("배송완료")){ %>
                                 			
                                 			<!--주문상태가 배송완료일 때만 가능-->
                                 			<button type="button"  onclick="location.href='리뷰작성페이지이동'">리뷰작성</button>
                                 			<button class="refundDo" type="button" data-toggle="modal" data-target="#refundModal">환불요청</button>
-                                		
+                                			<form method="post" class="postApi">
+									            <div class="form-group" style="display:none;">
+									              <input type="text" class="form-control" id="t_key" name="t_key" value="3CAIZnOaR4lWXQulWSJlUg">
+									            </div>
+									            <div class="form-group" style="display:none;">
+									              <input type="text" class="form-control" name="t_code" id="t_code" value="05">
+									            </div>
+									            <div class="form-group" style="display:none;">
+									              <input type="text" class="form-control" name="t_invoice" id="t_invoice" value="530012125005">
+									            </div>
+									            <button type="submit">배송조회</button>
+									        </form>
                                 		<% }else { %>
                                 			
                                 			<!--주문상태가 환불/취소일 때만 가능-->
@@ -251,16 +273,28 @@
                         	<% } %>	
                     <% } %>
                     	</table>
-                   
+
         </div>
 
     </div>
+	
+	<script>
+	
+		$(".postApi").on('submit', function(){
+			
+			window.open("", "pop_target", "width=454.40, height=758.40, resizable=no, location=no, menubar=no, scrollbars=no, status=no, toolbar=no");
+			this.action = "http://info.sweettracker.co.kr/tracking/5";
+            this.method = 'POST';
+            this.target = 'pop_target';
+        }).trigger("submit");
+		
+	</script>
+   
     
-    
-    <!-- 취소요청 -->
+    <!-- 취소요청 ajax -->
     <script>
-    	$(".cancelDo").on('click', function(){
-    		
+    
+    	$(document).on('click', '.cancelDo', function(){
     		
     		
     		// confirm통해 의사 확인
@@ -274,7 +308,7 @@
         		console.log(pmCode);
         		
         		$.ajax({
-        			url:"cancelInsert.my",
+        			url:"refundInsert.my",
         			type:"post",
         			data:{
         				orderCode:oCode,
@@ -299,38 +333,53 @@
     </script>
     
     
+    <!-- 환불요청 모달|ajax -->
     
-    
-    
-    
-    
-    
-    
-    
-	
-	<script>
+     <script>
 		
-		$("#refundDo").click(function(){
-			
-			var orderCode = $("#orderCode").text();
-			console.log(orderCode);
-			
-			$.ajax({
-				url:"crDetail.my",
-				type:"post",
-				data:{orderCode:orderCode},
-				success:function(mo){
-					console.log(mo)
-				},error:function(){
-					console.log("ajax 통신 실패")
-				}
-            });
-		})
-		
+	     $(document).on('click', '.refundDo', function(){
+	 		
+	 			
+	 			var oCode = $(this).parent().siblings(".oC").find(".oCode").text();
+	     		var pmCode = $(this).parent().siblings(".pmCode").text();
+	     		
+	     		$(document).on('click', '.reason', function(){
+	    	 		
+		 			var reason = $(this).text();
+		 			//console.log(reason);
+		 			//console.log(oCode);
+		 			//console.log(pmCode);
+		 			
+		 			$('.refundGo').on('click', function(){
+		 				
+		 				$.ajax({
+		        			url:"refundInsert.my",
+		        			type:"post",
+		        			data:{
+		        				orderCode:oCode,
+		        				pmCode:pmCode,
+		        				reReason:reason
+		       				},
+		        			success:function(result){
+		        				
+		        				if(result>0) {
+		        					alert("환불이 요청되었습니다.");
+		        				}
+		        				
+		        				
+		        			}, error:function(){
+		        				alert("요청에 실패했습니다.\n관리자에게 문의하세요.");
+		        			}
+		        		}) // ajax닫기
+		 				
+		 			})// 환불이유 클릭시닫기
+		 		
+		 		})// 환불하기 클릭시닫기
+	 	})
 		
 	</script>
     
-    <!-- 환불요청 모달창 -->
+	 <!-- 환불요청 모달창 -->
     <div class="modal" id="refundModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -361,12 +410,12 @@
                     <div>
                         <table class="cancelReason">
                             <tr>
-                                <td><button type="button" value="단순변심" name="cancelReason">단순변심</button></td>
-                                <td><button type="button" value="상품불량" name="cancelReason">상품불량</button></td>
+                                <td><button type="button" class="reason" value="단순변심">단순변심</button></td>
+                                <td><button type="button" class="reason" value="상품불량">상품불량</button></td>
                             </tr>
                             <tr>
-                                <td><button type="button" value="상품오배송" name="cancelReason">상품오배송</button></td>
-                                <td><button type="button" value="사이트불만족" name="cancelReason">사이트 불만족</button></td>
+                                <td><button type="button" class="reason" value="상품오배송">상품오배송</button></td>
+                                <td><button type="button" class="reason" value="사이트 불만족">사이트 불만족</button></td>
                             </tr>
                         </table>
                     </div>
@@ -377,7 +426,7 @@
         
                 <!-- Modal footer -->
                 <div class="modal-footer" style="border:0px;">
-                    <button type="submit" data-dismiss="modal">환불요청</button>
+                    <button type="submit" class="refundGo" data-dismiss="modal">환불요청</button>
                     <button type="reset" data-dismiss="modal">취소</button>
                 </div>
 
@@ -385,7 +434,8 @@
         </div>
     </div>
     
-    
+   
+   
     
     <!-- 조회기간 버튼  -->
     <script>
@@ -407,7 +457,7 @@
 			
 			var startDateString = stYear + '-' + stMonth  + '-' + stDay;
     		$("#startDate").val(startDateString);
-    		console.log($("#startDate").val());
+    		// console.log($("#startDate").val());
     	}
     	
     	// 3. inputDate 시작날짜 미입력시! == 기본 7일
@@ -422,7 +472,7 @@
 			var startDateString = svYear + '-' + svMonth  + '-' + svDay;
 			
     		$("#startDate").val(startDateString);
-    		console.log($("#startDate").val());
+    		// console.log($("#startDate").val());
 		
 		})
 		
@@ -446,6 +496,8 @@
 		
     		
     </script>
+    
+    
   
 </body>
 </html>
