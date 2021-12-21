@@ -16,8 +16,8 @@ public class Product {
 	private int pStock; // 현재 재고수량
 	private String pKeyword; // 검색 키워드
 	
+	private int discountPrice; // 할인가격 추가
 	private String filePath; // 이미지파일경로 추가
-	
 	
 	public Product() {}
 	
@@ -159,6 +159,31 @@ public class Product {
 		this.pStock = pStock;
 		this.pKeyword = pKeyword;
 		this.filePath = filePath;
+	}
+	
+	
+	public Product(String pCode, String pName, String pCategory, int pPrice, String pMainImg, int pStock,
+			int discountPrice, String filePath) {
+		super();
+		this.pCode = pCode;
+		this.pName = pName;
+		this.pCategory = pCategory;
+		this.pPrice = pPrice;
+		this.pMainImg = pMainImg;
+		this.pStock = pStock;
+		this.discountPrice = discountPrice;
+		this.filePath = filePath;
+	}
+
+	
+	
+	public int getDiscountPrice() {
+		return discountPrice;
+	}
+
+
+	public void setDiscountPrice(int discountPrice) {
+		this.discountPrice = discountPrice;
 	}
 
 

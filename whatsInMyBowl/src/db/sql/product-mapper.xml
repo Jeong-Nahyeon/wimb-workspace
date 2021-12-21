@@ -13,8 +13,7 @@
 	<entry key="selectProductList">
 		SELECT *
 		  FROM (
-		         SELECT
-		                ROWNUM RNUM, A.*
+		         SELECT ROWNUM RNUM, P.*
 		           FROM (
 		                  SELECT
 		                         P_CODE
@@ -23,40 +22,54 @@
 		                       , P_PRICE
 		                       , P_MAINIMG
 		                       , P_STOCK
-		                    FROM PRODUCT
-		                   WHERE P_SHOW = 'Y'
+		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
+		                       , <![CDATA[
+		                       	 CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+				                      ELSE 0
+				                  END DISCOUNT
+		                         ]]>
+		                    FROM SUBORDER
+		                   RIGHT
+		                    JOIN PRODUCT USING (P_CODE)
+		                   WHERE P_SHOW = 'Y' 
 		                     AND P_ADMINSHOW = 'Y'
+		                   GROUP
+		                      BY P_CODE, P_NAME, P_CATEGORY, P_PRICE, P_MAINIMG, P_STOCK
 		                   ORDER
 		                      BY P_CODE DESC
-		                 ) A
-		        )
+		                ) P
+		       )
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
 	<entry key="selectOptionListHot">
 		SELECT *
 		  FROM (
-		         SELECT
-		                ROWNUM RNUM, H.*
-		           FROM ( 
-		                  SELECT *
-		                    FROM (
-		                           SELECT
-		                                  P_CODE
-		                                , SUM(NVL(SUB_AMOUNT, 0)) SUM
-		                             FROM SUBORDER S
-		                            RIGHT
-		                             JOIN  PRODUCT P USING (P_CODE)
-		                            GROUP
-		                               BY P_CODE
-		                           HAVING P_CODE IS NOT NULL
-		                         )
-		                    JOIN PRODUCT USING (P_CODE)
-		                   WHERE P_SHOW = 'Y'
+		         SELECT ROWNUM RNUM, P.*
+		           FROM (
+		                  SELECT
+		                         P_CODE
+		                       , P_NAME
+		                       , P_CATEGORY
+		                       , P_PRICE
+		                       , P_MAINIMG
+		                       , P_STOCK
+		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
+		                       , <![CDATA[
+		                       	 CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+				                      ELSE 0
+				                  END DISCOUNT
+		                         ]]>
+		                    FROM SUBORDER
+		                   RIGHT
+		                    JOIN  PRODUCT USING (P_CODE)
+		                   WHERE P_SHOW = 'Y' 
 		                     AND P_ADMINSHOW = 'Y'
+		                   GROUP
+		                      BY P_CODE, P_NAME, P_CATEGORY, P_PRICE, P_MAINIMG, P_STOCK
 		                   ORDER
-		                      BY SUM DESC, P_CODE ASC
-		                )H
+		                      BY SALES DESC
+		                ) P
 		       )
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
@@ -64,8 +77,7 @@
 	<entry key="selectOptionListMin">
 		SELECT *
 		  FROM (
-		         SELECT
-		                ROWNUM RNUM, A.*
+		         SELECT ROWNUM RNUM, P.*
 		           FROM (
 		                  SELECT
 		                         P_CODE
@@ -74,21 +86,30 @@
 		                       , P_PRICE
 		                       , P_MAINIMG
 		                       , P_STOCK
-		                    FROM PRODUCT
-		                   WHERE P_SHOW = 'Y'
+		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
+		                       , <![CDATA[
+		                       	 CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+				                      ELSE 0
+				                  END DISCOUNT
+		                         ]]>
+		                    FROM SUBORDER
+		                   RIGHT
+		                    JOIN PRODUCT USING (P_CODE)
+		                   WHERE P_SHOW = 'Y' 
 		                     AND P_ADMINSHOW = 'Y'
+		                   GROUP
+		                      BY P_CODE, P_NAME, P_CATEGORY, P_PRICE, P_MAINIMG, P_STOCK
 		                   ORDER
 		                      BY P_PRICE
-		                 ) A
-		        )
+		                ) P
+		       )
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
 	<entry key="selectOptionListMax">
 		SELECT *
 		  FROM (
-		         SELECT
-		                ROWNUM RNUM, A.*
+		         SELECT ROWNUM RNUM, P.*
 		           FROM (
 		                  SELECT
 		                         P_CODE
@@ -97,15 +118,27 @@
 		                       , P_PRICE
 		                       , P_MAINIMG
 		                       , P_STOCK
-		                    FROM PRODUCT
-		                   WHERE P_SHOW = 'Y'
+		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
+		                       , <![CDATA[
+		                       	 CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+				                      ELSE 0
+				                  END DISCOUNT
+		                         ]]>
+		                    FROM SUBORDER
+		                   RIGHT
+		                    JOIN PRODUCT USING (P_CODE)
+		                   WHERE P_SHOW = 'Y' 
 		                     AND P_ADMINSHOW = 'Y'
+		                   GROUP
+		                      BY P_CODE, P_NAME, P_CATEGORY, P_PRICE, P_MAINIMG, P_STOCK
 		                   ORDER
 		                      BY P_PRICE DESC
-		                 ) A
-		        )
+		                ) P
+		       )
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
+	
+	
 	
 	
 	

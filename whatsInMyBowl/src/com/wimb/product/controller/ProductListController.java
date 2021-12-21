@@ -61,12 +61,12 @@ public class ProductListController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
-		
-		// 카테고리 옵션별 완제품 조회
+				
 		String selectOrder = "";
 		ArrayList<Product> productList = new ArrayList<>();
 		
-		if(request.getParameter("selectOrder") != null) {
+		if(request.getParameter("selectOrder") != null) { // 완제품 카테고리 옵션별 조회
+			
 			
 			selectOrder = request.getParameter("selectOrder");
 			
@@ -84,14 +84,15 @@ public class ProductListController extends HttpServlet {
 				
 			}
 			
+			
 			request.setAttribute("selectOrder", selectOrder);
 			request.setAttribute("pi", pi);
 			request.setAttribute("productList", productList);
 			
 			request.getRequestDispatcher("views/product/productListView.jsp").forward(request, response);
 			
-		} else {
-		// 전체 완제품 조회
+		} else { // 완제품 전체 조회
+		
 		productList = new ProductService().selectProductList(pi);
 		
 		request.setAttribute("pi", pi);

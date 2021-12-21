@@ -587,23 +587,22 @@
 
         </div>
         <!-- 페이징바 -->
-        <div id="paging-bar">
+			<div id="paging-bar">
                 <% if(currentPage != 1) { %>
-                        <a class ="btn btn-sm" onclick="location.href='<%= contextPath %>/updateDeleteList.apr?cpage=<%= currentPage - 1 %>';">&lt;</a>
+                        <a class ="btn btn-sm" href="<%= contextPath %>/updateDeleteList.apr?cpage=<%= currentPage - 1 %>">&lt;</a>
                 <% } %>
                 
                 <% for(int p=startPage; p<=endPage; p++ ) { %>
                     <% if(p == currentPage) { %>
-                        <button  class ="btn btn-sm" disabled><%= p %></button>
+                        <a  class ="btn btn-sm" disabled><%= p %></a>
                     <% } else { %>
-                        <button class ="btn btn-sm" onclick="location.href='<%= contextPath %>/updateDeleteList.apr?cpage=<%= p %>';"><%= p %></button>
+                        <a class ="btn btn-sm" href="<%= contextPath %>/updateDeleteList.apr?cpage=<%= p %>"><%= p %></a>
                     <% } %>
                 <% } %>
                 
                 <% if(currentPage != maxPage) { %>
-                        <buttob class ="btn btn-sm" onclick="location.href='<%= contextPath %>/updateDeleteList.apr?cpage=<%= currentPage + 1 %>';">&gt;</buttob>
+                        <a class ="btn btn-sm" href="<%= contextPath %>/updateDeleteList.apr?cpage=<%= currentPage + 1 %>">&gt;</a>
                 <% } %>
-            </ul>
         </div>
         
         <br>

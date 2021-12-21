@@ -29,7 +29,7 @@ public class ProductService {
 	}
 	
 	
-	/** 회원용 완제품 목록 조회 해주는 메소드
+	/** 회원용 완제품 전체 조회 해주는 메소드
 	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
 	 * @return
 	 */
@@ -46,6 +46,10 @@ public class ProductService {
 	}
 	
 	
+	/** 인기상품순으로 완제품 조회해주는 메소드
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @return
+	 */
 	public ArrayList<Product> selectOptionListHot(PageInfo pi){
 		
 		Connection conn = getConnection();
@@ -59,6 +63,10 @@ public class ProductService {
 	}
 	
 	
+	/** 낮은가격순으로 완제품 조회해주는 메소드
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @return
+	 */
 	public ArrayList<Product> selectOptionListMin(PageInfo pi){
 		
 		Connection conn = getConnection();
@@ -72,6 +80,10 @@ public class ProductService {
 	}
 	
 	
+	/** 높은가격순으로 완제품 조회해주는 메소드
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @return
+	 */
 	public ArrayList<Product> selectOptionListMax(PageInfo pi){
 		
 		Connection conn = getConnection();
@@ -83,6 +95,9 @@ public class ProductService {
 		return productList;
 		
 	}
+	
+	
+	
 	
 	
 	

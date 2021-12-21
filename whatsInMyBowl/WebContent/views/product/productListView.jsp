@@ -11,7 +11,7 @@
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
 	
-	// 전체 샐러드 조회 => 상품코드, 상품명, 카테고리, 판매가격, 대표이미지, 재고수량
+	// 완제품 전체  조회 => 상품코드, 상품명, 카테고리, 판매가격, 대표이미지, 재고수량, 파일경로
 	ArrayList<Product> productList = (ArrayList<Product>)(request.getAttribute("productList"));
 	
 	// 카테고리 옵션별 응답 페이지에서 select option 유지에 사용할  value 값
@@ -175,6 +175,15 @@
 		
 	}
 
+	/* 페이징바 */
+
+	#paging-bar{
+        /* border:1px solid red; */
+        width:900px;
+        text-align:center;
+    }
+
+
 	/* 장바구니 모달창 */
 
 	.cart-product{
@@ -237,7 +246,7 @@
 			//console.log("<%= selectOrder %>");
 			
 			$("select[name=selectOrder]").val("<%= selectOrder %>").prop("selected", true);
-			
+
 		});
 	
 	</script>
@@ -300,12 +309,14 @@
 							</div>
 		
 							<h6><%=  p.getpName() %></h6>
-		
-							<!-- case1. 원가 -->
-							<h4><%= p.getpPrice() %>원</h4>
-							<!-- case2. 할인가 -->
-							<!-- <h4 style="text-decoration: line-through; color:lightgray; font-size: medium;">4900원</h4>
-							<h4 style="color:salmon;">4410원</h4> -->
+							<% if(p.getDiscountPrice() != 0) { %>
+								<!-- case1. 할인가 -->
+								<span style="text-decoration: line-through; color:lightgray; margin:0;"><%= p.getpPrice() %>원</span>
+								<h4 style="color:salmon; display:inline-block; margin:0;"><%= p.getDiscountPrice() %>원</h4>
+							<% } else {%>
+								<!-- case2. 원가 -->
+								<h4 style="margin:0;"><%= p.getpPrice() %>원</h4>
+							<% } %>
 						</div>
 					<% } %>
 				
@@ -313,25 +324,35 @@
 			</div>
 
 			<!-- 페이징바 -->
-            <div id="paging-bar" align="center">
-            	<ul class="pagination">
-            		<% if(currentPage != 1) { %>
-				   		 <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.pr?cpage=<%= currentPage - 1 %>">&lt;</a></li>
-				    <% } %>
-				    
-				    <% for(int p=startPage; p<=endPage; p++ ) { %>
-				    	<% if(p == currentPage) { %>
-					    	<li class="page-item active"><a class="page-link" href="#"><%= p %></a></li>
-					    <% } else { %>
-					  		 <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.pr?cpage=<%= p %>"><%= p %></a></li>
-					    <% } %>
-				    <% } %>
-				    
-				    <% if(currentPage != maxPage) { %>
-				 		   <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.pr?cpage=<%= currentPage + 1 %>">&gt;</a></li>
-				    <% } %>
-			    </ul>
-            </div>
+			<div id="paging-bar">
+                <% if(currentPage != 1) { %>
+						<% if(selectOrder != null) { %>
+							<a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= currentPage - 1 %>&selectOrder=<%= selectOrder %>">&lt;</a>
+						<% } else { %>
+							<a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= currentPage - 1 %>">&lt;</a>
+						<% } %>	
+				<% } %>
+                
+                <% for(int p=startPage; p<=endPage; p++ ) { %>
+                    <% if(p == currentPage) { %>
+                        <a  class ="btn btn-sm" disabled><%= p %></a>
+                    <% } else { %>
+						<% if(selectOrder != null) { %>
+							<a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= p %>&selectOrder=<%= selectOrder %>"><%= p %></a>
+						<% } else { %>
+							<a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= p %>"><%= p %></a>
+						<% } %>	
+                    <% } %>
+                <% } %>
+                
+                <% if(currentPage != maxPage) { %>
+					<% if(selectOrder != null) { %>
+						<a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= currentPage + 1 %>&selectOrder=<%= selectOrder %>">&lt;</a>
+					<% } else { %>
+                        <a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= currentPage + 1 %>">&gt;</a>
+					<% } %>	
+                <% } %>
+        </div>
             
 		</div>
 	</div>
