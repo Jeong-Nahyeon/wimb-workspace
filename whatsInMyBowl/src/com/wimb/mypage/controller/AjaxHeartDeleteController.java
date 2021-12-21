@@ -31,11 +31,16 @@ public class AjaxHeartDeleteController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Member m = (Member)request.getAttribute("loginUser");
+		Member m = ((Member)request.getSession().getAttribute("loginUser"));
+		int count = Integer.parseInt(request.getParameter("count"));
 		String[] pArr = request.getParameterValues("pArr");
 		
+		System.out.println(count);
+		System.out.println(pArr[0]);
+		System.out.println(m.getmCode());
+		
 		int result = 0;
-		if(pArr != null) {
+		if(pArr != null && count > 0) {
 			for(int i=0; i<pArr.length; i++) {
 				String pCode = pArr[i];
 				result = new MyPageService().deleteHeart(m, pCode);

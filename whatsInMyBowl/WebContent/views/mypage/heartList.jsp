@@ -181,20 +181,25 @@
 		var result = confirm("해당 상품을 삭제하시겠습니까?");
 				
 			if(result) {
-					
+				
+				var count = $(".ck:checked").length;
 				var pCodes = new Array();
 				$(".ck:checked").each(function(){
-		   			var pCode = $(this).parent().siblings(".pCode").text();
-		   			pCodes.push(pCode);
-		   			console.log(pCodes)
-				}) // checked
+		   			pCodes.push($(this).parent().siblings(".pCode").text())
+				}); // checked 담기
+		   			console.log(pCodes);
+		   			console.log(count);
 				return new Promise(function(resolve, reject){
  	   					
  		   			$.ajax({
- 		   					
  		   				url:"deleteHeart.my",
+ 		   				datatype:"json",
+ 		   				traditional:true,
  		   				type:"post",
- 		   				data: {pArr:pCodes},
+ 		   				data: {
+							count:count,		   				
+ 		   					pArr:pCodes
+ 		   				},
  		   				success:function(result){
  		   					console.log("프로미스1 성공")
  	                    	resolve(result);
