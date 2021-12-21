@@ -52,9 +52,11 @@
     #total-area{
         height: 50px; 
         border-top:1px solid lightgrey; 
-        border-bottom:1px solid lightgrey;
     }
-    #foot-area{height: 50px;}
+    #foot-area{
+        height: 50px;
+        border-top:1px solid lightgrey; 
+    }
     #head-area td, #foot-area td{
         font-size: small; 
         font-weight: 900;
@@ -78,6 +80,12 @@
         text-decoration: none;
         
     }
+    #none-area{
+        height: 200px;
+        width: 250px;
+        margin-top:100px;
+    }
+    
 </style>
 </head>
 <body>
@@ -85,13 +93,14 @@
 	
 	<div class="cartOuter">
         <div id="order-process">
-            <span style="color: rgb(52,206,117);">01장바구니 &gt; </span>
+            <span style="color: rgb(155, 213, 189);">01장바구니 &gt; </span>
             <span>02주문서/결제 &gt;</span>
             <span>03주문완료</span>
         </div>
         <div class="page-title">
             <h3><b>장 바 구 니</b></h3>
         </div>
+        <!-- 장바구니 상품 있을 때-->
         <form action="">
             <div class="list-area">
                 <table id="list-table" align="center">
@@ -175,6 +184,38 @@
                 </table>
             </div>
         </form>
+        <!-- 장바구니 아무것도 없을 때-->
+        <div class="list-area">
+            <table id="list-table" align="center">
+                <tr id="head-area">
+                    <td colspan="2" width="140"> 
+                        <input type="checkbox" id="checkAll">
+                        <label for="checkAll">전체선택</label>  
+                    </td>
+                    <td colspan="11" width="550" align="left">
+                        <a style="color:black;">선택삭제</a>
+                        </td>
+                </tr>
+                <tr>
+                    <td colspan="13" align="center">
+                        <div id="none-area">
+                            <i class="fas fa-shopping-cart" style="font-size:40px;"></i><br><br>
+                            <span>장바구니에 담긴 상품이 없습니다.</span>
+                        </div>
+                    </td>
+                </tr>
+               
+                <tr id="foot-area">
+                    <td colspan="2" width="140"> 
+                        <input type="checkbox" id="checkAll2">
+                        <label for="checkAll2">전체선택</label> 
+                    </td>
+                    <td colspan="11" width="550" align="left">
+                        <a style="color:black;">선택삭제</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
     <footer>
         <%@ include file="../common/footer.jsp"%>
