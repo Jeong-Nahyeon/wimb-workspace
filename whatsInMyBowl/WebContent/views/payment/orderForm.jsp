@@ -1,183 +1,188 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<%@ page import="com.wimb.payment.model.vo.*, java.util.ArrayList" %> 
+<%
+    ArrayList<PaymentCustom> customList = (ArrayList<PaymentCustom>)request.getAttribute("customList");
+    ArrayList<PaymentProduct> productList = (ArrayList<PaymentProduct>)request.getAttribute("productList");
+%>    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://kit.fontawesome.com/fca98d1848.js" crossorigin="anonymous"></script>
+
+<!-- 주소 API -->
+<!-- https: 붙이니까 팝업창은 뜬다..! 정확한 테스트는 서버 구동 후 가능 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<style>
+    * {font-family: 'Noto Sans KR', sans-serif;}
+    div{box-sizing: border-box;}
+    .wrap{
+        /*border: 1px solid red;*/
+        width: 1000px;
+        padding-top: 20px;
+        margin: auto;
+    }
+    /*가장 상단, 과정(작은글씨)*/
+    #order-process{
+        /*border: 1px solid blue;*/
+        width: 100%;
+        padding-right: 30px;
+        text-align: right;
+    }
+    #order-process span{font-size: 10px;}
+    /*제목*/
+    #order-header{text-align: center;}
+    #order-header h3{font-weight: 800;}
+    /*주문상품 목록*/
+    #order-list, #order-form-area{
+        padding: 0 20px; 
+        margin-bottom: 50px;
+        vertical-align: middle;
+        width: 100%;
+    }
+    #order-list img{
+        width: 70px;
+        height: 70px;
+        margin: 0 150px 10px 20px;
+    }
+    #order-list span{ display: inline-block;}
+    .product-name{
+        width: 300px;
+        margin-right: 100px;
+    }
+    .product-num{
+        width: 50px;
+        margin-left: 120px;
+    }
+    .product-price{
+        width: 100px;
+        text-align: right;
+    }
+
+    /*주문서 form 영역*/
+    #order-form table{
+        border-collapse: separate;
+        border-spacing: 0 10px;
+        margin-left: 10px;
+    }
+    #order-form th{
+        width: 130px;
+    }
+    #order-form td{
+        width: 500px;
+    }
+    #orderer-info, #address-info{
+        margin-bottom: 70px;
+    }
+    #order-form input{
+        border: 1px solid lightgray;
+        border-radius: 5%;
+    }
+    #order-form input[type="text"]{
+        width: 220px;
+        height: 28px;
+        line-height: 24px;
+        font-size: 13px;
+    }
+    #order-form input::placeholder{font-size: 10px;}
+    /*input요소 focus시 placeholder 안보이게*/
+    #order-form input:focus::-webkit-input-placeholder{color: transparent;}
+    /*input 요소 클릭시 박스 제거*/
+    #order-form input:focus{outline: none;}
+    .order-address{margin-bottom: 3px;}
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
-    
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-    <script src="https://kit.fontawesome.com/fca98d1848.js" crossorigin="anonymous"></script>
-    
-    <!-- 주소 API -->
-    <!-- https: 붙이니까 팝업창은 뜬다..! 정확한 테스트는 서버 구동 후 가능 -->
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    
-    <style>
-        * {font-family: 'Noto Sans KR', sans-serif;}
-        div{box-sizing: border-box;}
-        .wrap{
-            /*border: 1px solid red;*/
-            width: 1000px;
-            padding-top: 20px;
-            margin: auto;
-        }
-        /*가장 상단, 과정(작은글씨)*/
-        #order-process{
-            /*border: 1px solid blue;*/
-            width: 100%;
-            padding-right: 30px;
-            text-align: right;
-        }
-        #order-process span{font-size: 10px;}
-        /*제목*/
-        #order-header{text-align: center;}
-        #order-header h3{font-weight: 800;}
-        /*주문상품 목록*/
-        #order-list, #order-form-area{
-            padding: 0 20px; 
-            margin-bottom: 50px;
-            vertical-align: middle;
-            width: 100%;
-        }
-        #order-list img{
-            width: 70px;
-            height: 70px;
-            margin: 0 150px 10px 20px;
-        }
-        #order-list span{ display: inline-block;}
-        #product-name{
-            width: 300px;
-            margin-right: 100px;
-        }
-        #product-num{
-            width: 50px;
-            margin-left: 120px;
-        }
-        #product-price{
-            width: 100px;
-            text-align: right;
-        }
-    
-        /*주문서 form 영역*/
-        #order-form table{
-            border-collapse: separate;
-            border-spacing: 0 10px;
-            margin-left: 10px;
-        }
-        #order-form th{
-            width: 130px;
-        }
-        #order-form td{
-            width: 500px;
-        }
-        #orderer-info, #address-info{
-            margin-bottom: 70px;
-        }
-        #order-form input{
-            border: 1px solid lightgray;
-            border-radius: 5%;
-        }
-        #order-form input[type="text"]{
-            width: 220px;
-            height: 28px;
-            line-height: 24px;
-            font-size: 13px;
-        }
-        #order-form input::placeholder{font-size: 10px;}
-        /*input요소 focus시 placeholder 안보이게*/
-        #order-form input:focus::-webkit-input-placeholder{color: transparent;}
-        /*input 요소 클릭시 박스 제거*/
-        #order-form input:focus{outline: none;}
-        .order-address{margin-bottom: 3px;}
-        
-        /*기본 배송지 불러오기*/
-        #get-address-input, #get-address{
-            vertical-align: middle;
-        }
-        /*적립금 설명*/
-        .point-sub span{
-            display: block;
-            font-size: 10px;
-        }
-        /*결제수단 영역*/
-        .pay-area{overflow: hidden; margin-top: 30px;}
-        .pay-area i{
-            display: block;
-            font-size: 40px;
-            color: gray;
-            margin-left: 13px;
-        }
-        .pay-area label{font-size: 13px;}
-        #credit, #cash{margin: 10px 25px;}
-        #credit{float: left;}
-        #cash{
-            float: left;
-            text-align: center;
-        }
-        /*총 금액*/
-        #total-payment{
-            border: 1px solid lightgray;
-            width: 800px;
-            height: 100px;
-            margin: auto; margin-top: 70px;
-            text-align: center; 
-        }
-        #total-payment span{
-            font-size: 25px;
-            font-weight: 700;
-            line-height: 100px;
-        }
-        /*약관동의*/
-        #terms{
-            margin: auto;
-            text-align: center;
-        }
-        #terms label{
-            font-size: 10px;
-            vertical-align: middle;
-        }
-        /*결제버튼*/
-        #submit-but{
-            display: block;
-            background:rgb(155,213,189);
-            width: 150px; height: 40px;
-            font-size: 13px; 
-            color: gray;
-            margin: auto; margin-top: 30px;
-        }
-        /*무통장 입금*/
-        #cash-area{
-            border-top: 1px solid lightgray;
-            margin: 50px 0 30px 0;
-            padding: 20px 20px;
-        }
-        #cash-area div{margin: 10px 0;}
-        #cash-area label{
-            font-size: 13px;
-            margin-right: 15px;
-        }
-        #cash-area select{
-            border: 1px solid lightgray;
-            width: 220px; height: 28px; 
-            font-size: 13px;
-        }
-    </style>
-    </head>
+    /*기본 배송지 불러오기*/
+    #get-address-input, #get-address{
+        vertical-align: middle;
+    }
+    /*적립금 설명*/
+    .point-sub span{
+        display: block;
+        font-size: 10px;
+    }
+    /*결제수단 영역*/
+    .pay-area{overflow: hidden; margin-top: 30px;}
+    .pay-area i{
+        display: block;
+        font-size: 40px;
+        color: gray;
+        margin-left: 13px;
+    }
+    .pay-area label{font-size: 13px;}
+    #credit, #cash{margin: 10px 25px;}
+    #credit{float: left;}
+    #cash{
+        float: left;
+        text-align: center;
+    }
+    /*총 금액*/
+    #total-payment{
+        border: 1px solid lightgray;
+        width: 800px;
+        height: 100px;
+        margin: auto; margin-top: 70px;
+        text-align: center; 
+    }
+    #total-payment span{
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 100px;
+    }
+    /*약관동의*/
+    #terms{
+        margin: auto;
+        text-align: center;
+    }
+    #terms label{
+        font-size: 10px;
+        vertical-align: middle;
+    }
+    /*결제버튼*/
+    #submit-but{
+        display: block;
+        background:rgb(155,213,189);
+        width: 150px; height: 40px;
+        font-size: 13px; 
+        color: gray;
+        margin: auto; margin-top: 30px;
+    }
+    /*무통장 입금*/
+    #cash-area{
+        border-top: 1px solid lightgray;
+        margin: 50px 0 30px 0;
+        padding: 20px 20px;
+    }
+    #cash-area div{margin: 10px 0;}
+    #cash-area label{
+        font-size: 13px;
+        margin-right: 15px;
+    }
+    #cash-area select{
+        border: 1px solid lightgray;
+        width: 220px; height: 28px; 
+        font-size: 13px;
+    }
+</style>
+</head>
     <body>
         <div id="header">
             <%@ include file="../common/menubar.jsp" %>
@@ -196,19 +201,24 @@
             <div id="order-list">
                 <span style="font-size: 15px; font-weight: 800;">주문상품</span>
                 <hr style="margin-top: 5px;">
-                <div>
-                    <img src="" alt="">
-                    <span id="product-name">왓츠인마이볼_상품1</span>
-                    <span id="product-num">1개</span>
-                    <span id="product-price">24,000원</span>
-                    <hr style="width: 930px; ">
-                </div>
-                <div>
-                    <img src="" alt="">
-                    <span id="product-name">왓츠인마이볼_상품1</span>
-                    <span id="product-num">1개</span>
-                    <span id="product-price">24,000원</span>
-                </div>
+                <% for(PaymentProduct ppro : productList){ %>
+	                <div>
+	                    <img src="<%= ppro.getFilePath() %><%= ppro.getpMainImg() %>">
+	                    <span class="product-name"><%= ppro.getpName() %></span>
+	                    <span class="product-num"><%= ppro.getpCount() %>개</span>
+	                    <span class="product-price"><%= ppro.getpPrice() %>원</span>
+	                    <hr style="width: 930px; ">
+	                </div>
+                <% } %>
+                <% for(PaymentCustom pcu : customList ){ %>
+	                <div>
+	                    <img src="<%= pcu.getCuMainImg() %>">
+	                    <span class="product-name"><%= pcu.getCuName() %></span>
+	                    <span class="product-num"><%= pcu.getCuCount() %>개</span>
+	                    <span class="product-price"><%= pcu.getCuPrice() %>원</span>
+	                    <hr style="width: 930px; ">
+	                </div>
+                <% } %>
             </div>
             
             <!-- 본격적인? 주문서 Form-->

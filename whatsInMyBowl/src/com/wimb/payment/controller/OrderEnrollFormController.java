@@ -37,7 +37,7 @@ public class OrderEnrollFormController extends HttpServlet {
 		//String[] saladCount = request.getParameterValues("saladCount");
 		//String[] saladPrice = request.getParameterValues("saladPrice");
 		
-		String[] saladCode = {"CU1001", "CU1002", "P1001", "P1001"};
+		String[] saladCode = {"CU1001", "CU1002", "CU1003", "CU1004"};
 		String[] saladCount = {"1", "1", "2", "3"};
 		String[] saladPrice = {"10000", "15000", "9000", "13000"};
 		
@@ -67,7 +67,8 @@ public class OrderEnrollFormController extends HttpServlet {
 		System.out.println(customList);
 		System.out.println(productList);
 		
-		
+		request.setAttribute("customList", customList);
+		request.setAttribute("productList", productList);
 		request.getRequestDispatcher("views/payment/orderForm.jsp").forward(request, response);
 	}
 

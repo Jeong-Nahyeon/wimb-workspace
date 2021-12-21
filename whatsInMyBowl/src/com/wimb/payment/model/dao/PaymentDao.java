@@ -57,6 +57,7 @@ public class PaymentDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectProduct");
+		String filePath = "resources/images/product_images/";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -66,7 +67,8 @@ public class PaymentDao {
 			if(rset.next()) {
 				product = new PaymentProduct(rset.getString("p_code"),
 										     rset.getString("p_name"),
-										     rset.getString("p_mainimg")
+										     rset.getString("p_mainimg"),
+										     filePath
 										    );	
 			}
 		} catch (SQLException e) {

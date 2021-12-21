@@ -7,24 +7,27 @@ public class PaymentProduct {
 	private int pPrice;
 	private int pCount;
 	private String pMainImg;
+	private String filePath;
 	
 	public PaymentProduct() {}
 
-	public PaymentProduct(String pCode, String pName, int pPrice, int pCount, String pMainImg) {
+	public PaymentProduct(String pCode, String pName, int pPrice, int pCount, String pMainImg, String filePath) {
 		super();
 		this.pCode = pCode;
 		this.pName = pName;
 		this.pPrice = pPrice;
 		this.pCount = pCount;
 		this.pMainImg = pMainImg;
+		this.filePath = filePath;
 	}
 	
 
-	public PaymentProduct(String pCode, String pName, String pMainImg) {
+	public PaymentProduct(String pCode, String pName, String pMainImg, String filePath) {
 		super();
 		this.pCode = pCode;
 		this.pName = pName;
 		this.pMainImg = pMainImg;
+		this.filePath = filePath;
 	}
 
 	public String getpCode() {
@@ -66,12 +69,22 @@ public class PaymentProduct {
 	public void setpMainImg(String pMainImg) {
 		this.pMainImg = pMainImg;
 	}
+	
+	public String getFilePath() {
+		return filePath;
+	}
+	
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
 
 	@Override
 	public String toString() {
 		return "PaymentProduct [pCode=" + pCode + ", pName=" + pName + ", pPrice=" + pPrice + ", pCount=" + pCount
-				+ ", pMainImg=" + pMainImg + "]";
+				+ ", pMainImg=" + pMainImg + ", filePath=" + filePath + "]";
 	}
+
+	
 	
 
 }
