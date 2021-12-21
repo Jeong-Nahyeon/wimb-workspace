@@ -187,7 +187,8 @@
 
             <div class="banner">
 				
-        	<div class="cls1">현재 등록중인 배너</div>
+        	<div class="cls1">현재 등록중인 배너</div><br>
+        	<div class="">* 배너 등록은 최대 3개까지 가능합니다.</div>
 				<!-- 배너 메인 1 영역 -->
                 <% for(Banner b : list) { %>
                     <div class="banner_box" align="center">     
@@ -214,12 +215,6 @@
                                 <td class="FirstCode"><%= b.getbCode() %></td>
                             </tr>
                         </table>
-                        <!--
-                            <div class="checkboxandbtn">
-                                <button type="button" id="updatebtn1">변경하기</button>
-                            </div>
-                        -->
-                        
                         
                     </div>
                 <% } %>   
@@ -231,133 +226,10 @@
     </div>
     
 
-    <!-- 메인 베너에서 메인1 변경하기 클릭 시 나타나는 등록된 베너 리스트 모달창 -->
-        <div class="mainblack_bg"></div>
-        <div class="mainmodal_wrap">
-
-            <div class="mainmodal_close"><a href="#">close</a></div>
-            <div class="mainBanner_box">
-                <div class="mainBanner_btn">
-                    <button type="button" class="mainBanner_btn_left">취소</button>
-                    <button type="button" class="mainBanner_btn_right" onclick="selectMain();">등록</button>
-                </div>
-                <div class="innerAjax">
-                
-                <!-- ajax로 메인1에 등록하고자 하는 리스트 목록 띄워주는 위치 -->
-                
-                </div>
-		    
-            </div>
-
 
 
     <script>
-    	/*
-    	// 변경하기 버튼 시 띄워지는 메인등록1에 사용될 등록될 메인 리스트를 띄워줄 모달창
-    	var main1 = document.getElementById('updatebtn1');
-    	if(main1.addEventListener){
-    		function onClick() {
-                document.querySelector('.mainmodal_wrap').style.display ='block';
-                document.querySelector('.mainblack_bg').style.display ='block';
-            }   
-            function offClick() {
-                document.querySelector('.mainmodal_wrap').style.display ='none';
-                document.querySelector('.mainblack_bg').style.display ='none';
-            }
-         
-            document.getElementById('updatebtn1').addEventListener('click', onClick);
-            document.querySelector('.mainmodal_close').addEventListener('click', offClick); 	
-            document.querySelector('.mainBanner_btn_left').addEventListener('click', offClick); 
-    	}  	
-    	
-		
-    	// AJAX구문의 success:function()의 값을 담을 전역변수 생성
-    	var ajaxlist = [];
-    	
-    	//'변경하기'버튼 클릭 시 메인등록1에 띄워줄   AJAX 구문
-		$('#updatebtn1').click(function(){
-			madeajaxlist();
-		});
-		
-    	// 페이지 로딩 후 실행되는 ajax구문
-		$(document).ready(function selectFirstMainList(){
-			$.ajax({
-				url:"firstMainlist.banner",
-				data:{},
-				asynf:false,
-				success:function(Firstlist){
-					
-				ajaxlist = Firstlist;
-				
-				
-				
-				},error:function(){
-					console.log("메인1 리스트 조회용 ajax 통신 실패");
-				}
-				
-			});
-		});
-		
-		// AJAX구문의 success:function()의 값을 담은 전역변수 ajaxlist를 가지고 리스트를 만드는 함수
-		function madeajaxlist(){
-			
-			let result = ""
-			if(ajaxlist.length == 0) return;
-				
-				for(let i=0; i<ajaxlist.length; i++){
-					result += "<table>"
-								+ "<tr>" 
-			            			+	"<td colspan='2'><img src='" + ajaxlist[i].bOriginName + "' class='inputMainImg' height='180' width='250px'></td>" 
-								+ "</tr>"
-								+ "<tr>"
-									+	"<td style='width:5px;'><input type='radio' name='selectMainImg' value='"+ ajaxlist[i].bCode +"' style='margin: 0px 10px;'></td>"
-									+	"<td style='text-align:center;'>" + ajaxlist[i].bName + "</td>"
-								+ "</tr>" +
-						  	"</table>";
-						  	
-				$(".innerAjax").html(result);
-			
-			}
-		}
-		madeajaxlist(ajaxlist);
-			
-				
-				
-			
-		
-		// 메인1에 등록하고자 하는 메인의 라디오버튼 선택 후 '등록'버튼 클릭 시 실행할 함수
-		function selectMain(){
-			var selectMainNum = $('input[name=selectMainImg]:checked').val();
-			
-			$.ajax({
-				url:"selectFirstMain.banner",
-				data:{selectMainNum:selectMainNum},
-				success:function(FirstMain){
-          	
-					let FirstMainImg = FirstMain.mainImg;
-					let FirstStatus = FirstMain.status;
-					let FirstStartdate = FirstMain.startDate;
-					let FirstName = FirstMain.bName;
-					let FirstCode = FirstMain.bCode;
-					let FirstPosition = FirstMain.bPostion;
-					
-					
-					$(".titleImg img").attr("src", FirstMainImg);  // 메인이미지
-					$(".FirstStatus").html(FirstStatus);           // 게시여부
-					$(".FirstStartdate").html(FirstStartdate);     // 게시일
-					$(".FirstName").html(FirstName);               // 배너명
-					$(".FirstCode").html(FirstCode);               // 배너번호
-					$(".FirstPosition").html(FirstPosition);       // 위치
-					
-					
-				}, error:function(){
-					console.log("통신 실패");
-				}
-				
-			})
-		}
-		
-		*/
+
     </script>
     
     

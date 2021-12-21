@@ -466,7 +466,6 @@
         			  bStatus:bannerStatus
         		},
         		success:function(result){
-        			alert("상태변경 성공");
         			location.reload();
         		}, error:function(){
         			console.log("통신 실패");

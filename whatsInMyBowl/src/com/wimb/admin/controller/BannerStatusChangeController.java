@@ -35,10 +35,24 @@ public class BannerStatusChangeController extends HttpServlet {
 		int bCode = Integer.parseInt(request.getParameter("bCode"));
 		String bStatus = request.getParameter("bStatus");
 		
-		int result = new bannerService().statusChange(bCode, bStatus);
+		// count : 현재 게시중인 배너의 개수
+		int count = new bannerService().selectMainBannerCount();
+		System.out.println(count);
+		if(count<2 && bStatus.equals("Y")){
+			request.getSession().setAttribute("alertMsg", "배너는 최소 1개 이상이어야합니다.");
+		} else if(count==3 && bStatus.equals("N")){
+			request.getSession().setAttribute("alertMsg", "배너 등록은 최대 3개까지 가능합니다.");			
+		} else {
+			
+			int result = new bannerService().statusChange(bCode, bStatus);
+			
+			response.setContentType("application/json; charset=UTF-8");
+			new Gson().toJson(result, response.getWriter());
+			request.getSession().setAttribute("alertMsg", "상태 변경 성공");
+		}
 		
-		response.setContentType("application/json; charset=UTF-8");
-		new Gson().toJson(result, response.getWriter());
+		
+		
 	}
 
 	/**

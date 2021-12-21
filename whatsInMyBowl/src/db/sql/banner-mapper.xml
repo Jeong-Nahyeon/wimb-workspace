@@ -124,7 +124,18 @@
 		  FROM BANNER
          WHERE B_STATUS = 'Y'
 		   AND B_ADMINSHOW = 'Y'
+		   AND <![CDATA[ ROWNUM <= 3]]>
 	</entry>
+	
+	<!-- 게시중인 배너의 갯수를 구하는 sql문 -->
+	<entry key="selectMainBannerCount">
+		 SELECT 
+		  COUNT (*) "COUNT" 
+		   FROM BANNER
+		  WHERE B_STATUS = 'Y'
+		    AND B_ADMINSHOW = 'Y'
+	</entry>
+	
 	
 	<entry key="statusChangeY">
 		UPDATE

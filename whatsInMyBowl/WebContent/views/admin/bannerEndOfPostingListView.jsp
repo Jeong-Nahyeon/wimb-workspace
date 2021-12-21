@@ -408,9 +408,7 @@
     		 $("input[name='check']:checked").each(function(){
                  checkArr.push($(this).parent().siblings(".bannerCode").text())
              });
-    		 
-    		 console.log(checkArr);
-             console.log(count);
+    		
              return new Promise(function(resolve, reject){
                  $.ajax({
                      url:"delete.banner",

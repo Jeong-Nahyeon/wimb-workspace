@@ -258,6 +258,32 @@ public class bannerDao {
 		return list;
 	}
 	
+	// 상태가 Y 배너의 갯수를 구하는 dao
+	public int selectMainBannerCount(Connection conn) {
+		
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMainBannerCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
+	}
+	
 	// 배너 '변경'클릭 시 상태 Y로 변경해주는 서비스
 	public int statusChangeY(Connection conn, int bCode) {
 		int result = 0;

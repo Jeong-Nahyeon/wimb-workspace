@@ -65,7 +65,9 @@
 		<ul class="bxslider" style="width:800px">
 		
 				<!-- ajax로 메인배너 띄워주는 위치 -->
-			
+			<li><a href="#"><img class="img1" src=""></a></li>
+			<li><a href="#"><img class="img2" src=""></a></li>
+			<li><a href="#"><img class="img3" src=""></a></li>
 		</ul>
 	</div>
 	<br clear="both">
@@ -159,6 +161,9 @@
 		</footer>
 	</div>
 	<script>
+	$(function(){
+		test4();
+	})
 	
 	function test4(){
 		$.ajax({
@@ -166,14 +171,12 @@
 			data:{},
 			success:function(list){ 
 				
-				console.log(list);
-				
 				let result = "";
 				for(let i=0; i<list.length; i++){
-					result += "<li><a href='#'><img src='" + list[i].mainImg + "></a></li>";
+					$(".img" + (i+1)).attr("src", '/wimb/' + list[i].mainImg);
+					//result += "<li><a href='#'><img src='/wimb/" + list[i].mainImg + "'></a></li>";
 				}
 
-				$(".bxslider").html(result);
 			
 			},error:function(){
 				console.log("ajax 통신 실패");

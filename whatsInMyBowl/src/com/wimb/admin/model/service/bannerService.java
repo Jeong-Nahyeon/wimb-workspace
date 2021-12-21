@@ -82,9 +82,17 @@ public class bannerService {
 	// 메인배너에 등록된 사진을 띄워주는 서비스
 	public ArrayList<Banner> selectMainBanner() {
 		Connection conn = getConnection();
-		ArrayList<Banner> list = new bannerDao().selectMainBanner(conn);
+		ArrayList<Banner> list = new bannerDao().selectMainBanner(conn);	
 		close(conn);
 		return list;
+	}
+	
+	public int selectMainBannerCount() {
+		 Connection conn = getConnection();
+		 int count = new bannerDao().selectMainBannerCount(conn);
+		 close(conn);
+		 
+		 return count;
 	}
 	
 	// 배너 '변경'클릭 시 상태 변경해주는 서비스
@@ -93,7 +101,6 @@ public class bannerService {
 		
 		int result1 = 0;
 		int result2 = 0;
-		System.out.println(bStatus);
 		if(bStatus.equals("Y")) { // 게시여부가 Y일 경우 N으로 바꿔주는 DAO실행
 			result1 = new bannerDao().statusChangeN(conn, bCode);
 		} else { // 게시여부가 N일 경우 Y으로 바꿔주는 DAO실행
