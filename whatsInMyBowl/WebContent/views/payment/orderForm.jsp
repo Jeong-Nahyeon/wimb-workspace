@@ -90,7 +90,7 @@
     #order-form td{
         width: 500px;
     }
-    #orderer-info, #address-info{
+    .orderer-info, #address-info{
         margin-bottom: 70px;
     }
     #order-form input{
@@ -227,29 +227,58 @@
                 <hr style="margin-top: 5px;">
     
                 <form action="" id="order-form">
-                    <table id="orderer-info">
-                        <tr>
-                            <th>주문자 성함 <span style="color: red; vertical-align: middle;">*</span></th>
-                            <td><input type="text" name="" placeholder="이름을 입력해주세요." ></td>
-                        </tr>
-                        <tr>
-                            <th>전화번호</th>
-                            <td><input type="text" name=""></td>
-                        </tr>
-                        <tr>
-                            <th>휴대폰 <span style="color: red; vertical-align: middle;">*</span></th>
-                            <td><input type="text" placeholder="숫자만 입력해주세요." ></td>
-                        </tr>
-                        <tr>
-                            <th>이메일 <span style="color: red; vertical-align: middle;">*</span></th>
-                            <td><input type="text" ></td>
-                        </tr>
-                    </table>
+                	<% if(loginUser != null){ %>
+	                    <table class="orderer-info">
+	                        <tr>
+	                            <th>주문자 성함 <span style="color: red; vertical-align: middle;">*</span></th>
+	                            <td>
+	                                <input type="text" name="" placeholder="이름을 입력해주세요." value="">
+	                                <input type="hidden" name="mCode" value="<%= loginUser.getmCode() %>">
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>전화번호</th>
+	                            <td><input type="text" name=""></td>
+	                        </tr>
+	                        <tr>
+	                            <th>휴대폰 <span style="color: red; vertical-align: middle;">*</span></th>
+	                            <td><input type="text" placeholder="숫자만 입력해주세요." ></td>
+	                        </tr>
+	                        <tr>
+	                            <th>이메일 <span style="color: red; vertical-align: middle;">*</span></th>
+	                            <td><input type="text" name="oEmail"></td>
+	                        </tr>
+	                    </table>
+                    <% } else {%>
+                    	<table class="orderer-info">
+	                        <tr>
+	                            <th>주문자 성함 <span style="color: red; vertical-align: middle;">*</span></th>
+	                            <td>
+	                                <input type="text" name="" placeholder="이름을 입력해주세요." >
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>전화번호</th>
+	                            <td><input type="text" name=""></td>
+	                        </tr>
+	                        <tr>
+	                            <th>휴대폰 <span style="color: red; vertical-align: middle;">*</span></th>
+	                            <td><input type="text" placeholder="숫자만 입력해주세요." ></td>
+	                        </tr>
+	                        <tr>
+	                            <th>이메일 <span style="color: red; vertical-align: middle;">*</span></th>
+	                            <td><input type="text" name="oEmail"></td>
+	                        </tr>
+	                    </table>
+                    <% } %>
+                    
     
                     <!-- 배송지 정보 영역-->
                     <span style="font-size: 15px; font-weight: 800; margin-right: 15px;">배송지 정보</span>
-                    <input type="checkbox" name="" id="get-address-input"> 
-                    <span  id="get-address" style="font-size: 10px;">기본 배송지 불러오기</span> 
+                    <% if(loginUser != null){ %>
+                    	<input type="checkbox" name="" id="get-address-input"> 
+                    	<span  id="get-address" style="font-size: 10px;">기본 배송지 불러오기</span> 
+                    <% } %>
                     <hr style="margin-top: 5px;">
     
                     <table id="address-info">
@@ -258,7 +287,7 @@
                                 받으실 분<span style="color: red; vertical-align: middle;">*</span>
                             </th>
                             <td>
-                                <input type="text" name="" placeholder="이름을 입력해주세요." >
+                                <input type="text" name="oName" placeholder="이름을 입력해주세요." >
                             </td>
                         </tr>
                         <tr>
@@ -267,14 +296,14 @@
                             </th>
                             <td>
                                 <div class="order-address">
-                                    <input type="text" name="" id="address-code">
+                                    <input type="text" name="oZipCode" id="address-code">
                                     <button class="btn btn-sm btn-secondary" onclick="addressSearch()">
                                         우편번호 검색
                                     </button>
                                 </div>
                                 <div class="order-subAddress">
-                                    <input type="text" name="" id="address-main">
-                                    <input type="text" name="" id="address-sub" placeholder="상세주소">
+                                    <input type="text" name="oAddress" id="address-main">
+                                    <input type="text" name="oSubAddress" id="address-sub" placeholder="상세주소">
                                 </div>
                                 
                             </td>
@@ -283,15 +312,15 @@
                             <th>
                                 휴대폰<span style="color: red; vertical-align: middle;">*</span>
                             </th>
-                            <td><input type="text" placeholder="숫자만 입력해주세요." ></td>
+                            <td><input type="text" name="oPhone" placeholder="숫자만 입력해주세요." ></td>
                         </tr>
                         <tr>
                             <th>이메일 <span style="color: red; vertical-align: middle;">*</span></th>
-                            <td><input type="text" ></td>
+                            <td><input type="text" name="oEmail"></td>
                         </tr>
                         <tr>
                             <th>배송요청사항</th>
-                            <td><input type="text"></td>
+                            <td><input type="text" name="oRequest"></td>
                         </tr>
                         <tr>
                             <th></th>
@@ -300,30 +329,30 @@
                     </table>
     
                     <!-- 적립금 영역 -->
-                    <span style="font-size: 15px; font-weight: 800;">적립금 사용</span>
-                    <hr style="margin-top: 5px;">
-                    <table id="point-table">
-                        <tr>
-                            <th>
-                                적립금 사용
-                            </th>
-                            <td>
-                                <input type="number" name="">
-                                <button class="btn btn-sm btn-secondary">모두사용</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <td>
-                                <div class="point-sub">
-                                    <span style="font-size: 13px; margin-bottom: 7px;">보유적립금 : 3,000원</span>
-                                    <span>* 보유적립금 1천원 이상부터 사용가능</span>
-                                    <span>* 적립금내역 : 마이페이지 - 적립금조회</span>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-    
+                    <% if(loginUser != null){ %>
+                        <span style="font-size: 15px; font-weight: 800;">적립금 사용</span>
+                        <hr style="margin-top: 5px;">
+                        <table id="point-table">
+                            <tr>
+                                <th>적립금 사용</th>
+                                <td>
+                                    <input type="number" name="oPoint">
+                                    <button class="btn btn-sm btn-secondary">모두사용</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <div class="point-sub">
+                                        <span style="font-size: 13px; margin-bottom: 7px;">보유적립금 : 3,000원</span>
+                                        <span>* 보유적립금 1천원 이상부터 사용가능</span>
+                                        <span>* 적립금내역 : 마이페이지 - 적립금조회</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+    				<% } %>
+
                     <!-- 결제수단 영역 -->
                     <div class="pay-area">
                         <span style="font-size: 15px; font-weight: 800;">결제 수단</span>
@@ -354,7 +383,19 @@
                         </div>   
                     </div>
     
-    
+                    <script>
+                        $(function(){
+                            $("#cash-area").hide();
+                            $("input[type='radio'][id='cash-check']").on('click',function(){
+                                if($("input[type='radio'][id='cash-check']:checked")){
+                                    $("#cash-area").css('display', 'none');
+                                }else{
+                                    $("#cash-area").css('display','block');
+                                }
+                            })
+                        })
+
+                    </script>
     
                     <!-- 총 금액, 약관동의 -->
                     <div id="total-payment">
