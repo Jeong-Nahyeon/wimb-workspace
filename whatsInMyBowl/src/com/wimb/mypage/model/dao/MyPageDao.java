@@ -507,5 +507,25 @@ public class MyPageDao {
 		return hlist;
 	}
 	
+	// 찜리스트 선택삭제
+	public int deleteHeart(Connection conn, Member m, String pCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteHeart");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, m.getmCode());
+			pstmt.setString(2, pCode);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	
 }

@@ -50,7 +50,7 @@
     button:hover {background-color: rgb(155, 213, 189);}
     input {
         height: 35px;
-        width:130px;
+        width:125px;
         margin-left: 5px;
     }
     input:hover {cursor: pointer;}
@@ -193,7 +193,7 @@
 	                            <th width="80">확인/리뷰</th>
 	                        </tr>
 	                        <tr>
-	                            <td colspan="5" height="180">최근 주문 정보가 없습니다.</td>
+	                            <td colspan="5" style="height:200px;">최근 주문 정보가 없습니다.</td>
 	                        </tr>
 	                        
                     	</table>
@@ -321,7 +321,6 @@
         				if(result>0) {
         					alert("상품이 취소되었습니다.");
         				}
-        				
         				
         			}, error:function(){
         				alert("요청에 실패했습니다.\n관리자에게 문의하세요.");
@@ -473,7 +472,11 @@
 			
 			var startDateString = svYear + '-' + svMonth  + '-' + svDay;
 			
-    		$("#startDate").val(startDateString);
+			if(startDay != null) {
+				var startDay = '<%= request.getAttribute("startDay")%>'
+			}else {
+    			$("#startDate").val(startDateString);
+			}
     		// console.log($("#startDate").val());
 		
 		})

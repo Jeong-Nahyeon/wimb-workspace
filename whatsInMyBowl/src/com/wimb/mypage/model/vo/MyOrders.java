@@ -35,16 +35,18 @@ public class MyOrders {
 		
 	public MyOrders() {}
 	
-	
-		
-	
-
-
+	// 메인페이지 배송현황용
 	public MyOrders(int statusCount) {
 		super();
 		this.statusCount = statusCount;
 	}
-
+	
+	// 찜리스트 삭제용
+	public MyOrders(String pCode) {
+		super();
+		this.pCode = pCode;
+	}
+	
 
 	// 주문목록 조회시 사용
 	public MyOrders(String orderCode, int orderAmount, String orderCompany, String orderInvoice, String orderStatus,
@@ -67,7 +69,7 @@ public class MyOrders {
 	}
 
 	
-	
+
 	// 취소|환불 조회시 사용
 	public MyOrders(String orderCode, int orderAmount, String orderStatus, Date orderDate, String cuName,
 			String cuMainImg, String pName, String pMainImg, int pmTotalCost, String filePath,

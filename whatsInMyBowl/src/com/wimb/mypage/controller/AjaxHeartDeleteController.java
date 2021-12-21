@@ -1,30 +1,27 @@
 package com.wimb.mypage.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.wimb.member.model.vo.Member;
 import com.wimb.mypage.model.service.MyPageService;
-import com.wimb.mypage.model.vo.MyOrders;
 
 /**
- * Servlet implementation class OrderPostListController
+ * Servlet implementation class AjaxHeartDeleteController
  */
-@WebServlet("/orderList.my")
-public class OrderPostListController extends HttpServlet {
+@WebServlet("/deleteHeart.my")
+public class AjaxHeartDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OrderPostListController() {
+    public AjaxHeartDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,19 +31,24 @@ public class OrderPostListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 전달값 기록
-		HttpSession session = request.getSession();
-		Member m = (Member)session.getAttribute("loginUser");		
-		String startDay = request.getParameter("startDate");
-		String endDay = request.getParameter("endDate");
+		Member m = (Member)request.getAttribute("loginUser");
+		String[] pArr = request.getParameterValues("pArr");
 		
-		// 요청처리
-		ArrayList<MyOrders> list = new MyPageService().orderListDetail(m, startDay, endDay);
+		int result = 0;
+		if(pArr != null) {
+			for(int i=0; i<pArr.length; i++) {
+				String pCode = pArr[i];
+				result = new MyPageService().deleteHeart(m, pCode);
+			}
+		}
 		
-		// 응답뷰
-		request.setAttribute("list", list);
-		request.setAttribute("startDay", startDay);
-		request.getRequestDispatcher("views/mypage/orderPostList.jsp").forward(request, response);
+		if(result > 0) {
+			response.getWriter().print(result);
+		}else {
+			request.setAttribute("errorMsg", "삭제실패\n관리자에게 문의하세요");
+		}
+	
+	
 	}
 
 	/**

@@ -52,7 +52,7 @@
     }
     input {
         height: 35px;
-        width: 120px;
+        width: 125px;
         margin-left: 5px;
     }
     input:hover {cursor: pointer;}
@@ -199,7 +199,7 @@
 	                            <th width="80">상세보기</th>
 	                        </tr>
 	                        <tr>
-	                            <td colspan="5" height="180">최근 취소/환불 정보가 없습니다.</td>
+	                            <td colspan="5" style="height:200px;">최근 취소/환불 정보가 없습니다.</td>
 	                        </tr>
 	                        
                     	</table>

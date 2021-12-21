@@ -237,7 +237,7 @@
 	<entry key="deleteHeart">
 		DELETE 
 		       HEART
-		WHERE M_CODE = 2
-		  AND P_CODE = 'P1001'
+		WHERE M_CODE = ?
+		  AND P_CODE = ?
 	</entry>
 </properties>

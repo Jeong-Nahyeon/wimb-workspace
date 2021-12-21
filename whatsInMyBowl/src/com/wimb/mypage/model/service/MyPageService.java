@@ -171,5 +171,17 @@ public class MyPageService {
 		return hlist;
 	}
 	
+	// 찜리스트 선택삭제
+	public int deleteHeart(Member m, String pCode) {
+		Connection conn = getConnection();
+		int result = new MyPageDao().deleteHeart(conn, m, pCode);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
 	
 }
