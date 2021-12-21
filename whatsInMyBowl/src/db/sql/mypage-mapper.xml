@@ -221,4 +221,23 @@
 		  LEFT JOIN PRODUCT USING (P_CODE)
 		 WHERE ORDER_CODE = ?
 	</entry>
+	
+	<entry key="selectHeart">
+		SELECT
+		       M_CODE
+		     , P_CODE
+		     , P_NAME
+		     , P_MAINIMG
+		     , P_PROVIDEPRICE
+		  FROM HEART
+		  JOIN PRODUCT USING (P_CODE) 
+		 WHERE M_CODE = ?
+	</entry>
+	
+	<entry key="deleteHeart">
+		DELETE 
+		       HEART
+		WHERE M_CODE = 2
+		  AND P_CODE = 'P1001'
+	</entry>
 </properties>

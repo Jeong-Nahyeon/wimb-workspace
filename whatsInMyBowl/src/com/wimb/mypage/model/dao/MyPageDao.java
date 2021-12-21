@@ -344,7 +344,7 @@ public class MyPageDao {
 		return result;
 		
 	}
-	//---------------------------------------------------------------------------	
+	
 	// 주문 횐불 요청 insert
 	public int insertRefund(Connection conn, String oCode, String payCode, String reReason) {
 		int result = 0;
@@ -473,5 +473,39 @@ public class MyPageDao {
 		}
 		return mo;
 	}
+	
+	// 찜리스트 조회
+	public ArrayList<MyOrders> selectHeart(Connection conn, Member m) {
+		ArrayList<MyOrders> hlist = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectHeart");
+		// 저장경로
+		String filePath = "resources/images/product_images/";
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, m.getmCode());
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				MyOrders mo = new MyOrders(rset.getString("p_name"),
+						                   rset.getString("p_mainImg"),
+						                   filePath,
+						                   rset.getString("p_code"),
+						                   rset.getInt("p_provideprice"));
+				hlist.add(mo);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return hlist;
+	}
+	
 	
 }

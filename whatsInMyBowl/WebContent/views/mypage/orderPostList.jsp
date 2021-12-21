@@ -232,7 +232,9 @@
 	                                	<% }else if(od.getOrderStatus().equals("배송중")) { %>
 	                                		
 	                                		<!--주문상태가 배송중일 때만 가능-->
-                                            <form action="http://info.sweettracker.co.kr/tracking/5" method="post">
+                                            <button type="button"  onclick="location.href='리뷰작성페이지이동'">리뷰작성</button>
+                                			<button class="refundDo" type="button" data-toggle="modal" data-target="#refundModal">환불요청</button>
+                                			<form method="post" class="postApi">
 									            <div class="form-group" style="display:none;">
 									              <input type="text" class="form-control" id="t_key" name="t_key" value="3CAIZnOaR4lWXQulWSJlUg">
 									            </div>
@@ -240,7 +242,7 @@
 									              <input type="text" class="form-control" name="t_code" id="t_code" value="05">
 									            </div>
 									            <div class="form-group" style="display:none;">
-									              <input type="text" class="form-control" name="t_invoice" id="t_invoice" value="530012125005">
+									              <input type="text" class="form-control" name="t_invoice" id="t_invoice" value="<%= od.getOrderInvoice() %>">
 									            </div>
 									            <button type="submit">배송조회</button>
 									        </form>
@@ -258,7 +260,7 @@
 									              <input type="text" class="form-control" name="t_code" id="t_code" value="05">
 									            </div>
 									            <div class="form-group" style="display:none;">
-									              <input type="text" class="form-control" name="t_invoice" id="t_invoice" value="530012125005">
+									              <input type="text" class="form-control" name="t_invoice" id="t_invoice" value="<%= od.getOrderInvoice() %>">
 									            </div>
 									            <button type="submit">배송조회</button>
 									        </form>

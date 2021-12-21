@@ -113,7 +113,7 @@
                     </tr>
                     <tr>
                         <td style="padding-bottom: 45px;">
-                            <a href="">찜리스트</a>
+                            <a href="<%=contextPath%>/heartList.my">찜리스트</a>
                         </td>
                     </tr>
                     <tr>

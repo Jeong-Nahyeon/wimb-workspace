@@ -163,5 +163,13 @@ public class MyPageService {
 		return mo;
 	}
 	
+	// 찜리스트 조회
+	public ArrayList<MyOrders> selectHeart(Member m) {
+		Connection conn = getConnection();
+		ArrayList<MyOrders> hlist = new MyPageDao().selectHeart(conn, m);
+		close(conn);
+		return hlist;
+	}
+	
 	
 }

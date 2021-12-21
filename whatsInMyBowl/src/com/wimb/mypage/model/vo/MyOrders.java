@@ -17,10 +17,10 @@ public class MyOrders {
 	private int pmTotalCost;       // 원결제금액
 	private String pmCode;		   // 결제번호
 	private String filePath;       // 저장경로
-	
+	private String pCode;		   // 완제품상품코드
+	private int pPrice;            // 완제품 구매가
 	// 메인페이지에서만 사용
 	private int statusCount;	   // 주문상태별 갯수
-	
 	// 취소|환불 조회시 사용
 	private int pmFinalCost;	   // 최종결제금액
 	private String cancelCode;	   // 취소코드
@@ -32,13 +32,21 @@ public class MyOrders {
 	private String cReason;        // 취소사유
 	private String rReason;        // 환불사유
 
-
-
-
-
+		
 	public MyOrders() {}
+	
+	
+		
+	
 
-	// 주문만조회시 사용
+
+	public MyOrders(int statusCount) {
+		super();
+		this.statusCount = statusCount;
+	}
+
+
+	// 주문목록 조회시 사용
 	public MyOrders(String orderCode, int orderAmount, String orderCompany, String orderInvoice, String orderStatus,
 			Date orderDate, String cuName, String cuMainImg, String pName, String pMainImg, int pmTotalCost,
 			String pmCode, String filePath) {
@@ -107,7 +115,37 @@ public class MyOrders {
 		this.cReason = cReason;
 		this.rReason = rReason;
 	}
+	
+	
+	// 찜리스트 조회시 사용
+	public MyOrders(String pName, String pMainImg, String filePath, String pCode, int pPrice) {
+		super();
+		this.pName = pName;
+		this.pMainImg = pMainImg;
+		this.filePath = filePath;
+		this.pCode = pCode;
+		this.pPrice = pPrice;
+	}
+	
+	
+	
+	public String getpCode() {
+		return pCode;
+	}
 
+
+	public int getpPrice() {
+		return pPrice;
+	}
+
+	public void setpPrice(int pPrice) {
+		this.pPrice = pPrice;
+	}
+
+	public void setpCode(String pCode) {
+		this.pCode = pCode;
+	}
+	
 	public String getcReason() {
 		return cReason;
 	}
@@ -157,12 +195,6 @@ public class MyOrders {
 		this.cancelStatus = cancelStatus;
 	}
 
-
-	public MyOrders(int statusCount) {
-		super();
-		this.statusCount = statusCount;
-	}
-	
 	
 	public int getPmFinalCost() {
 		return pmFinalCost;
@@ -311,10 +343,11 @@ public class MyOrders {
 		return "MyOrders [orderCode=" + orderCode + ", orderAmount=" + orderAmount + ", orderCompany=" + orderCompany
 				+ ", orderInvoice=" + orderInvoice + ", orderStatus=" + orderStatus + ", orderDate=" + orderDate
 				+ ", cuName=" + cuName + ", cuMainImg=" + cuMainImg + ", pName=" + pName + ", pMainImg=" + pMainImg
-				+ ", pmTotalCost=" + pmTotalCost + ", pmCode=" + pmCode + ", filePath=" + filePath + ", statusCount="
-				+ statusCount + ", pmFinalCost=" + pmFinalCost + ", cancelCode=" + cancelCode + ", cancelStatus="
-				+ cancelStatus + ", cancelCompDate=" + cancelCompDate + ", reCode=" + reCode + ", rStatus=" + rStatus
-				+ ", rcompDate=" + rcompDate + ", cReason=" + cReason + ", rReason=" + rReason + "]";
+				+ ", pmTotalCost=" + pmTotalCost + ", pmCode=" + pmCode + ", filePath=" + filePath + ", pCode=" + pCode
+				+ ", pPrice=" + pPrice + ", statusCount=" + statusCount + ", pmFinalCost=" + pmFinalCost
+				+ ", cancelCode=" + cancelCode + ", cancelStatus=" + cancelStatus + ", cancelCompDate=" + cancelCompDate
+				+ ", reCode=" + reCode + ", rStatus=" + rStatus + ", rcompDate=" + rcompDate + ", cReason=" + cReason
+				+ ", rReason=" + rReason + "]";
 	}
 
 	
