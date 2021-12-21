@@ -14,6 +14,7 @@
 	// 전체 샐러드 조회 => 상품코드, 상품명, 카테고리, 판매가격, 대표이미지, 재고수량
 	ArrayList<Product> productList = (ArrayList<Product>)(request.getAttribute("productList"));
 	
+	// 카테고리 옵션별 응답 페이지에서 select option 유지에 사용할  value 값
 	String selectOrder = (String)(request.getAttribute("selectOrder"));
 	
 %>
@@ -231,14 +232,11 @@
 	<% if(selectOrder != null) { %>
 	<script>
 	
-		//console.log("<%= selectOrder %>");
-		
-		
-		const $option = $("select[name=selectOrder]").children();
-		
-		$option.each(function(){
+		$(function(){
 			
-			console.log($(this).val());
+			//console.log("<%= selectOrder %>");
+			
+			$("select[name=selectOrder]").val("<%= selectOrder %>").prop("selected", true);
 			
 		});
 	
@@ -276,7 +274,7 @@
 						const $option = $("option:selected").val();
 
 						if($option == "new"){ // 신상품순일 경우
-							location.reload();
+							location.href="<%= contextPath %>/list.pr?cpage=1";
 						} else { // 그 외일 경우
 							location.href="<%= contextPath %>/list.pr?cpage=1&selectOrder=" + $option;
 						}
@@ -287,7 +285,7 @@
 			</script>
 
 			<div class="product-area">
-				
+					
 					<% for (Product p : productList) { %>
 						<div class="product">
 							<div class="product-img">
