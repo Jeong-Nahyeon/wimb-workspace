@@ -116,8 +116,8 @@ public class MyPageService {
 		return list;
 	}
 	
-	// 주문 취소 요청 insert
-	public int insertCancel(String oCode, String payCode) {
+	// 주문 취소 요청 insert|update
+	public int insertUpdateCancel(String oCode, String payCode) {
 		Connection conn = getConnection();
 		int result1 = new MyPageDao().insertCancel(conn, oCode, payCode);
 		int result2 = new MyPageDao().updateCancel(conn, oCode);
@@ -131,7 +131,20 @@ public class MyPageService {
 		return result1 * result2;
 	}
 	
-	
+	// 주문 환불 요청 insert|update
+		public int insertUpdateRefund(String oCode, String payCode, String reReason) {
+			Connection conn = getConnection();
+			int result1 = new MyPageDao().insertRefund(conn, oCode, payCode, reReason);
+			int result2 = new MyPageDao().updateRefund(conn, oCode);
+			
+			if(result1>0 && result2>0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+			close(conn);
+			return result1 * result2;
+		}
 	
 	// 취소/환불조회 페이지
 	public ArrayList<MyOrders> selectCancelList(Member m, String startDay, String endDay) {

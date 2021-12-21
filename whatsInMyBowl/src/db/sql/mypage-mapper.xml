@@ -133,7 +133,32 @@
 	<entry key="updateCancel">
 		UPDATE
 		       "ORDER"
-		   SET ORDER_STATUS = '상품취소'
+		   SET ORDER_STATUS = '주문취소'
+		 WHERE ORDER_CODE = ?
+	</entry>
+	
+	<entry key="insertRefund">
+		INSERT
+		  INTO REFUND
+		  (
+		    RE_CODE
+		  , ORDER_CODE
+		  , PM_CODE
+		  , RE_REASON
+		  )
+		  VALUES
+		  (
+		    'RE'||SEQ_REFUND.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="updateRefund">
+		UPDATE
+		       "ORDER"
+		   SET ORDER_STATUS = '제품환불'
 		 WHERE ORDER_CODE = ?
 	</entry>
 	

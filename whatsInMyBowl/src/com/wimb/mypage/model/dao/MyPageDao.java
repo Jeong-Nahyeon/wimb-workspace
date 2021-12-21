@@ -301,17 +301,61 @@ public class MyPageDao {
 		return list;
 		
 	}
-		
+	
 	// 주문 취소 요청 insert
-	public int insertCancel(Connection conn, String oCode, String payCode) {
+		public int insertCancel(Connection conn, String oCode, String payCode) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("insertCancel");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, oCode);
+				pstmt.setString(2, payCode);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
+			
+		}
+		
+	// 주문 취소 요청 update 
+	public int updateCancel(Connection conn, String oCode) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("insertCancel");
+		String sql = prop.getProperty("updateCancel");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, oCode);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	//---------------------------------------------------------------------------	
+	// 주문 횐불 요청 insert
+	public int insertRefund(Connection conn, String oCode, String payCode, String reReason) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertRefund");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, oCode);
 			pstmt.setString(2, payCode);
+			pstmt.setString(3, reReason);
 			
 			result = pstmt.executeUpdate();
 			
@@ -324,11 +368,11 @@ public class MyPageDao {
 		
 	}
 	
-	// 주문 취소 요청 update 
-	public int updateCancel(Connection conn, String oCode) {
+	// 주문 횐불 요청 update 
+	public int updateRefund(Connection conn, String oCode) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("updateCancel");
+		String sql = prop.getProperty("updateRefund");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
