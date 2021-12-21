@@ -14,13 +14,13 @@ import com.wimb.mypage.model.vo.MyOrders;
  * Servlet implementation class AjaxCancelInsertController
  */
 @WebServlet("/cancelInsert.my")
-public class AjaxCancelInsertController extends HttpServlet {
+public class AjaxCancelInserUpdatetController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxCancelInsertController() {
+    public AjaxCancelInserUpdatetController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +35,11 @@ public class AjaxCancelInsertController extends HttpServlet {
 		
 		int result = new MyPageService().insertCancel(oCode, payCode);
 		
-		response.getWriter().print(result);
+		if(result>0) {
+			response.getWriter().print(result);
+		}else {
+			request.getSession().setAttribute("alertMsg", "요청에 실패했습니다.\n관리자에게 문의하세요.");
+		}
 	}
 
 	/**

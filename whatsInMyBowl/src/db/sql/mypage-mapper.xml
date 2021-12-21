@@ -130,6 +130,13 @@
 		  )
 	</entry>
 	
+	<entry key="updateCancel">
+		UPDATE
+		       "ORDER"
+		   SET ORDER_STATUS = '상품취소'
+		 WHERE ORDER_CODE = ?
+	</entry>
+	
 	<entry key="selectCancelList">
 		SELECT
 		       ORDER_CODE
