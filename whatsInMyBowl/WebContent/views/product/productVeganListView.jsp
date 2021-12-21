@@ -12,7 +12,7 @@
 	int maxPage = pi.getMaxPage();
 	
 	// 완제품 전체  조회 => 상품코드, 상품명, 카테고리, 판매가격, 대표이미지, 재고수량, 파일경로
-	ArrayList<Product> productList = (ArrayList<Product>)(request.getAttribute("productList"));
+	ArrayList<Product> categoryList = (ArrayList<Product>)(request.getAttribute("categoryList"));
 	
 	// 카테고리 옵션별 응답 페이지에서 select option 유지에 사용할  value 값
 	String selectOrder = (String)(request.getAttribute("selectOrder"));
@@ -283,9 +283,9 @@
 						const $option = $("option:selected").val();
 
 						if($option == "new"){ // 신상품순일 경우
-							location.href="<%= contextPath %>/list.pr?cpage=1";
+							location.href="<%= contextPath %>/veganList.pr?cpage=1";
 						} else { // 그 외일 경우
-							location.href="<%= contextPath %>/list.pr?cpage=1&selectOrder=" + $option;
+							location.href="<%= contextPath %>/veganList.pr?cpage=1&selectOrder=" + $option;
 						}
 
 					});
@@ -295,7 +295,7 @@
 
 			<div class="product-area">
 					
-					<% for (Product p : productList) { %>
+					<% for (Product p : categoryList) { %>
 						<div class="product">
 							<div class="product-img">
 								<img src="<%= contextPath %>/<%= p.getFilePath() + p.getpMainImg() %>">
@@ -327,9 +327,9 @@
 			<div id="paging-bar">
                 <% if(currentPage != 1) { %>
 						<% if(selectOrder != null) { %>
-							<a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= currentPage - 1 %>&selectOrder=<%= selectOrder %>">&lt;</a>
+							<a class ="btn btn-sm" href="<%= contextPath %>/veganList.pr?cpage=<%= currentPage - 1 %>&selectOrder=<%= selectOrder %>">&lt;</a>
 						<% } else { %>
-							<a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= currentPage - 1 %>">&lt;</a>
+							<a class ="btn btn-sm" href="<%= contextPath %>/veganList.pr?cpage=<%= currentPage - 1 %>">&lt;</a>
 						<% } %>	
 				<% } %>
                 
@@ -338,18 +338,18 @@
                         <a  class ="btn btn-sm" disabled><%= p %></a>
                     <% } else { %>
 						<% if(selectOrder != null) { %>
-							<a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= p %>&selectOrder=<%= selectOrder %>"><%= p %></a>
+							<a class ="btn btn-sm" href="<%= contextPath %>/veganList.pr?cpage=<%= p %>&selectOrder=<%= selectOrder %>"><%= p %></a>
 						<% } else { %>
-							<a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= p %>"><%= p %></a>
+							<a class ="btn btn-sm" href="<%= contextPath %>/veganList.pr?cpage=<%= p %>"><%= p %></a>
 						<% } %>	
                     <% } %>
                 <% } %>
                 
                 <% if(currentPage != maxPage) { %>
 					<% if(selectOrder != null) { %>
-						<a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= currentPage + 1 %>&selectOrder=<%= selectOrder %>">&lt;</a>
+						<a class ="btn btn-sm" href="<%= contextPath %>veganList.pr?cpage=<%= currentPage + 1 %>&selectOrder=<%= selectOrder %>">&lt;</a>
 					<% } else { %>
-                        <a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= currentPage + 1 %>">&gt;</a>
+                        <a class ="btn btn-sm" href="<%= contextPath %>veganList.pr?cpage=<%= currentPage + 1 %>">&gt;</a>
 					<% } %>	
                 <% } %>
         </div>

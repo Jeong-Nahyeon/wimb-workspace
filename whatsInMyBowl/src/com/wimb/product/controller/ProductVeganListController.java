@@ -14,16 +14,16 @@ import com.wimb.product.model.service.ProductService;
 import com.wimb.product.model.vo.Product;
 
 /**
- * Servlet implementation class ProductListController
+ * Servlet implementation class ProductVeganListController
  */
-@WebServlet("/list.pr")
-public class ProductListController extends HttpServlet {
+@WebServlet("/veganList.pr")
+public class ProductVeganListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductListController() {
+    public ProductVeganListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -61,46 +61,47 @@ public class ProductListController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
-				
+		String category = "비건";		
 		String selectOrder = "";
-		ArrayList<Product> productList = new ArrayList<>();
+		ArrayList<Product> categoryList = new ArrayList<>();
 		
-		if(request.getParameter("selectOrder") != null) { // 완제품 옵션별 정렬 조회
+		if(request.getParameter("selectOrder") != null) { // 비건 옵션별 정렬 조회
 			
 			
 			selectOrder = request.getParameter("selectOrder");
 			
 			if(selectOrder.equals("hot")) { // 인기상품순
 				
-				productList = new ProductService().selectOptionListHot(pi);
+				categoryList = new ProductService().selectCategoryOptionListHot(pi, category);
 				
 			} else if(selectOrder.equals("min")) { // 낮은가격순
 				
-				productList = new ProductService().selectOptionListMin(pi);
+				categoryList = new ProductService().selectCategoryOptionListMin(pi, category);
 				
 			} else if(selectOrder.equals("max")) { // 높은가격순
 				
-				productList = new ProductService().selectOptionListMax(pi);
+				categoryList = new ProductService().selectCategoryOptionListMax(pi, category);
 				
 			}
 			
 			
 			request.setAttribute("selectOrder", selectOrder);
 			request.setAttribute("pi", pi);
-			request.setAttribute("productList", productList);
+			request.setAttribute("categoryList", categoryList);
 			
 			request.getRequestDispatcher("views/product/productListView.jsp").forward(request, response);
 			
-		} else { // 완제품 전체 조회
+		} else { // 비건 상품 전체 조회
 		
-		productList = new ProductService().selectProductList(pi);
+		categoryList = new ProductService().selectCategoryList(pi, category);
 		
 		request.setAttribute("pi", pi);
-		request.setAttribute("productList", productList);
+		request.setAttribute("categoryList", categoryList);
 		
-		request.getRequestDispatcher("views/product/productListView.jsp").forward(request, response);
+		System.out.println(categoryList);
+		
+		request.getRequestDispatcher("views/product/productVeganListView.jsp").forward(request, response);
 		}
-		
 		
 		
 	}

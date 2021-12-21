@@ -97,6 +97,70 @@ public class ProductService {
 	}
 	
 	
+	/** 카테고리별(비건/육류/해산물) 완제품 전체 조회해주는 메소드
+	 * @param conn
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @param category  :  카테고리명
+	 * @return
+	 */
+	public ArrayList<Product> selectCategoryList(PageInfo pi, String category) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> categoryList = new ProductDao().selectCategoryList(conn, pi, category);
+		
+		close(conn);
+		
+		return categoryList;
+		
+	}
+	
+	
+	public ArrayList<Product> selectCategoryOptionListHot(PageInfo pi, String category) {
+
+		Connection conn = getConnection();
+		
+		ArrayList<Product> categoryList = new ProductDao().selectCategoryOptionListHot(conn, pi, category);
+		
+		close(conn);
+		
+		return categoryList;
+	}
+	
+	
+	public ArrayList<Product> selectCategoryOptionListMin(PageInfo pi, String category) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> categoryList = new ProductDao().selectCategoryOptionListMin(conn, pi, category);
+		
+		close(conn);
+		
+		return categoryList;
+		
+	}
+	
+	
+	public ArrayList<Product> selectCategoryOptionListMax(PageInfo pi, String category) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> categoryList = new ProductDao().selectCategoryOptionListMax(conn, pi, category);
+		
+		close(conn);
+		
+		return categoryList;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
