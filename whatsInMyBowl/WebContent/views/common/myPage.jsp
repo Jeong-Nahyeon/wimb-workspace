@@ -39,9 +39,10 @@
         display: block;
     }
     .menu{
-        border: 3px solid lightgray;
-        border-top: 3px solid black;
+        /* border: 3px solid lightgray; */
+        border-top: 2px solid black;
         padding: 10px;
+        background-color: rgba(240, 238, 238, 0.267);
     }
     .menu th{
         color: black;
