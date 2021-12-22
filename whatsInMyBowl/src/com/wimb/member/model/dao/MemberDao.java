@@ -8,8 +8,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
+import com.wimb.common.model.vo.PageInfo;
 import com.wimb.member.model.vo.Member;
 
 public class MemberDao {
@@ -296,5 +298,86 @@ public class MemberDao {
 		
 		return m;
 	}
+	
+	public int selectListCount(Connection conn) {
+		
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+	
+	public ArrayList<Member> selectAllMember(Connection conn, PageInfo pi){
+		
+		ArrayList<Member> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectAllMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage()-1)* pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Member(rset.getInt("m_code"),
+								    rset.getString("m_name"),
+								    rset.getString("m_id"),
+ 			 	 	 	 	 	    rset.getString("m_pwd"),
+								    rset.getString("m_phone"),
+								    rset.getString("m_birth"),
+								    rset.getString("m_gender"),
+								    rset.getString("m_address"),
+								    rset.getString("m_subaddress"),
+								    rset.getString("m_postcode"),
+								    rset.getString("m_email"),
+								    rset.getDate("m_enrolldate"),
+								    rset.getString("m_introducer"),
+								    rset.getString("m_status"),
+								    rset.getString("m_quitreason"),
+								    rset.getDate("m_quitdate"),
+								    rset.getString("m_ad"),
+								    rset.getDate("m_blackdate"),
+								    rset.getString("m_blackreason"),
+								    rset.getInt("m_point")));
+			}			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 }

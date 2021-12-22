@@ -133,7 +133,7 @@
 
         <ul>
             <li class="menubar-left-title">회원관리</li>
-            <li class="menubar-left-text left_link"><a href="">회원 정보 관리</a></li>
+            <li class="menubar-left-text left_link"><a href="<%= contextPath %>/infoAdminClick.me?cpage=1">회원 정보 관리</a></li>
             <li class="menubar-left-text left_link"><a href="">신고내역</a></li>
             <li class="menubar-left-text left_link"><a href="">블랙리스트</a></li>
             <li class="menubar-left-text left_link"><a href="">적립금 관리</a></li>

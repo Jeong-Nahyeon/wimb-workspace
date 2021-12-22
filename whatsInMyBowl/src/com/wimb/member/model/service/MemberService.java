@@ -1,10 +1,15 @@
 package com.wimb.member.model.service;
 
 
-import static com.wimb.common.JDBCTemplate.*;
+import static com.wimb.common.JDBCTemplate.close;
+import static com.wimb.common.JDBCTemplate.commit;
+import static com.wimb.common.JDBCTemplate.getConnection;
+import static com.wimb.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
+import com.wimb.common.model.vo.PageInfo;
 import com.wimb.member.model.dao.MemberDao;
 import com.wimb.member.model.vo.Member;
 
@@ -91,10 +96,20 @@ public class MemberService {
 		return updateMem;
 	}
 	
+	public int selectMemberCount() {
+		Connection conn = getConnection();
+		int listCount = new MemberDao().selectListCount(conn);
+		close(conn);
+		return listCount;
+	}
 	
-	
-	
-	
+	public ArrayList<Member> selectAllMember(PageInfo pi){
+		Connection conn = getConnection();
+		ArrayList<Member> list = new MemberDao().selectAllMember(conn, pi);
+		close(conn);
+		return list;
+		
+	}
 	
 
 }

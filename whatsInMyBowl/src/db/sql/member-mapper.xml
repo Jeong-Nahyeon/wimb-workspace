@@ -64,7 +64,6 @@
 	     , M_EMAIL
 	     , M_INTRODUCER
 	     , M_AD
-	     , M_POINT
 	     )
 	VALUES
 	    (
@@ -81,7 +80,6 @@
 	    , ?
 	    , ?
 	    , ?
-	    , 1000
 	    )
 	</entry>
 
@@ -141,8 +139,40 @@
  		 WHERE M_ID = ?
 	</entry>
 
+		<entry key="selectAllMember">
+		SELECT
+			   M_CODE
+		     , M_NAME
+		     , M_ID
+		     , M_PWD
+		     , M_PHONE
+		     , M_BIRTH
+		     , M_GENDER
+		     , M_ADDRESS
+		     , M_SUBADDRESS
+		     , M_POSTCODE
+		     , M_EMAIL
+		     , M_ENROLLDATE
+		     , M_INTRODUCER
+		     , M_STATUS
+		     , M_QUITREASON
+		     , M_QUITDATE
+		     , M_AD
+		     , M_BLACKDATE
+		     , M_BLACKREASON
+		     , M_POINT
+ 		  FROM MEMBER
+ 		 ORDER
+ 		    BY M_CODE DESC
+ 		    
+	</entry>
 
-
+	<entry key="selectListCount">
+		SELECT
+			   COUNT(*) COUNT
+		  FROM MEMBER
+		 WHERE M_STATUS = 'Y'
+	</entry>
 
 
 </properties>
