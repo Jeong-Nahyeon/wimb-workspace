@@ -120,7 +120,7 @@
 		                        <td style="text-align:left; padding-left:10px;"><%= mo.getpName() %></td>
 		                        <td><%= mo.getpPrice() %></td>
 		                        <td>
-		                            <button type="button" class="cart" onclick="클릭메소드">장바구니</button>
+		                            <button type="button" class="cart">장바구니</button>
 		                            <button type="button" class="delete">삭제</button>
 		                        </td>
 		                        <td></td>
@@ -168,7 +168,7 @@
 		})   
    </script>
    
-   <!-- 선택된 제품 delete -->
+   <!-- 찜리스트 선택 삭제 -->
    <script>
    $("#checkedDelete").on('click', function(){
 	   promise1()
@@ -187,8 +187,8 @@
 				$(".ck:checked").each(function(){
 		   			pCodes.push($(this).parent().siblings(".pCode").text())
 				}); // checked 담기
-		   			console.log(pCodes);
-		   			console.log(count);
+		   			//console.log(pCodes);
+		   			//console.log(count);
 				return new Promise(function(resolve, reject){
  	   					
  		   			$.ajax({
@@ -225,14 +225,14 @@
  				
    </script>
    
-   <!-- 장바구니 개별삭제 -->
+   <!-- 찜리스트 개별 삭제 -->
    <script>
    		$(".delete").on('click', function(){
    			
    			if(confirm("해당상품을 취소하시겠습니까?")) {
    				
    				var pCode = $(this).parent().siblings(".pCode").text();
-   				console.log(pCode)
+   				//console.log(pCode)
    				
    				$.ajax ({
    					url:"deleteHeartOne.my",
@@ -240,6 +240,7 @@
    					data: {pCode:pCode},
    					success:function(){
    						alert("상품이 삭제되었습니다.");
+   						location.reload();
    					},error:function(){
    						alert("삭제에 실패했습니다.");
    					}
@@ -250,6 +251,94 @@
    			
    		})
    </script>
+   
+    <!-- 장바구니 선택담기 -->
+	<script>
+		$("#checkedCart").on('click', function(){
+		  promise1()
+			.then(successCheck)
+			.catch(failCheck);
+		})
+					
+		function promise1(){
+					
+			var result = confirm("선택한 상품을 장바구니로 이동하시겠습니까?");
+					
+				if(result) {
+					
+					var count = $(".ck:checked").length;
+					var pCodes = new Array();
+					$(".ck:checked").each(function(){
+			   			pCodes.push($(this).parent().siblings(".pCode").text())
+					}); // checked 담기
+			   			console.log(pCodes);
+			   			console.log(count);
+					return new Promise(function(resolve, reject){
+		   					
+			   			$.ajax({
+			   				url:"heartToCart.my",
+			   				datatype:"json",
+			   				traditional:true,
+			   				type:"post",
+			   				data: {
+								count:count,		   				
+			   					pArr:pCodes
+			   				},
+			   				success:function(result){
+			   					console.log("프로미스1 성공")
+		                    	resolve(result);
+			   				}, error:function(){
+			   					console.log("ajax통신실패")
+			   				}
+			   					
+			   			}) //ajax
+		   			})
+						
+				}
+					
+		} // delete
+				
+		function successCheck(){
+			alert("상품이 장바구니에 담겼습니다.");
+			location.reload();
+		}
+		
+		function failCheck(){
+		   alert("장바구니 담기에 실패하였습니다.")
+		} 
+   </script>
+   
+   <!-- 장바구니 개별 담기 -->
+   <script>
+   		$(".cart").on('click', function(){
+			
+			if(confirm("상품을 장바구니로 이동하시겠습니까?")) {
+				
+				var pCode = $(this).parent().siblings(".pCode").text();
+				//console.log(pCode)
+				
+				$.ajax ({
+					url:"heartToCartOne.my",
+					type:"post",
+					data: {pCode:pCode},
+					success:function(){
+						alert("상품이 장바구니에 담겼습니다.");
+						location.reload();
+					},error:function(){
+						alert("장바구니 담기에 실패하였습니다.");
+					}
+				
+				})
+				
+			}
+			
+		})
+   </script>
+   
+   
+
+
+	
   
 </body>
 </html>

@@ -507,7 +507,7 @@ public class MyPageDao {
 		return hlist;
 	}
 	
-	// 찜리스트 선택삭제
+	// 찜리스트 삭제
 	public int deleteHeart(Connection conn, Member m, String pCode) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -527,5 +527,25 @@ public class MyPageDao {
 		return result;
 	}
 	
+	// 찜리스트 - 장바구니 추가
+	public int heartToCart(Connection conn, Member m, String pCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("heartToCart");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, m.getmCode());
+			pstmt.setString(2, pCode);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 }

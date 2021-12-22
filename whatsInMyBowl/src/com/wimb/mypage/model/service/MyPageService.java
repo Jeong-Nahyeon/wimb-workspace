@@ -184,4 +184,17 @@ public class MyPageService {
 		return result;
 	}
 	
+	// 찜리스트 - 장바구니 추가
+	public int heartToCart(Member m, String pCode) {
+		Connection conn = getConnection();
+		int result = new MyPageDao().heartToCart(conn, m, pCode);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
+	
 }
