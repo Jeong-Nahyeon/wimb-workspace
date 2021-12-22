@@ -41,8 +41,9 @@ public class ProductVeganListController extends HttpServlet {
 		int startPage; // 시작 페이지 수
 		int endPage; // 끝 페이지 수
 		
+		String category = "비건";		
 		
-		listCount = new ProductService().selectListCount();
+		listCount = new ProductService().categoryListCount(category);
 		
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
@@ -61,12 +62,10 @@ public class ProductVeganListController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
-		String category = "비건";		
-		String selectOrder = "";
 		ArrayList<Product> categoryList = new ArrayList<>();
+		String selectOrder = "";
 		
 		if(request.getParameter("selectOrder") != null) { // 비건 옵션별 정렬 조회
-			
 			
 			selectOrder = request.getParameter("selectOrder");
 			
@@ -89,7 +88,7 @@ public class ProductVeganListController extends HttpServlet {
 			request.setAttribute("pi", pi);
 			request.setAttribute("categoryList", categoryList);
 			
-			request.getRequestDispatcher("views/product/productListView.jsp").forward(request, response);
+			request.getRequestDispatcher("views/product/productVeganListView.jsp").forward(request, response);
 			
 		} else { // 비건 상품 전체 조회
 		
@@ -97,8 +96,6 @@ public class ProductVeganListController extends HttpServlet {
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("categoryList", categoryList);
-		
-		System.out.println(categoryList);
 		
 		request.getRequestDispatcher("views/product/productVeganListView.jsp").forward(request, response);
 		}

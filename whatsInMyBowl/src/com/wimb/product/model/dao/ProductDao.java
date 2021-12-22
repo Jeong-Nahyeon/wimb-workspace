@@ -280,6 +280,42 @@ public class ProductDao {
 	}
 	
 	
+	/** 카테고리별(비건/육류/해산물) 완제품 총 개수 반환해주는 메소드
+	 * @param conn
+	 * @return
+	 */
+	public int categoryListCount(Connection conn, String category) {
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("categoryListCount"); // 완성된 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, category);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	
 	/** 카테고리별(비건/육류/해산물) 완제품 전체 조회해주는 메소드
 	 * @param conn
 	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
@@ -336,6 +372,12 @@ public class ProductDao {
 	}
 	
 	
+	/** 인기순으로 카테고리별(비건/육류/해산물) 완제품 정렬해주는 메소드
+	 * @param conn
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @param category  :  카테고리명
+	 * @return
+	 */
 	public ArrayList<Product> selectCategoryOptionListHot(Connection conn, PageInfo pi, String category) {
 
 		ArrayList<Product> categoryList = new ArrayList<>();
@@ -386,6 +428,12 @@ public class ProductDao {
 	}
 	
 	
+	/** 낮은가격순으로 카테고리별(비건/육류/해산물) 완제품 정렬해주는 메소드
+	 * @param conn
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체
+	 * @param category  :  카테고리명
+	 * @return
+	 */
 	public ArrayList<Product> selectCategoryOptionListMin(Connection conn, PageInfo pi, String category) {
 		
 		ArrayList<Product> categoryList = new ArrayList<>();
@@ -436,6 +484,12 @@ public class ProductDao {
 	}
 	
 	
+	/** 높은가격순으로 카테고리별(비건/육류/해산물) 완제품 정렬해주는 메소드
+	 * @param conn
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체
+	 * @param category  :  카테고리명
+	 * @return
+	 */
 	public ArrayList<Product> selectCategoryOptionListMax(Connection conn, PageInfo pi, String category) {
 		
 		ArrayList<Product> categoryList = new ArrayList<>();
@@ -484,6 +538,455 @@ public class ProductDao {
 		return categoryList;
 		
 	}
+	
+	
+	/** 베스트 메뉴 조회해주는 메소드
+	 * @param conn
+	 * @return
+	 */
+	public ArrayList<Product> selectBestList(Connection conn) {
+
+		ArrayList<Product> bestList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
+		String sql = prop.getProperty("selectBestList"); // 완성된 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				
+				bestList.add(new Product(rset.getString("p_code"),
+										 rset.getString("p_name"),
+										 rset.getString("p_category"),
+										 rset.getInt("p_price"),
+										 rset.getString("p_mainimg"),
+										 rset.getInt("p_stock"),
+										 rset.getInt("discount"),
+										 filePath));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return bestList;
+		
+	}
+	
+	
+	public ArrayList<Product> selectBestOptionListHot(Connection conn) {
+
+		ArrayList<Product> bestList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
+		String sql = prop.getProperty("selectBestOptionListHot"); // 완성된 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				
+				bestList.add(new Product(rset.getString("p_code"),
+										 rset.getString("p_name"),
+										 rset.getString("p_category"),
+										 rset.getInt("p_price"),
+										 rset.getString("p_mainimg"),
+										 rset.getInt("p_stock"),
+										 rset.getInt("discount"),
+										 filePath));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return bestList;
+		
+	}
+	
+	
+	/** 낮은가격순으로 베스트 메뉴 정렬해주는 메소드
+	 * @return
+	 */
+	public ArrayList<Product> selectBestOptionListMin(Connection conn) {
+		
+		ArrayList<Product> bestList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
+		String sql = prop.getProperty("selectBestOptionListMin"); // 완성된 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				
+				bestList.add(new Product(rset.getString("p_code"),
+						rset.getString("p_name"),
+						rset.getString("p_category"),
+						rset.getInt("p_price"),
+						rset.getString("p_mainimg"),
+						rset.getInt("p_stock"),
+						rset.getInt("discount"),
+						filePath));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return bestList;
+		
+	}
+	
+	
+	/** 높은가격순으로 베스트 메뉴 정렬해주는 메소드
+	 * @return
+	 */
+	public ArrayList<Product> selectBestOptionListMax(Connection conn) {
+		
+		ArrayList<Product> bestList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
+		String sql = prop.getProperty("selectBestOptionListMax"); // 완성된 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				
+				bestList.add(new Product(rset.getString("p_code"),
+						rset.getString("p_name"),
+						rset.getString("p_category"),
+						rset.getInt("p_price"),
+						rset.getString("p_mainimg"),
+						rset.getInt("p_stock"),
+						rset.getInt("discount"),
+						filePath));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return bestList;
+		
+	}
+	
+	
+	/** 세일상품 총 개수 반환해주는 메소드
+	 * @param conn
+	 * @return
+	 */
+	public int selectSaleListCount(Connection conn) {
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSaleListCount"); // 완성된 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	
+	/** 세일상품 전체 조회 해주는 메소드
+	 * @param conn
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @return
+	 */
+	public ArrayList<Product> selectSaleList(Connection conn, PageInfo pi){
+		
+		ArrayList<Product> saleList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
+		String sql = prop.getProperty("selectSaleList"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1; // 시작값
+			int endRow = startRow + pi.getBoardLimit() - 1; // 끝값
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				
+				saleList.add(new Product(rset.getString("p_code"),
+										  rset.getString("p_name"),
+										  rset.getString("p_category"),
+										  rset.getInt("p_price"),
+										  rset.getString("p_mainimg"),
+										  rset.getInt("p_stock"),
+										  rset.getInt("discount"),
+										  filePath));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return saleList;
+		
+	}
+	
+	
+	/** 인기상품순으로 세일상품 조회해주는 메소드
+	 * @param conn
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @return
+	 */
+	public ArrayList<Product> selectSaleOptionListHot(Connection conn, PageInfo pi){
+		
+		ArrayList<Product> saleList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
+		String sql = prop.getProperty("selectSaleOptionListHot");
+		
+		try {
+			
+				pstmt = conn.prepareStatement(sql);
+				
+				int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1; // 시작값
+				int endRow = startRow + pi.getBoardLimit() - 1; // 끝값
+				
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()){
+					
+					saleList.add(new Product(rset.getString("p_code"),
+											  rset.getString("p_name"),
+											  rset.getString("p_category"),
+											  rset.getInt("p_price"),
+											  rset.getString("p_mainimg"),
+											  rset.getInt("p_stock"),
+											  rset.getInt("discount"),
+											  filePath));
+					
+				}
+				
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+		
+		return saleList;
+		
+	}
+	
+	
+	/** 낮은가격순으로 세일상품 조회해주는 메소드
+	 * @param conn
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @return
+	 */
+	public ArrayList<Product> selectSaleOptionListMin(Connection conn, PageInfo pi){
+			
+			ArrayList<Product> saleList = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			// 파일저장경로
+			String filePath = "resources/images/product_images/";
+			
+			String sql = prop.getProperty("selectSaleOptionListMin");
+			
+			try {
+					
+					pstmt = conn.prepareStatement(sql);
+					
+					int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1; // 시작값
+					int endRow = startRow + pi.getBoardLimit() - 1; // 끝값
+					
+					pstmt.setInt(1, startRow);
+					pstmt.setInt(2, endRow);
+					
+					rset = pstmt.executeQuery();
+					
+					while(rset.next()){
+						
+						saleList.add(new Product(rset.getString("p_code"),
+												  rset.getString("p_name"),
+												  rset.getString("p_category"),
+												  rset.getInt("p_price"),
+												  rset.getString("p_mainimg"),
+												  rset.getInt("p_stock"),
+												  rset.getInt("discount"),
+												  filePath));
+						
+					}
+					
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					close(rset);
+					close(pstmt);
+				}
+			
+			return saleList;
+			
+		}
+	
+		
+	/** 높은가격순으로 세일상품 조회해주는 메소드
+	 * @param conn
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @return
+	 */
+	public ArrayList<Product> selectSaleOptionListMax(Connection conn, PageInfo pi){
+		
+			ArrayList<Product> saleList = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			// 파일저장경로
+			String filePath = "resources/images/product_images/";
+			
+			String sql = prop.getProperty("selectSaleOptionListMax");
+			
+			try {
+					
+					pstmt = conn.prepareStatement(sql);
+					
+					int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1; // 시작값
+					int endRow = startRow + pi.getBoardLimit() - 1; // 끝값
+					
+					pstmt.setInt(1, startRow);
+					pstmt.setInt(2, endRow);
+					
+					rset = pstmt.executeQuery();
+					
+					while(rset.next()){
+						
+						saleList.add(new Product(rset.getString("p_code"),
+												  rset.getString("p_name"),
+												  rset.getString("p_category"),
+												  rset.getInt("p_price"),
+												  rset.getString("p_mainimg"),
+												  rset.getInt("p_stock"),
+												  rset.getInt("discount"),
+												  filePath));
+					
+				}
+					
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					close(rset);
+					close(pstmt);
+				}
+			
+		return saleList;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

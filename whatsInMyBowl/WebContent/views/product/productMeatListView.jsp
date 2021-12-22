@@ -283,9 +283,9 @@
 						const $option = $("option:selected").val();
 
 						if($option == "new"){ // 신상품순일 경우
-							location.href="<%= contextPath %>/veganList.pr?cpage=1";
+							location.href="<%= contextPath %>/meatList.pr?cpage=1";
 						} else { // 그 외일 경우
-							location.href="<%= contextPath %>/veganList.pr?cpage=1&selectOrder=" + $option;
+							location.href="<%= contextPath %>/meatList.pr?cpage=1&selectOrder=" + $option;
 						}
 
 					});
@@ -325,9 +325,9 @@
 			<div id="paging-bar">
                 <% if(currentPage != 1) { %>
 						<% if(selectOrder != null) { %>
-							<a class ="btn btn-sm" href="<%= contextPath %>/veganList.pr?cpage=<%= currentPage - 1 %>&selectOrder=<%= selectOrder %>">&lt;</a>
+							<a class ="btn btn-sm" href="<%= contextPath %>/meatList.pr?cpage=<%= currentPage - 1 %>&selectOrder=<%= selectOrder %>">&lt;</a>
 						<% } else { %>
-							<a class ="btn btn-sm" href="<%= contextPath %>/veganList.pr?cpage=<%= currentPage - 1 %>">&lt;</a>
+							<a class ="btn btn-sm" href="<%= contextPath %>/meatList.pr?cpage=<%= currentPage - 1 %>">&lt;</a>
 						<% } %>	
 				<% } %>
                 
@@ -336,18 +336,18 @@
                         <a  class ="btn btn-sm" disabled><%= p %></a>
                     <% } else { %>
 						<% if(selectOrder != null) { %>
-							<a class ="btn btn-sm" href="<%= contextPath %>/veganList.pr?cpage=<%= p %>&selectOrder=<%= selectOrder %>"><%= p %></a>
+							<a class ="btn btn-sm" href="<%= contextPath %>/meatList.pr?cpage=<%= p %>&selectOrder=<%= selectOrder %>"><%= p %></a>
 						<% } else { %>
-							<a class ="btn btn-sm" href="<%= contextPath %>/veganList.pr?cpage=<%= p %>"><%= p %></a>
+							<a class ="btn btn-sm" href="<%= contextPath %>/meatList.pr?cpage=<%= p %>"><%= p %></a>
 						<% } %>	
                     <% } %>
                 <% } %>
                 
                 <% if(currentPage != maxPage) { %>
 					<% if(selectOrder != null) { %>
-						<a class ="btn btn-sm" href="<%= contextPath %>veganList.pr?cpage=<%= currentPage + 1 %>&selectOrder=<%= selectOrder %>">&lt;</a>
+						<a class ="btn btn-sm" href="<%= contextPath %>meatList.pr?cpage=<%= currentPage + 1 %>&selectOrder=<%= selectOrder %>">&lt;</a>
 					<% } else { %>
-                        <a class ="btn btn-sm" href="<%= contextPath %>veganList.pr?cpage=<%= currentPage + 1 %>">&gt;</a>
+                        <a class ="btn btn-sm" href="<%= contextPath %>meatList.pr?cpage=<%= currentPage + 1 %>">&gt;</a>
 					<% } %>	
                 <% } %>
         </div>

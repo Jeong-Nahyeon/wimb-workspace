@@ -335,7 +335,7 @@
                 
                 <% for(int p=startPage; p<=endPage; p++ ) { %>
                     <% if(p == currentPage) { %>
-                        <a  class ="btn btn-sm" disabled><%= p %></a>
+                        <a  class ="btn btn-sm" href="#"><%= p %></a>
                     <% } else { %>
 						<% if(selectOrder != null) { %>
 							<a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= p %>&selectOrder=<%= selectOrder %>"><%= p %></a>
@@ -347,7 +347,7 @@
                 
                 <% if(currentPage != maxPage) { %>
 					<% if(selectOrder != null) { %>
-						<a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= currentPage + 1 %>&selectOrder=<%= selectOrder %>">&lt;</a>
+						<a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= currentPage + 1 %>&selectOrder=<%= selectOrder %>">&gt;</a>
 					<% } else { %>
                         <a class ="btn btn-sm" href="<%= contextPath %>/list.pr?cpage=<%= currentPage + 1 %>">&gt;</a>
 					<% } %>	

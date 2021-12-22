@@ -97,6 +97,22 @@ public class ProductService {
 	}
 	
 	
+	/** 카테고리별(비건/육류/해산물) 완제품 총 개수 반환해주는 메소드
+	 * @return
+	 */
+	public int categoryListCount(String category) {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new ProductDao().categoryListCount(conn, category);
+		
+		close(conn);
+		
+		return listCount;
+				
+	}
+	
+	
 	/** 카테고리별(비건/육류/해산물) 완제품 전체 조회해주는 메소드
 	 * @param conn
 	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
@@ -116,6 +132,11 @@ public class ProductService {
 	}
 	
 	
+	/** 인기순으로 카테고리별(비건/육류/해산물) 완제품 정렬해주는 메소드
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @param category  :  카테고리명
+	 * @return
+	 */
 	public ArrayList<Product> selectCategoryOptionListHot(PageInfo pi, String category) {
 
 		Connection conn = getConnection();
@@ -128,6 +149,11 @@ public class ProductService {
 	}
 	
 	
+	/** 낮은가격순으로 카테고리별(비건/육류/해산물) 완제품 정렬해주는 메소드
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @param category  :  카테고리명
+	 * @return
+	 */
 	public ArrayList<Product> selectCategoryOptionListMin(PageInfo pi, String category) {
 		
 		Connection conn = getConnection();
@@ -141,6 +167,11 @@ public class ProductService {
 	}
 	
 	
+	/** 높은가격순으로 카테고리별(비건/육류/해산물) 완제품 정렬해주는 메소드
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @param category  :  카테고리명
+	 * @return
+	 */
 	public ArrayList<Product> selectCategoryOptionListMax(PageInfo pi, String category) {
 		
 		Connection conn = getConnection();
@@ -150,6 +181,154 @@ public class ProductService {
 		close(conn);
 		
 		return categoryList;
+		
+	}
+	
+	
+	/** 베스트 메뉴 조회해주는 메소드
+	 * @return
+	 */
+	public ArrayList<Product> selectBestList() {
+
+		Connection conn = getConnection();
+		
+		ArrayList<Product> bestList = new ProductDao().selectBestList(conn);
+		
+		close(conn);
+		
+		return bestList;
+		
+	}
+	
+	
+	/** 인기순으로 베스트 메뉴 정렬해주는 메소드 
+	 * @return
+	 */
+	public ArrayList<Product> selectBestOptionListHot() {
+
+		Connection conn = getConnection();
+		
+		ArrayList<Product> bestList = new ProductDao().selectBestOptionListHot(conn);
+		
+		close(conn);
+		
+		return bestList;
+		
+	}
+	
+	
+	/** 낮은가격순으로 베스트 메뉴 정렬해주는 메소드
+	 * @return
+	 */
+	public ArrayList<Product> selectBestOptionListMin() {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> bestList = new ProductDao().selectBestOptionListMin(conn);
+		
+		close(conn);
+		
+		return bestList;
+		
+	}
+	
+	
+	/** 높은가격순으로 베스트 메뉴 정렬해주는 메소드
+	 * @return
+	 */
+	public ArrayList<Product> selectBestOptionListMax() {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> bestList = new ProductDao().selectBestOptionListMax(conn);
+		
+		close(conn);
+		
+		return bestList;
+		
+	}
+	
+	
+	/** 세일상품 총 개수 반환해주는 메소드
+	 * @return
+	 */
+	public int selectSaleListCount() {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new ProductDao().selectSaleListCount(conn);
+		
+		close(conn);
+		
+		return listCount;
+		
+	}
+	
+	
+	/** 세일상품 전체 조회해주는 메소드
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @return
+	 */
+	public ArrayList<Product> selectSaleList(PageInfo pi){
+		
+		Connection conn = getConnection();
+				
+		ArrayList<Product> saleList = new ProductDao().selectSaleList(conn, pi);
+		
+		close(conn);
+		
+		return saleList;
+		
+	}
+	
+	
+	/** 인기상품순으로 세일상품 조회해주는 메소드
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @return
+	 */
+	public ArrayList<Product> selectSaleOptionListHot(PageInfo pi){
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> saleList = new ProductDao().selectSaleOptionListHot(conn, pi);
+		
+		close(conn);
+		
+		return saleList;
+		
+	}
+	
+	
+	/** 낮은가격순으로 세일상품 조회해주는 메소드
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @return
+	 */
+	public ArrayList<Product> selectSaleOptionListMin(PageInfo pi){
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> saleList = new ProductDao().selectSaleOptionListMin(conn, pi);
+		
+		close(conn);
+		
+		return saleList;
+		
+	}
+	
+	
+	/** 높은가격순으로 세일상품 조회해주는 메소드
+	 * @param pi  :  회원이 요청한 페이지 정보 담은 PageInfo 객체 
+	 * @return
+	 */
+	public ArrayList<Product> selectSaleOptionListMax(PageInfo pi){
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> saleList = new ProductDao().selectSaleOptionListMax(conn, pi);
+		
+		close(conn);
+		
+		return saleList;
 		
 	}
 	

@@ -233,8 +233,8 @@
             <div class="navi" align="center">
                 <ul id="navi-area">
                     <li><a href="#" id="whole"><i class="fas fa-bars"></i></a></li>
-                    <li><a href="">Best메뉴</a></li>
-                    <li><a href="">세일</a></li>
+                    <li><a href="<%= contextPath %>/bestList.pr">Best메뉴</a></li>
+                    <li><a href="<%= contextPath %>/onSaleList.pr?cpage=1">세일</a></li>
                     <% if(loginUser != null){%>
                         <li><a href="<%= contextPath %>/item.cu">커스텀</a></li>
                     <% }else{ %>
@@ -242,9 +242,9 @@
                     <% }%>    
                     <li><a href="<%= contextPath %>/list.pr?cpage=1">샐러드</a>
                         <ul>
-                            <li><a href="">비건샐러드</a></li>
-                            <li><a href="">육류샐러드</a></li>
-                            <li><a href="">해산물샐러드</a></li>
+                            <li><a href="<%= contextPath %>/veganList.pr?cpage=1">비건샐러드</a></li>
+                            <li><a href="<%= contextPath %>/meatList.pr?cpage=1">육류샐러드</a></li>
+                            <li><a href="<%= contextPath %>/seafoodList.pr?cpage=1">해산물샐러드</a></li>
                         </ul>                
                     </li>
                 </ul>            

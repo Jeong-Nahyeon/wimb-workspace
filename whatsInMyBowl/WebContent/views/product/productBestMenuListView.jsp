@@ -4,15 +4,9 @@
 <%@ page import="com.wimb.common.model.vo.PageInfo, java.util.ArrayList, com.wimb.product.model.vo.Product" %>
     
 <%
-	PageInfo pi = (PageInfo)(request.getAttribute("pi"));
-
-	int currentPage = pi.getCurrentPage();
-	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
-	int maxPage = pi.getMaxPage();
-	
-	// 카테고리별 완제품  조회 => 상품코드, 상품명, 카테고리, 판매가격, 대표이미지, 재고수량, 파일경로
-	ArrayList<Product> categoryList = (ArrayList<Product>)(request.getAttribute("categoryList"));
+		
+	// 완제품 전체  조회 => 상품코드, 상품명, 카테고리, 판매가격, 대표이미지, 재고수량, 파일경로
+	ArrayList<Product> bestList = (ArrayList<Product>)(request.getAttribute("bestList"));
 	
 	// 카테고리 옵션별 응답 페이지에서 select option 유지에 사용할  value 값
 	String selectOrder = (String)(request.getAttribute("selectOrder"));
@@ -64,17 +58,6 @@
 		margin-right:40px;
 	}
 
-	.title-area>a{
-		margin-right:10px;
-		color:black;
-		text-decoration: none;
-	}
-
-	/* .title-area>a:{
-		font-weight: border;
-		font-size: large;
-		color:#9BD5BD;
-	} */
 
 	/* 상품 정렬 목록 */
 	.sort-list-area{
@@ -243,7 +226,7 @@
 	
 		$(function(){
 			
-			console.log("<%= selectOrder %>");
+			//console.log("<%= selectOrder %>");
 			
 			$("select[name=selectOrder]").val("<%= selectOrder %>").prop("selected", true);
 
@@ -259,11 +242,7 @@
 		<div class="product-list-area">
 
 			<div class="title-area">
-				<h4>샐러드</h4>
-				<a href="<%= contextPath %>/list.pr?cpage=1">전체상품</a>
-				<a href="<%= contextPath %>/veganList.pr?cpage=1">비건샐러드</a>
-				<a href="<%= contextPath %>/meatList.pr?cpage=1">육류샐러드</a>
-				<a href="<%= contextPath %>/seafoodList.pr?cpage=1">해산물샐러드</a>
+				<h4>Best 메뉴</h4>
 			</div>
 
 			<div class="sort-list-area" align="right">
@@ -283,19 +262,19 @@
 						const $option = $("option:selected").val();
 
 						if($option == "new"){ // 신상품순일 경우
-							location.href="<%= contextPath %>/veganList.pr?cpage=1";
+							location.href="<%= contextPath %>/bestList.pr";
 						} else { // 그 외일 경우
-							location.href="<%= contextPath %>/veganList.pr?cpage=1&selectOrder=" + $option;
+							location.href="<%= contextPath %>/bestList.pr?selectOrder=" + $option;
 						}
 
 					});
 
 				});
 			</script>
-			 
+
 			<div class="product-area">
 					
-					<% for (Product p : categoryList) { %>
+					<% for (Product p : bestList) { %>
 						<div class="product">
 							<div class="product-img">
 								<img src="<%= contextPath %>/<%= p.getFilePath() + p.getpMainImg() %>">
@@ -321,37 +300,7 @@
 					<% } %>
 				
 			</div>
-			<!-- 페이징바 -->
-			<div id="paging-bar">
-                <% if(currentPage != 1) { %>
-						<% if(selectOrder != null) { %>
-							<a class ="btn btn-sm" href="<%= contextPath %>/veganList.pr?cpage=<%= currentPage - 1 %>&selectOrder=<%= selectOrder %>">&lt;</a>
-						<% } else { %>
-							<a class ="btn btn-sm" href="<%= contextPath %>/veganList.pr?cpage=<%= currentPage - 1 %>">&lt;</a>
-						<% } %>	
-				<% } %>
-                
-                <% for(int p=startPage; p<=endPage; p++ ) { %>
-                    <% if(p == currentPage) { %>
-                        <a  class ="btn btn-sm" disabled><%= p %></a>
-                    <% } else { %>
-						<% if(selectOrder != null) { %>
-							<a class ="btn btn-sm" href="<%= contextPath %>/veganList.pr?cpage=<%= p %>&selectOrder=<%= selectOrder %>"><%= p %></a>
-						<% } else { %>
-							<a class ="btn btn-sm" href="<%= contextPath %>/veganList.pr?cpage=<%= p %>"><%= p %></a>
-						<% } %>	
-                    <% } %>
-                <% } %>
-                
-                <% if(currentPage != maxPage) { %>
-					<% if(selectOrder != null) { %>
-						<a class ="btn btn-sm" href="<%= contextPath %>veganList.pr?cpage=<%= currentPage + 1 %>&selectOrder=<%= selectOrder %>">&lt;</a>
-					<% } else { %>
-                        <a class ="btn btn-sm" href="<%= contextPath %>veganList.pr?cpage=<%= currentPage + 1 %>">&gt;</a>
-					<% } %>	
-                <% } %>
-        </div>
-            
+
 		</div>
 	</div>
 	

@@ -14,16 +14,16 @@ import com.wimb.product.model.service.ProductService;
 import com.wimb.product.model.vo.Product;
 
 /**
- * Servlet implementation class ProductListController
+ * Servlet implementation class ProductOnSaleListController
  */
-@WebServlet("/list.pr")
-public class ProductListController extends HttpServlet {
+@WebServlet("/onSaleList.pr")
+public class ProductOnSaleListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductListController() {
+    public ProductOnSaleListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +32,7 @@ public class ProductListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		int listCount; // 완제품 총 개수
 		int currentPage; // 사용자가 요청한 페이지 번호
 		int pageLimit; // 페이징바에 보여질 최대 페이지 개수(단위)
@@ -42,7 +42,7 @@ public class ProductListController extends HttpServlet {
 		int endPage; // 끝 페이지 수
 		
 		
-		listCount = new ProductService().selectListCount();
+		listCount = new ProductService().selectSaleListCount();
 		
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
@@ -63,40 +63,40 @@ public class ProductListController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 				
 		String selectOrder = "";
-		ArrayList<Product> productList = new ArrayList<>();
+		ArrayList<Product> saleList = new ArrayList<>();
 		
-		if(request.getParameter("selectOrder") != null) { // 완제품 옵션별 정렬 조회
+		if(request.getParameter("selectOrder") != null) { // 세일상품 옵션별 정렬 조회
 			
 			selectOrder = request.getParameter("selectOrder");
 			
 			if(selectOrder.equals("hot")) { // 인기상품순
 				
-				productList = new ProductService().selectOptionListHot(pi);
+				saleList = new ProductService().selectSaleOptionListHot(pi);
 				
 			} else if(selectOrder.equals("min")) { // 낮은가격순
 				
-				productList = new ProductService().selectOptionListMin(pi);
+				saleList = new ProductService().selectSaleOptionListMin(pi);
 				
 			} else if(selectOrder.equals("max")) { // 높은가격순
 				
-				productList = new ProductService().selectOptionListMax(pi);
+				saleList = new ProductService().selectSaleOptionListMax(pi);
 				
 			}
 			
 			request.setAttribute("selectOrder", selectOrder);
 			request.setAttribute("pi", pi);
-			request.setAttribute("productList", productList);
+			request.setAttribute("saleList", saleList);
 			
-			request.getRequestDispatcher("views/product/productListView.jsp").forward(request, response);
+			request.getRequestDispatcher("views/product/productOnSaleListView.jsp").forward(request, response);
 			
-		} else { // 완제품 전체 조회
+		} else { // 세일상품 전체 조회
 		
-		productList = new ProductService().selectProductList(pi);
+			saleList = new ProductService().selectSaleList(pi);
 		
 		request.setAttribute("pi", pi);
-		request.setAttribute("productList", productList);
+		request.setAttribute("saleList", saleList);
 		
-		request.getRequestDispatcher("views/product/productListView.jsp").forward(request, response);
+		request.getRequestDispatcher("views/product/productOnSaleListView.jsp").forward(request, response);
 		}
 		
 	}
