@@ -258,4 +258,27 @@
 		  , 1
 		  )
 	</entry>
+	
+	<entry key="selectListCount">
+		SELECT
+		       *
+		  FROM "ORDER"
+	</entry>
+	
+	<entry key="adminOrderList">
+	SELECT *
+	  FROM (
+	        SELECT ROWNUM RNUM, A.*
+	          FROM (
+	                SELECT 
+					        *
+					  FROM "ORDER"
+					 WHERE R
+					 ORDER 
+					     BY ORDER_CODE DESC
+	                ) A        
+	        )
+	  WHERE RNUM BETWEEN ? AND ?
+		
+	</entry>
 </properties>

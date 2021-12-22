@@ -11,9 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.wimb.common.model.vo.PageInfo;
 import com.wimb.member.model.vo.Member;
 import com.wimb.mypage.model.vo.Inquiry;
 import com.wimb.mypage.model.vo.MyOrders;
+import com.wimb.mypage.model.vo.Orders;
 
 public class MyPageDao {
 	
@@ -546,6 +548,75 @@ public class MyPageDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	// 페이징처리
+	public int selectListCount(Connection conn) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+	
+	// 관리자 상품관리>주문내역리스트
+	public ArrayList<Orders> adminOrderList(Connection conn, PageInfo pi) {
+		ArrayList<Orders> olist = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("adminOrderList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql); // 미완성된 sql문
+
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Orders od = new Orders(rset.getString("order_code"),
+						               rset.getInt("m_code"),
+						               rset.getString("pm_code"),
+						               rset.getInt("order_amount"),
+						               rset.getString("order_name"),
+						               rset.getString("order_address"),
+						               rset.getString("order_subaddress"),
+						               rset.getInt("order_zipcode"),
+						               rset.getString("order_phone"),
+						               rset.getString("order_email"),
+						               rset.getString("order_request"),
+						               rset.getInt("order_point"),
+						               rset.getString("order_company"),
+						               rset.getString("order_invoice"),
+						               rset.getString("order_status"),
+						               rset.getDate("order_date"));
+				olist.add(od);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return olist;
 	}
 	
 }

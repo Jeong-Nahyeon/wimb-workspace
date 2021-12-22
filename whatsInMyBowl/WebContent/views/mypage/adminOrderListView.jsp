@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList, com.wimb.mypage.model.vo.Orders, com.wimb.common.model.vo.PageInfo" %>
+<%
+	ArrayList<Orders> olist = (ArrayList<Orders>)request.getAttribute("olist");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +28,7 @@
     main{
         margin-top: 100px;
         margin-left: 25%;
+        width: 1500px;
     }
     #mainTitle>h2 {
         display: inline;
@@ -65,7 +76,7 @@
     #cancel {
         float: right;
         border: none;
-        background-color: orange;
+        background-color: #ffee58;
         color: rgba(94, 93, 93, 0.87);
         font-weight: bold;
         font-size: 14px;
@@ -82,7 +93,7 @@
         border: 0px;
         background-color: lightgray;
     }
-    button:disabled {background-color: orange; color: black;}
+    button:disabled {background-color: #ffee58; color: black;}
     .search-area button {
         height: 27px;
         width: 70px;
@@ -127,9 +138,9 @@
         </div>
 
         <div class="menus">
-            <button type="button"><b>주문내역</b></button>
-            <button type="button"><b>환불내역</b></button>
-            <button type="button"><b>취소내역</b></button>
+            <button type="button" id="order"><b>주문내역</b></button>
+            <button type="button" id="refund"><b>환불내역</b></button>
+            <button type="button" id="cancel"><b>취소내역</b></button>
         </div>
         
         <div>
@@ -140,7 +151,7 @@
                 <button type="button" id="cancel">주문 취소</button>
             </div>
             <table class="list" width="1000">
-                <tbody>
+                <thead>
                     <tr>
                         <th width="25">/</th>
                         <th width="35">번호</th>
@@ -155,160 +166,52 @@
                         <th width="135">운송장번호</th>
                         <th width="75">배송상태</th>
                     </tr>
-                </tbody>
+                </thead>
                 <tbody>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>20</td>
-                        <td>2021121112345</td>
-                        <td>김말똥말똥</td>
-                        <td>닭가슴살 샐러드 외 1개</td>
-                        <td>100,000원</td>
-                        <td>99,000원</td>
-                        <td>3000원</td>
-                        <td>무통장</td>
-                        <td>cl대박통운</td>
-                        <td>20211211123456789</td>
-                        <td>상품준비중</td>
+                <% if(olist == null) { %>
+                	<tr>
+                        <td colspan="12" style="height:300px;">조회내역이 없습니다.</td>
                     </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>19</td>
-                        <td>2021121112345</td>
-                        <td>김말똥말똥</td>
-                        <td>닭가슴살 샐러드 외 1개</td>
-                        <td>100,000원</td>
-                        <td>99,000원</td>
-                        <td>3000원</td>
-                        <td>무통장</td>
-                        <td>cl대박통운</td>
-                        <td>20211211123456789</td>
-                        <td>상품준비중</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>18</td>
-                        <td>2021121112345</td>
-                        <td>김말똥말똥</td>
-                        <td>닭가슴살 샐러드 외 1개</td>
-                        <td>100,000원</td>
-                        <td>99,000원</td>
-                        <td>3000원</td>
-                        <td>무통장</td>
-                        <td>cl대박통운</td>
-                        <td>20211211123456789</td>
-                        <td>상품준비중</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>17</td>
-                        <td>2021121112345</td>
-                        <td>김말똥말똥</td>
-                        <td>닭가슴살 샐러드 외 1개</td>
-                        <td>100,000원</td>
-                        <td>99,000원</td>
-                        <td>3000원</td>
-                        <td>무통장</td>
-                        <td>cl대박통운</td>
-                        <td>20211211123456789</td>
-                        <td>상품준비중</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>16</td>
-                        <td>2021121112345</td>
-                        <td>김말똥말똥</td>
-                        <td>닭가슴살 샐러드 외 1개</td>
-                        <td>100,000원</td>
-                        <td>99,000원</td>
-                        <td>3000원</td>
-                        <td>무통장</td>
-                        <td>cl대박통운</td>
-                        <td>20211211123456789</td>
-                        <td>상품준비중</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>15</td>
-                        <td>2021121112345</td>
-                        <td>김말똥말똥</td>
-                        <td>닭가슴살 샐러드 외 1개</td>
-                        <td>100,000원</td>
-                        <td>99,000원</td>
-                        <td>3000원</td>
-                        <td>무통장</td>
-                        <td>cl대박통운</td>
-                        <td>20211211123456789</td>
-                        <td>상품준비중</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>14</td>
-                        <td>2021121112345</td>
-                        <td>김말똥말똥</td>
-                        <td>닭가슴살 샐러드 외 1개</td>
-                        <td>100,000원</td>
-                        <td>99,000원</td>
-                        <td>3000원</td>
-                        <td>무통장</td>
-                        <td>cl대박통운</td>
-                        <td>20211211123456789</td>
-                        <td>상품준비중</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>13</td>
-                        <td>2021121112345</td>
-                        <td>김말똥말똥</td>
-                        <td>닭가슴살 샐러드 외 1개</td>
-                        <td>100,000원</td>
-                        <td>99,000원</td>
-                        <td>3000원</td>
-                        <td>무통장</td>
-                        <td>cl대박통운</td>
-                        <td>20211211123456789</td>
-                        <td>상품준비중</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>12</td>
-                        <td>2021121112345</td>
-                        <td>김말똥말똥</td>
-                        <td>닭가슴살 샐러드 외 1개</td>
-                        <td>100,000원</td>
-                        <td>99,000원</td>
-                        <td>3000원</td>
-                        <td>무통장</td>
-                        <td>cl대박통운</td>
-                        <td>20211211123456789</td>
-                        <td>상품준비중</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>11</td>
-                        <td>2021121112345</td>
-                        <td>김말똥말똥</td>
-                        <td><label data-toggle="modal" data-target="#myModal"><u>닭가슴살 샐러드 외 1개</u></label></td>
-                        <td>100,000원</td>
-                        <td>99,000원</td>
-                        <td>3000원</td>
-                        <td>무통장</td>
-                        <td>cl대박통운</td>
-                        <td>20211211123456789</td>
-                        <td>상품준비중</td>
-                    </tr>
-
-                </tbody>
+                
+                
+                <% }else { %>
+                	<% for(Orders od : olist) { %>
+	                    <tr>
+	                        <td><input type="checkbox"></td>
+	                        <td>1</td>
+	                        <td><%= od.getOrderCode() %></td>
+	                        <td><%= od.getmName() %></td>
+	                        <td>상품명</td>
+	                        <td>상품금액</td>
+	                        <td>결제금액</td>
+	                        <td>3000원</td>
+	                        <td>결제유형</td>
+	                        <td><%= od.getCompany() %></td>
+	                        <td><%= od.getInvoice() %></td>
+	                        <td><%= od.getStatus() %></td>
+	                    </tr>
+                    <% } %>
+                <% } %>
+                </tbody>    
             </table>
 
             <div class="paging-area" style="width:1000px; padding-bottom:40px;" align="center">
 			
-                <button onclick="location.href='<%= contextPath %>/list.bo?cpage=<%= currentPage -1 %>';"> &lt; </button>
+				<% if (currentPage != 1) { %>
+                <button onclick="location.href='<%= contextPath %>/orderList.admin?cpage=<%= currentPage -1 %>';"> &lt; </button>
+                <% } %>
+					
+				<% for(int p=startPage; p<=endPage; p++) { %>
+                    <% if(p == currentPage) { %>
+                    <button disabled><%= p %></button>
+                    <% }else { %>
+                    <button onclick="location.href='<%= contextPath %>/orderList.admin?cpage=<%= p %>';"><%= p %></button>
+                	<% } %>
+                <% } %>
                 
-                    <button disabled>1</button>
-                    <button onclick="location.href='<%= contextPath %>/list.bo?cpage=<%= p %>';">2</button>
-                
+                <% if(currentPage != maxPage) { %>
                 <button onclick="location.href='<%= contextPath %>/list.bo?cpage=<%= currentPage +1%>';"> &gt; </button>
+            	<% } %>
             </div>
 
             <div style="width:1000px" align="center">
@@ -410,10 +313,10 @@
                             </tr>
                         </table>
                     </div>
-            \
+            
                     <!-- Modal footer -->
                     <div class="modal-footer" style="border:0px;">
-                        <button type="submit" data-dismiss="modal" style="background-color: orange;">등록</button>
+                        <button type="submit" data-dismiss="modal" style="background-color: #ffee58;">등록</button>
                         <button type="reset" data-dismiss="modal">취소</button>
                     </div>
 

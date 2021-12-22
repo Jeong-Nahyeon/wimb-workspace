@@ -1,14 +1,19 @@
 package com.wimb.mypage.model.service;
 
-import static com.wimb.common.JDBCTemplate.*;
+import static com.wimb.common.JDBCTemplate.close;
+import static com.wimb.common.JDBCTemplate.commit;
+import static com.wimb.common.JDBCTemplate.getConnection;
+import static com.wimb.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.wimb.common.model.vo.PageInfo;
 import com.wimb.member.model.vo.Member;
 import com.wimb.mypage.model.dao.MyPageDao;
 import com.wimb.mypage.model.vo.Inquiry;
 import com.wimb.mypage.model.vo.MyOrders;
+import com.wimb.mypage.model.vo.Orders;
 
 
 
@@ -195,6 +200,22 @@ public class MyPageService {
 			rollback(conn);
 		}
 		return result;
+	}
+	
+	// 페이징처리
+	public int selectListCount() {
+		Connection conn = getConnection();
+		int listCount = new MyPageDao().selectListCount(conn);
+		close(conn);
+		return listCount;
+	}
+	
+	// 관리자 상품관리>주문내역리스트
+	public ArrayList<Orders> adminOrderList(PageInfo pi) {
+		Connection conn = getConnection();
+		ArrayList<Orders> olist = new MyPageDao().adminOrderList(conn, pi);
+		close(conn);
+		return olist;
 	}
 	
 }
