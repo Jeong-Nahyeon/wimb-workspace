@@ -1,4 +1,4 @@
-package com.wimb.admin.controller;
+package com.wimb.customerService.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;

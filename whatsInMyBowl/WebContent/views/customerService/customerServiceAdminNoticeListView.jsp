@@ -102,7 +102,7 @@
         border-radius: 5%;
     }
 	.notice_Box table tr:hover{
-    	background: #efefef;
+    	background: lightgray;
     	cursor: pointer;
     }
 </style>
@@ -129,7 +129,7 @@
                 <button class="notice_Box_top_bottom">선택삭제</button>
             </div>
             <table>
-                <tr class="noticeList_header">
+                <tr class="noticeList_header" style="background-color: rgb(234, 234, 234);">
                     <th class="noticeList_checkbox_main"></th>
                     <th class="noticeList_num">글번호</th>
                     <th class="noticeList_title">제목</th>

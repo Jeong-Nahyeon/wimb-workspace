@@ -57,11 +57,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
     <!-- + 버튼 누르면 파일 업로드 갯수 늘어나고 - 누르면 삭제되는 부분 테스트 중 -->
-	<form action="" method="">
-
+	
+		
+		<!-- 
 		<div class="fileBox" style="display: inline-block;">
 			<div class="fileBox_first" style="margin-bottom: 10px;">
 				<div style="padding: 0px 30px; display: inline-block; text-align: start;">첨부파일</div>
@@ -72,30 +74,105 @@
 			</div>
 		</div>
 		
-		<div class="addInput">
+		 -->
+	<!-- 예제 시작 -->
+	<!-- 
 	
-		</div>
-		
-		<!--
-			<button type="button" class="btnAdd">+</button>
-			<input type="submit">
-
-
-		-->
 	
-		
 	
+	 -->
+	<table id="preset" style="display:none;">
+		<tr name="tr_attach_file">
+			<th>첨부파일</th>
+			<td>
+				<input type="file" name="attachFile" />
+			</td>
+		</tr>
+	</table>
+	
+	<form name="form1" method="post" action="">
+		<table cellpadding="5" cellspacing="0" border="1">
+			<tr>
+				<th>제목</th>
+				<td>.</td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td>.</td>
+			</tr>
+			<tr name="tr_attach_file">
+				<th>첨부파일</th>
+				<td>
+					<input type="file" name="attachFile" /> <input type="button" value="추가" onclick="addInput();" />
+					<div id="parah"></div>
+				</td>
+			</tr>
+			<!-- 추가 버튼을 누르면 위 숨겨진 테이블의 tr 을 가져다가 추가할 겁니닷 -->
+		</table>
 		
+		<input type="button" value="삭제" onclick="deleteInput();"/>
+		<input type="submit" value="전송"/>
+		
+        <div class="two_btn" align="center">
+            <button type="button">목록으로</button>
+            <button type="submit" id="insert">등록</button>
+        </div>	
 	</form>
 
 	<script type="text/javascript">
+	
+		// 첨부파일 추가, 삭제 버튼으로 확장, 삭제하기 기능 -----------------------------------------------------------------------
+		var arrInput = new Array(0);
+		var arrInputValue = new Array(0);
+		 
+		function addInput() {
+		  arrInput.push(arrInput.length);
+		  arrInputValue.push("");
+		  display();
+		}
+		 
+		function display() {
+		  document.getElementById('parah').innerHTML="";
+		  for (intI=0;intI<arrInput.length;intI++) {
+		    document.getElementById('parah').innerHTML+=createInput(arrInput[intI], arrInputValue[intI]);
+		  }
+		}
+		 
+		function saveValue(intId,strValue) {
+		  arrInputValue[intId]=strValue;
+		}  
+		 
+		function createInput(id,value) {
+		  return "<input type='file' id='test "+ id +"' onChange='javascript:saveValue("+ id +",this.value)' value='"+ value +"'>\
+		  		<input type='button' value='삭제' onclick='deleteInput();'/><br>";
+		}
+		 
+		function deleteInput() {
+		  if (arrInput.length > 0) { 
+		     arrInput.pop(); 
+		     arrInputValue.pop();
+		  }
+		  display(); 
+		}	
 		
+		//-----------------------------------------------------------------------------------------------------
+	/*
+		function addFile(){
+			$('[name=form1] [name=tr_attach_file]:last').after( $('#preset tr').clone() );
+			// $('#preset tr').clone() : id=preset 에서 tr 요소 셀렉트 하여 복제 !!
+			// form1 안에 이름이 tr_attach_file 인것 중 마지막 것 다음에 추가합니다.
+			// 이렇게 하면 실행때 마다 동적으로 하나씩 추가됩니다.
+		}
+	
+	*/
+	
+	
+	/*
 		$(document).ready(function(){
 			$('.btnAdd').click(function(){
 				$('.addInput').append(
-					'<input type="text" class="fileName" readonly="readonly">\
-					<label for="uploadBtn" class="btn_file" style="vertical-align: middle;">찾아보기</label>\
-					<button type="button" class="btnRemove">-</button><br>'
+					"<input type='type' name='test' value=''>\
+					 <button type='button' class='btnRemove'>tag삭제하기</button><br>"
 				); //input tag 추가
 				$('.btnRemove').on('click', function(){
 
@@ -106,9 +183,11 @@
 				});
 			});
 		});
-		
+	*/
+	
+	
 
-
+	/*
 		var uploadFile = $('.fileBox .uploadBtn');
         uploadFile.on('change', function(){
             if(window.FileReader){
@@ -128,6 +207,7 @@
             }
             $(this).siblings('.fileName').val(filename);
         });
+        */
 	</script>
 
 
