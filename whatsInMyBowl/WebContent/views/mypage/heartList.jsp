@@ -224,6 +224,32 @@
 	} 
  				
    </script>
+   
+   <!-- 장바구니 개별삭제 -->
+   <script>
+   		$(".delete").on('click', function(){
+   			
+   			if(confirm("해당상품을 취소하시겠습니까?")) {
+   				
+   				var pCode = $(this).parent().siblings(".pCode").text();
+   				console.log(pCode)
+   				
+   				$.ajax ({
+   					url:"deleteHeartOne.my",
+   					type:"post",
+   					data: {pCode:pCode},
+   					success:function(){
+   						alert("상품이 삭제되었습니다.");
+   					},error:function(){
+   						alert("삭제에 실패했습니다.");
+   					}
+   				
+   				})
+   				
+   			}
+   			
+   		})
+   </script>
   
 </body>
 </html>

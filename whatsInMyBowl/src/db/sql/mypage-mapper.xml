@@ -240,4 +240,22 @@
 		WHERE M_CODE = ?
 		  AND P_CODE = ?
 	</entry>
+	
+	<entry key="heartToCart">
+		INSERT
+		  INTO CART
+		  (
+		    M_CODE
+		  , CA_CATEGORY
+		  , CA_CODE
+		  , CA_AMOUNT
+		  )
+		  VALUES
+		  (
+		    회원번호
+		  , 'P'
+		  , 상품코드
+		  , 1
+		  )
+	</entry>
 </properties>
