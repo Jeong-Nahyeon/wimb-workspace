@@ -34,7 +34,7 @@
     /* 주문|배송조회 기간 선택 영역 */
     .selectDate {
         width:600px;
-        padding: 35px 20px 35px 20px;
+        padding: 10px 20px 10px 20px;
         border: 1px solid #ebebeb;
         box-sizing: border-box;
         margin-bottom: 50px;
@@ -45,6 +45,7 @@
         border: 1px solid lightgrey;
         height: 35px;
         width: 55px;
+        margin-bottom:6px;
     }
     button:hover {
         cursor: pointer;
@@ -62,6 +63,7 @@
         color: white;
         width: 90px;
         float: right;
+        margin-left:10px;
     }
     /* 교환|환불 내역 리스트 영역 */
     .orderList th {
@@ -101,6 +103,10 @@
         text-decoration: none;
         color:black;
     }
+    a:link {
+        text-decoration: none;
+        color:black;
+    }
     .modal-footer button {
         border: 0px;
         border-radius: 5px;
@@ -115,9 +121,8 @@
     	background-color: lightgrey;
     }
     img {
-    	width: 80px;
-    	height: 80px;
-    	margin-right: 20px;
+    	width: 70px;
+    	height: 70px;
     }
     #area1 th{
         height: 30px;
@@ -166,7 +171,7 @@
         <label style="font-size: 18px;"><b>취소/환불내역</b></label>
         <div>
             <form action="" method="get" class="selectDate">
-                <p style="margin-bottom: 5px; font-size: 15px;"><b>조회기간</b></p>
+                <p style="margin-bottom: 1px; font-size: 15px;"><b>조회기간</b></p>
                 <div class="selectBtn" style="display: inline-block;">
                     <div>
                         <button type="button" onclick="dateSub(7);" style="margin-right: -6px;">7일</button>
@@ -192,14 +197,15 @@
             		
                    		<table class="orderList">
 	                        <tr>
-	                            <th width="130">주문일자<br>[주문번호]</th>
+	                            <th width="80">주문일자<br>[주문번호]</th>
 	                            <th>상품명</th>
-	                            <th width="80">상품금액/수량</th>
-	                            <th width="80">처리일자</th>
-	                            <th width="80">상세보기</th>
+	                            <th width="60">상품금액<br>[수량]</th>
+	                            <th width="70">진행상태</th>
+	                            <th width="75">처리일자</th>
+	                            <th width="75">상세보기</th>
 	                        </tr>
 	                        <tr>
-	                            <td colspan="5" style="height:200px;">최근 취소/환불 정보가 없습니다.</td>
+	                            <td colspan="6" style="height:200px;">최근 취소/환불 정보가 없습니다.</td>
 	                        </tr>
 	                        
                     	</table>
@@ -208,10 +214,10 @@
 	                    <!--case2. 취소/환불내역이 있을 때 (if(취소상태 == 처리X))-->
 	                    <table class="orderList">
 	                        <tr>
-	                            <th width="130">주문일자<br>[주문번호]</th>
-	                            <th>상품명</th>
-	                            <th width="100">상품금액/수량</th>
-	                            <th width="80">진행상태</th>
+	                            <th width="80">주문일자<br>[주문번호]</th>
+	                            <th colspan="2">상품명</th>
+	                            <th width="60">상품금액<br>[수량]</th>
+	                            <th width="75">진행상태</th>
 	                            <th width="80">처리일자</th>
 	                            <th width="80">상세보기</th>
 	                        </tr>
@@ -226,12 +232,14 @@
 	                             </td>
 	                            
 	                            <% if(od.getpName() == null) {  // 커스텀상품%>
-	                            	<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"><%= od.getCuName() %></a></td>
+	                            	<td width="80"><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"></a></td>
+	                            	<td><a href="상품상세페이지"><%= od.getCuName() %></a></td>
 	                            <% }else {  // 완제품%>
-									<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getFilePath() + od.getpMainImg() %>"><%= od.getpName() %></a></td>                            
+									<td width="80"><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getFilePath() + od.getpMainImg() %>"></a></td>                            
+	                            	<td><a href="상품상세페이지"><%= od.getpName() %></a></td>
 	                            <% } %>
 	                            
-	                            <td><%= od.getPmTotalCost() %>원/<%= od.getOrderAmount() %>개</td>
+	                            <td><%= od.getPmTotalCost() %>원<br>[<%= od.getOrderAmount() %>개]</td>
 	                            
 	                            <% if(od.getCancelCode() == null) { %>
 	                            	

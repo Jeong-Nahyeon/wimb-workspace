@@ -35,7 +35,7 @@
     /* 주문|배송조회 기간 선택 영역 */
     .selectDate {
     	width: 600px;
-        padding: 35px 20px 35px 20px;
+        padding: 10px 20px 10px 20px;
         border: 1px solid #ebebeb;
         box-sizing: border-box;
         margin-bottom: 50px;
@@ -45,7 +45,8 @@
         background-color: white;
         border: 1px solid lightgrey;
         height: 35px;
-        width: 55px
+        width: 55px;
+        margin-bottom:6px;
     }
     button:hover {background-color: rgb(155, 213, 189);}
     input {
@@ -146,7 +147,6 @@
     img {
     	width: 80px;
     	height: 80px;
-    	margin-right: 20px;
     }
 </style>
 </head>
@@ -160,7 +160,7 @@
         <label style="font-size: 18px;"><b>주문목록/배송조회</b></label>
         <div>
             <form action="<%= contextPath %>/orderList.my" method="get" class="selectDate">
-                <p style="margin-bottom: 5px; font-size: 15px;"><b>조회기간</b></p>
+                <p style="margin-bottom: 1px; font-size: 15px;"><b>조회기간</b></p>
                 <div class="selectBtn" style="display: inline-block;">
                     <div>
                         <button type="button" onclick="dateSub(7);" style="margin-right: -6px;">7일</button>
@@ -186,9 +186,9 @@
             		
                    		<table class="orderList">
 	                        <tr>
-	                            <th width="130">주문일자<br>[주문번호]</th>
+	                            <th width="100">주문일자<br>[주문번호]</th>
 	                            <th>상품명</th>
-	                            <th width="100">상품금액/수량</th>
+	                            <th width="80">상품금액/수량</th>
 	                            <th width="80">주문상태</th>
 	                            <th width="80">확인/리뷰</th>
 	                        </tr>
@@ -201,9 +201,9 @@
                     	<!--case2. 최근 주문내역이 있을 때 -->
                     	<table class="orderList">
 	                        <tr>
-	                            <th width="130">주문일자<br>[주문번호]</th>
-	                            <th>상품명</th>
-	                            <th width="100">상품금액/수량</th>
+	                            <th width="100">주문일자<br>[주문번호]</th>
+	                            <th colspan="2">상품명</th>
+	                            <th width="80">상품금액/수량</th>
 	                            <th width="80">주문상태</th>
 	                            <th width="80">확인/리뷰</th>
 	                        </tr>
@@ -217,9 +217,11 @@
 		                             	[<span class="oCode"><%= od.getOrderCode() %></span>]
 	                            	</td>
                     				<% if(od.getpName() == null) { %>
-                    					<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"><%= od.getCuName() %></a></td>
+                    					<td width="90"><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"></a></td>
+                    					<td><a href="상품상세페이지"><%= od.getCuName() %></a></td>
                    					<% }else { %>
-                   						<td><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getFilePath() + od.getpMainImg() %>"><%= od.getpName() %></a></td>
+                   						<td width="90"><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getFilePath() + od.getpMainImg() %>"></a></td>
+                 						<td><a href="상품상세페이지"><%= od.getpName() %></a></td>
                  					<% } %>
                  					<td><%= od.getPmTotalCost() %>원/<%= od.getOrderAmount() %>개</td> 
                  					<td><a href="주문목록/배송조회 이동"><%= od.getOrderStatus() %></a></td> 
