@@ -13,14 +13,14 @@ import com.wimb.customerService.model.service.NoticeService;
 /**
  * Servlet implementation class NoticeDeleteController
  */
-@WebServlet("/deleteOne.no")
-public class NoticeDeleteController extends HttpServlet {
+@WebServlet("/delete.no")
+public class NoticeMultiDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeDeleteController() {
+    public NoticeMultiDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,15 +29,25 @@ public class NoticeDeleteController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 하나의 게시글만 삭제하는 컨트롤러
 		
-		String nCode = request.getParameter("num");
+		// 선택삭제 컨트롤러
 		
-		int result = new NoticeService().deleteNotice(nCode);
+		request.setCharacterEncoding("UTF-8");
+		int count =  Integer.parseInt( request.getParameter("count"));
+		String[] arr = request.getParameterValues("checkArr");
+
+		
+		int result = 0;
+		if(arr != null && count > 0) {
+			for(int i=0; i<count; i++) {
+				String nCode = arr[i];
+				result = new NoticeService().deleteNotice(nCode);
+			}
+		}
 		
 		if(result > 0) {
-			request.getSession().setAttribute("alertMsg", "공지사항 삭제 완료");
-			response.sendRedirect(request.getContextPath() + "/adminListView.no?cpage=1");
+			//response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().print(result);
 		}else {
 			request.setAttribute("errorMsg", "공지사항 삭제 실패");
 			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);

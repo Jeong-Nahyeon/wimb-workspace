@@ -29,6 +29,14 @@ public class File {
 		this.fRename = fRename;
 		this.fPath = fPath;
 	}
+	
+	public File(int fCode, String fName, String fRename, String fPath) {
+		super();
+		this.fCode = fCode;
+		this.fName = fName;
+		this.fRename = fRename;
+		this.fPath = fPath;
+	}
 
 	public int getfCode() {
 		return fCode;

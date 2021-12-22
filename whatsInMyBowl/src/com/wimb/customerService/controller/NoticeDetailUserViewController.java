@@ -1,6 +1,7 @@
 package com.wimb.customerService.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wimb.common.model.vo.File;
 import com.wimb.customerService.model.service.NoticeService;
 import com.wimb.customerService.model.vo.Notice;
 
@@ -38,7 +40,10 @@ public class NoticeDetailUserViewController extends HttpServlet {
 		
 		if(result > 0) {
 			Notice n = new NoticeService().selectNotice(noticeNo);
+			ArrayList<File> list = new NoticeService().selectAdminFile(noticeNo);
+			
 			request.setAttribute("notice", n);
+			request.setAttribute("list", list);
 			request.getRequestDispatcher("views/customerService/customerServiceNoticeDetailView.jsp").forward(request, response);
 		} else {
 			

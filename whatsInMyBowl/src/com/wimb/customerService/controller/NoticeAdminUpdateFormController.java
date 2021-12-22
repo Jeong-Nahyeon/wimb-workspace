@@ -1,6 +1,7 @@
 package com.wimb.customerService.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,19 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wimb.common.model.vo.File;
 import com.wimb.customerService.model.service.NoticeService;
+import com.wimb.customerService.model.vo.Notice;
 
 /**
- * Servlet implementation class NoticeDeleteController
+ * Servlet implementation class NoticeAdminUpdateFormController
  */
-@WebServlet("/deleteOne.no")
-public class NoticeDeleteController extends HttpServlet {
+@WebServlet("/adminUpdateForm.no")
+public class NoticeAdminUpdateFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeDeleteController() {
+    public NoticeAdminUpdateFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,19 +32,17 @@ public class NoticeDeleteController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 하나의 게시글만 삭제하는 컨트롤러
 		
-		String nCode = request.getParameter("num");
+		// 수정하기 클릭 시 클릭한 게시글의 수정화면을 띄워주는 컨트롤러
+		int nCode = Integer.parseInt(request.getParameter("num"));
 		
-		int result = new NoticeService().deleteNotice(nCode);
+		NoticeService nService = new NoticeService();
+		Notice n = nService.selectAdminNotice(nCode);
+		ArrayList<File> list = nService.selectAdminFile(nCode);
 		
-		if(result > 0) {
-			request.getSession().setAttribute("alertMsg", "공지사항 삭제 완료");
-			response.sendRedirect(request.getContextPath() + "/adminListView.no?cpage=1");
-		}else {
-			request.setAttribute("errorMsg", "공지사항 삭제 실패");
-			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
-		}
+		request.setAttribute("n", n);
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("views/customerService/customerServiceAdminNoticeUpdateForm.jsp").forward(request, response);
 	}
 
 	/**

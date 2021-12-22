@@ -94,4 +94,69 @@
 			   SET NOTICE_STATUS = 'N'
 			 WHERE NOTICE_CODE = ?	
 	</entry>
+	
+	<!-- 관리자 상세보기 화면 조회용 sql문 (조회수 증가x) -->
+	<entry key="selectAdminNotice">
+		SELECT 
+		       NOTICE_CODE
+		     , NOTICE_TITLE
+		     , NOTICE_CONTENT
+		  FROM NOTICE
+		 WHERE NOTICE_STATUS='Y'
+		   AND NOTICE_CODE = ?
+	</entry>
+	
+	<!-- 관리자 상세보기 화면 조회용 sql문 -->
+	<entry key="selectAdminFile">
+		SELECT
+		       F_CODE
+		     , F_NAME
+		     , F_RENAME
+		     , F_PATH
+		  FROM "FILE"
+		 WHERE F_REFCODE = ?	
+	</entry>
+	
+	<!-- 수정 시 공통적으로  수행되는 update문 -->
+	<entry key="updateNotice">
+		UPDATE
+		       NOTICE
+		   SET NOTICE_TITLE = ?
+		     , NOTICE_CONTENT = ?
+		 WHERE NOTICE_CODE = ?		
+	</entry>
+	
+	<entry key="updateFile">
+		 UPDATE
+		        "FILE"
+		    SET F_NAME = ?
+		      , F_RENAME = ?
+		      , F_PATH = ?
+		      , F_EXTENSION = SUBSTR(?,INSTR(?,'.', -1)+1)
+		  WHERE F_CODE = ?
+	</entry>
+	
+	<entry key="insertNewFile">
+	 INSERT 
+	   INTO "FILE"
+	   (
+	     F_CODE
+	   , F_NAME
+	   , F_RENAME
+	   , F_PATH
+	   , F_EXTENSION
+	   , F_REF
+	   , F_REFCODE
+	   )
+	   VALUES
+	   (
+	     SEQ_FILE.NEXTVAL
+	   , ?
+	   , ?
+	   , ?
+	   , SUBSTR(?,INSTR(?,'.', -1)+1)
+	   , 'N'
+	   , ?
+	   )		
+	</entry>
 </properties>

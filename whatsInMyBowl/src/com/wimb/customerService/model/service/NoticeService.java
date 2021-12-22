@@ -96,5 +96,54 @@ public class NoticeService {
 		return result;
 	}
 	
-
+	/*관리자 상세보기 화면 조회용 */
+	public Notice selectAdminNotice(int nCode) {
+		Connection conn = getConnection();
+		Notice n = new NoticeDao().selectAdminNotice(conn, nCode);
+		close(conn);
+		return n;
+		
+	}
+	
+	/*관리자 상세보기 화면 조회용 */
+	public ArrayList<File> selectAdminFile(int nCode){
+		Connection conn = getConnection();
+		ArrayList<File> list = new NoticeDao().selectAdminFile(conn, nCode);
+		close(conn);
+		return list;
+	}
+	
+	/* 수정 시 공통적으로 수행되는 update*/
+	public int updateNotice(Notice n, ArrayList<File> list) {
+		Connection conn = getConnection();
+		int result1 = new NoticeDao().updateNotice(conn, n);
+		
+		int result2 = 1;
+		if(list != null) { // 새로운 첨부파일이 있었을 경우
+			
+			for(File f:list) {
+				if(f.getfCode() != 0) { // 기존의 첨부파일이 있었을 경우 => update file
+					result2 = new NoticeDao().updateFile(conn, list);
+					
+				} else { // 기존의 첨부파일이 없었을 경우 => insert file
+					result2 = new NoticeDao().insertNewFile(conn, list);
+					
+				}
+			}
+		}
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result1 * result2;
+		
+	}
+	
+	
+	
+	
 }

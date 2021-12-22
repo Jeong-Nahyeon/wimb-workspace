@@ -47,7 +47,13 @@ public class Notice {
 		this.noticeContent = noticeContent;
 	}
 	
-	
+	public Notice(int noticeCode, String noticeTitle, String noticeContent) {
+		super();
+		this.noticeCode = noticeCode;
+		this.noticeTitle = noticeTitle;
+		this.noticeContent = noticeContent;
+	}
+
 	public int getNoticeCode() {
 		return noticeCode;
 	}

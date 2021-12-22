@@ -124,7 +124,7 @@
 	        </table>
             
             <div class="two_btn" align="center">
-                <button type="button">목록으로</button>
+                <button type="button" onclick="location.href='<%=contextPath %>/adminListView.no?cpage=1';">목록으로</button>
                 <button type="submit" id="insert">등록</button>
             </div>
 		</form>

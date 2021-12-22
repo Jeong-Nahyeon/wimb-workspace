@@ -244,7 +244,137 @@ private Properties prop = new Properties();
 		return result;
 	}
 		
+	public Notice selectAdminNotice(Connection conn, int nCode) {
+		
+		Notice n = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminNotice");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, nCode);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				n = new Notice(rset.getInt("notice_code"),
+						       rset.getString("notice_title"),
+						       rset.getString("notice_content"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}	
+		return n;
+		
+	}
+		
+	public ArrayList<File> selectAdminFile(Connection conn, int nCode){
+		ArrayList<File> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminFile");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, nCode);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new File(rset.getInt("f_code"),
+						  		  rset.getString("f_name"),
+						  		  rset.getString("f_rename"),
+						          rset.getString("f_path")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list; // null이 반환될 수도 있고 아닐수도있음
+	}
 	
+	public int updateNotice(Connection conn, Notice n) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, n.getNoticeTitle());
+			pstmt.setString(2, n.getNoticeContent());
+			pstmt.setInt(3, n.getNoticeCode());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	
+	
+	public int updateFile(Connection conn, ArrayList<File> list) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateFile");
+		
+		try {
+			for(File f : list) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, f.getfName());
+				pstmt.setString(2, f.getfRename());
+				pstmt.setString(3, f.getfPath());
+				pstmt.setString(4, f.getfRename());
+				pstmt.setString(5, f.getfRename());
+				pstmt.setInt(6, f.getfCode());
+				
+				result = pstmt.executeUpdate();
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
+	public int insertNewFile(Connection conn, ArrayList<File> list) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertNewFile");
+		
+		try {
+			for(File f : list) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, f.getfName());
+				pstmt.setString(2, f.getfRename());
+				pstmt.setString(3, f.getfPath());
+				pstmt.setString(4, f.getfRename());
+				pstmt.setString(5, f.getfRename());
+				pstmt.setInt(6, f.getfRefCode());
+				
+				result = pstmt.executeUpdate();
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 	
 	

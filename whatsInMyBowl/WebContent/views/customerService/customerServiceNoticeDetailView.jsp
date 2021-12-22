@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.wimb.customerService.model.vo.Notice"%>
+    pageEncoding="UTF-8" import="com.wimb.customerService.model.vo.Notice, com.wimb.common.model.vo.File, java.util.ArrayList"%>
 <%
 	Notice n = (Notice)request.getAttribute("notice");
-
+	ArrayList<File> list = (ArrayList<File>)request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
@@ -137,6 +137,20 @@
                     <td style="text-align: left;"><%= n.getNoticeDate() %></td>
                     <th style="width: 90px;">조회수</th>
                     <td style="text-align: left;"><%= n.getNoticeView() %></td>
+                </tr>
+                <tr style="border-top: 1px solid gray">
+                	<th>첨부파일</th>
+                	<td style="text-align: left;">
+ 						<% if(list.isEmpty()){ %>
+	                        <!-- 1.첨부파일이 없을 경우 -->
+	                                                      첨부파일이 없습니다.
+                        <% } else { %>
+                        	<% for(File f : list) { %>
+		                        <!-- 2.첨부파일이 있을 경우 -->
+		                        <a style="display: block;" download="<%= f.getfName() %>" href="<%=contextPath%>/<%= f.getfPath() + f.getfRename()%>"><%= f.getfName() %></a>
+                        	<% } %>
+                        <% } %>                		
+                	</td>
                 </tr>
                 <tr style="border-top: 1px solid gray">
                     <td colspan="4" style="padding: 0;">

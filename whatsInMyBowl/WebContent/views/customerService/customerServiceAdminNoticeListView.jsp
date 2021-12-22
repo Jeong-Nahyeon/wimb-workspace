@@ -145,29 +145,34 @@
                 <button class="notice_Box_top_bottom" data-toggle="modal" data-target="#banner_delete_Modal">선택삭제</button>
             </div>
             <table>
-                <tr class="noticeList_header" style="background-color: rgb(234, 234, 234);">
-                    <th class="noticeList_checkbox_main"></th>
-                    <th class="noticeList_num">글번호</th>
-                    <th class="noticeList_title">제목</th>
-                    <th class="noticeList_update_delete">수정 / 삭제</th>
-                    <th class="noticeList_enroll_date">작성일</th>
-                    <th class="noticeList_count">조회수</th>
-                </tr>
-                <% for(Notice n : noticeList) { %>
-                <tr>
-                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1" name="check"></td>
-                    <td class="noticeList_num"><%= n.getNoticeCode() %></td>
-                    <td class="noticeList_title"><%= n.getNoticeTitle() %></td>
-                    <td class="noticeList_update_delete">
-                        <div class="two_btn">
-                            <button>수정</button>
-                            <button>삭제</button>
-                        </div>
-                    </td>
-                    <td class="noticeList_enroll_date"><%= n.getNoticeDate() %></td>
-                    <td  class="noticeList_count"><%= n.getNoticeView() %></td>
-                </tr>
-				<% } %>
+            	<thead>
+	                <tr class="noticeList_header" style="background-color: rgb(234, 234, 234);">
+	                    <th class="noticeList_checkbox_main"></th>
+	                    <th class="noticeList_num">글번호</th>
+	                    <th class="noticeList_title">제목</th>
+	                    <th class="noticeList_update_delete">수정 / 삭제</th>
+	                    <th class="noticeList_enroll_date">작성일</th>
+	                    <th class="noticeList_count">조회수</th>
+	                </tr>
+            	</thead>
+            	<tbody>
+	                <% for(Notice n : noticeList) { %>
+	                <tr class="noticeList_header2">
+	                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1" name="check"></td>
+	                    <td class="noticeList_num"><%= n.getNoticeCode() %></td>
+	                    <td class="noticeList_title"><%= n.getNoticeTitle() %></td>
+	                    <td class="noticeList_update_delete">
+	                        <div class="two_btn">
+	                            <button type="button" onclick="location.href='<%=contextPath %>/adminUpdateForm.no?num=<%= n.getNoticeCode() %>'">수정</button>
+	                            <button type="button" onclick="location.href='<%=contextPath %>/deleteOne.no?num=<%= n.getNoticeCode() %>'">삭제</button>
+	                        </div>
+	                    </td>
+	                    <td class="noticeList_enroll_date"><%= n.getNoticeDate() %></td>
+	                    <td  class="noticeList_count"><%= n.getNoticeView() %></td>
+	                </tr>
+					<% } %>
+            	
+            	</tbody>
             </table>
 
         <div class="paging-area">
@@ -191,11 +196,8 @@
 
             <div class="search_box" align="center">
                 <form action="" method="get" class="search_form">
-                    <select name="search_category" id="search_category">
-                        <option value="">제목</option>
-                        <option value="">글번호</option>
-                    </select>
-                    <input type="text" placeholder="검색하실 내용을 입력해주세요" name="search_category_input" id="search_category_input">
+                    <span style="border: 1px solid gray; padding: 3px 7px;">제목</span>
+                    <input type="text" placeholder="검색하실 제목을 입력해주세요" name="search_category_input" id="search_category_input">
                     <button id="search_btn">검색</button>
                 </form>
             </div>
@@ -210,7 +212,7 @@
                     <div class="modal-body">
                         <!-- <form action="" >  -->
                             <div class="delete_text">
-                                <span>선택하신 배너를 삭제합니다.</span>
+                                <span>선택하신 공지사항을 삭제합니다.</span>
                                 <span>정말 삭제하시겠습니까?</span>
                                 <span>(삭제 후 복구불가)</span>
                             </div>
@@ -228,15 +230,15 @@
             
     		// 상세보기 시 필요한 게시판 번호를 넘기는 함수 ------------------------------------------
         	$(function(){
-        		$(".notice_Box table tr>td:nth-child(2)").click(function(){
-        			
-        			const num =  $(this).text();
-        			location.href='<%= contextPath %>/detailAdminView.no?num=' + num;
+        		$(".notice_Box tbody td:nth-child(3)").click(function(){
+        			location.href="<%= contextPath %>/adminDetailView.no?num=" + $(this).siblings('.noticeList_num').text();
         			
         		})
-        	})
+        	})       	
         	// ----------------------------------------------------------------------		
 	        
+        	
+        	
         	// 선택 삭제 ------------------------------------------------------------------
 	        function deletecheck(){
 	    		promise1()
