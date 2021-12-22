@@ -174,9 +174,22 @@ public class Product {
 		this.discountPrice = discountPrice;
 		this.filePath = filePath;
 	}
+	
 
-	
-	
+	public Product(String pCode, String pName, int pPrice, String pMainImg, String pDetailImg, String pDetail,
+			int discountPrice, String filePath) {
+		super();
+		this.pCode = pCode;
+		this.pName = pName;
+		this.pPrice = pPrice;
+		this.pMainImg = pMainImg;
+		this.pDetailImg = pDetailImg;
+		this.pDetail = pDetail;
+		this.discountPrice = discountPrice;
+		this.filePath = filePath;
+	}
+
+
 	public int getDiscountPrice() {
 		return discountPrice;
 	}

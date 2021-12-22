@@ -971,7 +971,52 @@ public class ProductDao {
 	}
 	
 	
+	/** 완제품 상세 조회해주는 메소드
+	 * @param conn
+	 * @param pCode  :  회원이 요청한 상품의 상품번호
+	 * @return
+	 */
+	public Product selectProduct(Connection conn, String pCode) {
 	
+		Product p = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
+		String sql = prop.getProperty("selectProduct"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, pCode);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				p = new Product(rset.getString("p_code"),
+						 		rset.getString("p_name"),
+						 		rset.getInt("p_price"),
+						 		rset.getString("p_mainimg"),
+						 		rset.getString("p_detailimg"),
+						 		rset.getString("p_detail"),
+						 		rset.getInt("discount"),
+						 		filePath);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return p;
+		
+	}
 	
 	
 	

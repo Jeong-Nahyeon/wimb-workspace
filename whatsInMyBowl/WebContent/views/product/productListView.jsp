@@ -298,6 +298,7 @@
 					<% for (Product p : productList) { %>
 						<div class="product">
 							<div class="product-img">
+								<input type="hidden" name="pcode" value="<%= p.getpCode() %>">
 								<img src="<%= contextPath %>/<%= p.getFilePath() + p.getpMainImg() %>">
 							
 								<!-- case1. 찜 안 했을 경우 -->
@@ -311,8 +312,8 @@
 							<h6><%=  p.getpName() %></h6>
 							<% if(p.getDiscountPrice() != 0) { %>
 								<!-- case1. 할인가 -->
-								<span style="text-decoration: line-through; color:lightgray; margin:0;"><%= p.getpPrice() %>원</span>
-								<h4 style="color:salmon; display:inline-block; margin:0;"><%= p.getDiscountPrice() %>원</h4>
+								<span name="cost" style="text-decoration: line-through; color:lightgray; margin:0;"><%= p.getpPrice() %>원</span>
+								<h4 name="discount" style="color:salmon; display:inline-block; margin:0;"><%= p.getDiscountPrice() %>원</h4>
 							<% } else {%>
 								<!-- case2. 원가 -->
 								<h4 style="margin:0;"><%= p.getpPrice() %>원</h4>
@@ -320,8 +321,25 @@
 						</div>
 					<% } %>
 				
-
 			</div>
+			<script>
+				$(function(){
+					// 상품 이미지 클릭 시 상세 페이지로 이동
+					$(".product-img").on("click", "img", function(){
+						//console.log($("input:hidden", this).val());
+						location.href="<%= contextPath %>/detail.pr?pcode=" + $(this).prev().val();
+					});
+
+					// 카트 아이콘 클릭 시
+					$(".product").on("click", ".cart-btn", function(){
+						
+						$("#cart-modal").modal("show");
+
+					});
+
+				});
+			</script>
+
 
 			<!-- 페이징바 -->
 			<div id="paging-bar">
@@ -359,7 +377,8 @@
 	
 	
 	<%@ include file="../common/footer.jsp" %>
-	<button id="cart-success-btn">장바구니 담기 성공 창 테스트</button>
+	<button id="cart-test-btn">장바구니 창 테스트</button>
+	<button id="success-test-btn">장바구니 담기 성공 창 테스트</button>
 
 
 	<!-- 장바구니 모달창 -->
@@ -378,14 +397,14 @@
                     <form action="" id="cart-insert-form" method="get">
                       
 						<div class="cart-product">
-						   
+							<input type="hidden" name="cart-pCode">
 							<div class="cart-product-img">
 								<img src="" style="width:100%; height:100%;">
 						   </div>
 
 						   <div class="cart-product-content">
 								
-								<h4 style="font-weight:bolder; margin-bottom: 30px;" align="left">닭가슴살 샐러드</h4>
+								<h4 id="cart-pName" style="font-weight:bolder; margin-bottom: 30px;" align="left"></h4>
 								
 								<span>수량 선택</span>
 								<span style="margin-left:50px;">
@@ -395,34 +414,43 @@
 								</span>
 								<hr>
 
-								<h2 style="font-weight: bolder; color:#9BD5BD;" align="right">4900원</h2>
+								<h2 id="cart-pPrice" style="font-weight: bolder; color:#9BD5BD;" align="right"></h2>
+								<h2 style="font-weight: bolder; color:#9BD5BD;" align="right">원</h2>
 						   
 							</div>
 
-							<!-- 수량 표시 영역 기능 -->
+							<!-- 수량 및 합계금액 표시 -->
 							<script>
 								function count(type)  {
-									// 결과를 표시할 element
-									const amount = document.getElementById('amount');
 									
-									// 현재 화면에 표시된 값
-									let number = amount.value;
+									// 수량 표시
+									let $number = $("#amount").val(); // 수량 표시될 input 
 									
-									// 더하기/빼기
-									if(type === 'plus') {
-										number = parseInt(number) + 1;
-									}else if(type === 'minus')  {
-										if(number != '1'){
-											number = parseInt(number) - 1;
+									if(type == 'plus') {
+										$number = parseInt($number) + 1;
+									}else if(type == 'minus')  {
+										if($number != '1'){
+											$number = parseInt($number) - 1;
 										} else{
-											number = 1;
+											$number = 1;
 										}
-										
 									}
-									
-									// 결과 출력
-									amount.value = number;
+
+									$("#amount").val($number);
+
+									// 합계금액 표시
+									let $discount = $("#discount").text(); // 할인가
+									let $cost = $("#cost").text(); // 원가
+									let $num = $("#amount").val(); // 수량
+
+									if($discount != 0){
+										$("#total-discount").text($discount * $num);
+									} else {
+										$("#total-cost").text($cost * $num);
+									}
+
 								}
+
 							</script>
 
 					   </div>

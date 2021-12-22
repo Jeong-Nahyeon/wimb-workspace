@@ -14,7 +14,7 @@
 		             , P_STOCK
 		             , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		             , <![CDATA[
-                       CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+                       CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 		                    ELSE 0
 		                END DISCOUNT
                        ]]>
@@ -44,7 +44,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -76,7 +76,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -108,7 +108,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -140,7 +140,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -170,7 +170,7 @@
 		             , P_STOCK
 		             , SUM(NVL(SUB_AMOUNT, 0)) SALES
                      , <![CDATA[
-                       CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+                       CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
                             ELSE 0
                         END DISCOUNT
                        ]]>
@@ -201,7 +201,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -234,7 +234,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -267,7 +267,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -300,7 +300,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -333,7 +333,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -367,7 +367,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -399,7 +399,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -433,7 +433,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -465,7 +465,7 @@
                       , P_STOCK
                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
                       , <![CDATA[
-                        CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+                        CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 		                     ELSE 0
 		                 END DISCOUNT
                         ]]>
@@ -496,7 +496,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -529,7 +529,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -562,7 +562,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -595,7 +595,7 @@
 		                       , P_STOCK
 		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
 		                       , <![CDATA[
-		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE <= 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
 				                      ELSE 0
 				                  END DISCOUNT
 		                         ]]>
@@ -614,7 +614,28 @@
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
-	
+	<entry key="selectProduct">
+		SELECT
+		       P_CODE
+		     , P_NAME
+		     , P_PRICE
+		     , P_MAINIMG
+		     , P_DETAILIMG
+		     , P_DETAIL
+             , <![CDATA[
+               CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+                    ELSE 0
+                END DISCOUNT
+               ]]>
+		  FROM SUBORDER
+		 RIGHT
+		  JOIN PRODUCT USING (P_CODE)
+		 WHERE P_SHOW = 'Y' 
+		   AND P_ADMINSHOW = 'Y'
+		   AND P_CODE = ?
+		 GROUP
+		    BY P_CODE, P_NAME, P_PRICE, P_MAINIMG, P_DETAILIMG, P_DETAIL
+	</entry>
 	
 	
 	

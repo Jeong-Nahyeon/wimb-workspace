@@ -277,6 +277,7 @@
 					<% for (Product p : bestList) { %>
 						<div class="product">
 							<div class="product-img">
+								<input type="hidden" name="pcode" value="<%= p.getpCode() %>">
 								<img src="<%= contextPath %>/<%= p.getFilePath() + p.getpMainImg() %>">
 							
 								<!-- case1. 찜 안 했을 경우 -->
@@ -298,8 +299,26 @@
 							<% } %>
 						</div>
 					<% } %>
+
 				
 			</div>
+			<script>
+				$(function(){
+					// 상품 이미지 클릭 시 상세 페이지로 이동
+					$(".product-img").on("click", "img", function(){
+						//console.log($("input:hidden", this).val());
+						location.href="<%= contextPath %>/detail.pr?pcode=" + $(this).prev().val();
+					});
+
+					// 카트 아이콘 클릭 테스트용
+					$(".product").on("click", ".cart-btn", function(){
+						
+						$("#cart-modal").modal("show");
+
+					});
+
+				});
+			</script>
 
 		</div>
 	</div>

@@ -333,6 +333,32 @@ public class ProductService {
 	}
 	
 	
+	/** 완제품 상세 조회해주는 메소드
+	 * @param pCode  :  회원이 요청한 상품의 상품번호
+	 * @return
+	 */
+	public Product selectProduct(String pCode) {
+		
+		Connection conn = getConnection();
+		
+		Product p = new ProductDao().selectProduct(conn, pCode);
+		
+		close(conn);
+		
+		return p;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

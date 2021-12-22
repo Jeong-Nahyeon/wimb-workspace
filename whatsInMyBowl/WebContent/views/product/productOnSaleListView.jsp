@@ -248,7 +248,7 @@
 		<div class="product-list-area">
 
 			<div class="title-area">
-				<h4>샐러드</h4>
+				<h4>Sale 상품</h4>
 			</div>
 
 			<div class="sort-list-area" align="right">
@@ -283,6 +283,7 @@
 					<% for (Product p : saleList) { %>
 						<div class="product">
 							<div class="product-img">
+								<input type="hidden" name="pcode" value="<%= p.getpCode() %>">
 								<img src="<%= contextPath %>/<%= p.getFilePath() + p.getpMainImg() %>">
 							
 								<!-- case1. 찜 안 했을 경우 -->
@@ -307,6 +308,24 @@
 				
 
 			</div>
+			<script>
+				$(function(){
+					// 상품 이미지 클릭 시 상세 페이지로 이동
+					$(".product-img").on("click", "img", function(){
+						//console.log($("input:hidden", this).val());
+						location.href="<%= contextPath %>/detail.pr?pcode=" + $(this).prev().val();
+					});
+
+					// 카트 아이콘 클릭 테스트용
+					$(".product").on("click", ".cart-btn", function(){
+						
+						$("#cart-modal").modal("show");
+
+					});
+
+				});
+			</script>
+
 
 			<!-- 페이징바 -->
 			<div id="paging-bar">

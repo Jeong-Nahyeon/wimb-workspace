@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.wimb.product.model.vo.Product" %>
+    
+<%
+	Product p = (Product)(request.getAttribute("p"));
+%>    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +18,7 @@
 <style>
 	.outer{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		margin:auto;
 		margin-top:20px;
 		width:1000px;
@@ -24,7 +29,7 @@
 
 	.main{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		margin:auto;
 		margin-bottom: 20px;
 		width:90%;
@@ -33,7 +38,7 @@
 	
 	.main-left, .main-right{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		width:50%;
 		height:100%;
 		float:left;
@@ -60,7 +65,7 @@
 
 	.main-right>.main-content{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		width:400px;
 		height:400px;
 		position:absolute;
@@ -72,29 +77,88 @@
 		
 	}
 
+	
 	.content, .amount,.total-price, .main-btns{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		width:100%;
 	}
-
+	
 	.content{
 		border-bottom:2px solid lightgray;
 		height:50%;
 		margin-bottom:10px;
+		position:relative; z-index:1;
+	}
+	
+	#extra-fee{
+		border:2px solid lightgray;
+		background:white;
+		width:250px;
+		height:70px;
+		padding:5px;
+		position:relative;
+		z-index:5; top:-125px;
+		left:145px;
+		display:none;
+	}
+
+	#extra-fee ul{
+		font-size:13px;
+		font-weight:bolder;
+		padding-left:30px;
+		margin-top:10px;
+	}
+
+	#extra-fee-btn{
+		margin-left:55px;
+		font-size:12px;
+		border:1px solid lightgray;
+	}
+
+	#line-through-cost{
+		font-weight:bolder;
+		text-decoration:line-through;
+		color:lightgray;
+		display: inline-block;
+	}
+
+	.discount-area{
+		font-weight:bolder;
+		color:salmon;
+		display:inline-block;
+	}
+
+	.cost-area{
+		font-weight:bolder;
+		display: inline-block;
 	}
 
 	.amount{
 		border-bottom:2px solid lightgray;
 		height:15%;
 		margin-bottom:10px;
-		padding-top: 10px;
+	}
+
+	#amount{
+		width:50px;
+		height:25px;
+		text-align:center;
+		border:1px solid lightgray;
+		margin:0 5px;
 	}
 
 	.total-price{
 		height:15%;
 		margin-bottom:10px;
 		padding-top: 10px;
+	}
+
+	.total-price-area{
+		color:#9BD5BD;
+		font-size:30px;
+		font-weight:bolder;
+		margin-left:30px;
 	}
 	
 	.main-btns{
@@ -105,12 +169,26 @@
 		margin-top:10px;
 	}
 
+	#buy-btn{
+		background:#9BD5BD;
+		color:white;
+		font-weight:bolder;
+		width:100%;
+	}
+
+	#cart-btn{
+		border:1px solid #9BD5BD;
+		color:#9BD5BD;
+		font-weight:bolder;
+		width:100%;
+	}
+
 
 	/* 상세설명, 리뷰, 배송정보, 상품문의 이동 버튼 */
 
 	.btns{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		margin:auto;
 		margin-bottom: 20px;
 		width:90%;
@@ -118,7 +196,7 @@
 	}
 	.btn-detail, .btn-review, .btn-delivery, .btn-QnA{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		width:25%;
 		height:100%;
 		float:left;
@@ -139,7 +217,7 @@
 	/* 상품 상세 설명 */
 	.detail{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		margin:auto;
 		margin-bottom: 20px;
 		width:90%;
@@ -148,7 +226,7 @@
 
 	.detail-content, .detail-img{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		width:100%;
 	}
 
@@ -167,7 +245,7 @@
 	
 	.delivery-info{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		margin:auto;
 		margin-bottom: 20px;
 		width:90%;
@@ -176,7 +254,7 @@
 
 	.delivery-info-title{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		height:13%;
 		margin-bottom: 10px;
 		border-bottom: 2px solid lightgray;
@@ -184,7 +262,7 @@
 
 	.delivery-info-content{
 		box-sizing: border-box;
-		border:1px solid red;
+		/* border:1px solid red; */
 		height:84%;
 		padding:10px;
 	}
@@ -233,80 +311,111 @@
 		<!-- 상품 상세 메인 -->
 		<div class="main">
 			<div class="main-left">
-				<img src="">
+				<img src="<%= p.getFilePath() %><%= p.getpMainImg() %>">
 			</div>
 			<div class="main-right">
 				<div class="main-content">
 
-					<!-- 지역별 추가 배송비 창 => 기본 안 보이게 설정 -->
-					<div class="extra-fee" style="border:2px solid lightgray; background:white; width:250px; height:100px; padding:5px; position:relative; z-index:2; top:260px; left:145px; display: none;">
-						<i class="far fa-times-circle" style="margin-left: 215px; color:lightgray;"></i>
-						
-						<ul style="font-size:13px; font-weight: bolder; padding-left:30px; margin-top:10px;">
-							<li>제주특별자치도 서귀포시 3000원</li>
-							<li>제주특별자치도 제주시 3000원</li>
-						</ul>
-					</div>
-					<div class="content" style="position:relative; z-index:1;">
-						<h2 style="font-weight: bolder;">닭가슴살 샐러드</h2>
+					<div class="content">
+						<h4 style="font-weight: bolder;"><%= p.getpName() %></h4>
 						<br>
-						<!-- case1. 원가 -->
-						<h5 style="font-weight: bolder; ">4900원</h5>
-						<!-- case2. 할인가 -->
-						<!-- <h5 style="font-weight: bolder; text-decoration: line-through; color:lightgray; display: inline-block;">4900원</h5>
-						<h3 style="font-weight: bolder; color:salmon; display: inline-block;">4410원</h3> -->
+						<% if(p.getDiscountPrice() != 0) { %>
+							<!-- case1. 할인가 -->
+							<h5 id="line-through-cost"><%= p.getpPrice() %>원</h5>
+							<h3 id="discount" class="discount-area"><%= p.getDiscountPrice() %></h3>
+							<h5 class="discount-area">원</h5>
+						<% } else { %>
+							<!-- case2. 원가 -->
+							<h3 id="cost" class="cost-area"><%= p.getpPrice() %></h3>
+							<h5 class="cost-area">원</h5>
+						<% } %>
 						<br>
 						<span style="font-size: 12px;">
 							배송정보 3,000원 / 주문 시 결제 (선결제)
 						</span>
-						<button type="button" class="btn btn-sm " style="margin-left:55px; font-size:12px; border:1px solid lightgray;">지역별 배송비 추가</button>
+						<button id="extra-fee-btn" type="button" class="btn btn-sm ">지역별 배송비 추가</button>
 						<br>
 						<span style="font-size: 12px;">
 							전체 결제 금액의 1% 적립 (배송비 제외)
 						</span>
+						<!-- 지역별 추가 배송비 창 => 기본 안 보이게 설정 -->
+						<div id="extra-fee">
+							<ul>
+								<li>제주특별자치도 서귀포시 3000원</li>
+								<li>제주특별자치도 제주시 3000원</li>
+							</ul>
+						</div>
+						<script>
+							$(function(){
+
+								$("#extra-fee-btn").click(function(){
+									const $content = $("#extra-fee");
+									if($content.css("display") == "none") {
+										$content.css("display", "block");
+									} else {
+										$content.css("display", "none");
+									}
+								});
+
+							});
+						</script>
 					</div>
 					
-					<div class="amount">
-						<span>닭가슴살 샐러드</span>
-						<span style="margin-left:175px;">
+					<div class="amount" align="right">
+						<span><%= p.getpName() %></span>
+						<br>
+						<span>
 							<i class="fas fa-minus" onclick='count("minus")' value="-" style="cursor:pointer" style="color:lightgray;"></i>
-							<input type="text" id="amount" name="amount" value="1" readonly style="width:50px; height:25px; text-align:center; border:1px solid lightgray; margin:0 5px;">
+							<input type="text" id="amount" name="amount" value="1" readonly>
 							<i class="fas fa-plus" onclick='count("plus")' value="+" style="cursor:pointer"></i>
 						</span>
 					</div>
-					<!-- 수량 표시 영역 기능 -->
+					<!-- 수량 및 합계금액 표시 -->
 					<script>
 						function count(type)  {
-							// 결과를 표시할 element
-							const amount = document.getElementById('amount');
 							
-							// 현재 화면에 표시된 값
-							let number = amount.value;
+							// 수량 표시
+							let $number = $("#amount").val(); // 수량 표시될 input 
 							
-							// 더하기/빼기
-							if(type === 'plus') {
-								number = parseInt(number) + 1;
-							}else if(type === 'minus')  {
-								if(number != '1'){
-									number = parseInt(number) - 1;
+							if(type == 'plus') {
+								$number = parseInt($number) + 1;
+							}else if(type == 'minus')  {
+								if($number != '1'){
+									$number = parseInt($number) - 1;
 								} else{
-									number = 1;
+									$number = 1;
 								}
-								
 							}
-							
-							// 결과 출력
-							amount.value = number;
+
+							$("#amount").val($number);
+
+							// 합계금액 표시
+							let $discount = $("#discount").text(); // 할인가
+							let $cost = $("#cost").text(); // 원가
+							let $num = $("#amount").val(); // 수량
+
+							if($discount != 0){
+								$("#total-discount").text($discount * $num);
+							} else {
+								$("#total-cost").text($cost * $num);
+							}
+
 						}
+
 					</script>
 
 					<div class="total-price" align="right">
 						<span style="font-size:20px; font-weight: bolder;">총 합계 금액</span>
-						<!-- case1. 원가 총합 -->
-						<span style="color:#9BD5BD; font-size:30px; font-weight: bolder; margin-left:30px;">4900원</span>
-						<!-- case2. 할인가 총합 -->
-						<!-- <span style="color:#9BD5BD; font-size:30px; font-weight: bolder; margin-left:30px;">4410원</span> -->
-					</div>
+						<% if(p.getDiscountPrice() != 0) { %>
+							<!-- case1. 할인가 총합 -->
+							<span id="total-discount" class="total-price-area"><%= p.getDiscountPrice() %></span>
+							<span style="color:#9BD5BD; font-size:20px; font-weight: bolder;">원</span>
+						<% } else { %>
+							<!-- case2. 원가 총합 -->
+							<span id="total-cost" class="total-price-area"><%= p.getpPrice() %></span>
+							<span style="color:#9BD5BD; font-size:20px; font-weight: bolder;">원</span>
+						<% } %>
+						</div>
 
 					<table class="main-btns">
 						<tr>
@@ -317,10 +426,10 @@
 								<!-- <i class="fas fa-heart fa-2x" style="color:#9BD5BD;"></i> -->
 							</td>
 							<td class="buy-btn" width="40%">
-								<button class="btn" style="background:#9BD5BD; color:white; font-weight: bolder; width:100%;">바로구매</button>
+								<button id="buy-btn" class="btn">바로구매</button>
 							</td>
 							<td class="cart-btn" width="40%">
-								<button class="btn" id="cart-btn"style="border:1px solid #9BD5BD; color:#9BD5BD; font-weight: bolder; width:100%;">장바구니</button>
+								<button id="cart-btn" class="btn">장바구니</button>
 							</td>
 						</tr>
 					</table>
@@ -347,11 +456,10 @@
 		<!-- 상품 상세 설명 -->
 		<div id="detail" class="detail" align="center">
 			<div class="detail-content">
-				<p>상품상세설명내용</p>
+				<p><%= p.getpDetail() %></p>
 			</div>
 			<div class="detail-img">
-				상품상세설명이미지
-				<img src="">
+				<img width="100%" src="<%= p.getFilePath() %><%= p.getpDetailImg() %>">
 			</div>
 		</div>
 
@@ -364,7 +472,17 @@
 				<h4 style="font-weight: bolder;">배송정보</h4>
 			</div>
 			<div class="delivery-info-content">
-				<p>배송정보내용</p>
+				<p>
+					배송 비용 : 3,000원 (결제금액 50,000원 이상 무료) <br>
+					배송 기간 : 1~2일 (제주도, 도서산간 2~3일) <br>
+					배송 안내 : <br>
+					- 제주 및 도서 산간지역은 운임 3,000원이 추가 됩니다. <br>
+					- <b style="color:salmon">주문량이 많은 경우 배송 지연이 발생할 수 있습니다.</b> <br>
+					- 신선 식품 배송으로 월요일 및 공휴일 다음날은 배송이 불가합니다. <br>
+					- 롯데 택배로 배송되며, 상품 출고 후 송장번호가 문자로 발송됩니다. [오후 5시 이후] <br> 
+					- 스티로폼 박스에 아이스팩과 함께 포장하여 배송됩니다. (단, 겨울철에는 아이스팩을 제외하고 배송됩니다) <br>
+					- 고객님께서 주문하신 상품은 발송되는 날, 당일 제작하여 배송됩니다. <br>
+				</p>
 			</div>
 		</div>
 
