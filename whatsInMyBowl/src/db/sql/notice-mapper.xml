@@ -49,6 +49,49 @@
 		   AND NOTICE_CODE = ?
 	</entry>
 	
+	<entry key="insertNotice">
+		INSERT
+		  INTO NOTICE
+		  (
+		    NOTICE_CODE
+		  , NOTICE_TITLE
+		  , NOTICE_CONTENT
+		  )
+		  VALUES
+		  (
+		    SEQ_NOTICE.NEXTVAL
+		  , ?
+		  , ?
+		  )
+	</entry>
 	
+	<entry key="insertFile">
+	 INSERT 
+	   INTO "FILE"
+	   (
+	     F_CODE
+	   , F_NAME
+	   , F_RENAME
+	   , F_PATH
+	   , F_EXTENSION
+	   , F_REF
+	   , F_REFCODE
+	   )
+	   VALUES
+	   (
+	     SEQ_FILE.NEXTVAL
+	   , ?
+	   , ?
+	   , ?
+	   , SUBSTR(?,INSTR(?,'.', -1)+1)
+	   , 'N'
+	   , SEQ_NOTICE.CURRVAL
+	   )
+	</entry>
 	
+	<entry key="deleteNotice">
+		UPDATE NOTICE
+			   SET NOTICE_STATUS = 'N'
+			 WHERE NOTICE_CODE = ?	
+	</entry>
 </properties>

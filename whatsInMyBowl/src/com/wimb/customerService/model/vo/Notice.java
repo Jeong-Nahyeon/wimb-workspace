@@ -32,8 +32,6 @@ public class Notice {
 		this.noticeView = noticeView;
 	}
 	
-	
-
 	public Notice(int noticeCode, String noticeTitle, String noticeContent, Date noticeDate, int noticeView) {
 		super();
 		this.noticeCode = noticeCode;
@@ -42,7 +40,14 @@ public class Notice {
 		this.noticeDate = noticeDate;
 		this.noticeView = noticeView;
 	}
-
+	
+	public Notice(String noticeTitle, String noticeContent) {
+		super();
+		this.noticeTitle = noticeTitle;
+		this.noticeContent = noticeContent;
+	}
+	
+	
 	public int getNoticeCode() {
 		return noticeCode;
 	}

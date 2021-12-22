@@ -105,6 +105,22 @@
     	background: lightgray;
     	cursor: pointer;
     }
+ 	/*공지사항 삭제 모달*/
+
+     .delete_text{
+         text-align: center;
+      }
+     .delete_text span{
+         display: block;
+         margin: 10px 0;
+     }
+     .delete_btn{
+         margin: 40px 5px 5px 5px;
+         text-align: center;
+     }
+     .delete_btn button{
+         margin: 0 10px;
+     }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -125,8 +141,8 @@
 
         <div class="notice_Box">
             <div class="notice_Box_top">
-                <button class="notice_Box_top_left">새 글 등록</button>
-                <button class="notice_Box_top_bottom">선택삭제</button>
+                <button class="notice_Box_top_left" onclick="location.href='<%= contextPath %>/adminEnrollForm.no';">새 글 등록</button>
+                <button class="notice_Box_top_bottom" data-toggle="modal" data-target="#banner_delete_Modal">선택삭제</button>
             </div>
             <table>
                 <tr class="noticeList_header" style="background-color: rgb(234, 234, 234);">
@@ -139,7 +155,7 @@
                 </tr>
                 <% for(Notice n : noticeList) { %>
                 <tr>
-                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1"></td>
+                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1" name="check"></td>
                     <td class="noticeList_num"><%= n.getNoticeCode() %></td>
                     <td class="noticeList_title"><%= n.getNoticeTitle() %></td>
                     <td class="noticeList_update_delete">
@@ -183,21 +199,87 @@
                     <button id="search_btn">검색</button>
                 </form>
             </div>
+            
+         <!-- 공지사항 삭제 관련 모달-->
+            <!-- The Modal -->
+            <div class="modal" id="banner_delete_Modal">
+                <div class="modal-dialog">
+                <div class="modal-content">
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <!-- <form action="" >  -->
+                            <div class="delete_text">
+                                <span>선택하신 배너를 삭제합니다.</span>
+                                <span>정말 삭제하시겠습니까?</span>
+                                <span>(삭제 후 복구불가)</span>
+                            </div>
+                            <div class="delete_btn">
+                                <button class="btn btn-sm btn btn-outline-warning" data-toggle="modal" onclick="deletecheck();">삭제</button>
+                                <button type="reset" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">취소</button>
+                            </div>
+                        <!-- </form>  -->
+                    </div>
+                </div>
+                </div>
+            </div>
 
             <script>
             
     		// 상세보기 시 필요한 게시판 번호를 넘기는 함수 ------------------------------------------
         	$(function(){
-        		$(".notice_Box table tr").click(function(){
+        		$(".notice_Box table tr>td:nth-child(2)").click(function(){
         			
-        			const num =  $(this).children().eq(1).text();
+        			const num =  $(this).text();
         			location.href='<%= contextPath %>/detailAdminView.no?num=' + num;
-        	// ----------------------------------------------------------------------		
         			
         		})
         	})
-            
-            
+        	// ----------------------------------------------------------------------		
+	        
+        	// 선택 삭제 ------------------------------------------------------------------
+	        function deletecheck(){
+	    		promise1()
+	    		.then(successCheck)
+	    		.catch(failCheck);
+	    	}
+	    	
+	    	function promise1(){
+	    		var count = $("input[name='check']:checked").length;
+	    		var checkArr = new Array();
+	    		 $("input[name='check']:checked").each(function(){
+	                 checkArr.push($(this).parent().siblings(".noticeList_num").text())
+	             });
+	    		 
+	             return new Promise(function(resolve, reject){
+	                 $.ajax({
+	                     url:"delete.no",
+	                     dataType:"json",
+	                     traditional:true,
+	                     data:{
+	                         count:count,
+	                         checkArr:checkArr
+	                     },
+	                     success:function(result){
+	                         console.log("프로미스1 성공")
+	                         resolve(result);
+	                     },
+	                     error:function(){
+	                         console.log("ajax 통신 실패");
+	                     }
+	                 })
+	             })
+	    	}
+	    	  function successCheck(){
+	              alert("공지사항 삭제 완료")
+	              location.reload();
+	          }
+	
+	          function failCheck(){
+	              alert("삭제에 실패하였습니다.")
+	          }    	
+	    	// ------------------------------------------------------------------------            
+	            
             
             
             

@@ -1,6 +1,8 @@
 package com.wimb.customerService.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,9 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.oreilly.servlet.MultipartRequest;
-import com.wimb.admin.model.service.bannerService;
-import com.wimb.admin.model.vo.Banner;
 import com.wimb.common.WimbFileRenamePolicy;
+import com.wimb.common.model.vo.File;
+import com.wimb.customerService.model.service.NoticeService;
+import com.wimb.customerService.model.vo.Notice;
 
 /**
  * Servlet implementation class NoticeAdminInsertController
@@ -48,26 +51,39 @@ public class NoticeAdminInsertController extends HttpServlet {
 			MultipartRequest multi = null;
 			multi = new MultipartRequest(request, savePath, maxSize, "UTF-8", new WimbFileRenamePolicy()); 
 			
-			String bannerTitle = multi.getParameter("bannerTitle");
-			String bannerPosition = multi.getParameter("bannerPosition");
-			String bannerPath = "resources/images/notice_upfiles/";	
-			String originName = multi.getOriginalFileName("bannerFile");
-			String changeName = multi.getFilesystemName("bannerFile");				
+			String noticeTitle = multi.getParameter("title");
+			String noticeContent = multi.getParameter("content");
 			
-			Banner b = new Banner(bannerTitle, bannerPosition, bannerPath, originName, changeName);
+			Notice n = new Notice(noticeTitle, noticeContent);
 			
-		
-			int result = new bannerService().insertBanner(b);
+			// File에 여러번 insert할 데이터 뽑기
+			ArrayList<File> list = new ArrayList<>(); // 공지사항 등록 시 첨부파일이 없을 수도 있고, 여러개 존재할수도 있음
 			
-			if(result > 0) { // 성공 => /wimb/list.banner 재요청
-				request.getSession().setAttribute("alertMsg", "배너 등록 완료");
-				response.sendRedirect(request.getContextPath() + "/list.banner?cpage=1");
-			} else { // 실패 => 에러페이지
-				request.setAttribute("errorMsg", "배너 등록 실패");
-				request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
+			for(int i=0; i<=2; i++) {
+				String key = "file" + i;
 				
+				if(multi.getOriginalFileName(key) != null) { 
+					// 첨부파일이 존재할경우 => File 객체 생성 => 원본명, 수정명, 저장경로, 확장자 
+					File f = new File();
+					f.setfName(multi.getOriginalFileName(key));
+					f.setfRename(multi.getFilesystemName(key));
+					f.setfPath("resources/images/notice_upfiles/");
+					
+					list.add(f);
+				}
 			}
-
+			
+			// list : 넘어온 첨부파일이 없다면 null로 전달
+			int result = new NoticeService().insertNotice(n, list);
+		
+			if(result > 0) { // 성공 => URL 재요청
+				request.getSession().setAttribute("alertMsg", "공지사항 등록 완료");
+				response.sendRedirect(request.getContextPath() + "/adminListView.no?cpage=1");
+			} else { // 실패 => 에러페이지
+				request.setAttribute("errorMsg", "공지사항 등록 실패");
+				request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);	
+			}
+			
 		}
 		
 	}

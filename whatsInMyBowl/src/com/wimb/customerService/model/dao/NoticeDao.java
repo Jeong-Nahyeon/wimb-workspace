@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.wimb.common.model.vo.File;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.customerService.model.vo.Notice;
 
@@ -176,11 +177,73 @@ private Properties prop = new Properties();
 	}	
 	
 	
+	public int insertNotice(Connection conn, Notice n) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, n.getNoticeTitle());
+			pstmt.setString(2, n.getNoticeContent());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
 	
+	// 첨부파일이 존재할경우에만 실행되는 dao
+	public int insertFile(Connection conn, ArrayList<File> list) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertFile");
+		
+		try {
+			
+			for(File f : list) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, f.getfName());
+				pstmt.setString(2, f.getfRename());
+				pstmt.setString(3, f.getfPath());
+				pstmt.setString(4, f.getfRename());
+				pstmt.setString(5, f.getfRename());
+				
+				result = pstmt.executeUpdate();
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
-	
-	
-	
+	public int deleteNotice(Connection conn, String nCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nCode);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
+		
 	
 	
 	

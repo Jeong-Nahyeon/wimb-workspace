@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.wimb.admin.model.dao.bannerDao;
+import com.wimb.common.model.vo.File;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.customerService.model.dao.NoticeDao;
 import com.wimb.customerService.model.vo.Notice;
@@ -57,8 +58,43 @@ public class NoticeService {
 		return list;
 	}
 	
+	// 공지사항 등록하는 Service
+	public int insertNotice(Notice n, ArrayList<File> list) {
+		Connection conn = getConnection();
+		
+		System.out.println(list);
+		int result1 = new NoticeDao().insertNotice(conn, n); // 공지사항 테이블에 insert
+		int result2 = 1;
+		
+		System.out.println(result2);
+		
+		if(list != null) {
+			result2 = new NoticeDao().insertFile(conn, list);
+		}
+		
+		System.out.println(result1);
+		System.out.println(result2);
+		if(result1 > 0 && result2 >0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+
+		return result1*result2;
+	}
 	
-	
+	public int deleteNotice(String nCode) {
+		Connection conn = getConnection();
+		int result = new NoticeDao().deleteNotice(conn, nCode);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
 	
 
 }

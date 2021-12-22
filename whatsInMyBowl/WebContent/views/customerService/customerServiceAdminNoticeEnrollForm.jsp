@@ -23,10 +23,11 @@
     .insertNotice_title_input{width: 100%;}
     .insertNotice_title_input:focus{outline: none;}
     .insertNotice_content{vertical-align: top;}
+    .insertNotice_content_textarea{color: gray;}
     .insertNotice_content_textarea:focus{outline: none;}
     .insertNotice_title_input, .insertNotice_file_input, .insertNotice_content_textarea{
         margin: 5px 0;
-        padding: 3px;
+        padding: 10px 5px;
     }
     .two_btn button{
         border: none;
@@ -34,7 +35,7 @@
         border-radius: 5px;
         font-size: 13px;
         padding: 3px 10px;
-        margin-top: 50px;
+        margin: 20px 0 ;
     }
     .two_btn button:focus{outline: none;}
     #insert{
@@ -42,8 +43,7 @@
         padding:3px 23px;
     }
     /* 첨부파일 영역 css*/
-	#parah input[id^=test]{margin: 5px 0 0 0;}
-    .filebox .upload-name {
+    .filebox input[class^=upload-file]{
         display: inline-block;
         height: 40px;
         padding: 0 10px;
@@ -60,7 +60,7 @@
         background-color: #999999;
         cursor: pointer;
         height: 40px;
-        margin-left: 10px;
+        margin-left: 3px;
     }
     .adddeletebtn{
         padding: 4px 4px;
@@ -79,7 +79,7 @@
         overflow: hidden;
         border: 0;
     }
-    .upload-name{margin: 3px 0;}
+    input[class^=upload-file]{margin: 3px 0;}
 
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -107,23 +107,19 @@
 	            </tr>
 	            <tr>
 	                <td class="insertNotice_file">첨부파일</td>
-	                <td style="border: 1px solid gray; padding: 10px 5px;">
+	                <td style="border: 1px solid gray; padding: 10px 0 10px 5px">
                         <div class="filebox">
-                            <input class="upload-name" value="첨부파일을 등록해주세요" placeholder="첨부파일">
+                            <input class="upload-file" value="첨부파일을 등록해주세요" placeholder="첨부파일">
                             <label for="file" style="margin: 0;">파일찾기</label> <input type="button" value="추가" class="adddeletebtn" onclick="addInput();" />
-                            <input type="file" id="file">
-                            <div id="parah"></div> <!-- 추가 버튼 클릭 시 새로운 첨부파일이 생성되는 영역-->
+                            <input type="file" id="file" name="file0">
+                            <div id="parah"><!-- 추가 버튼 클릭 시 새로운 첨부파일이 생성되는 영역--></div> 
                         </div>
-
-                        <!--
-                            <input type="file" name="attachFile" /> <input type="button" value="추가" onclick="addInput();" />
-                        -->
                         
                     </td>
 	            </tr>
 	            <tr>
 	                <td class="insertNotice_content">내용</td>
-	                <td><textarea name="" id="" cols="100" rows="20"  class="insertNotice_content_textarea" required>내용을 입력해주세요</textarea></td>
+	                <td><textarea name="content" cols="100" rows="20"  class="insertNotice_content_textarea" required style="resize: none;">내용을 입력해주세요</textarea></td>
 	            </tr>
 	        </table>
             
@@ -136,9 +132,10 @@
 
         <script>
             // 첨부파일 등록 시 파일명 보여지게 하는 함수
-            $("#file").on('change',function(){
-                var fileName = $("#file").val();
-                $(".upload-name").val(fileName);
+            //$("#enroll-form input[type=file]").on('change',function(){
+            $(document).on("change", "#enroll-form input[type=file]", function(){
+                var fileName = $(this).val();
+                $(".upload-" + $(this).attr("id")).val(fileName);
             });
 
         	// 첨부파일 부분 (추가, 삭제 버튼 구현)----------------------------------------------------------------------
@@ -147,13 +144,17 @@
             
             function addInput() {
                 arrInput.push(arrInput.length);
-                arrInputValue.push("");
-                display();
+                if(arrInput.length>3){
+                	alert("첨부파일은 최대3개까지 등록가능합니다.")
+                } else{
+	                arrInputValue.push("");
+	                display();  	
+                }
             }
             
             function display() {
             document.getElementById('parah').innerHTML="";
-                for (intI=0;intI<arrInput.length;intI++) {
+                for (intI=1;intI<arrInput.length;intI++) {
                     document.getElementById('parah').innerHTML+=createInput(arrInput[intI], arrInputValue[intI]);
                 }
             }
@@ -163,9 +164,9 @@
             }  
             
             function createInput(id,value) {
-                return "<input class='upload-name' value='첨부파일을 등록해주세요' placeholder='첨부파일'>\
-                        <label for='file' style='margin: 0;'>파일찾기</label>\
-                        <input type='file' class='file' id='test"+ id +"' onChange='javascript:saveValue("+ id +",this.value)' value='"+ value +"'>\
+                return "<input class='upload-file" + id + "' value='첨부파일을 등록해주세요' placeholder='첨부파일'>\
+                        <label for='file" + id + "' style='margin: 0;'>파일찾기</label>\
+                        <input type='file' class='file' id='file"+ id +"' name='file"+ id +"'onChange='javascript:saveValue("+ id +",this.value)' value='"+ value +"'>\
                         <input type='button' class='adddeletebtn' value='삭제' onclick='deleteInput();'/><br>"
             }
             
@@ -176,44 +177,6 @@
                 }
                 display(); 
             }	
-            // ------------------------------------------------------------------------------------------------------
-        	/*
-            const search_Form = document.querySelector('.search_Form')
-            const searchBox = document.querySelector('.search_category_input')
-            const searchHistory = document.querySelector('search_btn')
-
-            function createSearchHistoryList(){
-                if(searchHistoryListIndex < searchHistoryList.length){
-                    var a = document.createElement('a');
-                    const aText = searchHistoryList[searchHistoryListIndex];
-                    searchHistory.appendChild(a);
-                    a.outerHTML = '<a href="http://google.com/search?q=${aText}">${aText}</a><br>'
-                    searchHistoryListIndex++;
-                    createSearchHistoryList();
-                }
-            }
-            function handleSearch(event){
-                event.preventDefault();
-                const sValue = searchBox.value;
-                searchOnInput(sValue);
-            }
-            function search(){
-                search_Form.addEventListener("submit", handleSearch)
-            }
-            function searchOnInput(sValue){
-                loaction.href='http://google.com/search?q=${sValue}';
-            }
-            function init(){
-                search()
-                createSearchHistoryList()
-            }
-            init()
-
-
-            $(document).ready(function(){
-                $(":button")
-            });
-            */
         </script>
 
     </div>
