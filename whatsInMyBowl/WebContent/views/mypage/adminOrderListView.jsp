@@ -138,9 +138,9 @@
         </div>
 
         <div class="menus">
-            <button type="button" id="order"><b>주문내역</b></button>
-            <button type="button" id="refund"><b>환불내역</b></button>
-            <button type="button" id="cancel"><b>취소내역</b></button>
+            <button type="button" id="orderLIst"><b>주문내역</b></button>
+            <button type="button" id="refundLIst"><b>환불내역</b></button>
+            <button type="button" id="cancelList"><b>취소내역</b></button>
         </div>
         
         <div>

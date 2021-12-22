@@ -261,7 +261,7 @@
 	
 	<entry key="selectListCount">
 		SELECT
-		       *
+		       (*)"COUNT"
 		  FROM "ORDER"
 	</entry>
 	
