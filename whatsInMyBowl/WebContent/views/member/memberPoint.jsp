@@ -39,6 +39,28 @@
         height: 100px;
         margin-top: 50px;
     }
+    #lookupPeriod{border: 1px solid black; margin-bottom:50px;}
+    #lookupPeriod ul{padding:0; margin-top:20px;}
+    #lookupPeriod li{
+        list-style-type: none;
+        display:inline;
+        font-size: 12px;
+        margin:5px;
+    }
+    #lookupPeriod button{
+        width:45px;
+        font-size: 11px;
+        background-color:rgb(155, 213, 189);
+        color: white;   
+        border:none; 
+    }
+    #lookupPeriod button:hover{opacity:0.5;}
+    #lookupPeriod input{
+        width: 100px;
+        font-size: 12px;
+    }
+    #pointListTable{width:100%; font-size: 12px;}
+    #pointListTable td{width: 100px;}
 </style>
 </head>
 <body style="height:100%">
@@ -47,7 +69,7 @@
     <% 
 		String userId = loginUser.getmId();
 		String userPwd = loginUser.getmPwd();
-        String point = loginUwer.getmPoint();
+        int point = loginUser.getmPoint();
 	%>
 	
 
@@ -62,21 +84,21 @@
                 <div>
                     현재 적립금
                 </div>
-                <div style="color:rgb(155, 213, 189); font-weight: 900; font-size: 25px;">
-                    <%= point %>
+                <div style="color:rgb(155, 213, 189); font-weight: 900; font-size: 24px;">
+                    <%= point %>원
                 </div>
             </div>
             <br clear="both">
-            <div id="lookupPeriod">
+            <div id="lookupPeriod" width="600">
                 <ul>
                     <li>
                         조회기간
                     </li>
                     <li>
-                        <button></button>
-                        <button></button>
-                        <button></button>
-                        <button></button>
+                        <button>7일</button>
+                        <button>1개월</button>
+                        <button>3개월</button>
+                        <button>1년</button>
                     </li>
                     <li>
                         <input type="date">
@@ -85,16 +107,22 @@
                         <input type="date">
                     </li>
                     <li>
-                        <button></button>
+                        <button>조회</button>
                     </li>
                 </ul>
             </div>
-            <div>
-                <p align="left" style="margin:0;">
+            <div id="pointListTable">
+                <p align="left" style="margin:0; font-size:13px; border-bottom:1px solid black;">
                     2021/11/30 ~ 2021/12/24 까지의 적립금 조회내역
                 </p>
-                <table border id="pointListTable">
-                    <tr>
+                <table id="pointListTable">
+                    <tr style="background-color:rgba(231, 231, 231, 0.438);">
+                        <td>날짜</td>
+                        <td colspan="2">내용</td>
+                        <td>포인트내역</td>
+                        <td>잔여포인트</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid lightgrey;">
                         <td>날짜</td>
                         <td colspan="2">내용</td>
                         <td>포인트내역</td>

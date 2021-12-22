@@ -108,7 +108,7 @@
 				<i class="fas fa-star-of-life"></i> 필수입력사항
 			</p>
 		</div>
-		<form action="<%=contextPath %>/enroll.me" align="center" type="post" id="enrollForm" onsubmit="return enroll()" >
+		<form action="<%=contextPath %>/enroll.me" align="center" method="post" id="enrollForm" onsubmit="return enroll()" >
 		
 			<table id="enrollFormTable" align="center">
 				<tr>
