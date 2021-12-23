@@ -66,14 +66,10 @@ public class NoticeService {
 		int result1 = new NoticeDao().insertNotice(conn, n); // 공지사항 테이블에 insert
 		int result2 = 1;
 		
-		System.out.println(result2);
-		
-		if(list != null) {
+		if(!list.isEmpty()) {
 			result2 = new NoticeDao().insertFile(conn, list);
 		}
 		
-		System.out.println(result1);
-		System.out.println(result2);
 		if(result1 > 0 && result2 >0) {
 			commit(conn);
 		} else {
@@ -119,7 +115,7 @@ public class NoticeService {
 		int result1 = new NoticeDao().updateNotice(conn, n);
 		
 		int result2 = 1;
-		if(list != null) { // 새로운 첨부파일이 있었을 경우
+		if(!list.isEmpty()) { // 새로운 첨부파일이 있었을 경우
 			
 			for(File f:list) {
 				if(f.getfCode() != 0) { // 기존의 첨부파일이 있었을 경우 => update file
@@ -143,7 +139,23 @@ public class NoticeService {
 		
 	}
 	
+	/* 검색기능 */
+	public ArrayList<Notice> searchTitle(String searchWord){
+		Connection conn = getConnection();
+		ArrayList<Notice> list = new NoticeDao().searchTitle(conn, searchWord);
+		
+		close(conn);
+		return list;
+	}
 	
+	// 검색된 페이징바에 사용할 등록된 공지사항글의 총 갯수를 구하는 Service
+	public int selectSerachListCount(String searchWord) {
+		 Connection conn = getConnection();
+		 int listCount = new NoticeDao().selectSerachListCount(conn, searchWord);
+		 close(conn);
+		 
+		 return listCount;
+	}
 	
 	
 }

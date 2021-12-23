@@ -2,14 +2,14 @@
     pageEncoding="UTF-8" import="java.util.ArrayList, com.wimb.customerService.model.vo.Notice, com.wimb.common.model.vo.PageInfo"%>
 <%
 	
-	ArrayList<Notice> noticeList = (ArrayList<Notice>)request.getAttribute("noticeList");
-	// 조회된 공지사항 리스트가 담겨있는 list
+	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
+	// 검색된 공지사항 리스트가 담겨있는 list
 	
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
-	int maxPage = pi.getMaxPage();
+	int maxPage = pi.getMaxPage();	
 %>
 <!DOCTYPE html>
 <html>
@@ -136,7 +136,7 @@
     <div class="outer">
         <div id="mainTitle">
             <h2 id="mainTitle1">고객센터관리</h2>
-            <h2>> 공지사항</h2>
+            <h2>> 공지사항 검색</h2>
         </div>
 
         <div class="notice_Box">
@@ -156,7 +156,7 @@
 	                </tr>
             	</thead>
             	<tbody>
-	                <% for(Notice n : noticeList) { %>
+	                <% for(Notice n : list) { %>
 	                <tr class="noticeList_header2">
 	                    <td class="noticeList_checkbox_main"><input type="checkbox" id="notice1" name="check"></td>
 	                    <td class="noticeList_num"><%= n.getNoticeCode() %></td>
@@ -174,25 +174,25 @@
             	
             	</tbody>
             </table>
-
+            
 	        <div class="paging-area">
 	            <% if(currentPage != 1) { %>
-	            	<button onclick="location.href='<%= contextPath %>/adminListView.no?cpage=<%=currentPage-1%>';">&lt;</button>
+	            	<button onclick="location.href='<%= contextPath %>/search.no?cpage=<%=currentPage-1%>';">&lt;</button>
 	            <% } %>
 	            
 	            <% for(int p=startPage; p<=endPage; p++) { %>
 	            	<% if(p == currentPage) { %>
 	            		<button disabled><%= p %></button>
 	            	<% } else { %>
-	            		<button onclick="location.href='<%= contextPath %>/adminListView.no?cpage=<%= p %>';"><%= p %></button>
+	            		<button onclick="location.href='<%= contextPath %>/search.no?cpage=<%= p %>';"><%= p %></button>
 	            	<% } %>
 	            <% } %>
 	            
 	            <% if(currentPage != maxPage) { %>
-	            <button onclick="location.href='<%= contextPath %>/adminListView.no?cpage=<%=currentPage+1%>';">&gt;</button>
+	            <button onclick="location.href='<%= contextPath %>/search.no?cpage=<%=currentPage+1%>';">&gt;</button>
 	        	<% } %>
-	        </div>
-	
+	        </div>	
+	        		
 			<!-- 검색창 -->
 			<form action="<%= contextPath %>/search.no?cpage=1" method="post">
 	            <div class="search_box" align="center">

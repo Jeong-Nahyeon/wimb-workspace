@@ -48,7 +48,7 @@
     .two_btn button:focus{outline: none;}
     #insert{
         margin-left: 10px;
-        padding:3px 23px;
+        padding:3px 10px;
     }
     /* 첨부파일 영역 css*/
     .filebox input[class^=upload-file]{

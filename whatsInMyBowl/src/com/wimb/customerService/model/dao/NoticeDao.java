@@ -376,6 +376,61 @@ private Properties prop = new Properties();
 		return result;
 	}
 	
+	/* 검색기능 */
+	public ArrayList<Notice> searchTitle(Connection conn, String searchWord) {
+		ArrayList<Notice> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("searchTitle");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, searchWord);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				list.add(new Notice(rset.getInt("notice_code"),
+						            rset.getString("notice_title"),
+						            rset.getString("notice_content"),
+						            rset.getDate("notice_date"),
+						            rset.getInt("notice_view"),
+						            rset.getString("notice_status")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}	
+
 	
-	
+	// 검색된 페이징바에 사용할 등록된 공지사항글의 총 갯수를 구하는 dao
+	public int selectSerachListCount(Connection conn, String searchWord) {
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSerachListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, searchWord);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}		
 }

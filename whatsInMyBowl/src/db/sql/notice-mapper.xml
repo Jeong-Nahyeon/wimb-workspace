@@ -159,4 +159,22 @@
 	   , ?
 	   )		
 	</entry>
+	
+	<entry key="searchTitle">
+		SELECT *
+		  FROM NOTICE
+		 WHERE NOTICE_TITLE LIKE '%' || ? || '%'
+		   AND NOTICE_STATUS = 'Y'
+		 ORDER
+            BY NOTICE_CODE DESC 				
+	</entry>
+	
+	<entry key="selectSerachListCount">
+       SELECT 
+		       COUNT(*) count
+		  FROM NOTICE
+		 WHERE NOTICE_STATUS = 'Y'	
+           AND NOTICE_TITLE LIKE '%' || ? || '%'	
+	</entry>
+	
 </properties>
