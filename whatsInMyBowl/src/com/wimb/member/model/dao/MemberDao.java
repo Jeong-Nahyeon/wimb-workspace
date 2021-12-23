@@ -338,29 +338,21 @@ public class MemberDao {
 			int startRow = (pi.getCurrentPage()-1)* pi.getBoardLimit() + 1;
 			int endRow = startRow + pi.getBoardLimit() - 1;
 			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
 				list.add(new Member(rset.getInt("m_code"),
+									rset.getString("m_id"),
 								    rset.getString("m_name"),
-								    rset.getString("m_id"),
- 			 	 	 	 	 	    rset.getString("m_pwd"),
 								    rset.getString("m_phone"),
-								    rset.getString("m_birth"),
-								    rset.getString("m_gender"),
-								    rset.getString("m_address"),
-								    rset.getString("m_subaddress"),
-								    rset.getString("m_postcode"),
-								    rset.getString("m_email"),
+								    rset.getInt("count"),
+								    rset.getInt("sum"),
+								    rset.getInt("m_point"),
 								    rset.getDate("m_enrolldate"),
-								    rset.getString("m_introducer"),
-								    rset.getString("m_status"),
-								    rset.getString("m_quitreason"),
-								    rset.getDate("m_quitdate"),
-								    rset.getString("m_ad"),
-								    rset.getDate("m_blackdate"),
-								    rset.getString("m_blackreason"),
-								    rset.getInt("m_point")));
+								    rset.getString("m_status")));
 			}			
 			
 		} catch (SQLException e) {

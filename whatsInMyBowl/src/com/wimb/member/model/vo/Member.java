@@ -25,6 +25,9 @@ public class Member {
 	private String mBlackReason;// 블랙리스트등록사유
 	private int mPoint;         // 적립금
 	
+	private int count; // selectAllMember 구문용 구매횟수
+	private int sum; // selectAllMember 구문용 구매총액
+	
 	public Member() {}
 
 	public Member(int mCode, String mName, String mId, String mPwd, String mPhone, String mBirth, String mGender,
@@ -103,6 +106,36 @@ public class Member {
 		this.mAd = mAd;
 	}
 
+	
+	public Member(int mCode, String mId, String mName, String mPhone, int count, int sum, int mPoint, Date enrollDate, String status) {
+		super();
+		this.mCode = mCode;
+		this.mId = mId;
+		this.mName = mName;
+		this.mPhone = mPhone;
+		this.count = count;
+		this.sum = sum;
+		this.mPoint = mPoint;
+		this.enrollDate = enrollDate;
+		this.status = status;
+		
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public int getSum() {
+		return sum;
+	}
+
+	public void setSum(int sum) {
+		this.sum = sum;
+	}
 
 	public int getmCode() {
 		return mCode;
