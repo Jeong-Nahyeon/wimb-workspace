@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="selectFAQListAll">
+		SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT
+                               FAQ_CODE
+                             , FAQ_CATEGORY
+                             , FAQ_TITLE
+                             , FAQ_CONTENT
+                          FROM FAQ
+                         WHERE FAQ_SHOW = 'Y'
+                         ORDER
+                            BY FAQ_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?	
+	</entry>
+	
+	<entry key="selectListCount">
+		SELECT 
+		       COUNT(*) count
+		  FROM FAQ
+		 WHERE FAQ_SHOW = 'Y'	
+	</entry>
+	
+	<entry key="selectSearchListCount">
+       SELECT 
+		       COUNT(*) count
+		  FROM FAQ
+		 WHERE FAQ_SHOW = 'Y'	
+           AND FAQ_TITLE LIKE '%' || ? || '%'	
+	</entry>
+	
+	<entry key="selectSearchList">
+		SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT *
+                          FROM FAQ
+                         WHERE FAQ_TITLE LIKE '%' || ? || '%'
+                           AND FAQ_SHOW = 'Y'
+                         ORDER
+                            BY FAQ_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?		
+	</entry>
+	
+	<entry key="selectDeliveryList">
+		SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT
+                               FAQ_CODE
+                             , FAQ_CATEGORY
+                             , FAQ_TITLE
+                             , FAQ_CONTENT
+                          FROM FAQ
+                         WHERE FAQ_SHOW = 'Y'
+                           AND FAQ_CATEGORY = '배송'
+                         ORDER
+                            BY FAQ_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectDeliveryListCount">
+		SELECT 
+		       COUNT(*) count
+		  FROM FAQ
+		 WHERE FAQ_SHOW = 'Y'
+           AND FAQ_CATEGORY = '배송'	
+	</entry>
+
+	<entry key="selectPointList">
+		SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT
+                               FAQ_CODE
+                             , FAQ_CATEGORY
+                             , FAQ_TITLE
+                             , FAQ_CONTENT
+                          FROM FAQ
+                         WHERE FAQ_SHOW = 'Y'
+                           AND FAQ_CATEGORY = '적립금'
+                         ORDER
+                            BY FAQ_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectPointListCount">
+		SELECT 
+		       COUNT(*) count
+		  FROM FAQ
+		 WHERE FAQ_SHOW = 'Y'
+           AND FAQ_CATEGORY = '적립금'	
+	</entry>
+	
+	<entry key="selectOrderPaymentList">
+		SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT
+                               FAQ_CODE
+                             , FAQ_CATEGORY
+                             , FAQ_TITLE
+                             , FAQ_CONTENT
+                          FROM FAQ
+                         WHERE FAQ_SHOW = 'Y'
+                           AND FAQ_CATEGORY = '주문/결제'
+                         ORDER
+                            BY FAQ_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectOrderPaymentListCount">
+		SELECT 
+		       COUNT(*) count
+		  FROM FAQ
+		 WHERE FAQ_SHOW = 'Y'
+           AND FAQ_CATEGORY = '주문/결제'	
+	</entry>
+	
+	<entry key="selectCencelRefundList">
+		SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT
+                               FAQ_CODE
+                             , FAQ_CATEGORY
+                             , FAQ_TITLE
+                             , FAQ_CONTENT
+                          FROM FAQ
+                         WHERE FAQ_SHOW = 'Y'
+                           AND FAQ_CATEGORY = '취소/환불'
+                         ORDER
+                            BY FAQ_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectCencelRefundListCount">
+		SELECT 
+		       COUNT(*) count
+		  FROM FAQ
+		 WHERE FAQ_SHOW = 'Y'
+           AND FAQ_CATEGORY = '취소/환불'	
+	</entry>
+	
+	<entry key="selectProductList">
+		SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT
+                               FAQ_CODE
+                             , FAQ_CATEGORY
+                             , FAQ_TITLE
+                             , FAQ_CONTENT
+                          FROM FAQ
+                         WHERE FAQ_SHOW = 'Y'
+                           AND FAQ_CATEGORY = '상품'
+                         ORDER
+                            BY FAQ_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectProductListCount">
+		SELECT 
+		       COUNT(*) count
+		  FROM FAQ
+		 WHERE FAQ_SHOW = 'Y'
+           AND FAQ_CATEGORY = '상품'	
+	</entry>
+	
+	<entry key="selectETCList">
+		SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT
+                               FAQ_CODE
+                             , FAQ_CATEGORY
+                             , FAQ_TITLE
+                             , FAQ_CONTENT
+                          FROM FAQ
+                         WHERE FAQ_SHOW = 'Y'
+                           AND FAQ_CATEGORY = '이용/기타'
+                         ORDER
+                            BY FAQ_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectETCListCount">
+		SELECT 
+		       COUNT(*) count
+		  FROM FAQ
+		 WHERE FAQ_SHOW = 'Y'
+           AND FAQ_CATEGORY = '이용/기타'	
+	</entry>
+</properties>

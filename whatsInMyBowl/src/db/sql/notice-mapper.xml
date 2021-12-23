@@ -162,11 +162,18 @@
 	
 	<entry key="searchTitle">
 		SELECT *
-		  FROM NOTICE
-		 WHERE NOTICE_TITLE LIKE '%' || ? || '%'
-		   AND NOTICE_STATUS = 'Y'
-		 ORDER
-            BY NOTICE_CODE DESC 				
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT *
+                          FROM NOTICE
+                         WHERE NOTICE_TITLE LIKE '%' || ? || '%'
+                           AND NOTICE_STATUS = 'Y'
+                         ORDER
+                            BY NOTICE_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?				
 	</entry>
 	
 	<entry key="selectSerachListCount">

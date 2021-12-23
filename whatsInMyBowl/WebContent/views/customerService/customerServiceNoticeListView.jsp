@@ -110,7 +110,7 @@
                             <a href="<%= contextPath %>/userView.no?cpage=1">공지사항</a>
                         </li>
                         <li>
-                            <a href="">자주묻는 질문</a>
+                            <a href="<%= contextPath %>/listUserView.faq?cpage=1">자주묻는 질문</a>
                         </li>
                         <li style="margin-bottom: 80px;">
                             <a href="">1:1문의</a>

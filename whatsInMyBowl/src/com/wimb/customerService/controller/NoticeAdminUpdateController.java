@@ -83,22 +83,22 @@ public class NoticeAdminUpdateController extends HttpServlet {
 					}
 					
 					// 넘어온 첨부파일이 없을 경우 list는 계속 null!
-					int result = new NoticeService().updateNotice(n, list);
-					// 새로운 첨부파일이 없을경우                       => n, null              => updateNotice
-					// 새로운 첨부파일o, 기존 첨부파일o     => n, fCode가 담긴 list    => updateNotice, update File
-					// 새로운 첨부파일o, 기존 첨부파일x     => n, refCode가 담긴 list  => updateNotice, insert File
-					
-					if(result > 0) { // 성공 => URL 재요청
-						request.getSession().setAttribute("alertMsg", "공지사항 수정 완료");
-						response.sendRedirect(request.getContextPath() + "/adminDetailView.no?num=" + nCode);
-					} else { // 실패 => 에러페이지
-						request.setAttribute("errorMsg", "공지사항 수정 실패");
-						request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);	
-					}
 					
 				}
 			}
 			
+			int result = new NoticeService().updateNotice(n, list);
+			// 새로운 첨부파일이 없을경우                       => n, null              => updateNotice
+			// 새로운 첨부파일o, 기존 첨부파일o     => n, fCode가 담긴 list    => updateNotice, update File
+			// 새로운 첨부파일o, 기존 첨부파일x     => n, refCode가 담긴 list  => updateNotice, insert File
+			
+			if(result > 0) { // 성공 => URL 재요청
+				request.getSession().setAttribute("alertMsg", "공지사항 수정 완료");
+				response.sendRedirect(request.getContextPath() + "/adminDetailView.no?num=" + nCode);
+			} else { // 실패 => 에러페이지
+				request.setAttribute("errorMsg", "공지사항 수정 실패");
+				request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);	
+			}
 			
 			
 			

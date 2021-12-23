@@ -377,14 +377,20 @@ private Properties prop = new Properties();
 	}
 	
 	/* 검색기능 */
-	public ArrayList<Notice> searchTitle(Connection conn, String searchWord) {
+	public ArrayList<Notice> searchTitle(Connection conn, String searchWord, PageInfo pi) {
 		ArrayList<Notice> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("searchTitle");
 		try {
 			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
 			pstmt.setString(1, searchWord);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			

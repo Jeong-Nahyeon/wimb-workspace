@@ -1,10 +1,13 @@
 package com.wimb.customerService.model.service;
 
-import static com.wimb.common.JDBCTemplate.*;
+import static com.wimb.common.JDBCTemplate.close;
+import static com.wimb.common.JDBCTemplate.commit;
+import static com.wimb.common.JDBCTemplate.getConnection;
+import static com.wimb.common.JDBCTemplate.rollback;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import com.wimb.admin.model.dao.bannerDao;
 import com.wimb.common.model.vo.File;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.customerService.model.dao.NoticeDao;
@@ -140,9 +143,9 @@ public class NoticeService {
 	}
 	
 	/* 검색기능 */
-	public ArrayList<Notice> searchTitle(String searchWord){
+	public ArrayList<Notice> searchTitle(String searchWord, PageInfo pi){
 		Connection conn = getConnection();
-		ArrayList<Notice> list = new NoticeDao().searchTitle(conn, searchWord);
+		ArrayList<Notice> list = new NoticeDao().searchTitle(conn, searchWord, pi);
 		
 		close(conn);
 		return list;

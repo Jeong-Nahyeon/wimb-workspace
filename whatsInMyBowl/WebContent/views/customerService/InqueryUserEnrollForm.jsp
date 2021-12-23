@@ -16,7 +16,7 @@
         width: 1000px;
         box-sizing: border-box;
         margin: auto;
-        margin-top: 130px;
+        margin-top: 100px;
     }
     .noticeSideBar{
         float: left;
@@ -142,13 +142,13 @@
                 <h2>고객센터</h2>
                 <ul>
                     <li>
-                        <a href="">공지사항</a>
+                        <a href="<%= contextPath %>/userView.no?cpage=1">공지사항</a>
                     </li>
                     <li>
-                        <a href="">자주묻는 질문</a>
+                        <a href="<%= contextPath %>/listUserView.faq?cpage=1">자주묻는 질문</a>
                     </li>
                     <li style="margin-bottom: 80px;">
-                        <a href="">1:1문의</a>
+                        <a href="<%= contextPath %>/userEnrollForm.inq">1:1문의</a>
                     </li>
                 </ul>
             </div>

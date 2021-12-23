@@ -284,51 +284,6 @@
 	          }    	
 	    	  // ------------------------------------------------------------------------            
 	            
-	    		// 검색창 ajax----------------------------------------------------------------------------------------
-               
-	    		/*
-	    		$(function(){
-                    $("#search_btn").click(function(){
-                        if($("#search_category_input").val() == ""){
-                            location.reload();
-                        }else{
-                            $.ajax({
-                                url:"search.no",
-                                data:{
-                                    searchWord:$("#search_category_input").val()
-                                },
-                                success:function(list){
-                                	console.log(list);
-                                    var content = "";
-                                    $(".notice_Box tbody").html("");
-                                    for(var i=0; i<list.length; i++){
-                                        content += "<tr class='noticeList_header2'>" +
-                	                    		   "<td class='noticeList_checkbox_main'><input type='checkbox' id='notice1' name='check'></td>" +
-                	                    		   "<td class='noticeList_num'>" + list[i].noticeCode + "</td>" +
-                	                    		   "<td class='noticeList_title'>" + list[i].noticeTitle + "</td>" +
-                	                    		   "<td class='noticeList_update_delete'>" +
-                	                        	   "<div class='two_btn'>" +
-                	                                	"<button type='button'>수정</button>" + 
-                	                            		"<button type='button'>삭제</button>" +
-                	                        	   "</div>" +
-                	                    		   "</td>" +
-                	                    		   "<td class='noticeList_enroll_date'>" + list[i].noticeDate + "</td>" +
-                	                    		   "<td class='noticeList_count'>" + list[i].noticeView + "</td>" +
-                	                			   "</tr>"
-                                    }
-
-                                    $("#notice_Box tbody").html(content);
-                                    $(".paging-area").text("");
-                                },
-                                error:function(){
-                                    console.log("ajax 통신 실패");
-                                }
-                            });
-                        }
-                        
-                    });
-                });            
-   				*/
             </script>
 
         </div>

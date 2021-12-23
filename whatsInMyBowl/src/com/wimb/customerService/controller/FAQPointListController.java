@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wimb.common.model.vo.PageInfo;
-import com.wimb.customerService.model.service.NoticeService;
-import com.wimb.customerService.model.vo.Notice;
+import com.wimb.customerService.model.service.FAQService;
+import com.wimb.customerService.model.vo.FAQ;
 
 /**
- * Servlet implementation class NoticeSearchController
+ * Servlet implementation class FAQPointListController
  */
-@WebServlet("/search.no")
-public class NoticeSearchController extends HttpServlet {
+@WebServlet("/pointList.faq")
+public class FAQPointListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeSearchController() {
+    public FAQPointListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,10 +33,7 @@ public class NoticeSearchController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.setCharacterEncoding("UTF-8");
-		// 검색 기능 컨트롤러
-		String searchWord = request.getParameter("search_title");
-		
+		// 자주묻는질문 - 적립금
 		// 페이징 처리
 		int listCount;     // 현재 총 배너게시글 갯수
 		int currentPage;   // 현재 페이지
@@ -47,7 +44,7 @@ public class NoticeSearchController extends HttpServlet {
 		int startPage;     // 페이징바의 시작 수
 		int endPage;       // 페이징바의 끝 수
 		
-		listCount = new NoticeService().selectSerachListCount(searchWord);
+		listCount = new FAQService().selectPointListCount();
 		
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
@@ -65,13 +62,17 @@ public class NoticeSearchController extends HttpServlet {
 			endPage = maxPage;
 		}
 		
-		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);				
-		ArrayList<Notice> list = new NoticeService().searchTitle(searchWord, pi);
+		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);						
+
+		ArrayList<FAQ> list = new FAQService().selectPointList(pi);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
+		request.getRequestDispatcher("views/customerService/FAQPointListView.jsp").forward(request, response);
 		
-		request.getRequestDispatcher("views/customerService/customerServiceAdminNoticeSearchListView.jsp").forward(request, response);
+		
+		
+		
 	}
 
 	/**

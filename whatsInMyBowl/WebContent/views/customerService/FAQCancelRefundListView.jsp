@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.wimb.customerService.model.vo.FAQ, com.wimb.common.model.vo.PageInfo"%>
+<%
+	
+	ArrayList<FAQ> list = (ArrayList<FAQ>)request.getAttribute("list");
+	// 조회된 자주묻는질문 리스트가 담겨있는 list
+	
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +28,7 @@
         width: 1000px;
         box-sizing: border-box;
         margin: auto;
-        margin-top: 130px;
+        margin-top: 100px;
     }
     .noticeSideBar{
         float: left;
@@ -94,7 +105,7 @@
     #research_question_box_right_bottom{
         border: none;
         width: 130px;
-        background-color: gray;
+        background-color: #cfcfcf;
         border-radius: 3px;
         display: inline-block;
     }
@@ -114,8 +125,9 @@
     }
     .FAQ_Category_box{
         display: inline-block;
-        padding: 5px 29px;
+        padding: 5px 30px;
     }
+    .FAQ_Category_box a{color:black;}
     #Accordion_wrap{
         margin-left: 230px;
         box-sizing: border-box;
@@ -163,9 +175,29 @@
     background-color: #f4f4f2;
     padding: 27px 0;
     }
+    
+    /* 페이징바 */
     .paging-area button{
         margin-top: 20px;
         border: 0;
+    }
+    .paging-area{
+        /*border: 1px solid coral;*/
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .paging-area>button{
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+        border: none;
+        border-radius: 5%;
+    }
+	.noticeList tr:hover{
+    	background: lightgrey;
+    	cursor: pointer;
     }
 
 </style>
@@ -188,13 +220,13 @@
                 <h2>고객센터</h2>
                 <ul>
                     <li>
-                        <a href="">공지사항</a>
+                        <a href="<%= contextPath %>/userView.no?cpage=1">공지사항</a>
                     </li>
                     <li>
-                        <a href="">자주묻는 질문</a>
+                        <a href="<%= contextPath %>/listUserView.faq?cpage=1">자주묻는 질문</a>
                     </li>
                     <li style="margin-bottom: 80px;">
-                        <a href="">1:1문의</a>
+                        <a href="<%= contextPath %>/userEnrollForm.inq">1:1문의</a>
                     </li>
                 </ul>
             </div>
@@ -214,31 +246,31 @@
 
         <div class="FAQ">
             <h1>자주 묻는 질문</h1>
-            <form action="" method="">
+            <form action="<%= contextPath %>/search.faq?cpage=1" method="post">
 
                 <div class="research_question_box">
                     <div class="research_question_box_left">
                         <h3 style="width: 70px;">질문검색</h3>
-                        <input type="text" value="궁금한 내용을 입력하세요.">
-                        <span><i class="fas fa-search"></i></span>
+                        <input type="text" value="궁금한 내용을 입력하세요." name="search_title" id="search_title">
+                        <span onclick="document.forms[0].submit()" style="cursor: pointer;"><i class="fas fa-search"></i></span>
                     </div>
     
                     <div class="research_question_box_right" style="width: 300px;"></div>
                         <div id="research_question_box_right_top" style="font-size: 13px; font-weight: bold;">찾는 질문이 없다면?</div>
-                        <div id="research_question_box_right_bottom" style="font-size: 14px;">1:1문의</div>
+                        <div id="research_question_box_right_bottom" style="font-size: 14px; cursor: pointer;" onclick="location.href='<%= contextPath %>/userEnrollForm.inq';">1:1문의</div>
                     </div>
                 </div>
 
             </form>
 
             <div class="FAQ_Category">
-                <div class="FAQ_Category_box">전체</div>
-                <div class="FAQ_Category_box" style="border-left: 1px solid gray;">배송</div>
-                <div class="FAQ_Category_box" style="border-left: 1px solid gray;">적립금</div>
-                <div class="FAQ_Category_box" style="border-left: 1px solid gray;">주문/결제</div>
-                <div class="FAQ_Category_box" style="border-left: 1px solid gray;"> 취소/환불</div>
-                <div class="FAQ_Category_box" style="border-left: 1px solid gray;">상품</div>
-                <div class="FAQ_Category_box" style="border-left: 1px solid gray;">이용/기타</div>
+                <div class="FAQ_Category_box"><a href="<%= contextPath %>/listUserView.faq?cpage=1">전체</a></div>
+                <div class="FAQ_Category_box" style="border-left: 1px solid gray;"><a href="<%= contextPath %>/deliveryList.faq?cpage=1">배송</a></div>
+                <div class="FAQ_Category_box" style="border-left: 1px solid gray;"><a href="<%= contextPath %>/pointList.faq?cpage=1">적립금</a></div>
+                <div class="FAQ_Category_box" style="border-left: 1px solid gray;"><a href="<%= contextPath %>/orderPaymentList.faq?cpage=1">주문/결제</a></div>
+                <div class="FAQ_Category_box" style="border-left: 1px solid gray;"><a href="<%= contextPath %>/cancelRefundList.faq?cpage=1">취소/환불</a></div>
+                <div class="FAQ_Category_box" style="border-left: 1px solid gray;"><a href="<%= contextPath %>/productList.faq?cpage=1">상품</a></div>
+                <div class="FAQ_Category_box" style="border-left: 1px solid gray;"><a href="<%= contextPath %>/etcList.faq?cpage=1">이용/기타</a></div>
             </div>
 
             <div id="FAQ_List">
@@ -247,70 +279,51 @@
                     <div style="width: 12%;">분류</div>
                     <div style="width: 73%;">제목</div>
                 </div>
+                
+                <% for(FAQ f : list) { %>
                 <div class="FAQ_List_que" align="center">
-                    <span style="width: 10%;">41</span>
-                    <span style="width: 10%;">배송</span>
-                    <span style="width: 72%;">This is first question.</span>
+                    <span style="width: 10%;"><%= f.getFaqCode() %></span>
+                    <span style="width: 10%;"><%= f.getFaqCategory() %></span>
+                    <span style="width: 72%;"><%= f.getFaqTitle() %></span>
                 </div>
                 <div class="FAQ_List_anw" align="center">
                     <span id="FAQ_List_anw_anw">답변</span>
-                    <span style="width: 82%;">This is first answer.</span>
+                    <span style="width: 82%;"><%= f.getFaqContent() %></span>
                 </div>
-                <div class="FAQ_List_que" align="center">
-                    <span style="width: 10%;">41</span>
-                    <span style="width: 10%;">배송</span>
-                    <span style="width: 72%;">This is first question.</span>
-                </div>
-                <div class="FAQ_List_anw" align="center">
-                    <span id="FAQ_List_anw_anw">답변</span>
-                    <span style="width: 82%;">This is first answer.</span>
-                </div>
-                 <div class="FAQ_List_que" align="center">
-                    <span style="width: 10%;">41</span>
-                    <span style="width: 10%;">배송</span>
-                    <span style="width: 72%;">This is first question.</span>
-                </div>
-                <div class="FAQ_List_anw" align="center">
-                    <span id="FAQ_List_anw_anw">답변</span>
-                    <span style="width: 82%;">This is first answer.</span>
-                </div>
-                <div class="FAQ_List_que" align="center">
-                    <span style="width: 10%;">41</span>
-                    <span style="width: 10%;">배송</span>
-                    <span style="width: 72%;">This is first question.</span>
-                </div>
-                <div class="FAQ_List_anw" align="center">
-                    <span id="FAQ_List_anw_anw">답변</span>
-                    <span style="width: 82%;">This is first answer.</span>
-                </div>
-                <div class="FAQ_List_que" align="center">
-                    <span style="width: 10%;">41</span>
-                    <span style="width: 10%;">배송</span>
-                    <span style="width: 72%;">This is first question.</span>
-                </div>
-                <div class="FAQ_List_anw" align="center">
-                    <span id="FAQ_List_anw_anw">답변</span>
-                    <span style="width: 82%;">This is first answer.</span>
-                </div>
+   				<% } %>
 
-
-                <div class="paging-area" align="center">
-                 <button>&lt;</button>
-                 <button>1</button>
-                 <button>2</button>
-                 <button>3</button>
-                 <button>4</button>
-                 <button>5</button>
-                 <button>&gt;</button>
-                 </div>
+		        <div class="paging-area" align="center">
+		            
+		            <% if(currentPage != 1) { %>
+		            	<button onclick="location.href='<%= contextPath %>/listUserView.faq?cpage=<%=currentPage-1%>';">&lt;</button>
+		            <% } %>
+		            
+		            <% for(int p=startPage; p<=endPage; p++) { %>
+		            	<% if(p == currentPage) { %>
+		            		<button disabled><%= p %></button>
+		            	<% } else { %>
+		            		<button onclick="location.href='<%= contextPath %>/listUserView.faq?cpage=<%= p %>';"><%= p %></button>
+		            	<% } %>
+		            <% } %>
+		            
+		            <% if(currentPage != maxPage) { %>
+		            <button onclick="location.href='<%= contextPath %>/listUserView.faq?cpage=<%=currentPage+1%>';">&gt;</button>
+		        	<% } %>
+		        </div>
            </div>
 
            <script>
+           
+           		// 자주묻는질문 아코디언 메뉴 함수
                $(".FAQ_List_que").click(function() {
                     $(this).next(".FAQ_List_anw").stop().slideToggle(300);
                     $(this).toggleClass('on').siblings().removeClass('on');
                     $(this).next(".FAQ_List_anw").siblings(".FAQ_List_anw").slideUp(300); // 1개씩 펼치기
                 });
+               
+               
+               
+               
            </script>
 
         </div>
