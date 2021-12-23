@@ -35,6 +35,7 @@
 <!-- https: 붙이니까 팝업창은 뜬다..! 정확한 테스트는 서버 구동 후 가능 -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>  
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <style>
     * {font-family: 'Noto Sans KR', sans-serif;}
@@ -210,7 +211,8 @@
 	                    <img src="<%= ppro.getFilePath() %><%= ppro.getpMainImg() %>">
 	                    <span class="product-name"><%= ppro.getpName() %></span>
 	                    <span class="product-num"><%= ppro.getpCount() %>개</span>
-	                    <span class="product-price"><%= ppro.getpPrice() %>원</span>
+	                    <span class="product-price"> <label class="price_num"><%= ppro.getpPrice() %></label> 원</span>
+                        <input type="hidden" name="product_code" value="<%= ppro.getpCode() %>">
 	                    <hr style="width: 930px; ">
 	                </div>
                 <% } %>
@@ -219,7 +221,8 @@
 	                    <img src="<%= pcu.getCuMainImg() %>">
 	                    <span class="product-name"><%= pcu.getCuName() %></span>
 	                    <span class="product-num"><%= pcu.getCuCount() %>개</span>
-	                    <span class="product-price"><%= pcu.getCuPrice() %>원</span>
+	                    <span class="product-price"><label class="price_num"><%= pcu.getCuPrice() %></label>원</span>
+	                    <input type="hidden" name="product_code" value="<%= pcu.getCuCode() %>">
 	                    <hr style="width: 930px; ">
 	                </div>
                 <% } %>
@@ -236,8 +239,11 @@
 	                        <tr>
 	                            <th>주문자 성함 <span style="color: red; vertical-align: middle;">*</span></th>
 	                            <td>
-	                                <input type="text" name="" placeholder="이름을 입력해주세요." value="<%= loginUser.getmName() %>">
+	                                <input type="text" name="mName" placeholder="이름을 입력해주세요." value="<%= loginUser.getmName() %>">
 	                                <input type="hidden" name="mCode" value="<%= loginUser.getmCode() %>">
+                                    <input type="hidden" name="mPostCode" value="<%= loginUser.getPostcode() %>">
+                                    <input type="hidden" name="mAddress" value="<%= loginUser.getmAddress() %>">
+                                    <input type="hidden" name="mSubAddress" value="<%= loginUser.getSubAddress() %>">
 	                            </td>
 	                        </tr>
 	                        <tr>
@@ -246,11 +252,11 @@
 	                        </tr>
 	                        <tr>
 	                            <th>휴대폰 <span style="color: red; vertical-align: middle;">*</span></th>
-	                            <td><input type="text" value="<%= loginUser.getmPhone() %>"></td>
+	                            <td><input type="text" name="mPhone" value="<%= loginUser.getmPhone() %>"></td>
 	                        </tr>
 	                        <tr>
 	                            <th>이메일 <span style="color: red; vertical-align: middle;">*</span></th>
-	                            <td><input type="text" value="<%= loginUser.getmEmail() %>" ></td>
+	                            <td><input type="text" name="mEmail" value="<%= loginUser.getmEmail() %>" ></td>
 	                        </tr>
 	                    </table>
                     <% } else {%>
@@ -259,6 +265,7 @@
 	                            <th>주문자 성함 <span style="color: red; vertical-align: middle;">*</span></th>
 	                            <td>
 	                                <input type="text" name="" placeholder="이름을 입력해주세요." >
+                                    <input type="hidden" name="mCode" value="1">
 	                            </td>
 	                        </tr>
 	                        <tr>
@@ -366,11 +373,11 @@
                         <hr style="margin-top: 5px;">
                         <div id="credit">
                             <i class="far fa-credit-card"></i>
-                            <input type="radio" name="payment" id="credit-check"> <label for="credit-check">신용카드</label> 
+                            <input type="radio" name="payment" id="credit-check" value="credit"> <label for="credit-check">신용카드</label> 
                         </div>
                         <div id="cash">
                             <i class="fas fa-wallet"></i>
-                            <input type="radio" name="payment" id="cash-check"> <label for="cash-check">무통장입금</label> 
+                            <input type="radio" name="payment" id="cash-check" value="cash"> <label for="cash-check">무통장입금</label> 
                         </div>
                     </div>
     
@@ -394,7 +401,7 @@
                         $(function(){
                             $("input[type='radio'][id='cash-check']").on('click',function(){
                                 var check = $("input[type='radio'][name='payment']:checked").val()
-                                console.log(check);
+                                //console.log(check);
                                 $("#cash-area").css('display', 'block');
                                  //$("#cash-area").css('display','none');
                             });
@@ -408,7 +415,7 @@
                     <!-- 총 금액, 약관동의 -->
                     <div id="total-payment">
                         <span>최종 결제금액 :</span>
-                        <span>32,000</span>
+                        <span id="total_price"></span><span>원</span>
                     </div>
                     <div id="terms">
                         <input type="checkbox" id="terms-check">
@@ -416,7 +423,7 @@
                         <label for="terms-check">구매하실 상품의 결제정보를 확인하였으며, 구매진행에 동의합니다.</label>
                     </div>
     
-                    <button type="submit" class="btn" id="submit-but">결제하기</button>
+                    <button type="button" class="btn" id="submit-but" onclick="paymentclick();">결제하기</button>
                 </form>
     
                 
@@ -483,13 +490,26 @@
             
         </script>
 
-        
         <script>
             //체크박스 클릭 시 데이터 뿌리기
             
             function memberInfo(){
                 
-
+                if($("input[type='checkbox'][id='get-address-input']").prop("checked")){
+                    $("input[name='oName']").val($("input[name='mName']").val());
+                    $("input[name='oZipCode']").val($("input[name='mPostCode']").val());
+                    $("input[name='oAddress']").val($("input[name='mAddress']").val());
+                    $("input[name='oSubAddress']").val($("input[name='mSubAddress']").val());
+                    $("input[name='oPhone']").val($("input[name='mPhone']").val());
+                    $("input[name='oEmail']").val($("input[name='mEmail']").val());
+                }else{
+                    $("input[name='oName']").val('');
+                    $("input[name='oZipCode']").val('');
+                    $("input[name='oAddress']").val('');
+                    $("input[name='oSubAddress']").val('');
+                    $("input[name='oPhone']").val('');
+                    $("input[name='oEmail']").val('');
+                }
             }
 
             // 적립금 모두사용 클릭 시 값 변경
@@ -497,8 +517,138 @@
                 var allPoint = $("#allPoint").text()
                 $("input[name='oPoint']").val(allPoint);
             }
+
+            // 총 결제 금액
+            $(function(){
+                var total_price = 0;
+                $(".price_num").each(function(){
+                    total_price += parseInt($(this).text());
+                });
+                console.log(total_price)
+                $("#total_price").text(total_price);
+            })
         </script>
 
+        <!-- 결제 관련 -->
+        <script>
+            function paymentclick(){
+                var paycheck = $("input[name='payment']:checked").val()
+                //if($("input[type='radio'][id='credit-check']"))
+                //console.log(paycheck);
+                var price = $("#total_price").text();
+                var mCode = $("input[name='mCode']").val();
+                var name = $("input[name='oEmail']").val();
+                var address = $("input[name='oAddress']").val()
+                var subAddress = $("input[name='oSubAddress']").val()
+                var zipCode = $("input[name='oZipCode']").val()
+                var email = $("input[name='oEmail']").val()
+                var phone = $("input[name=oPhone]").val()
+                var request = $("input[name='oRequest']").val()
+                var saladCode = new Array();
+                $($("input[name='product_code']")).each(function(){
+                    saladCode.push($(this).val())
+                    console.log(saladCode);
+                });
+                var saladCount = new Array();
+                $(".product-num").each(function(){
+                    saladCount.push($(this).text());
+                });
+                var point = "";
+                if($("input[name='oPoint']").val() != null){
+                    point = $("input[name='oPoint']").val()
+                }else{
+                    point = 0;
+                }
+                console.log(price);
+
+                if(paycheck == "credit"){
+                    // 카드결제
+                    IMP.init('imp28444469');
+                    IMP.request_pay({
+                        pay_method : 'card',
+                        merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
+                        name : '주문명: WIMB결제테스트',
+                        amount : price,
+                        buyer_email : email,
+                        buyer_name : name,
+                        buyer_tel : phone,
+                        buyer_addr : address + subAddress,
+                        buyer_postcode : zipCode
+                        
+                    }, function(rsp) {
+                        if ( rsp.success ) {
+                            //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+                            jQuery.ajax({
+                                url: "paycheck.pay", 
+                                type: 'POST',
+                                data: {
+                                    imp_uid : rsp.imp_uid,
+                                    paid_amount:rsp.paid_amount,
+                                    apply_num:rsp.apply_num,
+                                    card_name:rsp.card_name,
+                                    card_number:rsp.card_number,
+                                    card_quota:rsp.card_quota,
+                                    originPrice:price
+                                },
+                                success:function(data){
+                                    console.log(data);
+                                    console.log("성공")
+                                },
+                                error:function(){
+                                    console.log("실패")
+                            }
+                            }).done(function(data) {
+                                var msg = '결제가 완료되었습니다.';
+                                msg += '\n고유ID : ' + rsp.imp_uid;
+                                msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+                                msg += '\결제 금액 : ' + rsp.paid_amount;
+                                msg += '카드 승인번호 : ' + rsp.apply_num;
+                                
+                                alert(msg);
+
+                                jQuery.ajax({
+                                    url: "orderinsert.pay", 
+                                    type: 'POST',
+                                    dataType:'json',
+                                    traditional:true,
+                                    data: {
+                                        pmCode:data,
+                                        mCode:mCode,
+                                        saladCode:saladCode,
+                                        saladCount:saladCount,
+                                        name:name,
+                                        address:address,
+                                        subAddress:subAddress,
+                                        zipCode:zipCode,
+                                        phone:phone,
+                                        email:email,
+                                        request:request,
+                                        point:point
+                                    },
+                                    success:function(result){
+                                        console.log(result);
+                                        console.log("성공")
+                                    },
+                                    error:function(){
+                                        console.log("실패")
+                                    }
+                                })
+
+                            });
+                        } else {
+                            var msg = '결제에 실패하였습니다.';
+                            msg += '에러내용 : ' + rsp.error_msg;
+                            
+                            alert(msg);
+                        }
+                    });
+
+                }else{
+                    // 무통장입금
+                }
+            }
+
+        </script>
         
     </body>
     </html>

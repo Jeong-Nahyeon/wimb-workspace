@@ -6,6 +6,8 @@ import java.sql.Connection;
 
 import com.wimb.member.model.vo.Member;
 import com.wimb.payment.model.dao.PaymentDao;
+import com.wimb.payment.model.vo.Card;
+import com.wimb.payment.model.vo.Payment;
 import com.wimb.payment.model.vo.PaymentCustom;
 import com.wimb.payment.model.vo.PaymentProduct;
 
@@ -26,18 +28,23 @@ public class PaymentService {
 		return product;
 	}
 
-	// 배송지가져오기 체크시 회원의 주소를 가져오는 서비스
-	public Member selectMember(int mCode) {
+	// 카드결제 후 결제테이블에 결제정보 insert
+	public String insertPayment(Payment p, Card c) {
 		Connection conn = getConnection();
-		Member m = new PaymentDao().selectMember(conn, mCode);
+		int result = new PaymentDao().insertPayment(conn, p, c);
+		String pmCode = null;
+		if(result > 0) {
+			commit(conn);
+			pmCode = new PaymentDao().selectPaymentCode(conn);
+		}else {
+			rollback(conn);
+		}
 		close(conn);
-		return null;
+		return pmCode;
 	}
 
-	// 회원의 전체 포인트 조회
-	public int selectAllPoint(int mCode) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
+	
+	
 
 }

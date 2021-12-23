@@ -24,4 +24,33 @@
 	<entry key="selectMember">
 	
 	</entry>
+	
+	<entry key="insertPayment">
+		INSERT ALL
+		INTO PAYMENT
+		  VALUES
+		  (
+		    'PAY' || SEQ_PAYMENT.NEXTVAL
+		  , SYSDATE
+		  , ?
+		  , ?
+		  , '카드'
+		  )
+		 INTO CARD  
+		  VALUES
+		  (
+		    'PAY' || SEQ_PAYMENT.CURRVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
+		SELECT * 
+		  FROM DUAL
+	</entry>
+	
+	<entry key="selectPaymentCode">
+		SELECT 'PAY' || SEQ_PAYMENT.CURRVAL "PM_CODE"
+		  FROM DUAL
+	</entry>
 </properties>

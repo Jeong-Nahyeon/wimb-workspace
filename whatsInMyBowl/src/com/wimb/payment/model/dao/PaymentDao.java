@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import com.wimb.member.model.vo.Member;
+import com.wimb.payment.model.vo.Card;
+import com.wimb.payment.model.vo.Payment;
 import com.wimb.payment.model.vo.PaymentCustom;
 import com.wimb.payment.model.vo.PaymentProduct;
 
@@ -82,14 +84,55 @@ public class PaymentDao {
 		return product;
 	}
 
-	// 배송지가져오기 체크시 회원의 주소를 가져오는 서비스
-	public Member selectMember(Connection conn, int mCode) {
-		Member m = null;
+	// 카드결제 후 결제테이블에 결제정보 insert
+	public int insertPayment(Connection conn, Payment p, Card c) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertPayment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p.getPmTotalPrice());
+			pstmt.setInt(2, p.getPmFinalPrice());
+			pstmt.setString(3, c.getCardApproval());
+			pstmt.setString(4, c.getCardCompany());
+			pstmt.setInt(5, c.getCardInstalment());
+			pstmt.setString(6, c.getCardId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public String selectPaymentCode(Connection conn) {
+		String pmCode = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("selectMember");
+		String sql = prop.getProperty("selectPaymentCode");
 		
-		return null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				pmCode = rset.getString("pm_code");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return pmCode;
 	}
+
+	
+
+	
 
 }
