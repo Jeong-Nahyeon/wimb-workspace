@@ -1,6 +1,6 @@
 package com.wimb.customerService.model.service;
 
-import static com.wimb.common.JDBCTemplate.close;
+import static com.wimb.common.JDBCTemplate.*;
 import static com.wimb.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
@@ -150,6 +150,27 @@ public class FAQService {
 		return listCount;
 	}	
 	
+	// 관리자 - 전체 리스트를 가져오기
+	public ArrayList<FAQ> selectAdminAllListView(){
+		Connection conn = getConnection();
+		ArrayList<FAQ> list = new FAQDao().selectAdminAllListView(conn);
+		close(conn);
+		return list;
+	}
+	
+	// 관리자 - 자주묻는질문 등록
+	public int insertFaq(String faqTitle, String faqCategory, String faqContent) {
+		Connection conn = getConnection();
+		int result = new FAQDao().insertFaq(conn, faqTitle, faqCategory, faqContent);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 	
 	
 }

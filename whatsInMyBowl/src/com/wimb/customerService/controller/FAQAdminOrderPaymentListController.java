@@ -14,16 +14,16 @@ import com.wimb.customerService.model.service.FAQService;
 import com.wimb.customerService.model.vo.FAQ;
 
 /**
- * Servlet implementation class FAQAdminListController
+ * Servlet implementation class FAQOrderPaymentListController
  */
-@WebServlet("/adminList.faq")
-public class FAQAdminListController extends HttpServlet {
+@WebServlet("/adminOrderPaymentList.faq")
+public class FAQAdminOrderPaymentListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FAQAdminListController() {
+    public FAQAdminOrderPaymentListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,8 +32,7 @@ public class FAQAdminListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		// 관리자 - 전체 리스트를 가져오기
+		// 자주묻는질문 - 주문/결제
 		// 페이징 처리
 		int listCount;     // 현재 총 배너게시글 갯수
 		int currentPage;   // 현재 페이지
@@ -44,13 +43,13 @@ public class FAQAdminListController extends HttpServlet {
 		int startPage;     // 페이징바의 시작 수
 		int endPage;       // 페이징바의 끝 수
 		
-		listCount = new FAQService().selectListCount();
+		listCount = new FAQService().selectOrderPaymentListCount();
 		
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
 		pageLimit = 5;
 		
-		boardLimit = 5;
+		boardLimit = 10;
 		
 		maxPage = (int)Math.ceil((double)listCount / boardLimit);
 		
@@ -62,13 +61,14 @@ public class FAQAdminListController extends HttpServlet {
 			endPage = maxPage;
 		}
 		
-		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);		
-		ArrayList<FAQ> list = new FAQService().selectFAQListAll(pi);
+		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);						
+
+		ArrayList<FAQ> list = new FAQService().selectOrderPaymentList(pi);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
-		
-		request.getRequestDispatcher("views/customerService/FAQAdminListView.jsp").forward(request, response);
+		request.getRequestDispatcher("views/customerService/FAQAdminOrderPaymentListView.jsp").forward(request, response);
+			
 	}
 
 	/**

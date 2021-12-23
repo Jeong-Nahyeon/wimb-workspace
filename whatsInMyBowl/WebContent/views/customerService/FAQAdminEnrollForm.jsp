@@ -87,35 +87,40 @@
         </div>
 
         <div class="FAQ_Box">
+        	
+        	<form action="<%= contextPath %>/insert.faq" method="post">
+        	
+	            <table>
+	                <tr>
+	                    <td class="FAQ_Box_header">질문</td>
+	                    <td class="FAQ_Box_question_title"><input type="text" name="title" placeholder="질문을 입력하세요" required></td>
+	                    <td class="FAQ_category">분류</td>
+	                    <td class="FAQ_category_option">
+	                        <select name="FAQ_category_option">
+	                            <option value="배송">배송</option>
+	                            <option value="적립금">적립금</option>
+	                            <option value="주문/결제">주문/결제</option>
+	                            <option value="취소/환불">취소/환불</option>
+	                            <option value="상품">상품</option>
+	                            <option value="이용/기타">이용/기타</option>
+	                        </select>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td class="FAQ_Box_header FAQ_Box_question_answer_header">답변</td>
+	                    <td colspan="3">
+	                        <textarea name="FAQ_Box_question_answer" id="FAQ_Box_question_answer" cols="123" rows="15" required>답변 내용을 작성하세요</textarea>
+	                    </td>
+	                </tr>
+	            </table>
+	
+	            <div class="two_btn" align="center">
+	                <button type="button" id="back">목록으로</button>
+	                <button type="submit" id="insert">등록하기</button>
+	            </div>
+        	
+        	</form>
 
-            <table>
-                <tr>
-                    <td class="FAQ_Box_header">질문</td>
-                    <td class="FAQ_Box_question_title"><input type="text" name="title" placeholder="질문을 입력하세요" required></td>
-                    <td class="FAQ_category">분류</td>
-                    <td class="FAQ_category_option">
-                        <select name="FAQ_category_option" id="">
-                            <option value="">배송</option>
-                            <option value="">적립금</option>
-                            <option value="">주문/결제</option>
-                            <option value="">취소/환불</option>
-                            <option value="">상품</option>
-                            <option value="">이용/기타</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="FAQ_Box_header FAQ_Box_question_answer_header">답변</td>
-                    <td colspan="3">
-                        <textarea name="FAQ_Box_question_answer" id="FAQ_Box_question_answer" cols="123" rows="15" required>답변 내용을 작성하세요</textarea>
-                    </td>
-                </tr>
-            </table>
-
-            <div class="two_btn" align="center">
-                <button type="button" id="back">목록으로</button>
-                <button type="submit" id="insert">등록하기</button>
-            </div>
 
             
         </div>

@@ -183,5 +183,5 @@
 		 WHERE NOTICE_STATUS = 'Y'	
            AND NOTICE_TITLE LIKE '%' || ? || '%'	
 	</entry>
-	
+
 </properties>

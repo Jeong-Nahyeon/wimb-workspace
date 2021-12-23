@@ -14,16 +14,16 @@ import com.wimb.customerService.model.service.FAQService;
 import com.wimb.customerService.model.vo.FAQ;
 
 /**
- * Servlet implementation class FAQAdminListController
+ * Servlet implementation class FAQAdminDeliveryController
  */
-@WebServlet("/adminList.faq")
-public class FAQAdminListController extends HttpServlet {
+@WebServlet("/adminDeliveryList.faq")
+public class FAQAdminDeliveryController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FAQAdminListController() {
+    public FAQAdminDeliveryController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,7 +33,7 @@ public class FAQAdminListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 관리자 - 전체 리스트를 가져오기
+		// 관리자 - 배송 카테고리 리스트를 가져오기
 		// 페이징 처리
 		int listCount;     // 현재 총 배너게시글 갯수
 		int currentPage;   // 현재 페이지
@@ -44,13 +44,13 @@ public class FAQAdminListController extends HttpServlet {
 		int startPage;     // 페이징바의 시작 수
 		int endPage;       // 페이징바의 끝 수
 		
-		listCount = new FAQService().selectListCount();
+		listCount = new FAQService().selectDeliveryListCount();
 		
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
 		pageLimit = 5;
 		
-		boardLimit = 5;
+		boardLimit = 10;
 		
 		maxPage = (int)Math.ceil((double)listCount / boardLimit);
 		
@@ -62,13 +62,13 @@ public class FAQAdminListController extends HttpServlet {
 			endPage = maxPage;
 		}
 		
-		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);		
-		ArrayList<FAQ> list = new FAQService().selectFAQListAll(pi);
+		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);						
+
+		ArrayList<FAQ> list = new FAQService().selectDeliveryList(pi);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
-		
-		request.getRequestDispatcher("views/customerService/FAQAdminListView.jsp").forward(request, response);
+		request.getRequestDispatcher("views/customerService/FAQAdminDeliveryListView.jsp").forward(request, response);	
 	}
 
 	/**

@@ -125,7 +125,7 @@
         <div class="FAQ_Box">
 
             <div class="FAQ_Box_top">
-                <button class="notice_Box_top_left" type="button" onclick="location.href='<%= contextPath %>/adminEnrollForm.faq';">새 글 등록</button>
+                <button class="notice_Box_top_left" type="button">새 글 등록</button>
                 <button class="notice_Box_top_bottom">선택삭제</button>
             </div>
             

@@ -506,4 +506,55 @@ private Properties prop = new Properties();
 		}
 		return listCount;
 	}
+	
+	// 관리자 - 전체 리스트를 가져오기
+	public ArrayList<FAQ> selectAdminAllListView(Connection conn){
+		ArrayList<FAQ> list = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("selectAdminAllListView");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(new FAQ(rset.getInt("faq_code"),
+						         rset.getString("faq_title"),
+						         rset.getString("faq_content")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	}
+	
+	// 관리자 - 자주묻는질문 등록
+	public int insertFaq(Connection conn, String faqTitle, String faqCategory, String faqContent) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertFaq");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, faqCategory);
+			pstmt.setString(2, faqTitle);
+			pstmt.setString(3, faqContent);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	
+	
 }
