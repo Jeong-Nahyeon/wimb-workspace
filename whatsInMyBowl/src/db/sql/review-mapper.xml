@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="selectReviewListCount">
+		SELECT COUNT(*) COUNT
+		  FROM REVIEW
+		 WHERE P_CODE = ?
+	</entry>
+	
+	<entry key="selectReviewList">
+		SELECT *
+		  FROM (
+		         SELECT ROWNUM RNUM, R.*
+		           FROM (
+		                  SELECT
+		                         R_CODE
+		                       , M_CODE
+		                       , M_NAME
+		                       , P_NAME
+		                       , R_CONTENT
+                               , MAINIMG
+		                       , TO_CHAR(R_DATE, 'YYYY.MM.DD') R_DATE
+		                    FROM REVIEW
+		                    JOIN MEMBER USING (M_CODE)
+		                    JOIN PRODUCT USING (P_CODE)
+		                   WHERE R_STATUS = 'Y'
+		                     AND P_CODE = ?
+		                   ORDER
+		                      BY R_CODE DESC
+		                ) R
+		       )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectOrderList">
+		SELECT
+		       ORDER_CODE
+		     , M_CODE
+		  FROM "ORDER"
+		  JOIN SUBORDER USING (ORDER_CODE)
+		 WHERE P_CODE = ?
+ 		   AND M_CODE = ?
+		   AND ORDER_STATUS = '배송완료'
+	</entry>
+	
+	<entry key="insertReview">
+		INSERT
+		  INTO REVIEW
+		  (
+		    R_CODE
+		  , ORDER_CODE
+		  , M_CODE
+		  , P_CODE
+		  , R_CONTENT
+		  )
+		  VALUES
+		  (
+		    SEQ_REVIEW.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="insertFileList">
+		INSERT
+		  INTO "FILE"
+		  (
+		    F_CODE
+		  , F_NAME
+		  , F_RENAME
+		  , F_PATH
+		  , F_EXTENSION
+		  , F_REF
+		  , F_REFCODE
+		  )
+		  VALUES
+		  (
+		    SEQ_FILE.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , 'R'
+		  , SEQ_REVIEW.CURRVAL
+		  )
+	</entry>
+
+</properties>

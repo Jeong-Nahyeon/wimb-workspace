@@ -1,5 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ page import="java.util.ArrayList, com.wimb.member.model.vo.Member, com.wimb.review.model.vo.Review, com.wimb.payment.model.vo.Order, com.wimb.common.model.vo.PageInfo" %>
+    
+<%	
+	
+	Member loginUser = (Member)session.getAttribute("loginUser");
+	
+	ArrayList<Review> reviewList = (ArrayList<Review>)(request.getAttribute("reviewList"));
+
+	Order orderInfo = (Order)(request.getAttribute("orderInfo"));
+	
+    String pCode = (String)(request.getAttribute("pCode"));
+
+    String pName = (String)(request.getAttribute("pName"));
+	
+    PageInfo pi = (PageInfo)(request.getAttribute("pi"));
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+	
+	String detailMsg = (String)(session.getAttribute("detailMsg"));
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,33 +37,35 @@
 <style>
 	
 	.review{
-		border:1px solid red;
+		/* border:1px solid red; */
 		box-sizing: border-box;
 		margin:auto;
 		margin-bottom: 20px;
 		width:900px;
-		height:800px;
+		/* height:800px; */
+        height:auto;
 	}
 
 	.review-title, .review-btn1, .review-content, .review-btn2{
-		border:1px solid red;
+		/* border:1px solid red; */
 		box-sizing: border-box;
 		width:100%;
+        height:auto;
 	}
 
 	.review-title{
         border-bottom: 2px solid lightgray;
-		height:5%;
+		height:40px;
 		margin-bottom:10px;
 	}
 
 	.review-btn1, .review-btn2{
-		height:5%;
+		height:40px;
 		margin-bottom:20px;
 	}
 
 	.review-btn1-left, .review-btn1-right{
-		border:1px solid red;
+		/* border:1px solid red; */
 		box-sizing: border-box;
 		width:50%;
 		height:100%;
@@ -60,17 +86,18 @@
     }
 	
 	.review-content{
-        border:1px solid red;
-		height:24%;
+        /* border:1px solid red; */
+		height:650px;
 		margin-bottom:20px;
 	}
 
 	.review-content-left{
-		border:1px solid red;
+		/* border:1px solid red; */
 		box-sizing: border-box;
 		width:20%;
-		height:100%;
+		height:180px;
 		float:left;
+		margin-bottom:10px;
     }
 
     .review-content-left>img{
@@ -80,12 +107,13 @@
     }
 
 	.review-content-right{
-		border:1px solid red;
+		/* border:1px solid red; */
 		box-sizing: border-box;
 		width:80%;
-		height:100%;
+		height:180px;
 		float:left;
         padding:10px;
+        margin-bottom:10px;
 	}
 
     /* 상품후기 수정, 삭제, 신고 버튼 */
@@ -98,9 +126,9 @@
     }
 
     .review-btn2-left, .review-btn2-center, .review-btn2-right{
-		border:1px solid red;
+		/* border:1px solid red; */
 		box-sizing: border-box;
-		height:100%;
+		height:40px;
 		float:left;
 	}
 
@@ -149,6 +177,7 @@
         width:80%;
         height:100%;
         float: left;
+        text-align: left;
     }
 
     .review-form-content{
@@ -207,6 +236,22 @@
 </style>
 </head>
 <body>
+    <!-- 요청처리 성공 알림 -->
+    <% if(detailMsg != null) { %>
+        <script>
+            
+            $(function(){
+                
+                $("#review-success-modal b").text("<%= detailMsg %>");
+                $("#review-success-modal").modal({backdrop: false});
+                
+	            <% session.removeAttribute("detailMsg"); %>
+	            
+            });
+
+            </script>
+            
+	<% } %>
 
     <div id="review" class="review">
         <div class="review-title">
@@ -223,63 +268,129 @@
         </div>
 
         <div class="review-content">
-            <div class="review-content-left">
-                <img src="">
-            </div>
-            <div class="review-content-right">
-                <!-- 리뷰신고 성공 모달창 테스트용 임시 아이디 부여 -->
-                <b id="report-success-btn">홍길동</b> <span>&nbsp;&#124;&nbsp;</span><span> 2021.12.11</span>
-                <span style="margin-left:400px;">
-                    <a id="review-update-btn">수정</a>
-                    <span>&nbsp;&#124;&nbsp;</span>
-                    <a id="review-delete-btn">삭제</a> <!-- 리뷰삭제 성공 모달창 테스트용 임시 아이디 부여 -->
-                    <span>&nbsp;&#124;&nbsp;</span>
-                    <a id="report-review-btn">신고</a>
-                </span>
-                <!-- [고려사항]
-                    상품후기내용 => 입력 받을 때 글자수 제한해서 영역 범위 넘어가지 않도록 해야할 듯....
-                -->
-                <p>
-                    <br>
-                    상품후기내용
-                </p> 
-            </div>
+        	<% if(reviewList.isEmpty()) { %>
+	            <!-- case1. 리뷰 없을 경우 -->
+	            <div class="no-review" align="center">
+	                <p>등록된 리뷰가 없습니다.</p>
+	            </div>
+            <% } else { %>
+	            <!-- case2. 리뷰 있을 경우 -->
+	           	<% for(Review r : reviewList) { %>
+                    
+                    <div class="review-content-left">
+                        <input type="hidden" name="rCode" value="<%= r.getrCode() %>">
+                        <img src="">
+                    </div>
+                    <div class="review-content-right">
+                        <b><%= r.getmName() %></b> <span>&nbsp;&#124;&nbsp;</span><span> <%= r.getrDate() %></span>
+                        <span style="margin-left:20px;">
+							<% if( r.getmCode() == loginUser.getmCode()) { %>                        
+                                <a class="review-update-btn">수정</a>
+                                <span>&nbsp;&#124;&nbsp;</span>
+                                <a class="review-delete-btn">삭제</a>
+                            <% } else { %>
+                                <a class="review-report-btn">신고</a>
+                            <% } %>
+                        </span>
+                        <p>
+                            <br>
+                            <%= r.getrContent() %>
+                        </p> 
+                    </div>
+	            <% } %>
+            <% } %>
         </div>
-        <div class="review-content">
-            <div class="review-content-left">
-                <img src="">
-            </div>
-            <div class="review-content-right">
-                <p>상품후기내용</p>
-            </div>
-        </div>
-        <div class="review-content">
-            <div class="review-content-left">
-                <img src="">
-            </div>
-            <div class="review-content-right">
-                <p>상품후기내용</p>
-            </div>
-        </div>
+        <script>
+
+            $(function(){
+
+                $(".review-content-right").on("click", ".review-update-btn", function(){
+					
+
+
+                });
+
+            });
+
+        </script>
+
+
 
         <div class="review-btn2">
             <div class="review-btn2-left" style="width:20%"></div>
-            <div class="review-btn2-center">
-                <a href="">&lt;</a>
-                <a href="">1</a>
-                <a href="">&gt;</a>
+            <!-- 페이징바 -->
+            <div class="review-btn2-center"> 
+	            	<% if(currentPage != 1 && reviewList.size() > 3) { %>
+	                	<a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= currentPage - 1 %>&pcode=<%= pCode %>">&lt;</a>
+	                <% } %>
+	                <% for(int p=startPage; p<=endPage; p++) { %>
+	                	<% if(p == currentPage) { %>
+	               			<a href="#"><%= p %></a>
+	               		<% } else { %>
+	               			<a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= p %>&pcode=<%= pCode %>"><%= p %></a>
+	               		<% } %>
+	                <% } %>
+	                <% if(currentPage != maxPage && reviewList.size() > 3) { %>
+	               	 <a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= currentPage + 1 %>&pcode=<%= pCode %>">&gt;</a>
+	                <% } %>
             </div>
-            <div class="review-btn2-right">
-                <button class="btn" id="review-insert-btn">후기등록</button>
-            </div>
+            <% if(loginUser != null) { %>
+	            <div class="review-btn2-right">
+	                <button class="btn" id="review-insert-btn">후기등록</button>
+	            </div>
+            <% } %>
         </div>
     </div>
+
+    <!-- 리뷰등록 모달창 열기 기능 -->
+    	<% if(orderInfo.getoCode() != null) { %>
+            <%for(Review r : reviewList) { %>
+                <%if(r.getmCode() != loginUser.getmCode()) {  %>
+	                <script>
+	                    $(function(){
+	                            $("#review-insert-btn").click(function(){
+	                                
+	                                $("#review-insert-modal").modal({backdrop:false});
+	                                $(".review-product input[name=ocode]").val("<%= orderInfo.getoCode() %>");
+	                                $(".review-product input[name=mcode]").val("<%= orderInfo.getmCode() %>");
+	                                $(".review-product input[name=pcode]").val("<%= pCode %>");
+	                                // $(".review-product-img img").attr();
+	                                $(".review-product-name h4").text("<%= pName %>");
+	                                
+	                            });
+	                    });
+	                
+	                </script>
+                <% } else { %>
+                	<script>
+	                    $(function(){
+	                            $("#review-insert-btn").click(function(){
+	                                
+	                                alert("이미 작성한 후기가 존재합니다.");
+	                                
+	                            });
+	                    });
+	                </script>
+                <% } %>
+            <% } %>
+    	<% } else { %>
+            <script>
+                $(function(){
+                        $("#review-insert-btn").click(function(){
+                            
+                           alert("해당 상품 구매 후 배송완료 단계 시 등록 가능합니다.");
+                            
+                        });
+                });
+            
+            </script>
+        <% } %>    
 
 
     <!-- 리뷰등록 모달창 -->
 
     <div class="modal fade" id="review-insert-modal">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content insert-review-modal">
                 
                 <!-- Modal Header -->
@@ -291,32 +402,35 @@
                 <!-- Modal body -->
                 <div class="modal-body content-area" align="center">
 
-                    <form action="" id="review-insert-form" method="post" enctype="multipart/form-data">
+                    <form action="<%= request.getContextPath() %>/insert.rev" id="review-insert-form" method="post" enctype="multipart/form-data">
                        <div class="review-insert-content" style="box-sizing:border-box; width:750px;">
 
                            <div class="review-product">
+                               <input type="hidden" name="ocode">
+                               <input type="hidden" name="mcode">
+                               <input type="hidden" name="pcode">
                                <div class="review-product-img">
                                     <img src="" width="100px" height="100px">
                                </div>
                                <div class="review-product-name">
-                                    <h4 style="margin-top: 40px;">닭가슴살 샐러드</h4>
+                                    <h4 name="pname" style="margin-top: 40px;"></h4>
                                </div>
                            </div>
 
                            <hr>
 
                            <table class="review-form-content" id="reviewInsertForm">
+                                <tr><th>내용</th></tr>
                                 <tr>
-                                    <th>제목</th>
-                                    <td><input type="text" name="" id=""></td>
+                                    <td><textarea name="reviewContent" rows="15" style="resize:none;"></textarea></td>
                                 </tr>
+                                <tr><th>파일첨부</th></tr>
                                 <tr>
-                                    <th>내용</th>
-                                    <td><textarea name="" id="" rows="15" style="resize:none;"></textarea></td>
-                                </tr>
-                                <tr>
-                                    <th>파일첨부</th>
-                                    <td><input type="file" name="" id=""></td>
+                                    <td class="file-area">
+                                        <input type="file" name="file1" id="file1">
+                                        <input type="file" name="file2" id="file2">
+                                        <input type="file" name="file3" id="file3">
+                                    </td>
                                 </tr>
                            </table>
 
@@ -336,13 +450,6 @@
 			</div>	
 		</div>	
 	</div>
-	<script>
-		$(document).ready(function(){
-			$("#review-insert-btn").click(function(){
-			$("#review-insert-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
 
 
 	<!-- 리뷰수정 모달창 -->
@@ -405,13 +512,6 @@
             </div>
         </div>
     </div>
-	<script>
-		$(document).ready(function(){
-			$("#review-update-btn").click(function(){
-			$("#review-update-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
 
 
 	<!-- 리뷰등록/수정 성공 모달창 -->
@@ -434,30 +534,21 @@
 
                     <div class="review-success-content" align="center" style=" height:60%;">
                         <br>
-                        <b>상품후기가 등록 또는 수정되었습니다.</b>
+                        <b></b>
                         <br>
-                        마이페이지에서 확인하시겠습니까?
                     </div>
 				</div>
 				
 				<!-- Modal footer -->
 				<div class="modal-footer button-area">
 					<div class="cart-success-btns" align="center" style="width:100%;">
-						<button type="button" class="btn btn-sm" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
-						<button type="submit" id="my-page-btn" class="btn btn-sm" style="background:#9BD5BD; margin:0px 5px;">확인</button>
+						<button type="submit" id="my-page-btn" class="btn" style="background:#9BD5BD;" data-dismiss="modal">확인</button>
 					</div>
 				</div>
 
 			</div>
 		</div>
 	</div>		
-	<script>
-		$(document).ready(function(){
-			$("#review-success-btn").click(function(){
-			$("#review-success-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
 
 
 	<!-- 리뷰 삭제 성공 모달창 -->
@@ -495,13 +586,6 @@
 			</div>
 		</div>
 	</div>		
-	<script>
-		$(document).ready(function(){
-			$("#review-delete-btn").click(function(){
-			$("#review-delete-success-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
 
 
 

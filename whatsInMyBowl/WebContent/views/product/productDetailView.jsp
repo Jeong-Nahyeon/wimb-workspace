@@ -3,6 +3,7 @@
     
 <%
 	Product p = (Product)(request.getAttribute("p"));
+
 %>    
     
 <!DOCTYPE html>
@@ -239,6 +240,85 @@
 		height:auto;
 	}
 
+    /* 모달창 스타일 */
+
+
+	/* 리뷰 등록 및 수정 모달창 */
+
+    .review-product{
+        /* border:1px solid red; */
+        box-sizing: border-box;
+        width:100%;
+        height:120px;
+    }
+
+    .review-product-img{
+        /* border:1px solid red; */
+        box-sizing: border-box;
+        width:20%;
+        height:100%;
+        line-height: 110px;
+        float: left;
+    }
+
+    .review-product-name{
+        /* border:1px solid red; */
+        box-sizing:border-box;
+        width:80%;
+        height:100%;
+        float: left;
+    }
+
+    .review-form-content{
+        box-sizing:border-box;
+        width:100%;
+        height:500px;
+        text-align: center;
+    }  
+
+    .review-form-content input, .review-form-content textarea{
+        border:1px solid lightgray;
+        width:100%;
+    }
+
+
+    /* 리뷰 신고 창  */
+
+    .report-review{
+        /* border:1px solid red; */
+        box-sizing: border-box;
+        width:100%;
+        height:120px;
+    }
+
+    .report-review-img{
+        /* border:1px solid red; */
+        box-sizing: border-box;
+        width:20%;
+        height:100%;
+        line-height: 110px;
+        float: left;
+    }
+
+    .report-review-title{
+        /* border:1px solid red; */
+        box-sizing:border-box;
+        width:80%;
+        height:100%;
+        float: left;
+    }
+
+    .report-form-content{
+        box-sizing:border-box;
+        width:100%;
+        height:500px;
+        text-align: center;
+    }  
+
+    .report-form-content input, .report-form-content textarea, .report-form-content select{
+        border:1px solid lightgray;
+        width:100%;
+    }
 	
 
 	/* 배송 정보 */
@@ -266,8 +346,6 @@
 		height:84%;
 		padding:10px;
 	}
-
-
 
 
 	/* 나경님 파일 합치면 삭제 */
@@ -303,7 +381,21 @@
 </style>
 </head>
 <body>
-
+<%--	
+	<script>
+		$(function(){
+			$.ajax({
+				url:"reviewList.re?cpage=1",
+				data:{pcode:"<%= p.getpCode() %>"},
+				success:function(review){
+					console.log(review);
+				}, error:function(){
+					console.log("ajax 통신 실패");
+				} 
+			});
+		});
+	</script>
+--%>
 	<%@ include file="../common/menubar.jsp" %>
 	
 	<div class="outer">
@@ -443,7 +535,7 @@
 				<a href="#detail">상세설명</a>
 			</div>
 			<div class="btn-review">
-				<a href="#review">상품후기 (110)</a>
+				<a href="#review">상품후기</a>
 			</div>
 			<div class="btn-delivery">
 				<a href="#delivery-info">배송정보</a>
@@ -452,7 +544,7 @@
 				<a href="#product-QnA">상품문의</a>
 			</div>
 		</div>
-
+		
 		<!-- 상품 상세 설명 -->
 		<div id="detail" class="detail" align="center">
 			<div class="detail-content">
@@ -464,7 +556,8 @@
 		</div>
 
 		<!-- 리뷰 -->
-		<%@ include file="../review/reviewListView.jsp"%>
+		<iframe id="review" src="<%= contextPath %>/reviewList.rev?cpage=1&pcode=<%= p.getpCode() %>&pname=<%= p.getpName() %>"
+		 style="width:100%; height:900px; border:none;"></iframe>
 
 		<!-- 배송 정보 -->
 		<div id="delivery-info" class="delivery-info">
@@ -485,6 +578,7 @@
 				</p>
 			</div>
 		</div>
+		
 
 		<!-- 나경님 영역 => include로 합치기 -->
 		<!-- 상품 문의 -->
@@ -549,11 +643,6 @@
 			});
 		});
 	</script>
-
-
-	
-
-
 
 </body>
 </html>
