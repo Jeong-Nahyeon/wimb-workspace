@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.wimb.member.model.vo.Member;
 import com.wimb.payment.model.vo.PaymentCustom;
 import com.wimb.payment.model.vo.PaymentProduct;
 
@@ -79,6 +80,16 @@ public class PaymentDao {
 		}
 		
 		return product;
+	}
+
+	// 배송지가져오기 체크시 회원의 주소를 가져오는 서비스
+	public Member selectMember(Connection conn, int mCode) {
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectMember");
+		
+		return null;
 	}
 
 }

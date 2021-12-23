@@ -64,8 +64,9 @@ public class OrderEnrollFormController extends HttpServlet {
 		//System.out.println(saladCode[1]);
 		//System.out.println(custom);
 		//System.out.println(product);
-		System.out.println(customList);
-		System.out.println(productList);
+		
+		//System.out.println(customList);
+		//System.out.println(productList);
 		
 		request.setAttribute("customList", customList);
 		request.setAttribute("productList", productList);

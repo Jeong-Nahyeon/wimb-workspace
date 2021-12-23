@@ -20,4 +20,8 @@
 		  FROM PRODUCT
 		 WHERE P_CODE = ?
 	</entry>
+	
+	<entry key="selectMember">
+	
+	</entry>
 </properties>

@@ -13,24 +13,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 
+<!-- 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/fca98d1848.js" crossorigin="anonymous"></script>
 
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  -->
+
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<script src="https://kit.fontawesome.com/fca98d1848.js" crossorigin="anonymous"></script>
-
 <!-- 주소 API -->
 <!-- https: 붙이니까 팝업창은 뜬다..! 정확한 테스트는 서버 구동 후 가능 -->
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>  
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 
 <style>
     * {font-family: 'Noto Sans KR', sans-serif;}
@@ -232,21 +236,21 @@
 	                        <tr>
 	                            <th>주문자 성함 <span style="color: red; vertical-align: middle;">*</span></th>
 	                            <td>
-	                                <input type="text" name="" placeholder="이름을 입력해주세요." value="">
+	                                <input type="text" name="" placeholder="이름을 입력해주세요." value="<%= loginUser.getmName() %>">
 	                                <input type="hidden" name="mCode" value="<%= loginUser.getmCode() %>">
 	                            </td>
 	                        </tr>
 	                        <tr>
 	                            <th>전화번호</th>
-	                            <td><input type="text" name=""></td>
+	                            <td><input type="text" value=""></td>
 	                        </tr>
 	                        <tr>
 	                            <th>휴대폰 <span style="color: red; vertical-align: middle;">*</span></th>
-	                            <td><input type="text" placeholder="숫자만 입력해주세요." ></td>
+	                            <td><input type="text" value="<%= loginUser.getmPhone() %>"></td>
 	                        </tr>
 	                        <tr>
 	                            <th>이메일 <span style="color: red; vertical-align: middle;">*</span></th>
-	                            <td><input type="text" name="oEmail"></td>
+	                            <td><input type="text" value="<%= loginUser.getmEmail() %>" ></td>
 	                        </tr>
 	                    </table>
                     <% } else {%>
@@ -276,7 +280,7 @@
                     <!-- 배송지 정보 영역-->
                     <span style="font-size: 15px; font-weight: 800; margin-right: 15px;">배송지 정보</span>
                     <% if(loginUser != null){ %>
-                    	<input type="checkbox" name="" id="get-address-input"> 
+                    	<input type="checkbox" name="" id="get-address-input" onclick="memberInfo();"> 
                     	<span  id="get-address" style="font-size: 10px;">기본 배송지 불러오기</span> 
                     <% } %>
                     <hr style="margin-top: 5px;">
@@ -296,14 +300,14 @@
                             </th>
                             <td>
                                 <div class="order-address">
-                                    <input type="text" name="oZipCode" id="address-code">
-                                    <button class="btn btn-sm btn-secondary" onclick="addressSearch()">
+                                    <input type="text" name="oZipCode" id="address_code">
+                                    <button type="button" class="btn btn-sm btn-secondary" onclick="addressSearch();">
                                         우편번호 검색
                                     </button>
                                 </div>
                                 <div class="order-subAddress">
-                                    <input type="text" name="oAddress" id="address-main">
-                                    <input type="text" name="oSubAddress" id="address-sub" placeholder="상세주소">
+                                    <input type="text" name="oAddress" id="address_main">
+                                    <input type="text" name="oSubAddress" id="address_sub" placeholder="상세주소">
                                 </div>
                                 
                             </td>
@@ -337,14 +341,16 @@
                                 <th>적립금 사용</th>
                                 <td>
                                     <input type="number" name="oPoint">
-                                    <button class="btn btn-sm btn-secondary">모두사용</button>
+                                    <button type="button" class="btn btn-sm btn-secondary" onclick="pointAll();">모두사용</button>
                                 </td>
                             </tr>
                             <tr>
                                 <th></th>
                                 <td>
                                     <div class="point-sub">
-                                        <span style="font-size: 13px; margin-bottom: 7px;">보유적립금 : 3,000원</span>
+                                        <span style="font-size: 13px; margin-bottom: 7px;">
+                                            보유적립금 : <label id="allPoint"><%= loginUser.getmPoint() %></label>원
+                                        </span>
                                         <span>* 보유적립금 1천원 이상부터 사용가능</span>
                                         <span>* 적립금내역 : 마이페이지 - 적립금조회</span>
                                     </div>
@@ -352,6 +358,7 @@
                             </tr>
                         </table>
     				<% } %>
+                    
 
                     <!-- 결제수단 영역 -->
                     <div class="pay-area">
@@ -368,7 +375,7 @@
                     </div>
     
                     <!-- 무통장입금 선택시 보여질 영역 -->
-                    <div id="cash-area">
+                    <div id="cash-area" style="display: none;">
                         <div>
                             <label>입금자명</label> 
                             <input type="text" name="">
@@ -385,13 +392,14 @@
     
                     <script>
                         $(function(){
-                            $("#cash-area").hide();
                             $("input[type='radio'][id='cash-check']").on('click',function(){
-                                if($("input[type='radio'][id='cash-check']:checked")){
-                                    $("#cash-area").css('display', 'none');
-                                }else{
-                                    $("#cash-area").css('display','block');
-                                }
+                                var check = $("input[type='radio'][name='payment']:checked").val()
+                                console.log(check);
+                                $("#cash-area").css('display', 'block');
+                                 //$("#cash-area").css('display','none');
+                            });
+                            $("input[type='radio'][id='credit-check']").on('click', function(){
+                                $("#cash-area").css('display','none');
                             })
                         })
 
@@ -421,30 +429,76 @@
         <!-- script -->
         <!-- 다음 주소 API 스크립트 -->
         <script>
-            function addressSearch(){
+            function addressSearch() {
                 new daum.Postcode({
-                oncomplete: function(data) {
-                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-                    // 예제를 참고하여 다양한 활용법을 확인해 보세요.
-                    var addr = '';
-    
-                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                        addr = data.roadAddress;
-                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                        addr = data.jibunAddress;
+                    submitMode: false,
+                    popupKey: 'popup1',
+                    oncomplete: function(data) {
+                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+        
+                        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                        var addr = ''; // 주소 변수
+                        var extraAddr = ''; // 참고항목 변수
+        
+                        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                            addr = data.roadAddress;
+                        } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                            addr = data.jibunAddress;
+                        }
+        
+                        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                        if(data.userSelectedType === 'R'){
+                            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                                extraAddr += data.bname;
+                            }
+                            // 건물명이 있고, 공동주택일 경우 추가한다.
+                            if(data.buildingName !== '' && data.apartment === 'Y'){
+                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                            }
+                            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                            if(extraAddr !== ''){
+                                extraAddr = ' (' + extraAddr + ')';
+                            }
+                            // 조합된 참고항목을 해당 필드에 넣는다.
+                            //document.getElementById("sample6_extraAddress").value = extraAddr;
+                        
+                        } else {
+                            //document.getElementById("sample6_extraAddress").value = '';
+                        }
+        
+                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                        console.log(data.zonecode);
+                        console.log(addr);
+                        document.getElementById('address_code').value = data.zonecode;
+                        document.getElementById("address_main").value = addr + extraAddr;
+                        // 커서를 상세주소 필드로 이동한다.
+                        document.getElementById("address_sub").focus();
                     }
-    
-                    document.getElementById('address-code').value = data.zonecode;
-                    document.getElementById('address-main').value = addr;
-    
-                    // 커서를 상세주소 필드로 이동
-                    document.getElementById("address-sub").focus();
-                }
                 }).open();
             }
-    
+            
         </script>
+
+        
+        <script>
+            //체크박스 클릭 시 데이터 뿌리기
+            
+            function memberInfo(){
+                
+
+            }
+
+            // 적립금 모두사용 클릭 시 값 변경
+            function pointAll(){
+                var allPoint = $("#allPoint").text()
+                $("input[name='oPoint']").val(allPoint);
+            }
+        </script>
+
         
     </body>
     </html>
