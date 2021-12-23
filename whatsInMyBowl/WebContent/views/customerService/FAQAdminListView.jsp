@@ -41,9 +41,11 @@
         display: inline-block;
         padding: 5px 40px;
     }
+    .FAQ_Category_box a{color: black;}
     .FAQ_Box table{
         width: 1000px;
         border-collapse: collapse;
+        margin-top: 100px;
     }
     .FAQ_Box table .check1{width: 3%;}
     .FAQ_Box table .FAQ_title{
@@ -96,13 +98,13 @@
             </div>
             
             <div class="FAQ_Category" align="center">
-                <div class="FAQ_Category_box">전체</div>
-                <div class="FAQ_Category_box" style="border-left: 1px solid gray;">배송</div>
-                <div class="FAQ_Category_box" style="border-left: 1px solid gray;">적립금</div>
-                <div class="FAQ_Category_box" style="border-left: 1px solid gray;">주문/결제</div>
-                <div class="FAQ_Category_box" style="border-left: 1px solid gray;">취소/환불</div>
-                <div class="FAQ_Category_box" style="border-left: 1px solid gray;">상품</div>
-                <div class="FAQ_Category_box" style="border-left: 1px solid gray;">이용/기타</div>
+                <div class="FAQ_Category_box"><a href="">전체</a></div>
+                <div class="FAQ_Category_box" style="border-left: 1px solid gray;"><a href="">배송</a></div>
+                <div class="FAQ_Category_box" style="border-left: 1px solid gray;"><a href="">적립금</a></div>
+                <div class="FAQ_Category_box" style="border-left: 1px solid gray;"><a href="">주문/결제</a></div>
+                <div class="FAQ_Category_box" style="border-left: 1px solid gray;"><a href="">취소/환불</a></div>
+                <div class="FAQ_Category_box" style="border-left: 1px solid gray;"><a href="">상품</a></div>
+                <div class="FAQ_Category_box" style="border-left: 1px solid gray;"><a href="">이용/기타</a></div>
             </div>
 
             <table>
@@ -115,31 +117,6 @@
                     <td class="check1"></td>
                     <td colspan="2" class="FAQ_answer">2만원 이상 주문 시 결제시에 사용 가능합니다.</td>
                 </tr>
-
-                <tr>
-                    <td class="check1"><input type="checkbox" name="check1"></td>
-                    <td class="FAQ_title">적립금은 어떻게 사용하나요?</td>
-                    <td class="FAQ_Update_btn"><button type="button">수정</button></td>
-                </tr>
-                <tr>
-                    <td class="check1"></td>
-                    <td colspan="2" class="FAQ_answer">2만원 이상 주문 시 결제시에 사용 가능합니다.</td>
-                </tr>
-
-                <tr>
-                    <td class="check1"><input type="checkbox" name="check1"></td>
-                    <td class="FAQ_title">적립금은 어떻게 사용하나요?</td>
-                    <td class="FAQ_Update_btn"><button type="button">수정</button></td>
-                </tr>
-                <tr>
-                    <td class="check1"></td>
-                    <td colspan="2" class="FAQ_answer">2만원 이상 주문 시 결제시에 사용 가능합니다.</td>
-                </tr>
-
-
-
-
-
             </table>
 
 
