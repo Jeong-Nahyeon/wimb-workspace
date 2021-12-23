@@ -261,7 +261,7 @@
 	
 	<entry key="selectListCount">
 		SELECT
-		       (*)"COUNT"
+		       COUNT(*)"COUNT"
 		  FROM "ORDER"
 	</entry>
 	
@@ -273,7 +273,6 @@
 	                SELECT 
 					        *
 					  FROM "ORDER"
-					 WHERE R
 					 ORDER 
 					     BY ORDER_CODE DESC
 	                ) A        
