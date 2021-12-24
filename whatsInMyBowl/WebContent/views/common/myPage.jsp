@@ -96,7 +96,7 @@
                     </tr>
                     <tr>
                         <td style="padding-bottom: 45px;">
-                            <a href="">적립금</a>
+                            <a href="<%=contextPath%>/pointClick.me">적립금</a>
                         </td>
                     </tr>
                     <tr>
