@@ -165,25 +165,29 @@
             </div>
 
         </div>
-
+		
+		<% if (loginUser == null){ %>
+		<!-- 로그인이 안되어있을 경우 -->
+		<!-- 로그인 창 띄우기 -->
+		<% } else {%>
+		<!-- 로그인이 되어있을 경우 -->
         <div id="InqueryForm">
-            <form action="" method="post">
-    
+            <form action="<%= contextPath %>/userInsert.inq" method="post" id="enroll-form" enctype="multipart/form-data">
+    		<input type="hidden" name="userNo" value="<%= loginUser.getmCode() %>">
                 <h3>1:1 문의</h3>
                 <table>
                     <tr style="border-bottom: 1px solid lightgray;">
                         <th style="padding: 10px 0; width: 100px;">작성자</th>
-                        <td style="width: 300px; text-align: left;">홍길동</td>
+                        <td style="width: 300px; text-align: left;"><%= loginUser.getmName() %>님</td>
                         <th>말머리</th>
                         <td>
                             <select name="inquiry_category">
-                                <option value="">문의내용</option>
-                                <option value="">결제관련</option>
-                                <option value="">홈페이지이용</option>
-                                <option value="">배송</option>
-                                <option value="">상품</option>
-                                <option value="">취소/환불</option>
-                                <option value="">기타</option>
+                                <option value="결제관련">결제관련</option>
+                                <option value="홈페이지이용">홈페이지이용</option>
+                                <option value="배송">배송</option>
+                                <option value="상품">상품</option>
+                                <option value="취소/환불">취소/환불</option>
+                                <option value="기타">기타</option>
                             </select>
                         </td>
                     </tr>
@@ -207,13 +211,13 @@
                                     <div style="padding: 0px 30px; display: inline-block; text-align: start;">첨부파일</div>
                                     <input type="text" class="fileName" readonly="readonly">
                                     <label for="uploadBtn" class="btn_file" style="vertical-align: middle;">추가</label>
-                                    <input type="file" id="uploadBtn" class="uploadBtn">
+                                    <input type="file" id="uploadBtn" class="uploadBtn" name="file1">
                                 </div>
 
                                 <div class="fileBox_second" style="padding-left: 116px;">
                                     <input type="text" class="fileName" readonly="readonly">
                                     <label for="uploadBtn2" class="btn_file" style="vertical-align: middle;">추가</label>
-                                    <input type="file" id="uploadBtn2" class="uploadBtn">
+                                    <input type="file" id="uploadBtn2" class="uploadBtn" name="file2">
                                 </div>
 
                             </div>
@@ -231,7 +235,7 @@
 
 
         </div>
-
+		<% } %>
 
     </div>
 

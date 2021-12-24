@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<!-- 사용자 - 1:1문의 등록 -->
+	<entry key="insertInquery">
+		INSERT
+		  INTO INQUIRY
+		  (
+		    I_CODE
+		  , M_CODE
+		  , I_CATEGORY
+		  , I_TITLE
+		  , I_CONTENT
+		  , I_STATUS
+		  )
+		  VALUES
+		  (
+		    SEQ_INQUIRY.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , 'Y'
+		  )	
+	</entry>
+
+	<entry key="insertFile">
+		 INSERT 
+		   INTO "FILE"
+		   (
+		     F_CODE
+		   , F_NAME
+		   , F_RENAME
+		   , F_PATH
+		   , F_EXTENSION
+		   , F_REF
+		   , F_REFCODE
+		   )
+		   VALUES
+		   (
+		     SEQ_FILE.NEXTVAL
+		   , ?
+		   , ?
+		   , ?
+		   , SUBSTR(?,INSTR(?,'.', -1)+1)
+		   , 'I'
+		   , SEQ_INQUIRY.CURRVAL
+		   )	
+	</entry>
+	
+	<entry key="">
+	
+	
+	</entry>
+	
+	<entry key="">
+	
+	
+	</entry>
+	
+	<entry key="">
+	
+	
+	</entry>
+	
+	<entry key="">
+	
+	
+	</entry>
+	
+	<entry key="">
+	
+	
+	</entry>
+	
+	<entry key="">
+	
+	
+	</entry>
+	
+	<entry key="">
+	
+	
+	</entry>
+</properties>

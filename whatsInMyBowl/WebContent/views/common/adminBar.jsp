@@ -124,7 +124,7 @@
                 <a href=""><b style="font-size: 20px;">로그아웃</b></a>
             </td>
             <td style="width: 7%;">
-                <a href=""><b style="font-size: 20px;">홈페이지</b></a>
+                <a href="<%= contextPath %>"><b style="font-size: 20px;">홈페이지</b></a>
             </td>
         </tr>
     </table>

@@ -376,9 +376,7 @@
     	
     	var bannerCode = $(this).parent().siblings('.bannerCode').text();
     	var bannerStatus = $(this).parent().siblings('.bannerStatus').text();
-    	console.log(bannerCode);
-    	console.log(bannerStatus);
-    	
+  	
     	$.ajax({
     		url:"StatusChange.banner",
     		data:{bCode:bannerCode, 

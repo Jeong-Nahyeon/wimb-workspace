@@ -65,7 +65,6 @@ public class NoticeService {
 	public int insertNotice(Notice n, ArrayList<File> list) {
 		Connection conn = getConnection();
 		
-		System.out.println(list);
 		int result1 = new NoticeDao().insertNotice(conn, n); // 공지사항 테이블에 insert
 		int result2 = 1;
 		
