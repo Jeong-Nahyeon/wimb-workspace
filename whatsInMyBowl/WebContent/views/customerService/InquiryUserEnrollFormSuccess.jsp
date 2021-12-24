@@ -118,10 +118,49 @@
         background-color: white;
     }
     #btn-insert{
-       background-color: rgb(155, 213, 189);
-       color: white;
+        background-color: rgb(155, 213, 189);
+        color: white;
     }
-
+    /*질문 등록 성공  모달*/
+    .modal_text{
+        text-align: center;
+    }
+    .modal_text span{
+        display: block;
+        margin: 10px 0;
+    }
+    .modal_btn{
+        margin-top: 20px;
+        width: 400px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .modal_btn button{
+        display: block;
+        margin: 0 auto;
+    }
+    .modal{
+        margin-top : 20%;
+    }
+    .modal-body{
+        height: 250px;
+        padding-top: 20px;
+    }
+    .modal_btn_top{
+        background-color: rgb(155, 213, 189);
+        color: white;
+        padding: 5px 70px;
+        border: none;
+        border-radius: 5px;
+    }
+    .modal_btn_bottom{
+        border: none;
+        border: 2px solid rgb(155, 213, 189);
+        border-radius: 5px;
+        background-color: white;
+        padding: 5px 90px;
+        margin-top: 30px;
+    }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -249,16 +288,14 @@
         <div class="modal-content">
             
             <!-- Modal body -->
-            <div class="modal-body">
+            <div class="modal-body" style="margin-top: 30px;">
                 <!-- <form action="" >  -->
-                    <div class="delete_text">
-                        <span>선택하신 재료를 삭제합니다.</span>
-                        <span>정말 삭제하시겠습니까?</span>
-                        <span>(삭제 후 복구불가)</span>
+                    <div class="modal_text">
+                        <span>1:1 문의글 등록이 완료되었습니다.</span>
                     </div>
-                    <div class="delete_btn">
-                        <button class="btn btn-sm btn btn-outline-warning" data-toggle="modal" data-target="#adminPassword-Modal" >삭제</button>
-                        <button type="reset" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">취소</button>
+                    <div class="modal_btn" style="margin-top: 50px;">
+                        <button type="button" class="modal_btn_top" style="margin-bottom: 5px;" onclick="location.href='';">1:1 문의글 조회</button>
+                        <button type="button" class="modal_btn_bottom" onclick="location.href='';">메인화면</button>
                     </div>
                 <!-- </form>  -->
             </div>
@@ -291,6 +328,11 @@
                 var filename = $(this).val().split('/').pop().split('\\').pop();
             }
             $(this).siblings('.fileName').val(filename);
+        });
+        
+        // 글 등록하자마자 화면에 띄워주는 함수
+        $(document).ready(function() {
+        	$(".modal").modal("show");
         });
     </script>
 

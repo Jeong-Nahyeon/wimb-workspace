@@ -79,8 +79,7 @@ public class InquiryUserInsertController extends HttpServlet {
 			int result = new InquiryService().insertInquiry(inq, list);
 		
 			if(result > 0) { // 성공 => URL 재요청
-				request.getSession().setAttribute("alertMsg", "1:1문의 등록 완료");
-				response.sendRedirect(request.getContextPath() + "/userEnrollForm.inq");
+				request.getRequestDispatcher("views/customerService/InquiryUserEnrollFormSuccess.jsp").forward(request, response);
 			} else { // 실패 => 에러페이지
 				request.setAttribute("errorMsg", "1:1문의 등록 실패");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);	
