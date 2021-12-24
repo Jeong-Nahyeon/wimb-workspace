@@ -245,11 +245,12 @@
                 $("#review-success-modal b").text("<%= detailMsg %>");
                 $("#review-success-modal").modal({backdrop: false});
                 
-	            <% session.removeAttribute("detailMsg"); %>
+                <% session.removeAttribute("detailMsg"); %>
 	            
             });
 
-            </script>
+            
+        </script>
             
 	<% } %>
 
@@ -284,12 +285,14 @@
                     <div class="review-content-right">
                         <b><%= r.getmName() %></b> <span>&nbsp;&#124;&nbsp;</span><span> <%= r.getrDate() %></span>
                         <span style="margin-left:20px;">
+							<% if(loginUser != null) { %>
 							<% if( r.getmCode() == loginUser.getmCode()) { %>                        
                                 <a class="review-update-btn">수정</a>
                                 <span>&nbsp;&#124;&nbsp;</span>
                                 <a class="review-delete-btn">삭제</a>
                             <% } else { %>
                                 <a class="review-report-btn">신고</a>
+                            <% } %>
                             <% } %>
                         </span>
                         <p>
@@ -343,7 +346,7 @@
     </div>
 
     <!-- 리뷰등록 모달창 열기 기능 -->
-    	<% if(orderInfo.getoCode() != null) { %>
+    	<% if(orderInfo != null && orderInfo.getoCode() != null) { %>
             <%for(Review r : reviewList) { %>
                 <%if(r.getmCode() != loginUser.getmCode()) {  %>
 	                <script>

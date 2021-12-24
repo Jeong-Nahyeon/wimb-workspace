@@ -46,9 +46,7 @@ public class ReviewListController extends HttpServlet {
 		String pCode = request.getParameter("pcode"); // 요청 시 전달된 상품코드
 		String pName = request.getParameter("pname"); // 요청 시 전달된 상품명
 		Member m = (Member)(request.getSession().getAttribute("loginUser")); // 현재 로그인한 회원 정보
-		
-		System.out.println(m);
-		
+				
 		listCount = new ReviewService().selectReviewListCount(pCode);
 		
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
