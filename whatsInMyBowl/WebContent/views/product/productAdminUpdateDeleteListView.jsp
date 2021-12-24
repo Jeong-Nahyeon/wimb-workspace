@@ -313,7 +313,7 @@
                     <option>해산물</option>
                 </select>
             </div>
-            
+            <!-- 옵션별 정렬용 -->
             <script>
                 
                 $("#list-1 select").change(function(){

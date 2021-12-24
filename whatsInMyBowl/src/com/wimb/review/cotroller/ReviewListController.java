@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.member.model.vo.Member;
 import com.wimb.payment.model.vo.Order;
+import com.wimb.product.model.vo.Product;
 import com.wimb.review.model.service.ReviewService;
 import com.wimb.review.model.vo.Review;
 
@@ -69,15 +70,16 @@ public class ReviewListController extends HttpServlet {
 		
 		ArrayList<Review> reviewList = new ReviewService().selectReviewList(pi, pCode);
 		
+		Product p = new ReviewService().selectProduct(pCode);
+		
 		if(m != null) {
 			
 			Order orderInfo = new ReviewService().selectOrderList(pCode, m.getmCode());
 			request.setAttribute("orderInfo", orderInfo);
 			
 		}
-		
-		request.setAttribute("pCode", pCode);
-		request.setAttribute("pName", pName);
+
+		request.setAttribute("product", p);
 		request.setAttribute("pi", pi);
 		request.setAttribute("reviewList", reviewList);
 		

@@ -15,6 +15,7 @@ import static com.wimb.common.JDBCTemplate.*;
 import com.wimb.common.model.vo.File;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.payment.model.vo.Order;
+import com.wimb.product.model.vo.Product;
 import com.wimb.review.model.vo.Review;
 
 public class ReviewDao {
@@ -105,6 +106,44 @@ public class ReviewDao {
 		}
 		
 		return reviewList;
+		
+	}
+	
+	
+	public Product selectProduct(Connection conn, String pCode) {
+
+		Product p = new Product();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectProduct");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, pCode);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				p.setpCode(rset.getString("p_code"));
+				p.setpName(rset.getString("p_name"));
+				p.setpMainImg(rset.getString("p_mainimg"));
+				p.setFilePath("resources/images/product_images/");
+				
+			}
+			
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return p;
 		
 	}
 	
@@ -203,6 +242,87 @@ public class ReviewDao {
 		return result;
 		
 	}
+	
+	
+	public Review selectReview(Connection conn, int rCode) {
+
+		Review r = new Review();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReview");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, rCode);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				r.setrCode(rset.getInt("r_code"));
+				r.setrContent(rset.getString("r_content"));
+				
+			}
+			
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return r;
+		
+	}
+	
+	
+	public ArrayList<File> selectFileList(Connection conn, int rCode) {
+
+		ArrayList<File> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectFileList");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, rCode);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				File f = new File();
+				
+				f.setfCode(rset.getInt("f_code"));
+				f.setfName(rset.getString("f_name"));
+				f.setfRename(rset.getString("f_rename"));
+				f.setfPath(rset.getString("f_path"));
+				f.setfRefCode(rset.getInt("f_refcode"));
+				
+				list.add(f);
+				
+			}
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	
+	
 	
 
 }

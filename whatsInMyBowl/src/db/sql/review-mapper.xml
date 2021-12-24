@@ -33,6 +33,15 @@
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+	<entry key="selectProduct">
+		SELECT
+		       P_CODE
+		     , P_NAME
+		     , P_MAINIMG
+		  FROM PRODUCT
+		 WHERE P_CODE = ?
+	</entry>
+	
 	<entry key="selectOrderList">
 		SELECT
 		       ORDER_CODE
@@ -86,6 +95,27 @@
 		  , 'R'
 		  , SEQ_REVIEW.CURRVAL
 		  )
+	</entry>
+	
+	<entry key="selectReview">
+		SELECT
+		       R_CODE
+		     , R_CONTENT
+		  FROM REVIEW
+		 WHERE R_STATUS = 'Y'
+		   AND R_CODE = ?
+	</entry>
+	
+	<entry key="selectFileList">
+		SELECT
+		       F_CODE
+		     , F_NAME
+		     , F_RENAME
+		     , F_PATH
+		     , F_REFCODE
+		  FROM "FILE"
+		 WHERE F_REF = 'R'
+		   AND F_REFCODE = ?
 	</entry>
 
 </properties>

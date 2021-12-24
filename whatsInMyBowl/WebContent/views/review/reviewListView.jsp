@@ -1,26 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ page import="java.util.ArrayList, com.wimb.member.model.vo.Member, com.wimb.review.model.vo.Review, com.wimb.payment.model.vo.Order, com.wimb.common.model.vo.PageInfo" %>
+<%@ page import="java.util.ArrayList, com.wimb.member.model.vo.Member, com.wimb.review.model.vo.Review,
+				 com.wimb.product.model.vo.Product, com.wimb.payment.model.vo.Order, com.wimb.common.model.vo.PageInfo,
+				 com.wimb.common.model.vo.File" %>
     
 <%	
+	String contextPath = request.getContextPath();
 	
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	
+	
+	// 리뷰 전체 조회
 	ArrayList<Review> reviewList = (ArrayList<Review>)(request.getAttribute("reviewList"));
-
+	
+	// 리뷰 상품 정보
+	Product product = (Product)(request.getAttribute("product"));
+		
+	// 주문 정보
 	Order orderInfo = (Order)(request.getAttribute("orderInfo"));
 	
-    String pCode = (String)(request.getAttribute("pCode"));
-
-    String pName = (String)(request.getAttribute("pName"));
+	// 수정용 상세 리뷰 정보
+	//Review review = (Review)(session.getAttribute("review"));
 	
+	// 수정용 첨부파일 => null 가능
+	//ArrayList<File> fileList = (ArrayList<File>)(session.getAttribute("fileList"));
+	
+	// 페이징용
     PageInfo pi = (PageInfo)(request.getAttribute("pi"));
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
 	
+	// 성공 알림용
 	String detailMsg = (String)(session.getAttribute("detailMsg"));
 	
 %>
@@ -94,10 +107,12 @@
 	.review-content-left{
 		/* border:1px solid red; */
 		box-sizing: border-box;
+		border:1px solid lightgray;
 		width:20%;
 		height:180px;
 		float:left;
 		margin-bottom:10px;
+		text-align:center;
     }
 
     .review-content-left>img{
@@ -261,7 +276,7 @@
 
         <div class="review-btn1">
             <div class="review-btn1-left">
-                <a href="">전체후기</a> 
+                <a href="<%= contextPath %>/reviewList.rev?cpage=1&pcode=<%= product.getpCode() %>&pname=<%= product.getpName() %>#review">전체후기</a> 
             </div>
             <div class="review-btn1-right">
                 <a href="">포토후기</a>
@@ -280,7 +295,11 @@
                     
                     <div class="review-content-left">
                         <input type="hidden" name="rCode" value="<%= r.getrCode() %>">
-                        <img src="">
+                        	<% if(r.getMainImg() != null) { %>
+                        <img src="<%= r.getMainImg() %>">
+                        <% } else { %>
+                        	<i class="far fa-images fa-4x" style="margin-top:55px; color:lightgray;"></i>
+                        <% } %>
                     </div>
                     <div class="review-content-right">
                         <b><%= r.getmName() %></b> <span>&nbsp;&#124;&nbsp;</span><span> <%= r.getrDate() %></span>
@@ -300,41 +319,84 @@
                             <%= r.getrContent() %>
                         </p> 
                     </div>
+                    
 	            <% } %>
             <% } %>
         </div>
+        
+        <!-- 리뷰 수정버튼 클릭 시 리뷰 정보 조회 -->
         <script>
 
             $(function(){
 
                 $(".review-content-right").on("click", ".review-update-btn", function(){
 					
-
-
+					<%-- location.href="<%= contextPath %>/updateForm.rev?rcode=" + $(".review-content-left").children().eq(0).val(); --%>
+					
+					$.ajax({
+						url:"updateForm.rev",
+						data:{rcode:$(".review-content-left").children().eq(0).val()},
+						success:function(){
+							
+						}, error:function(){
+							console.log("ajax 통신 실패");
+						}
+						
+					});
+					
                 });
 
             });
 
         </script>
+        <!-- 리뷰 정보 조회 후 수정 모달창 열어서 데이터 뿌려주기  -->
+        <%-- 
+        <% if(review != null) { %>
+	        <script>
+	        
+	        	$(function(){
+	        		
+	        		$(function(){
+	        			
+	        			const $updateModal = $("#review-update-modal");
 
-
+	        			$updateModal.model({backdrop:false});
+	        			
+	        			$updateModal.find("textarea").text("<%= review.getrContent() %>");
+	        			
+	        			<% if(!fileList.isEmpty()) { %>
+		        			<% for(File f : fileList) { %>
+		        			
+		        				$updateModal.find("#existingImgs").html("<%= f.getfName() %> <br>");
+		        			
+		        			<% } %>
+	        			<% } %>
+	        			
+	        			
+	        		});
+	        		
+	        	});
+	        
+	        </script>
+		<% } %>
+		--%>
 
         <div class="review-btn2">
             <div class="review-btn2-left" style="width:20%"></div>
             <!-- 페이징바 -->
             <div class="review-btn2-center"> 
-	            	<% if(currentPage != 1 && reviewList.size() > 3) { %>
-	                	<a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= currentPage - 1 %>&pcode=<%= pCode %>">&lt;</a>
+	            	<% if(currentPage != 1 && reviewList.size() != 0) { %>
+	                	<a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= currentPage - 1 %>&pcode=<%= product.getpCode() %>">&lt;</a>
 	                <% } %>
 	                <% for(int p=startPage; p<=endPage; p++) { %>
 	                	<% if(p == currentPage) { %>
 	               			<a href="#"><%= p %></a>
 	               		<% } else { %>
-	               			<a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= p %>&pcode=<%= pCode %>"><%= p %></a>
+	               			<a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= p %>&pcode=<%= product.getpCode() %>"><%= p %></a>
 	               		<% } %>
 	                <% } %>
-	                <% if(currentPage != maxPage && reviewList.size() > 3) { %>
-	               	 <a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= currentPage + 1 %>&pcode=<%= pCode %>">&gt;</a>
+	                <% if(currentPage != maxPage && reviewList.size() != 0) { %>
+	               	 <a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= currentPage + 1 %>&pcode=<%= product.getpCode() %>">&gt;</a>
 	                <% } %>
             </div>
             <% if(loginUser != null) { %>
@@ -356,9 +418,9 @@
 	                                $("#review-insert-modal").modal({backdrop:false});
 	                                $(".review-product input[name=ocode]").val("<%= orderInfo.getoCode() %>");
 	                                $(".review-product input[name=mcode]").val("<%= orderInfo.getmCode() %>");
-	                                $(".review-product input[name=pcode]").val("<%= pCode %>");
-	                                // $(".review-product-img img").attr();
-	                                $(".review-product-name h4").text("<%= pName %>");
+	                                <%-- $(".review-product input[name=pcode]").val("<%= product.getpCode() %>"); --%>
+	                                <%-- $(".review-product-img img").attr(); --%>
+	                                <%-- $(".review-product-name h4").text("<%= product.getpName() %>"); --%>
 	                                
 	                            });
 	                    });
@@ -405,18 +467,18 @@
                 <!-- Modal body -->
                 <div class="modal-body content-area" align="center">
 
-                    <form action="<%= request.getContextPath() %>/insert.rev" id="review-insert-form" method="post" enctype="multipart/form-data">
+                    <form action="<%= contextPath %>/insert.rev" id="review-insert-form" method="post" enctype="multipart/form-data">
                        <div class="review-insert-content" style="box-sizing:border-box; width:750px;">
 
                            <div class="review-product">
                                <input type="hidden" name="ocode">
                                <input type="hidden" name="mcode">
-                               <input type="hidden" name="pcode">
+                               <input type="hidden" name="pcode" value="<%= product.getpCode() %>">
                                <div class="review-product-img">
-                                    <img src="" width="100px" height="100px">
+                                    <img src="<%= product.getpMainImg() %>" width="100px" height="100px">
                                </div>
                                <div class="review-product-name">
-                                    <h4 name="pname" style="margin-top: 40px;"></h4>
+                                    <h4 name="pname" style="margin-top: 40px;"><%= product.getpName() %></h4>
                                </div>
                            </div>
 
@@ -458,7 +520,7 @@
 	<!-- 리뷰수정 모달창 -->
 
     <div class="modal fade" id="review-update-modal">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content update-review-modal">
                 
                 <!-- Modal Header -->
@@ -469,52 +531,57 @@
                 
                 <!-- Modal body -->
                 <div class="modal-body content-area" align="center">
-                    <form action="" id="review-update-form" method="post" enctype="multipart/form-data">
 
+                    <form action="<%= contextPath %>/update.rev" id="review-update-form" method="post" enctype="multipart/form-data">
                        <div class="review-update-content" style="box-sizing:border-box; width:750px;">
 
                            <div class="review-product">
+                               <input type="hidden" name="ocode">
+                               <input type="hidden" name="mcode">
+                               <input type="hidden" name="pcode" value ="<%= product.getpCode() %>">
                                <div class="review-product-img">
-                                    <img src="" width="100px" height="100px">
+                                    <img src="<%= product.getpMainImg() %>" width="100px" height="100px">
                                </div>
                                <div class="review-product-name">
-                                    <h4 style="margin-top: 40px;">닭가슴살 샐러드</h4>
+                                    <h4 name="pname" style="margin-top: 40px;"><%= product.getpName() %></h4>
                                </div>
                            </div>
 
                            <hr>
 
                            <table class="review-form-content" id="reviewUpdateForm">
+                                <tr><th>내용</th></tr>
                                 <tr>
-                                    <th>제목</th>
-                                    <td><input type="text" name="" id=""></td>
+                                    <td><textarea name="reviewContent" rows="15" style="resize:none;"></textarea></td>
                                 </tr>
+                                <tr><th>파일첨부</th></tr>
+                                <tr><th id="existingImgs"><!-- 기존에 존재하는 첨부파일 원본명 --></th></tr>
                                 <tr>
-                                    <th>내용</th>
-                                    <td><textarea name="" id="" rows="15" style="resize:none;"></textarea></td>
-                                </tr>
-                                <tr>
-                                    <th>파일첨부</th>
-                                    <td><input type="file" name="" id=""></td>
+                                    <td class="file-area">
+                                        <input type="file" name="file1" id="file1">
+                                        <input type="file" name="file2" id="file2">
+                                        <input type="file" name="file3" id="file3">
+                                    </td>
                                 </tr>
                            </table>
 
                        </div>
-                    </form>
 
+                    </form>
                 </div>
-                
-                <!-- Modal footer -->
+
+				<!-- Modal footer -->
                 <div class="modal-footer button-area">
                     <div class="btns" align="center" style="width:100%;">
 						<button type="reset" class="btn" style="border:1px solid lightgray;" data-dismiss="modal">취소</button>
-						<button type="submit" class="btn" style="background:#9BD5BD; margin-left:10px;" form="review-update-form">등록</button>
+						<button type="submit" class="btn" style="background:#9BD5BD; margin-left:10px;" form="review-update-form">수정</button>
 					</div>
                 </div>
-            
-            </div>
-        </div>
-    </div>
+
+			</div>	
+		</div>	
+	</div>
+
 
 
 	<!-- 리뷰등록/수정 성공 모달창 -->

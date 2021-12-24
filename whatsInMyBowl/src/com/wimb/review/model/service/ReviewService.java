@@ -1,14 +1,17 @@
 package com.wimb.review.model.service;
 
-import static com.wimb.common.JDBCTemplate.*;
+import static com.wimb.common.JDBCTemplate.close;
+import static com.wimb.common.JDBCTemplate.commit;
+import static com.wimb.common.JDBCTemplate.getConnection;
+import static com.wimb.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.wimb.common.model.vo.File;
 import com.wimb.common.model.vo.PageInfo;
-import com.wimb.member.model.vo.Member;
 import com.wimb.payment.model.vo.Order;
+import com.wimb.product.model.vo.Product;
 import com.wimb.review.model.dao.ReviewDao;
 import com.wimb.review.model.vo.Review;
 
@@ -36,6 +39,19 @@ public class ReviewService {
 		close(conn);
 		
 		return reviewList;
+		
+	}
+	
+	
+	public Product selectProduct(String pCode) {
+		
+		Connection conn = getConnection();
+		
+		Product p = new ReviewDao().selectProduct(conn, pCode);
+		
+		close(conn);
+		
+		return p;
 		
 	}
 
@@ -80,6 +96,31 @@ public class ReviewService {
 		
 	}
 	
+	
+	public Review selectReview(int rCode) {
+
+		Connection conn = getConnection();
+		
+		Review r = new ReviewDao().selectReview(conn, rCode);
+		
+		close(conn);
+		
+		return r;
+		
+	}
+	
+	
+	public ArrayList<File> selectFileList(int rCode) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<File> list = new ReviewDao().selectFileList(conn, rCode);
+		
+		close(conn);
+		
+		return list;
+		
+	}
 	
 	
 }
