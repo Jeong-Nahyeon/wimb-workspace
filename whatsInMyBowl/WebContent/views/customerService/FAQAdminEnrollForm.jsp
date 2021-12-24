@@ -28,6 +28,7 @@
         padding: 3px;
         font-weight: bold;
         color: black;
+        width:750px;
     }
     .FAQ_Box_question_title input:focus{outline: none;}
     .FAQ_Box_question_title{

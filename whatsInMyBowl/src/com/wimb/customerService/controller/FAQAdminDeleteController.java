@@ -1,27 +1,26 @@
 package com.wimb.customerService.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.wimb.customerService.model.service.FAQService;
+import com.wimb.customerService.model.service.NoticeService;
 
 /**
- * Servlet implementation class FAQAdminInsertController
+ * Servlet implementation class FAQAdminDeleteController
  */
-@WebServlet("/insert.faq")
-public class FAQAdminInsertController extends HttpServlet {
+@WebServlet("/delete.faq")
+public class FAQAdminDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FAQAdminInsertController() {
+    public FAQAdminDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,29 +29,31 @@ public class FAQAdminInsertController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		// 자주묻는질문 등록 컨트롤러
+		
+		// 선택삭제 컨트롤러
+		
 		request.setCharacterEncoding("UTF-8");
+		int count =  Integer.parseInt( request.getParameter("count"));
+		String[] arr = request.getParameterValues("checkArr");
+
 		
-		String faqTitle = request.getParameter("title");
-		String faqCategory = request.getParameter("FAQ_category_option");
-		String faqContent = request.getParameter("FAQ_Box_question_answer");
-		
-		faqContent = faqContent.replace("\r\n","<br>");   // textarea영역에 적힌 띄어쓰기나 개행을 그대로 적용시켜주는 구문
-		
-		int result = new FAQService().insertFaq(faqTitle, faqCategory, faqContent);
-		
-		if(result > 0) {
-			
-			HttpSession session = request.getSession();
-			session.setAttribute("alertMsg", "자주묻는질문 등록 성공");
-			response.sendRedirect(request.getContextPath() + "/adminList.faq?cpage=1");
-		} else {
-			request.setAttribute("errorMsg", "자주묻는질문 등록 실패");
-			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
+		int result = 0;
+		if(arr != null && count > 0) {
+			for(int i=0; i<count; i++) {
+				String faqCode = arr[i];
+				result = new FAQService().deleteFAQ(faqCode);
+			}
 		}
 		
+		if(result > 0) {
+			//response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().print(result);
+		}else {
+			request.setAttribute("errorMsg", "자주묻는질문 삭제 실패");
+			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
+		}		
 		
+	
 	}
 
 	/**

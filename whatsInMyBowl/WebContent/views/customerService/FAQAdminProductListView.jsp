@@ -104,6 +104,22 @@
     	background: lightgrey;
     	cursor: pointer;
     }
+ 	/*자주묻는질문 삭제 모달*/
+
+     .delete_text{
+         text-align: center;
+      }
+     .delete_text span{
+         display: block;
+         margin: 10px 0;
+     }
+     .delete_btn{
+         margin: 40px 5px 5px 5px;
+         text-align: center;
+     }
+     .delete_btn button{
+         margin: 0 10px;
+     }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -125,8 +141,8 @@
         <div class="FAQ_Box">
 
             <div class="FAQ_Box_top">
-                <button class="notice_Box_top_left" type="button">새 글 등록</button>
-                <button class="notice_Box_top_bottom">선택삭제</button>
+                <button class="notice_Box_top_left" type="button" onclick="location.href='<%= contextPath %>/adminEnrollForm.faq';">새 글 등록</button>
+                <button class="notice_Box_top_bottom" data-toggle="modal" data-target="#banner_delete_Modal">선택삭제</button>
             </div>
             
             <div class="FAQ_Category" align="center">
@@ -142,7 +158,8 @@
             <table>
             	<% for(FAQ f:list) { %>
                 <tr>
-                    <td class="check1"><input type="checkbox" name="check1"></td>
+                	<input type="hidden" name="faqCode" value="<%= f.getFaqCode() %>" class="faqCode">
+                    <td class="check1"><input type="checkbox" name="check"></td>
                     <td class="FAQ_title"><%= f.getFaqTitle() %></td>
                     <td class="FAQ_Update_btn"><button type="button">수정</button></td>
                 </tr>
@@ -172,22 +189,88 @@
 		        	<% } %>
 		        </div>		
 
-
-
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
     </div>
+
+         	<!-- 자주묻는질문 삭제 관련 모달-->
+            <!-- The Modal -->
+            <div class="modal" id="banner_delete_Modal">
+                <div class="modal-dialog">
+                <div class="modal-content">
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <!-- <form action="" >  -->
+                            <div class="delete_text">
+                                <span>선택하신 자주묻는질문을 삭제합니다.</span>
+                                <span>정말 삭제하시겠습니까?</span>
+                                <span>(삭제 후 복구불가)</span>
+                            </div>
+                            <div class="delete_btn">
+                                <button class="btn btn-sm btn btn-outline-warning" data-toggle="modal" onclick="deletecheck();">삭제</button>
+                                <button type="reset" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">취소</button>
+                            </div>
+                        <!-- </form>  -->
+                    </div>
+                </div>
+                </div>
+            </div>
+
+	 	<script>
+		// 수정 시 필요한 게시판 번호를 넘기는 함수 ------------------------------------------
+		$(function(){
+			$(".updateBox td:nth-child(4) button").click(function(){
+				location.href="<%= contextPath %>/adminUpdateForm.faq?num=" + $(this).parent().siblings('.faqCode').val();
+				
+			})
+		})       	
+		// ----------------------------------------------------------------------	
+		
+        	
+        	// 선택 삭제 ------------------------------------------------------------------
+	        function deletecheck(){
+	    		promise1()
+	    		.then(successCheck)
+	    		.catch(failCheck);
+	    	}
+	    	
+	    	function promise1(){
+	    		var count = $("input[name='check']:checked").length;
+	    		var checkArr = new Array();
+	    		 $("input[name='check']:checked").each(function(){
+	                 checkArr.push($(this).parent().siblings(".faqCode").val())
+	             });
+	    		 
+	             return new Promise(function(resolve, reject){
+	                 $.ajax({
+	                     url:"delete.faq",
+	                     dataType:"json",
+	                     traditional:true,
+	                     data:{
+	                         count:count,
+	                         checkArr:checkArr
+	                     },
+	                     success:function(result){
+	                         console.log("프로미스1 성공")
+	                         resolve(result);
+	                     },
+	                     error:function(){
+	                         console.log("ajax 통신 실패");
+	                     }
+	                 })
+	             })
+	    	}
+	    	  function successCheck(){
+	              alert("자주묻는질문 삭제 완료")
+	              location.reload();
+	          }
+	
+	          function failCheck(){
+	              alert("삭제에 실패하였습니다.")
+	          }    	
+	    	  // ------------------------------------------------------------------------     	
+ 		</script>
 
 </body>
 </html>

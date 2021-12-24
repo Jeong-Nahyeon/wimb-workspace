@@ -172,5 +172,40 @@ public class FAQService {
 		return result;
 	}
 	
+	// 관리자 - 수정 버튼 클릭 시 클릭한 게시글의 내용을 불러오는 메소드
+	public FAQ selectFaq(int faqCode) {
+		Connection conn = getConnection();
+		FAQ faq = new FAQDao().selectFaq(conn, faqCode);
+		close(conn);
+		return faq;
+		
+	}
 	
+	// 관리자 - 수정하는 메소드
+	public int updateFAQ(int faqCode, String faqTitle, String faqContent) {
+		Connection conn = getConnection();
+		int result = new FAQDao().updateFAQ(conn, faqCode, faqTitle, faqContent);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	// 관리자 - 선택삭제
+	public int deleteFAQ(String faqCode) {
+		Connection conn = getConnection();
+		int result = new FAQDao().deleteFAQ(conn, faqCode);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 }

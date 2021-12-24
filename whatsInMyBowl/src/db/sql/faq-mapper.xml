@@ -240,4 +240,29 @@
 		  )
 	</entry>
 	
+	<entry key="selectFaq">
+		SELECT
+		       FAQ_CODE
+		     , FAQ_CATEGORY
+		     , FAQ_TITLE
+		     , FAQ_CONTENT
+		  FROM FAQ
+		 WHERE FAQ_CODE = ?
+		   AND FAQ_SHOW = 'Y'		
+	</entry>
+	
+	<entry key="updateFAQ">
+		UPDATE FAQ
+		   SET FAQ_TITLE = ?
+		     , FAQ_CONTENT = ?
+		 WHERE FAQ_CODE = ?
+		   AND FAQ_SHOW = 'Y'	
+	</entry>
+
+	<entry key="deleteFAQ">
+		UPDATE FAQ
+			   SET FAQ_SHOW = 'N'
+			 WHERE FAQ_CODE = ?		
+	</entry>	
+	
 </properties>

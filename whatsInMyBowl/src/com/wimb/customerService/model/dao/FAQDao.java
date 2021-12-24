@@ -556,5 +556,78 @@ private Properties prop = new Properties();
 		
 	}
 	
+	// 관리자 - 수정 버튼 클릭 시 클릭한 게시글의 내용을 불러오는 메소드
+	public FAQ selectFaq(Connection conn, int faqCode) {
+		FAQ faq = null;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectFaq");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, faqCode);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				faq = new FAQ(rset.getInt("faq_code"),
+						      rset.getString("faq_category"),
+						      rset.getString("faq_title"),
+						      rset.getString("faq_content"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return faq;
+	}
+	
+	
+	// 관리자 - 수정하는 메소드
+	public int updateFAQ(Connection conn, int faqCode, String faqTitle, String faqContent) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateFAQ");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, faqTitle);
+			pstmt.setString(2, faqContent);
+			pstmt.setInt(3, faqCode);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	// 관리자 - 선택삭제
+	public int deleteFAQ(Connection conn, String faqCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteFAQ");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, faqCode);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
+		
+	}
+	
 	
 }
