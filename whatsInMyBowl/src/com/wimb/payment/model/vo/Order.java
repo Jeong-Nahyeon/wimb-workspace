@@ -44,7 +44,7 @@ public class Order {
 	}
 	
 	public Order(int mCode, String pmCode, int oAmount, String oName, String oAddress, String oSubAddress,
-			int oZipCode, String oPhone, String oEmail, String oRequest, int oPoint) {
+			int oZipCode, String oPhone, String oEmail, String oRequest, int oPoint, String oStatus) {
 		super();
 		this.mCode = mCode;
 		this.pmCode = pmCode;
@@ -57,6 +57,25 @@ public class Order {
 		this.oEmail = oEmail;
 		this.oRequest = oRequest;
 		this.oPoint = oPoint;
+		this.oStatus = oStatus;
+	}
+	
+
+	public Order(String oCode, int mCode, String pmCode, String oName, String oAddress, String oSubAddress,
+			int oZipCode, String oPhone, String oEmail, String oRequest, int oPoint, String oDate) {
+		super();
+		this.oCode = oCode;
+		this.mCode = mCode;
+		this.pmCode = pmCode;
+		this.oName = oName;
+		this.oAddress = oAddress;
+		this.oSubAddress = oSubAddress;
+		this.oZipCode = oZipCode;
+		this.oPhone = oPhone;
+		this.oEmail = oEmail;
+		this.oRequest = oRequest;
+		this.oPoint = oPoint;
+		this.oDate = oDate;
 	}
 
 	public String getoCode() {

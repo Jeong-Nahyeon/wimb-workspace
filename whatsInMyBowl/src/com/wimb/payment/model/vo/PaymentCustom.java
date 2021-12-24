@@ -18,8 +18,6 @@ public class PaymentCustom {
 		this.cuCount = cuCount;
 		this.cuMainImg = cuMainImg;
 	}
-	
-	
 
 	public PaymentCustom(String cuCode, String cuName, int cuPrice, String cuMainImg) {
 		super();
@@ -27,6 +25,12 @@ public class PaymentCustom {
 		this.cuName = cuName;
 		this.cuPrice = cuPrice;
 		this.cuMainImg = cuMainImg;
+	}
+	
+	public PaymentCustom(String cuCode, String cuName) {
+		super();
+		this.cuCode = cuCode;
+		this.cuName = cuName;
 	}
 
 	public String getCuCode() {

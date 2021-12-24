@@ -86,7 +86,7 @@
 		  , ?
 		  , ?
 		  , ?
-		  , '결제완료'
+		  , ?
 		  )
 	</entry>
 	
@@ -125,5 +125,70 @@
 		  , ?
 		  , ?
 		  )
+	</entry>
+	
+	<entry key="insertCashPayment">
+		INSERT ALL
+		    INTO PAYMENT
+		      VALUES
+		      (
+		        'PAY' || SEQ_PAYMENT.NEXTVAL
+		      , SYSDATE
+		      , ?
+		      , ?
+		      , '입금'
+		      )
+		     INTO CASH 
+		     (
+		       PM_CODE
+		     , CASH_BANK
+		     , CASH_NAME
+		     )
+		      VALUES
+		      (
+		        'PAY' || SEQ_PAYMENT.CURRVAL
+		      , ?
+		      , ?
+		      )
+		    SELECT * 
+		      FROM DUAL
+	</entry>
+	
+	<entry key="selectOrder">
+		SELECT *
+		  FROM "ORDER"
+		 WHERE ORDER_CODE = ?
+	</entry>
+	
+	<entry key="selectPayment">
+		SELECT *
+		  FROM PAYMENT
+		 WHERE PM_CODE = ?
+	</entry>
+	
+	<entry key="selectCustomName">
+		SELECT ORDER_CODE, CU_CODE, CU_NAME
+		  FROM SUBORDER
+		  JOIN CUSTOM USING (CU_CODE)
+		 WHERE ORDER_CODE = ?
+	</entry>
+	
+	<entry key="selectProductName">
+		SELECT ORDER_CODE, P_CODE, P_NAME
+		  FROM SUBORDER
+		  JOIN PRODUCT USING (P_CODE)
+		 WHERE ORDER_CODE = ?
+	</entry>
+	
+	<entry key="selectCard">
+		SELECT *
+		  FROM CARD
+		 WHERE PM_CODE = ?
+	</entry>
+	
+	<entry key="selectCash">
+		SELECT *
+		  FROM CASH
+		 WHERE PM_CODE = ?
 	</entry>
 </properties>

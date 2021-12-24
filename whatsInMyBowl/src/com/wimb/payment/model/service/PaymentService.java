@@ -3,10 +3,12 @@ package com.wimb.payment.model.service;
 import static com.wimb.common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import com.wimb.member.model.vo.Member;
 import com.wimb.payment.model.dao.PaymentDao;
 import com.wimb.payment.model.vo.Card;
+import com.wimb.payment.model.vo.Cash;
 import com.wimb.payment.model.vo.Order;
 import com.wimb.payment.model.vo.Payment;
 import com.wimb.payment.model.vo.PaymentCustom;
@@ -43,6 +45,21 @@ public class PaymentService {
 		close(conn);
 		return pmCode;
 	}
+	
+	// payment, cash 테이블에 insert
+	public String insertCashPayment(int totalPrice, Cash cash) {
+		Connection conn = getConnection();
+		int result = new PaymentDao().insertCashPayment(conn, totalPrice, cash);
+		String pmCode = null;
+		if(result > 0) {
+			commit(conn);
+			pmCode = new PaymentDao().selectPaymentCode(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return pmCode;
+	}
 
 	// 주문테이블에 정보 insert
 	public String insertOrder(Order order) {
@@ -55,8 +72,11 @@ public class PaymentService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
 		return orderCode;
 	}
+	
+	
 
 	// 커스텀 제품에 대한 subOrder 등록
 	public int insertSubOrderCustom(PaymentCustom custom, String orderCode) {
@@ -67,6 +87,7 @@ public class PaymentService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
 		return result;
 	}
 
@@ -81,8 +102,59 @@ public class PaymentService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
 		return result;
 	}
+
+	// Order 테이블 조회
+	public Order selectOrder(String orderCode) {
+		Connection conn = getConnection();
+		Order order = new PaymentDao().selectOrder(conn, orderCode);
+		close(conn);
+		return order;
+	}
+
+	// payment 테이블 조회
+	public Payment selectPayment(String pmCode) {
+		Connection conn = getConnection();
+		Payment p = new PaymentDao().selectPayment(conn, pmCode);
+		close(conn);
+		return p;
+	}
+
+	// 커스텀 샐러드 이름 조회
+	public ArrayList<PaymentCustom> selectCustomName(String orderCode) {
+		Connection conn = getConnection();
+		ArrayList<PaymentCustom> customList = new PaymentDao().selectCustomName(conn, orderCode);
+		close(conn);
+		return customList;
+	}
+
+	// 완제품 이름 조회
+	public ArrayList<PaymentProduct> selectProductName(String orderCode) {
+		Connection conn = getConnection();
+		ArrayList<PaymentProduct> productList = new PaymentDao().selectProductName(conn, orderCode);
+		close(conn);
+		return productList;
+	}
+
+	// 카드결제 정보 조회
+	public Card selectCard(String pmCode) {
+		Connection conn = getConnection();
+		Card card = new PaymentDao().selectCard(conn, pmCode);
+		close(conn);
+		return card;
+	}
+
+	// 무통장입금 결제 정보 조회
+	public Cash selectCash(String pmCode) {
+		Connection conn = getConnection();
+		Cash cash = new PaymentDao().selectCash(conn, pmCode);
+		close(conn);
+		return cash;
+	}
+
+	
 
 	
 	

@@ -204,6 +204,7 @@
             </div>
     
             <!-- 주문 상품 정보-->
+            <form action="<%= contextPath %>/cashComplete.pay" id="order_form" method="post"></form>
             <div id="order-list">
                 <span style="font-size: 15px; font-weight: 800;">주문상품</span>
                 <hr style="margin-top: 5px;">
@@ -213,7 +214,7 @@
 	                    <span class="product-name"><%= ppro.getpName() %></span>
 	                    <span class="product-num"><%= ppro.getpCount() %></span><span>개</span>
 	                    <span class="product-price"> <label class="price_num"><%= ppro.getpPrice() %></label> 원</span>
-                        <input type="hidden" name="product_code" value="<%= ppro.getpCode() %>">
+                        <input type="hidden" name="productCode" value="<%= ppro.getpCode() %>">
 	                    <hr style="width: 930px; ">
 	                </div>
                 <% } %>
@@ -223,7 +224,7 @@
 	                    <span class="product-name"><%= pcu.getCuName() %></span>
 	                    <span class="product-num"><%= pcu.getCuCount() %></span><span>개</span>
 	                    <span class="product-price"><label class="price_num"><%= pcu.getCuPrice() %></label>원</span>
-	                    <input type="hidden" name="product_code" value="<%= pcu.getCuCode() %>">
+	                    <input type="hidden" name="productCode" value="<%= pcu.getCuCode() %>">
 	                    <hr style="width: 930px; ">
 	                </div>
                 <% } %>
@@ -234,7 +235,8 @@
                 <span style="font-size: 15px; font-weight: 800;">주문자 정보</span>
                 <hr style="margin-top: 5px;">
     
-                <form action="" id="order-form">
+                <!--<form action="<%= contextPath %>/cashComplete.pay" id="order-form" method="post">-->
+                <div id="order-form">
                 	<% if(loginUser != null){ %>
 	                    <table class="orderer-info">
 	                        <tr>
@@ -348,7 +350,7 @@
                             <tr>
                                 <th>적립금 사용</th>
                                 <td>
-                                    <input type="number" name="oPoint">
+                                    <input type="number" name="oPoint" value="0">
                                     <button type="button" class="btn btn-sm btn-secondary" onclick="pointAll();">모두사용</button>
                                 </td>
                             </tr>
@@ -365,8 +367,11 @@
                                 </td>
                             </tr>
                         </table>
-    				<% } %>
-                    
+    				<% } else{%>
+                        <div>
+                            <input type="hidden" name="oPoint" value="0">
+                        </div>
+                    <% } %>
 
                     <!-- 결제수단 영역 -->
                     <div class="pay-area">
@@ -386,14 +391,14 @@
                     <div id="cash-area" style="display: none;">
                         <div>
                             <label>입금자명</label> 
-                            <input type="text" name="">
+                            <input type="text" name="cashName">
                         </div>
                         <div>
                             <label>입금은행</label>
-                            <select name="" id="">
+                            <select name="cashBank" id="">
                                 <option>은행선택</option>
-                                <option value="">국민은행 11122223334445 wimb</option>
-                                <option value="">신한은행 11122223334445 wimb</option>
+                                <option value="국민">국민은행 11122223334445 wimb</option>
+                                <option value="신한">신한은행 11122223334445 wimb</option>
                             </select>
                         </div>   
                     </div>
@@ -408,6 +413,7 @@
                             });
                             $("input[type='radio'][id='credit-check']").on('click', function(){
                                 $("#cash-area").css('display','none');
+                                
                             })
                         })
 
@@ -418,6 +424,7 @@
                         <span>최종 결제금액 :</span>
                         <span id="total_price"></span><span>원</span>
                         <input type="hidden" name="total_count">
+                        <input type="hidden" name="total_price">
                     </div>
                     <div id="terms">
                         <input type="checkbox" id="terms-check">
@@ -427,7 +434,7 @@
     
                     <button type="button" class="btn" id="submit-but" onclick="paymentclick();">결제하기</button>
                 </form>
-    
+                </div>
                 
             </div>
         </div>
@@ -533,6 +540,7 @@
                 console.log(total_price)
                 console.log(total_count)
                 $("#total_price").text(total_price);
+                $("input[name='total_price']").val(total_price);
                 $("input[name='total_count']").val(total_count);
             })
         </script>
@@ -545,7 +553,7 @@
                 //console.log(paycheck);
                 var price = $("#total_price").text();
                 var mCode = $("input[name='mCode']").val();
-                var name = $("input[name='oEmail']").val();
+                var name = $("input[name='oName']").val();
                 var address = $("input[name='oAddress']").val()
                 var subAddress = $("input[name='oSubAddress']").val()
                 var zipCode = $("input[name='oZipCode']").val()
@@ -553,7 +561,7 @@
                 var phone = $("input[name=oPhone]").val()
                 var request = $("input[name='oRequest']").val()
                 var saladCode = new Array();
-                $($("input[name='product_code']")).each(function(){
+                $($("input[name='productCode']")).each(function(){
                     saladCode.push($(this).val())
                     console.log(saladCode);
                 });
@@ -561,11 +569,12 @@
                 $(".product-num").each(function(){
                     saladCount.push($(this).text());
                 });
-                var point = "";
-                if($("input[name='oPoint']").val() != null){
-                    point = $("input[name='oPoint']").val()
+                var point = 0;
+                if(parseInt($("input[name='mCode']").val()) != 1){
+                    console.log(mCode);
+                    point = $("input[type='number'][name='oPoint']").val()
                 }else{
-                    point = 0;
+                    point = $("input[type='hidden'][name='oPoint']").val()
                 }
                 var total_count = $("input[name='total_count']").val();
 
@@ -654,6 +663,69 @@
 
                 }else{
                     // 무통장입금
+                    //document.getElementById('order_form').submit();
+                    promise1()
+                    .then(promise2)
+
+
+                    function promise1(){
+                        var cashBank = $("select[name='cashBank']").val();
+                        var cashName = $("input[name='cashName']").val();
+                        return new Promise(function(resolve, reject){
+                            $.ajax({
+                                url:"cashpay.pay",
+                                data:{
+                                    cashBank:cashBank,
+                                    cashName:cashName,
+                                    totalPrice:price
+                                },
+                                success:function(data){
+                                    console.log(data);
+                                    resolve(data);
+                                },
+                                error:function(){
+                                    console.log("ajax 통신 실패");
+                                }
+                            })
+                        })
+                    }
+
+                    function promise2(data){
+                        var data = data
+                        console.log(data)
+                        return new Promise(function(resolve, reject){
+                            //console.log(data);
+                            jQuery.ajax({
+                                url: "ordercashComplete.pay", 
+                                type: 'POST',
+                                dataType:'json',
+                                traditional:true,
+                                data: {
+                                    pmCode:data,
+                                    mCode:mCode,
+                                    saladCode:saladCode,
+                                    saladCount:saladCount,
+                                    name:name,
+                                    address:address,
+                                    subAddress:subAddress,
+                                    zipCode:zipCode,
+                                    phone:phone,
+                                    email:email,
+                                    request:request,
+                                    point:point,
+                                    totalCount:total_count
+                                },
+                                success:function(result){
+                                    console.log(result);
+                                    location.href = "<%= contextPath %>/ordercomplete.pay?ono="+result;
+                                },
+                                error:function(){
+                                    console.log("실패")
+                                }
+                            })
+                        })
+                    }
+                    
                 }
             }
 

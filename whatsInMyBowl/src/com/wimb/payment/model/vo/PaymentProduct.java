@@ -29,6 +29,12 @@ public class PaymentProduct {
 		this.pMainImg = pMainImg;
 		this.filePath = filePath;
 	}
+	
+	public PaymentProduct(String pCode, String pName) {
+		super();
+		this.pCode = pCode;
+		this.pName = pName;
+	}
 
 	public String getpCode() {
 		return pCode;
