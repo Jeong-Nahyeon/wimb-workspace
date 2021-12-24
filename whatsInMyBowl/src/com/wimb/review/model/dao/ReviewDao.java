@@ -16,6 +16,7 @@ import com.wimb.common.model.vo.File;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.payment.model.vo.Order;
 import com.wimb.product.model.vo.Product;
+import com.wimb.review.model.vo.Report;
 import com.wimb.review.model.vo.Review;
 
 public class ReviewDao {
@@ -321,6 +322,59 @@ public class ReviewDao {
 		
 	}
 	
+	
+	public int deleteReview(Connection conn, int rCode) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteReview"); // 미완성 sql문
+		
+		try {
+			
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, rCode);
+				result = pstmt.executeUpdate();
+				
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public int insertReportReview(Connection conn, Report report) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertReportReview"); // 미완성 sql문
+		
+		try {
+			
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, report.getmCode());
+				pstmt.setInt(2, report.getrCode());
+				pstmt.setString(3, report.getReportCategory());
+				pstmt.setString(4, report.getReportContent());
+				
+				result = pstmt.executeUpdate();
+				
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
 	
 	
 	

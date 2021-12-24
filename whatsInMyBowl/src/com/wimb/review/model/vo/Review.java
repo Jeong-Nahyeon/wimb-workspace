@@ -43,7 +43,7 @@ public class Review {
 		this.mainImg = mainImg;
 		this.mName = mName;
 	}
-
+	
 
 	public int getrCode() {
 		return rCode;

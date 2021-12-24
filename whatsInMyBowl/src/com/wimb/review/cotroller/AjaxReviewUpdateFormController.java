@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.wimb.common.model.vo.File;
 import com.wimb.review.model.service.ReviewService;
 import com.wimb.review.model.vo.Review;
@@ -17,13 +18,13 @@ import com.wimb.review.model.vo.Review;
  * Servlet implementation class ReviewUpdateFormController
  */
 @WebServlet("/updateForm.rev")
-public class ReviewUpdateFormController extends HttpServlet {
+public class AjaxReviewUpdateFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReviewUpdateFormController() {
+    public AjaxReviewUpdateFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,22 +35,19 @@ public class ReviewUpdateFormController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int rCode = Integer.parseInt(request.getParameter("rcode"));
-		String pCode = request.getParameter("pcode");
-		String pName = request.getParameter("pName");
-		
+		ArrayList updateFormList = new ArrayList();
 		
 		// 리뷰 게시글
 		Review r = new ReviewService().selectReview(rCode);
 		
-		
 		// 첨부 파일 => null | 최대 3개
 		ArrayList<File> list = new ReviewService().selectFileList(rCode);
 		
-		request.getSession().setAttribute("review", r);
-		request.getSession().setAttribute("fileList", list);
+		updateFormList.add(r);
+		updateFormList.add(list);
 		
-//		request.getRequestDispatcher("views/review/reviewListView.jsp").forward(request, response);
-		response.sendRedirect(request.getContextPath() + "/reviewList.rev?cpage=1&pcode=" + pCode + "&pname=" + pName + "#review");
+		response.setContentType("application/json; charset=UTF-8");
+		new Gson().toJson(updateFormList, response.getWriter());
 		
 	}
 

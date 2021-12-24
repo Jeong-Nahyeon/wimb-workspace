@@ -13,6 +13,7 @@ import com.wimb.common.model.vo.PageInfo;
 import com.wimb.payment.model.vo.Order;
 import com.wimb.product.model.vo.Product;
 import com.wimb.review.model.dao.ReviewDao;
+import com.wimb.review.model.vo.Report;
 import com.wimb.review.model.vo.Review;
 
 public class ReviewService {
@@ -120,7 +121,37 @@ public class ReviewService {
 		
 		return list;
 		
+	}	
+	
+	
+	public int deleteReview(int rCode) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ReviewDao().deleteReview(conn, rCode);
+		
+		close(conn);
+		
+		return result;
+		
 	}
+	
+	
+	public int insertReportReview(Report report) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ReviewDao().insertReportReview(conn, report);
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	
+	
+	
 	
 	
 }

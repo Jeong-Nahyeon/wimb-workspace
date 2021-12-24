@@ -324,62 +324,128 @@
             <% } %>
         </div>
         
-        <!-- 리뷰 수정버튼 클릭 시 리뷰 정보 조회 -->
+        <!-- 
+            리뷰 수정버튼 클릭 시
+             => 리뷰 정보 조회 후 리뷰수정 모달창 열어서 데이터 뿌려주기
+        -->
         <script>
-
+            
             $(function(){
 
                 $(".review-content-right").on("click", ".review-update-btn", function(){
 					
-					<%-- location.href="<%= contextPath %>/updateForm.rev?rcode=" + $(".review-content-left").children().eq(0).val(); --%>
-					
 					$.ajax({
 						url:"updateForm.rev",
-						data:{rcode:$(".review-content-left").children().eq(0).val()},
-						success:function(){
+						data:{rcode:$(this).parent().parent().prev().children().eq(0).val()},
+						success:function(updateFormList){
+							console.log(updateFormList);
+							
+                            // 리뷰내용
+							const $updateModal = $("#review-update-modal");
+
+		        			const $review = updateFormList[0];
+                           console.log(updateFormList[0]);
+		        			
+		        			const $fileList = updateFormList[1];
+                            console.log(updateFormList[1]);
+		        			
+                            $updateModal.find("input[name=rcode]").val($review.rCode);
+                            $updateModal.find("textarea").text($review.rContent);
+		        			
+                            // 첨부파일
+
+                            $("#existingFile").html("");
+                            
+                            if($fileList.length != 0){ // 기존의 첨부파일이 있을 경우
+                                
+                                let file = "";
+
+                                for(let i=0; i<$fileList.length; i++){
+                                    
+                                    if($fileList[i] != null){
+                                        file += "<p style='margin:0'>" + $fileList[i].fPath + $fileList[i].fRename + "</p> <br>"
+                                              + "<input type='hidden' name='originfCode' value='" + $fileList[i].fCode + "'>" ;
+                                    }
+                                    
+                                }
+
+                                $("#existingFile").html(file);
+
+                            }
+		        			
+		        			$updateModal.modal({backdrop:false});
 							
 						}, error:function(){
 							console.log("ajax 통신 실패");
 						}
 						
 					});
+                });
+            
+            
+            
+                // 삭제버튼 클릭 시
+                $(".review-content-right").on("click", ".review-delete-btn", function(){
+                    
+                    const $rCode = $(this).parent().parent().prev().children().eq(0).val();
+
+                    $("#review-delete-modal").modal({backdrop:false});
+
+                    $("#delete-btn").click(function(){
+                        
+                        $.ajax({
+                            url:"delete.rev",
+                            data:{rcode:$rCode},
+                            success:function(result){
+                                
+                                if(result > 0){
+                                    
+                                    $("#review-delete-success-modal b").text("상품후기가 삭제되었습니다.");
+                                    $("#review-delete-success-modal").modal({backdrop:false});
+                                    $("#review-delete-success-modal button").click(function(){
+                                        location.reload();
+                                    });
+    
+                                }else {
+    
+                                    alert("상품후기 삭제를 실패했습니다.");
+    
+                                }
+                                
+                                
+                            }, error:function(){
+                                console.log("ajax 통신 실패");
+                            }
+                            
+                        });
+
+                    });
+
+                });
+            
+
+                // 신고버튼 클릭 시
+                $(".review-content-right").on("click", ".review-report-btn", function(){
+
+                    const $rCode = $(this).parent().parent().prev().children().eq(0).val();
 					
+                    console.log($rCode);
+
+                    $("#report-review-modal").modal({backdrop:false});
+                    $("#report-review-form input[name=rcode]").val($rCode);
+                    
+                    console.log($("#report-review-form input[name=rcode]").val($rCode));
+
                 });
 
-            });
 
-        </script>
-        <!-- 리뷰 정보 조회 후 수정 모달창 열어서 데이터 뿌려주기  -->
-        <%-- 
-        <% if(review != null) { %>
-	        <script>
-	        
-	        	$(function(){
-	        		
-	        		$(function(){
-	        			
-	        			const $updateModal = $("#review-update-modal");
 
-	        			$updateModal.model({backdrop:false});
-	        			
-	        			$updateModal.find("textarea").text("<%= review.getrContent() %>");
-	        			
-	        			<% if(!fileList.isEmpty()) { %>
-		        			<% for(File f : fileList) { %>
-		        			
-		        				$updateModal.find("#existingImgs").html("<%= f.getfName() %> <br>");
-		        			
-		        			<% } %>
-	        			<% } %>
-	        			
-	        			
-	        		});
-	        		
-	        	});
-	        
-	        </script>
-		<% } %>
-		--%>
+            });    
+
+    </script>
+        
+        
+        
 
         <div class="review-btn2">
             <div class="review-btn2-left" style="width:20%"></div>
@@ -418,10 +484,7 @@
 	                                $("#review-insert-modal").modal({backdrop:false});
 	                                $(".review-product input[name=ocode]").val("<%= orderInfo.getoCode() %>");
 	                                $(".review-product input[name=mcode]").val("<%= orderInfo.getmCode() %>");
-	                                <%-- $(".review-product input[name=pcode]").val("<%= product.getpCode() %>"); --%>
-	                                <%-- $(".review-product-img img").attr(); --%>
-	                                <%-- $(".review-product-name h4").text("<%= product.getpName() %>"); --%>
-	                                
+
 	                            });
 	                    });
 	                
@@ -475,7 +538,7 @@
                                <input type="hidden" name="mcode">
                                <input type="hidden" name="pcode" value="<%= product.getpCode() %>">
                                <div class="review-product-img">
-                                    <img src="<%= product.getpMainImg() %>" width="100px" height="100px">
+                                    <img src="<%= product.getFilePath() %><%= product.getpMainImg() %>" width="100px" height="100px">
                                </div>
                                <div class="review-product-name">
                                     <h4 name="pname" style="margin-top: 40px;"><%= product.getpName() %></h4>
@@ -536,11 +599,12 @@
                        <div class="review-update-content" style="box-sizing:border-box; width:750px;">
 
                            <div class="review-product">
+                               <input type="hidden" name="rcode">
                                <input type="hidden" name="ocode">
                                <input type="hidden" name="mcode">
                                <input type="hidden" name="pcode" value ="<%= product.getpCode() %>">
                                <div class="review-product-img">
-                                    <img src="<%= product.getpMainImg() %>" width="100px" height="100px">
+                                    <img src="<%= product.getFilePath() %><%= product.getpMainImg() %>" width="100px" height="100px">
                                </div>
                                <div class="review-product-name">
                                     <h4 name="pname" style="margin-top: 40px;"><%= product.getpName() %></h4>
@@ -555,7 +619,11 @@
                                     <td><textarea name="reviewContent" rows="15" style="resize:none;"></textarea></td>
                                 </tr>
                                 <tr><th>파일첨부</th></tr>
-                                <tr><th id="existingImgs"><!-- 기존에 존재하는 첨부파일 원본명 --></th></tr>
+                                <tr>
+                                    <td id="existingFile">
+                                        <!-- 기존에 존재하는 파일명 -->
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td class="file-area">
                                         <input type="file" name="file1" id="file1">
@@ -592,7 +660,6 @@
 				
 				<!-- Modal Header -->
 				<div class="modal-header title-area">
-					<h6 class="modal-title">후기등록/수정 완료</h6>
 					<button type="button" class="close" data-dismiss="modal">×</button>
 				</div>
 				
@@ -621,6 +688,43 @@
 	</div>		
 
 
+	<!-- 리뷰 삭제 모달창 -->
+
+	<div class="modal fade" id="review-delete-modal">
+		<div class="modal-dialog modal-dialog-centered" role="document" style="width:500px; height:350px;">
+			<div class="modal-content delete-review-modal">
+				
+				<!-- Modal Header -->
+				<div class="modal-header title-area">
+					<h6 class="modal-title">후기삭제</h6>
+					<button type="button" class="close" data-dismiss="modal">×</button>
+				</div>
+				
+				<!-- Modal body -->
+				<div class="modal-body content-area">
+
+                    <div class="delete-content" align="center" style=" height:60%;">
+                        <br>
+                        <b>해당 후기를 삭제하시겠습니까?</b>
+                        <br>
+                    </div>
+
+				</div>
+				
+				<!-- Modal footer -->
+				<div class="modal-footer button-area">
+					<div class="btns" align="center" style="width:100%;">
+                        <button class="btn btn-sm" style="border:1px solid lightgray;" data-dismiss="modal">취소</button>
+						<button type="submit" id="delete-btn" class="btn btn-sm" style="background:#9BD5BD; margin:0px 5px;">확인</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>		
+    
+    
+
 	<!-- 리뷰 삭제 성공 모달창 -->
 
 	<div class="modal fade" id="review-delete-success-modal">
@@ -641,7 +745,7 @@
 
                     <div class="delete-success-content" align="center" style=" height:60%;">
                         <br>
-                        <b>상품후기가 삭제되었습니다.</b>
+                        <b><!-- 삭제 완료 문구 --></b>
                         <br>
                     </div>
 				</div>
@@ -659,13 +763,14 @@
 
 
 
-
     <!-- 리뷰신고 모달창 -->
 
     <div class="modal fade" id="report-review-modal">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content review-report-modal">
-                
+                <input type="hidden" name="rcode">
+                <input type="hidden" name="pcode" value="<%= product.getpCode() %>">
+                <input type="hidden" name="pname" value="<%= product.getpName() %>">
                 <!-- Modal Header -->
                 <div class="modal-header title-area">
                     <h6 class="modal-title" style="margin-left:350px; font-weight:bolder;">후기신고</h6>
@@ -674,20 +779,11 @@
                 
                 <!-- Modal body -->
                 <div class="modal-body content-area">
-                    <form action="" id="report-review-form" method="post" enctype="multipart/form-data">
-
+                    <form action="<%= contextPath %>/report.rev" id="report-review-form" method="post">
+					   <input type="hidden" name="rcode">
                        <div class="report-review-content" style="box-sizing:border-box; width:750px;">
 
-                           <div class="report-review" align="center">
-                               <div class="report-review-img">
-                                    <img src="" width="100px" height="100px">
-                               </div>
-                               <div class="report-review-title">
-                                    <h4 style="margin-top: 40px;">신고 :: 신고할 리뷰 타이틀</h4>
-                               </div>
-                           </div>
-
-                           <hr>
+                           <br>
 
                            <table class="report-form-content" id="reportReviewForm" align="center">
                                <tr>
@@ -700,16 +796,12 @@
                                             <option>음란/청소년 유해</option>
                                             <option>티회원 비방</option>
                                             <option>타사 홍보</option>
-                                        </datalist>>
+                                        </datalist>
                                     </td>
                                </tr>
                                 <tr>
-                                    <th>제목</th>
-                                    <td><input type="text" name="" id=""></td>
-                                </tr>
-                                <tr>
                                     <th>내용</th>
-                                    <td><textarea name="" id="" rows="15" style="resize:none;"></textarea></td>
+                                    <td><textarea name="reportContent" rows="15" style="resize:none;"></textarea></td>
                                 </tr>
                            </table>
 
@@ -722,20 +814,14 @@
                 <div class="modal-footer button-area">
                     <div class="btns" align="center" style="width:100%;">
 						<button type="reset" class="btn" style="border:1px solid lightgray;" data-dismiss="modal">취소</button>
-						<button type="submit" class="btn" style="background:#9BD5BD; margin-left:10px;" form="review-update-form">등록</button>
+						<button type="submit" class="btn" style="background:#9BD5BD; margin-left:10px;" form="report-review-form">등록</button>
 					</div>
                 </div>
             
             </div>
         </div>
     </div>
-	<script>
-		$(document).ready(function(){
-			$("#report-review-btn").click(function(){
-			$("#report-review-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
+
 
 
     <!-- 리뷰신고 성공 모달창 -->
@@ -773,13 +859,6 @@
 			</div>
 		</div>
 	</div>		
-	<script>
-		$(document).ready(function(){
-			$("#report-success-btn").click(function(){
-			$("#report-success-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
 
 </body>
 </html>

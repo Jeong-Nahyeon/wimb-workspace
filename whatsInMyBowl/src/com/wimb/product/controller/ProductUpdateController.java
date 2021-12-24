@@ -39,9 +39,7 @@ public class ProductUpdateController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
-			
-			System.out.println("잘 실행되나?");
-			
+						
 			int maxSize = 100 * 1024 * 1024; //100mb
 			
 			String savePath = request.getSession().getServletContext().getRealPath("/resources/images/product_images/");

@@ -116,6 +116,34 @@
 		  FROM "FILE"
 		 WHERE F_REF = 'R'
 		   AND F_REFCODE = ?
+		 ORDER
+  		    BY F_CODE
+	</entry>
+	
+	<entry key="deleteReview">
+		UPDATE REVIEW
+		   SET R_STATUS = 'N'
+		 WHERE R_CODE = ?
+	</entry>
+	
+	<entry key="insertReportReview">
+		INSERT
+		  INTO REPORT
+		  (
+		    REPORT_CODE
+		  , M_CODE
+		  , R_CODE
+		  , REPORT_CATEGORY
+		  , REPORT_CONTENT
+		  )
+		  VALUES
+		  (
+		    SEQ_REPORT.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
 	</entry>
 
 </properties>
