@@ -5,7 +5,7 @@ public class Order {
 	private String oCode;
 	private int mCode;
 	private String pmCode;
-	private String oAmount;
+	private int oAmount;
 	private String oName;
 	private String oAddress;
 	private String oSubAddress;
@@ -21,7 +21,7 @@ public class Order {
 	
 	public Order() {}
 
-	public Order(String oCode, int mCode, String pmCode, String oAmount, String oName, String oAddress,
+	public Order(String oCode, int mCode, String pmCode, int oAmount, String oName, String oAddress,
 			String oSubAddress, int oZipCode, String oPhone, String oEmail, String oRequest, int oPoint,
 			String oCompany, String oInvoice, String oStatus, String oDate) {
 		super();
@@ -41,6 +41,22 @@ public class Order {
 		this.oInvoice = oInvoice;
 		this.oStatus = oStatus;
 		this.oDate = oDate;
+	}
+	
+	public Order(int mCode, String pmCode, int oAmount, String oName, String oAddress, String oSubAddress,
+			int oZipCode, String oPhone, String oEmail, String oRequest, int oPoint) {
+		super();
+		this.mCode = mCode;
+		this.pmCode = pmCode;
+		this.oAmount = oAmount;
+		this.oName = oName;
+		this.oAddress = oAddress;
+		this.oSubAddress = oSubAddress;
+		this.oZipCode = oZipCode;
+		this.oPhone = oPhone;
+		this.oEmail = oEmail;
+		this.oRequest = oRequest;
+		this.oPoint = oPoint;
 	}
 
 	public String getoCode() {
@@ -67,11 +83,11 @@ public class Order {
 		this.pmCode = pmCode;
 	}
 
-	public String getoAmount() {
+	public int getoAmount() {
 		return oAmount;
 	}
 
-	public void setoAmount(String oAmount) {
+	public void setoAmount(int oAmount) {
 		this.oAmount = oAmount;
 	}
 

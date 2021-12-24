@@ -7,6 +7,7 @@ import java.sql.Connection;
 import com.wimb.member.model.vo.Member;
 import com.wimb.payment.model.dao.PaymentDao;
 import com.wimb.payment.model.vo.Card;
+import com.wimb.payment.model.vo.Order;
 import com.wimb.payment.model.vo.Payment;
 import com.wimb.payment.model.vo.PaymentCustom;
 import com.wimb.payment.model.vo.PaymentProduct;
@@ -41,6 +42,46 @@ public class PaymentService {
 		}
 		close(conn);
 		return pmCode;
+	}
+
+	// 주문테이블에 정보 insert
+	public String insertOrder(Order order) {
+		Connection conn = getConnection();
+		int result = new PaymentDao().insertOrder(conn, order);
+		String orderCode = null;
+		if(result > 0) {
+			commit(conn);
+			orderCode = new PaymentDao().selectOrderCode(conn);
+		}else {
+			rollback(conn);
+		}
+		return orderCode;
+	}
+
+	// 커스텀 제품에 대한 subOrder 등록
+	public int insertSubOrderCustom(PaymentCustom custom, String orderCode) {
+		Connection conn = getConnection();
+		int result = new PaymentDao().insertSubOrderCustom(conn, custom, orderCode);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
+
+	// 완제품에 대한 subOrder 등록
+	public int insertSubOrderProduct(PaymentProduct product, String orderCode) {
+		Connection conn = getConnection();
+		int result = new PaymentDao().insertSubOrderProduct(conn, product, orderCode);
+		
+		if(result > 0) {
+			commit(conn);
+			
+		}else {
+			rollback(conn);
+		}
+		return result;
 	}
 
 	

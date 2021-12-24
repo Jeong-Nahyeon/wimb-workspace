@@ -1,11 +1,18 @@
 package com.wimb.payment.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+import com.wimb.payment.model.service.PaymentService;
+import com.wimb.payment.model.vo.Order;
+import com.wimb.payment.model.vo.PaymentCustom;
+import com.wimb.payment.model.vo.PaymentProduct;
 
 /**
  * Servlet implementation class AjaxInsertOrderController
@@ -33,8 +40,9 @@ public class AjaxInsertOrderController extends HttpServlet {
 		String[] saladCount = request.getParameterValues("saladCount");
 		//String saladCode = request.getParameter("saladCode");
 		//String saladCount = request.getParameter("saladCount");
+		int totalCount = Integer.parseInt(request.getParameter("totalCount"));
 		String pmCode = request.getParameter("pmCode");
-		int mCode = Integer.parseInt(request.getParameter("mCode"));
+		
 		String oName = request.getParameter("name");
 		String oAddress = request.getParameter("address");
 		String oSubAddress = request.getParameter("subAddress");
@@ -44,9 +52,40 @@ public class AjaxInsertOrderController extends HttpServlet {
 		String oRequest = request.getParameter("request");
 		int oPoint = Integer.parseInt(request.getParameter("point"));
 		
-		System.out.println(saladCode[1]);
-		System.out.println(saladCount);
+		// 회원번호 담기 / 회원=회원번호 / 비회원 = 0
+		int mCode = 0;
+		if(request.getParameter("mCode").equals("1")) {
+			mCode = 0;
+		}else {
+			mCode = Integer.parseInt(request.getParameter("mCode"));
+		}
 		
+		// 상품 코드 분류
+		PaymentCustom custom = new PaymentCustom();
+		PaymentProduct product = new PaymentProduct(); 
+		int result2 = 0;
+		Order order = new Order(mCode, pmCode, totalCount, oName, oAddress, oSubAddress, zipCode, oPhone, oEmail, oRequest, oPoint);
+		String orderCode = new PaymentService().insertOrder(order);
+		if(orderCode != null) {
+			for(int i=0; i<saladCode.length;i++) {
+				if(saladCode[i].startsWith("CU")) {
+					custom.setCuCode(saladCode[i]);
+					custom.setCuCount(Integer.parseInt(saladCount[i]));
+					result2 = new PaymentService().insertSubOrderCustom(custom, orderCode);
+				}else {
+					product.setpCode(saladCode[i]);
+					product.setpCount(Integer.parseInt(saladCount[i]));
+					result2 = new PaymentService().insertSubOrderProduct(product, orderCode);
+				}
+			}
+		}
+		
+		if(result2 > 0) {
+			response.setContentType("application/json; charset=UTF-8");
+			new Gson().toJson(orderCode, response.getWriter());
+		}else {
+			
+		}
 	}
 
 	/**

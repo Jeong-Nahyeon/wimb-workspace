@@ -76,6 +76,7 @@
     }
     .product-num{
         width: 50px;
+        text-align: right;
         margin-left: 120px;
     }
     .product-price{
@@ -210,7 +211,7 @@
 	                <div>
 	                    <img src="<%= ppro.getFilePath() %><%= ppro.getpMainImg() %>">
 	                    <span class="product-name"><%= ppro.getpName() %></span>
-	                    <span class="product-num"><%= ppro.getpCount() %>개</span>
+	                    <span class="product-num"><%= ppro.getpCount() %></span><span>개</span>
 	                    <span class="product-price"> <label class="price_num"><%= ppro.getpPrice() %></label> 원</span>
                         <input type="hidden" name="product_code" value="<%= ppro.getpCode() %>">
 	                    <hr style="width: 930px; ">
@@ -220,7 +221,7 @@
 	                <div>
 	                    <img src="<%= pcu.getCuMainImg() %>">
 	                    <span class="product-name"><%= pcu.getCuName() %></span>
-	                    <span class="product-num"><%= pcu.getCuCount() %>개</span>
+	                    <span class="product-num"><%= pcu.getCuCount() %></span><span>개</span>
 	                    <span class="product-price"><label class="price_num"><%= pcu.getCuPrice() %></label>원</span>
 	                    <input type="hidden" name="product_code" value="<%= pcu.getCuCode() %>">
 	                    <hr style="width: 930px; ">
@@ -331,7 +332,7 @@
                         </tr>
                         <tr>
                             <th>배송요청사항</th>
-                            <td><input type="text" name="oRequest"></td>
+                            <td><input type="text" name="oRequest" value="없음"></td>
                         </tr>
                         <tr>
                             <th></th>
@@ -416,6 +417,7 @@
                     <div id="total-payment">
                         <span>최종 결제금액 :</span>
                         <span id="total_price"></span><span>원</span>
+                        <input type="hidden" name="total_count">
                     </div>
                     <div id="terms">
                         <input type="checkbox" id="terms-check">
@@ -518,14 +520,20 @@
                 $("input[name='oPoint']").val(allPoint);
             }
 
-            // 총 결제 금액
+            // 총 결제 금액, 총 수량
             $(function(){
                 var total_price = 0;
+                var total_count = 0;
                 $(".price_num").each(function(){
                     total_price += parseInt($(this).text());
                 });
+                $(".product-num").each(function(){
+                    total_count += parseInt($(this).text());
+                })
                 console.log(total_price)
+                console.log(total_count)
                 $("#total_price").text(total_price);
+                $("input[name='total_count']").val(total_count);
             })
         </script>
 
@@ -559,7 +567,7 @@
                 }else{
                     point = 0;
                 }
-                console.log(price);
+                var total_count = $("input[name='total_count']").val();
 
                 if(paycheck == "credit"){
                     // 카드결제
@@ -623,11 +631,12 @@
                                         phone:phone,
                                         email:email,
                                         request:request,
-                                        point:point
+                                        point:point,
+                                        totalCount:total_count
                                     },
                                     success:function(result){
                                         console.log(result);
-                                        console.log("성공")
+                                        location.href = "<%= contextPath %>/ordercomplete.pay?ono="+result;
                                     },
                                     error:function(){
                                         console.log("실패")

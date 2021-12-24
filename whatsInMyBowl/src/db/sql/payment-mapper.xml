@@ -53,4 +53,77 @@
 		SELECT 'PAY' || SEQ_PAYMENT.CURRVAL "PM_CODE"
 		  FROM DUAL
 	</entry>
+	
+	<entry key="insertOrder">
+		INSERT 
+		  INTO "ORDER"
+		  (
+		    ORDER_CODE
+		  , M_CODE
+		  , PM_CODE
+		  , ORDER_AMOUNT
+		  , ORDER_NAME
+		  , ORDER_ADDRESS
+		  , ORDER_SUBADDRESS
+		  , ORDER_ZIPCODE
+		  , ORDER_PHONE
+		  , ORDER_EMAIL
+		  , ORDER_REQUEST
+		  , ORDER_POINT
+		  , ORDER_STATUS
+		  )
+		  VALUES
+		  (
+		    'O' || SEQ_ORDER.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , '결제완료'
+		  )
+	</entry>
+	
+	<entry key="selectOrderCode">
+		SELECT 'O' || SEQ_ORDER.CURRVAL "ORDER_CODE"
+		  FROM DUAL
+	</entry>
+	
+	<entry key="insertSubOrderCustom">
+		INSERT
+		  INTO SUBORDER
+		  (
+		    ORDER_CODE
+		  , CU_CODE
+		  , SUB_AMOUNT
+		  )
+		  VALUES
+		  (
+		    ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="insertSubOrderProduct">
+		INSERT
+		  INTO SUBORDER
+		  (
+		    ORDER_CODE
+		  , P_CODE
+		  , SUB_AMOUNT
+		  )
+		  VALUES
+		  (
+		    ?
+		  , ?
+		  , ?
+		  )
+	</entry>
 </properties>
