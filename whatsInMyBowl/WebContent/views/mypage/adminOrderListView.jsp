@@ -223,7 +223,6 @@
             </div>
 
             <div style="width:1000px" align="center">
-                <form action="">
                     <table class="search-area">
                         <tr>
                             <td>
@@ -237,15 +236,41 @@
                                 <input type="text" name="search" placeholder="내용을 입력해주세요">
                             </td>
                             <td>
-                                <button type="button"><i class="fas fa-search">조회</i></button>
+                                <button type="button" id="searchGo"><i class="fas fa-search">조회</i></button>
                             </td>
                         </tr>
                     </table>
-                </form>
             </div>
 
 
         </div>
+        
+        <script>
+        
+	        $("#searchGo").click(function(){
+				location.href = "<%= contextPath %>/order.admin?keyword=" + $("input[name=search]");   			
+	   		})
+        
+        </script>
+        
+        <!-- 검색키워드 넘기기 -->
+        <script>
+       		$("#searchGo").click(function(){
+       			
+       			var keyword = $("#search").val();
+       			console.log(keyword);
+       			
+       			$.ajax({
+       				
+       				url:"orderList.admin",
+       				data:{kword:keyword},
+       				type:"post",
+       				
+       				
+       			})
+       			
+       		})
+        </script>
 
 
         <!-- 주문상세정보 -->
@@ -316,14 +341,12 @@
             
                     <!-- Modal body -->
                     <div class="modal-body">
-                    	<form>
 	                        <table>
 	                            <tr id="detail12">
 	                            </tr>
 	                            <tr id="detail13">
 	                            </tr>
 	                        </table>
-                        </form>
                     </div>
             
                     <!-- Modal footer -->
