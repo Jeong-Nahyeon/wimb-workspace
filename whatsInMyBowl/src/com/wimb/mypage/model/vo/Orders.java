@@ -20,12 +20,22 @@ public class Orders {
 	private String invoice;
 	private String status;
 	private Date orderDate;
+	private int rNum;
+	private String pCode;
+	private String pName;
+	private String cuCode;
+	private String cuName;
+	private int totalCost;
+	private int finalCost;
+	private String pmMethod;
 	
 	public Orders() {}
-
+	
+	// 리스트 조회용
 	public Orders(String orderCode, int mCode, String pmCode, int amount, String mName, String address,
 			String subAddress, int zipCode, String phone, String email, String request, int point, String company,
-			String invoice, String status, Date orderDate) {
+			String invoice, String status, Date orderDate, int rNum, String pCode, String pName, String cuCode,
+			String cuName, int totalCost, int finalCost, String pmMethod) {
 		super();
 		this.orderCode = orderCode;
 		this.mCode = mCode;
@@ -43,7 +53,39 @@ public class Orders {
 		this.invoice = invoice;
 		this.status = status;
 		this.orderDate = orderDate;
+		this.rNum = rNum;
+		this.pCode = pCode;
+		this.pName = pName;
+		this.cuCode = cuCode;
+		this.cuName = cuName;
+		this.totalCost = totalCost;
+		this.finalCost = finalCost;
+		this.pmMethod = pmMethod;
 	}
+	
+	// 상세조회용
+	public Orders(String orderCode, String mName, String address, String subAddress, int zipCode, String phone,
+			String email, String request, int point, Date orderDate, String pCode, String pName, String cuCode, String cuName
+			, String company, String invoice) {
+		super();
+		this.orderCode = orderCode;
+		this.mName = mName;
+		this.address = address;
+		this.subAddress = subAddress;
+		this.zipCode = zipCode;
+		this.phone = phone;
+		this.email = email;
+		this.request = request;
+		this.point = point;
+		this.orderDate = orderDate;
+		this.pCode = pCode;
+		this.pName = pName;
+		this.cuCode = cuCode;
+		this.cuName = cuName;
+		this.company = company;
+		this.invoice = invoice;
+	}
+	
 
 	public String getOrderCode() {
 		return orderCode;
@@ -173,14 +215,79 @@ public class Orders {
 		this.orderDate = orderDate;
 	}
 
+	public int getrNum() {
+		return rNum;
+	}
+
+	public void setrNum(int rNum) {
+		this.rNum = rNum;
+	}
+
+	public String getpCode() {
+		return pCode;
+	}
+
+	public void setpCode(String pCode) {
+		this.pCode = pCode;
+	}
+
+	public String getpName() {
+		return pName;
+	}
+
+	public void setpName(String pName) {
+		this.pName = pName;
+	}
+
+	public String getCuCode() {
+		return cuCode;
+	}
+
+	public void setCuCode(String cuCode) {
+		this.cuCode = cuCode;
+	}
+
+	public String getCuName() {
+		return cuName;
+	}
+
+	public void setCuName(String cuName) {
+		this.cuName = cuName;
+	}
+
+	public int getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(int totalCost) {
+		this.totalCost = totalCost;
+	}
+
+	public int getFinalCost() {
+		return finalCost;
+	}
+
+	public void setFinalCost(int finalCost) {
+		this.finalCost = finalCost;
+	}
+
+	public String getPmMethod() {
+		return pmMethod;
+	}
+
+	public void setPmMethod(String pmMethod) {
+		this.pmMethod = pmMethod;
+	}
+
 	@Override
 	public String toString() {
 		return "Orders [orderCode=" + orderCode + ", mCode=" + mCode + ", pmCode=" + pmCode + ", amount=" + amount
 				+ ", mName=" + mName + ", address=" + address + ", subAddress=" + subAddress + ", zipCode=" + zipCode
 				+ ", phone=" + phone + ", email=" + email + ", request=" + request + ", point=" + point + ", company="
-				+ company + ", invoice=" + invoice + ", status=" + status + ", orderDate=" + orderDate + "]";
+				+ company + ", invoice=" + invoice + ", status=" + status + ", orderDate=" + orderDate + ", rNum="
+				+ rNum + ", pCode=" + pCode + ", pName=" + pName + ", cuCode=" + cuCode + ", cuName=" + cuName
+				+ ", totalCost=" + totalCost + ", finalCost=" + finalCost + ", pmMethod=" + pmMethod + "]";
 	}
-	
-	
 
+	
 }

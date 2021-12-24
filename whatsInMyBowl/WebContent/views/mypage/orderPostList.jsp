@@ -308,8 +308,8 @@
     			
     			var oCode = $(this).parent().siblings(".oC").find(".oCode").text();
         		var pmCode = $(this).parent().siblings(".pmCode").text();
-        		console.log(oCode);
-        		console.log(pmCode);
+        		//console.log(oCode);
+        		//console.log(pmCode);
         		
         		$.ajax({
         			url:"refundInsert.my",

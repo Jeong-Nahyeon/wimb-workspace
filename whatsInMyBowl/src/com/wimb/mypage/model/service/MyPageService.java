@@ -137,19 +137,19 @@ public class MyPageService {
 	}
 	
 	// 주문 환불 요청 insert|update
-		public int insertUpdateRefund(String oCode, String payCode, String reReason) {
-			Connection conn = getConnection();
-			int result1 = new MyPageDao().insertRefund(conn, oCode, payCode, reReason);
-			int result2 = new MyPageDao().updateRefund(conn, oCode);
-			
-			if(result1>0 && result2>0) {
-				commit(conn);
-			}else {
-				rollback(conn);
-			}
-			close(conn);
-			return result1 * result2;
+	public int insertUpdateRefund(String oCode, String payCode, String reReason) {
+		Connection conn = getConnection();
+		int result1 = new MyPageDao().insertRefund(conn, oCode, payCode, reReason);
+		int result2 = new MyPageDao().updateRefund(conn, oCode);
+		
+		if(result1>0 && result2>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
 		}
+		close(conn);
+		return result1 * result2;
+	}
 	
 	// 취소/환불조회 페이지
 	public ArrayList<MyOrders> selectCancelList(Member m, String startDay, String endDay) {
@@ -186,6 +186,7 @@ public class MyPageService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
 		return result;
 	}
 	
@@ -199,6 +200,7 @@ public class MyPageService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
 		return result;
 	}
 	
@@ -218,4 +220,24 @@ public class MyPageService {
 		return olist;
 	}
 	
+	// 관리자 상품관리>주문상세조회
+	public Orders adminOrderDetail(String oCode) {
+		Connection conn = getConnection();
+		Orders od = new MyPageDao().adminOrderDetail(conn, oCode);
+		close(conn);
+		return od;
+	}
+	
+	// 관리자 택배정보 입력
+	public int insertPost(String oCode, String com, String inv) {
+		Connection conn = getConnection();
+		int result = new MyPageDao().insertPost(conn, oCode, com, inv);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 }

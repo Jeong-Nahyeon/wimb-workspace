@@ -105,11 +105,12 @@
         background-color: lightgray;
     }
     label {margin: 0px;}
-    u:hover {cursor: pointer;}
+    .atag:hover {cursor: pointer;}
+	.atag {text-decoration: underline;}
     .modal-body th {
         width: 120px;
         font-size: 15px;
-        padding: 10px 0px;
+        padding: 8px 0px;
     }
     .modal-body td {
         font-size: 15px;
@@ -124,6 +125,9 @@
         width: 70px;
         height: 30px;
         margin-right: 40px;
+    }
+    li {
+     	list-style:none;
     }
 </style>
 </head>
@@ -178,14 +182,18 @@
                 	<% for(Orders od : olist) { %>
 	                    <tr>
 	                        <td><input type="checkbox"></td>
-	                        <td>1</td>
-	                        <td><%= od.getOrderCode() %></td>
+	                        <td><%= od.getrNum() %></td>
+	                        <td class="oCode"><%= od.getOrderCode() %></td>
 	                        <td><%= od.getmName() %></td>
-	                        <td>상품명</td>
-	                        <td>상품금액</td>
-	                        <td>결제금액</td>
+	                        <% if(od.getCuCode() == null) { %>
+	                        	<td class="atag"><a data-toggle="modal" data-target="#myModal"><%= od.getpName() %></a></td>
+	                        <% }else { %>
+	                        	<td class="atag"><a data-toggle="modal" data-target="#myModal"><%= od.getCuName() %></a></td>
+	                        <% } %>
+	                        <td><%= od.getTotalCost() %></td>
+	                        <td><%= od.getFinalCost() %></td>
 	                        <td>3000원</td>
-	                        <td>결제유형</td>
+	                        <td><%= od.getPmMethod() %></td>
 	                        <td><%= od.getCompany() %></td>
 	                        <td><%= od.getInvoice() %></td>
 	                        <td><%= od.getStatus() %></td>
@@ -210,7 +218,7 @@
                 <% } %>
                 
                 <% if(currentPage != maxPage) { %>
-                <button onclick="location.href='<%= contextPath %>/list.bo?cpage=<%= currentPage +1%>';"> &gt; </button>
+                <button onclick="location.href='<%= contextPath %>/orderList.admin?cpage=<%= currentPage +1%>';"> &gt; </button>
             	<% } %>
             </div>
 
@@ -240,7 +248,7 @@
         </div>
 
 
-        <!-- The Modal -->
+        <!-- 주문상세정보 -->
         <div class="modal" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -257,38 +265,44 @@
                             <table class="modal-body">
                                 <tr>
                                     <th>주문일자</th>
-                                    <td>2021.12.11</td>
+                                    <td id="detail1"></td>
                                 </tr>
                                 <tr>
                                     <th>주문번호</th>
-                                    <td>2021121112345</td>
+                                    <td id="detail2">5</td>
                                 </tr>
                                 <tr>
                                     <th>주문자</th>
-                                    <td>김말똥말똥</td>
+                                    <td id="detail3"></td>
                                 </tr>
                                 <tr>
                                     <th>연락처</th>
-                                    <td>010-1234-5678</td>
+                                    <td id="detail4"></td>
                                 </tr>
                                 <tr>
-                                    <th>주문번호</th>
-                                    <td>2021121112345</td>
+                                    <th>이메일</th>
+                                    <td id="detail5"></td>
+                                </tr>
+                                <tr>
+                                    <th style="vertical-align: top;">배송지 정보</th>
+                                    <td>
+                                    	<li id="detail6"></li>
+                                        <li id="detail7"></li>
+                                        <li id="detail8"></li>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>배송요청사항</th>
-                                    <td>문앞에 두고가세요.</td>
+                                    <td id="detail9"></td>
+                                </tr>
+                                <tr>
+                                    <th>적립포인트</th>
+                                    <td id="detail10"></td>
                                 </tr>
                                 <tr>
                                     <th style="vertical-align: top;">주문내역</th>
                                     <td>
-                                        <ul style="padding: 3px 18px;">
-                                            <li>닭가슴살샐러드</li>
-                                            <li>닭가슴살샐러드</li>
-                                            <li>닭가슴살샐러드</li>
-                                            <li>닭가슴살샐러드</li>
-                                            <li>닭가슴살샐러드</li>
-                                        </ul>
+                                        <li id="detail11"></li>
                                     <td>
                                 </tr>
                             </table>
@@ -302,28 +316,179 @@
             
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <table>
-                            <tr>
-                                <th>택배사</th>
-                                <td><input type="text" placeholder="택배사 입력"></td>
-                            </tr>
-                            <tr>
-                                <th>운송장번호</th>
-                                <td><input type="text" placeholder="운송장번호 입력"></td>
-                            </tr>
-                        </table>
+                    	<form>
+	                        <table>
+	                            <tr id="detail12">
+	                            </tr>
+	                            <tr id="detail13">
+	                            </tr>
+	                        </table>
+                        </form>
                     </div>
             
                     <!-- Modal footer -->
                     <div class="modal-footer" style="border:0px;">
-                        <button type="submit" data-dismiss="modal" style="background-color: #ffee58;">등록</button>
-                        <button type="reset" data-dismiss="modal">취소</button>
+                    	
+                        	<button type="button" id="submit" style="background-color: #ffee58;">등록</button>
+                        	<button type="reset" data-dismiss="modal">취소</button>
+                    	
                     </div>
 
                 </div>
             </div>
         </div>
-
+	
+	<!-- 주문 상세보기 ajax -->
+	<script>
+		$(document).on('click', ".atag", function(){
+			
+			var oCode = $(this).siblings(".oCode").text();
+			
+			$.ajax({
+				url:"orderDetail.admin",
+				type:"post",
+				data:{oCode:oCode},
+				success:function(od){
+					
+					// 첫번째 td
+					var result1 = "";
+					
+					result1 +=
+						       "<td>" + od.orderDate + "</td>";
+			        $("#detail1").html(result1);
+			        
+			        // 두번째 td
+			        var result2 = "";
+			        result2 +=
+					       "<td class='orderCode'>" + od.orderCode + "</td>";
+		        	$("#detail2").html(result2);
+		        	
+		        	// 세번째td
+		        	var result3 = "";
+			        result3 +=
+					       "<td>" + od.mName + "</td>";
+		        	$("#detail3").html(result3);
+		        	
+		        	// 네번째td
+		        	var result4 = "";
+			        result4 +=
+					       "<td>" + od.phone + "</td>";
+		        	$("#detail4").html(result4);
+		        	
+		        	// 다섯번째td
+		        	var result5 = "";
+			        result5 +=
+					       "<td>" + od.email + "</td>";
+		        	$("#detail5").html(result5);
+		        	
+		        	// 여섯번째td
+		        	var result6 = "";
+			        result6 +=
+					       "<li>[" + od.zipCode + "]</li>";
+		        	$("#detail6").html(result6);
+		        	
+		        	// 일곱번째td
+		        	var result7 = "";
+			        result7 +=
+					       "<li>" + od.address + "</li>";
+		        	$("#detail7").html(result7);
+		        	
+		        	// 여덟번째td
+		        	var result8 = "";
+			        result8 +=
+					       "<li>" + od.mName + "</li>";
+		        	$("#detail8").html(result8);
+		        	
+		        	// 아홉번째td
+		        	var result9 = "";
+			        result9 +=
+					       "<td>" + od.request + "</td>";
+		        	$("#detail9").html(result9);
+		        	
+		        	// 열번째td
+		        	var result10 = "";
+			        result10 +=
+					       "<td>" + od.point + "P" + "</td>";
+		        	$("#detail10").html(result10);
+		        	
+		        	// 열한번째td
+		        	var result11 = "";
+		        	if(od.pCode == null) {
+		        		result11 +=
+						       "<td>" + od.cuName + "</td>";
+		        	}else {
+		        		result11 +=
+						       "<td>" + od.pName + "</td>";
+		        	}
+			        
+		        	$("#detail11").html(result11);
+					
+		        	//택배사
+		        	var result12 = "";
+		        	if(od.company === '-') {
+		        		result12 +=
+		        				"<th>" + "택배사" + "</td>"
+		        			  + "<td><input type='text' class='company' placeholder='택배사 입력'></td>";
+		        	}else {
+		        		result12 +=
+	        				"<th>" + "택배사" + "</td>"
+	        			  + "<td><input type='text' value='" + od.company + "' readonly></td>";
+		        	}
+		        	$("#detail12").html(result12);
+		        	
+		        	// 송장번호
+		        	var result13 = "";
+		        	if(od.invoice === '-') {
+		        		result13 +=
+		        				"<th>" + "운송장번호" + "</td>"
+		        			  + "<td><input type='text' class='invoice' placeholder='운송장번호 입력'></td>";
+		        	}else {
+		        		result13 +=
+	        				"<th>" + "운송장번호" + "</td>"
+	        			  + "<td><input type='text' value='" + od.invoice + "' readonly></td>";
+		        	}
+		        	$("#detail13").html(result13);
+				},error:function(){
+					console.log("상세정보 불러오기 통신 실패");
+				}
+			})
+			
+		})
+		
+	</script>
+	
+	<script>
+		$('#submit').on('click', function(){
+			
+			var oCode = $('.orderCode').text();
+			var com = $('.company').val();
+			var inv = $('.invoice').val();
+			
+			$.ajax({
+				
+				url:"insertPost.admin",
+				type:"post",
+				data:{
+					oCode:oCode,
+					com:com,
+					inv:inv
+				}
+				, success:function(result) {
+					console.log(result);
+					if(result > 0) {
+						alert("배송정보를 입력하였습니다.");						
+					}else{
+						alert("요청에 실패하였습니다.\n관리자에게 문의하세요.")
+					}
+				}, error:function() {
+					console.log("통신에러")
+				}
+			
+				
+			})
+		})
+	</script>
+	
 
 
 

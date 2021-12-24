@@ -604,10 +604,18 @@ public class MyPageDao {
 						               rset.getString("order_email"),
 						               rset.getString("order_request"),
 						               rset.getInt("order_point"),
-						               rset.getString("order_company"),
-						               rset.getString("order_invoice"),
+						               rset.getString("company"),
+						               rset.getString("invoice"),
 						               rset.getString("order_status"),
-						               rset.getDate("order_date"));
+						               rset.getDate("order_date"),
+						               rset.getInt("rnum"),
+						               rset.getString("p_code"),
+						               rset.getString("p_name"),
+						               rset.getString("cu_code"),
+						               rset.getString("cu_name"),
+						               rset.getInt("pm_totalcost"),
+						               rset.getInt("pm_finalcost"),
+						               rset.getString("pm_method"));
 				olist.add(od);
 			}
 		} catch (SQLException e) {
@@ -617,6 +625,67 @@ public class MyPageDao {
 			close(pstmt);
 		}
 		return olist;
+	}
+	
+	// 관리자 상품관리>주문상세조회
+	public Orders adminOrderDetail (Connection conn, String oCode) {
+		Orders od = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("adminOrderDetail");
+		
+		try {
+			pstmt = conn.prepareStatement(sql); // 미완성된 sql문
+			pstmt.setString(1, oCode);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				od = new Orders(rset.getString("order_code"),
+						               rset.getString("order_name"),
+						               rset.getString("order_address"),
+						               rset.getString("order_subaddress"),
+						               rset.getInt("order_zipcode"),
+						               rset.getString("order_phone"),
+						               rset.getString("order_email"),
+						               rset.getString("order_request"),
+						               rset.getInt("order_point"),
+						               rset.getDate("order_date"),
+						               rset.getString("p_code"),
+						               rset.getString("p_name"),
+						               rset.getString("cu_code"),
+						               rset.getString("cu_name"),
+						               rset.getString("company"),
+						               rset.getString("invoice"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return od;
+	}
+	
+	// 관리자 택배정보 입력
+	public int insertPost(Connection conn, String oCode, String com, String inv) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertPost");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, com);
+			pstmt.setString(2, inv);
+			pstmt.setString(3, oCode);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 }
