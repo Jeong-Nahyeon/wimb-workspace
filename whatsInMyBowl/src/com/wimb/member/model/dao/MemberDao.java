@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.member.model.vo.Member;
+import com.wimb.member.model.vo.Point;
 
 public class MemberDao {
 	
@@ -365,6 +366,40 @@ public class MemberDao {
 		return list;
 	}
 	
+	public ArrayList<Point> selectPoint(Connection conn, String userId){
+		
+		ArrayList<Point> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectPoint");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Point(rset.getInt("m_code"),
+								   rset.getString("m_id"),
+								   rset.getString("order_code"),
+								   rset.getString("point_name"),
+								   rset.getInt("point"),
+								   rset.getString("point_reason"),
+								   rset.getString("modifydate"),
+								   rset.getInt("m_Point"),
+								   rset.getInt("point_typecode")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 	
 	
 	

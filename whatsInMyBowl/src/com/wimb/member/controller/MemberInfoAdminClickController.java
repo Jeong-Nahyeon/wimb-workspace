@@ -45,7 +45,7 @@ public class MemberInfoAdminClickController extends HttpServlet {
 		listCount = new MemberService().selectMemberCount();
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		pageLimit = 10;
-		boardLimit = 10;
+		boardLimit = 15;
 		
 		maxPage = (int)Math.ceil((double)listCount / boardLimit);
 		startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
@@ -62,6 +62,7 @@ public class MemberInfoAdminClickController extends HttpServlet {
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
+		request.setAttribute("listCount", listCount);
 		
 		request.getRequestDispatcher("views/member/memberInfoAdminMain.jsp").forward(request, response);
 	}

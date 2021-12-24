@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
+<%@ page import="com.wimb.member.model.vo.Point, java.util.ArrayList, 
+				com.wimb.common.model.vo.PageInfo"
+%>
 
 <!DOCTYPE html>
 <html>
@@ -56,11 +59,19 @@
     }
     #lookupPeriod button:hover{opacity:0.5;}
     #lookupPeriod input{
-        width: 100px;
+        width: 115px;
         font-size: 12px;
     }
     #pointListTable{width:100%; font-size: 12px;}
     #pointListTable td{width: 100px;}
+    #LitsTbody {
+    	overflow-y: scroll;
+    	height: 300px;
+    }
+    #listTbody td{
+    	width:100px;
+    	
+    }
 </style>
 </head>
 <body style="height:100%">
@@ -68,13 +79,11 @@
 	<%@ include file="../common/myPage.jsp" %>
     <% 
 		String userId = loginUser.getmId();
-		String userPwd = loginUser.getmPwd();
         int point = loginUser.getmPoint();
 	%>
 	
 
     <div class="main">
-        <form action="<%=contextPath %>/" id="point-wrap" align="center" method="post">
             <div id="title-area" >
                 <p>
                     <h4>적립금조회</h4>
@@ -89,61 +98,190 @@
                 </div>
             </div>
             <br clear="both">
-            <div id="lookupPeriod" width="600">
-                <ul>
-                    <li>
-                        조회기간
-                    </li>
-                    <li>
-                        <button>7일</button>
-                        <button>1개월</button>
-                        <button>3개월</button>
-                        <button>1년</button>
-                    </li>
-                    <li>
-                        <input type="date">
-                    </li>
-                    <li>
-                        <input type="date">
-                    </li>
-                    <li>
-                        <button>조회</button>
-                    </li>
-                </ul>
-            </div>
+            <form action="" id="periodForm" onsubmit="return false">
+	            <div id="lookupPeriod" width="600">
+	                <ul>
+	                    <li>
+	                        조회기간
+	                    </li>
+	                    <li>
+	                        <button id="day7" name="period" onclick="dateSub(7);">7일</button>
+	                        <button id="month1" name="period" onclick="dateSub(30);">1개월</button>
+	                        <button id="month3" name="period" onclick="dateSub(90);">3개월</button>
+	                        <button id="year1" name="period" onclick="dateSub(365);">1년</button>
+	                    </li>
+	                    <li>
+	                        <input type="date" id="startDate" name="startDate">
+                            <span>&nbsp;&nbsp;~</span>
+	                    </li>
+	                    <li>
+	                        <input type="date" id="endDate" name="endDate">
+	                    </li>
+	                    <li>
+	                    	<input type="hidden" id="userId" name="userId" value="<%= userId%>">
+	                        <button id="searchBtn" onclick="pointChk();">조회</button>
+	                    </li>
+	                </ul>
+	            </div>
+	        </form>
             <div id="pointListTable">
-                <p align="left" style="margin:0; font-size:13px; border-bottom:1px solid black;">
-                    2021/11/30 ~ 2021/12/24 까지의 적립금 조회내역
-                </p>
+               
                 <table id="pointListTable">
-                    <tr style="background-color:rgba(231, 231, 231, 0.438);">
-                        <td>날짜</td>
-                        <td colspan="2">내용</td>
-                        <td>포인트내역</td>
-                        <td>잔여포인트</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid lightgrey;">
-                        <td>날짜</td>
-                        <td colspan="2">내용</td>
-                        <td>포인트내역</td>
-                        <td>잔여포인트</td>
-                    </tr>
+                    <thead>
+                        <tr style="background-color:rgba(231, 231, 231, 0.438);" height="30" align="center">
+                            <th>날짜</td>
+                            <th colspan="2">내용</th>
+                            <th>포인트내역</th>
+                            <th>잔여포인트</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody id="nonListTbody">
+                		<tr align="center">
+                       		<td colspan="5" width="600" height="250" style="border-bottom: 1px solid lightgrey;">
+                       			조회된 포인트 내역이 없습니다.
+                       		</td>
+                  		</tr>
+                    </tbody>
+                    
+                    
+	                <tbody id="listTbody">
+	                        	
+	                </tbody>
+	               
+                   
                 </table>
             </div>
-        </form>
     </div>
    
 
-   <script>
-       function back(){
-           location.href="<%=contextPath%>/myPage.my"
-       }
-       function update(){
-    	   $("#inputPwd-area").submit();
-       }
-   </script>
-   <footer>
+    <script>
+       
+		// 포인트 조회용 ajax  
+        
+	    function pointChk(){
+			
+	    	const $userId = $("#periodForm input[name=userId]");
+			let $startDate = $("#lookupPeriod input[name=startDate]");
+            let $endDate = $("#lookupPeriod input[name=endDate]");
+          
+
+           	var list = [];
+           	
+			$.ajax({
+				url:"pointCheck.me",
+				data:{
+                    userId:$userId.val(),
+                    startDate:$startDate.val(),
+                    endDate:$endDate.val() 
+                },
+				type:"post",
+				success:function(list){
+                    var content = "";
+
+                   
+                        for(var i = 0; i<list.length; i++){
+                            if(list[i].pointTypeCode != 50){
+                            	
+                           		content += "<tr align='center'>" +
+		                                    "<td>" + list[i].modifyDate + "</td>" + 
+		                                    "<td colspan='2'>" + list[i].pointName + "</td>" +
+		                                    "<td>" + list[i].point + "</td>" + 
+		                                    "<td>" + list[i].mPoint + "</td>" + 
+		                                "</tr>";
+		                
+		
+				                $("#nonListTbody").attr("style", "display:none");
+				                $("#listTbody").html(content);
+
+                            }else{
+                       
+                                content += "<tr align='center'>" +
+                                                "<td>" + list[i].modifyDate + "</td>" + 
+                                                "<td colspan='2'>" + list[i].pointName + "</td>" +
+                                                "<td>" + (list[i].point * -1) + "</td>" + 
+                                                "<td>" + list[i].mPoint + "</td>" + 
+                                            "</tr>";
+                    
+
+                            $("#nonListTbody").attr("style", "display:none");
+                            $("#listTbody").html(content);
+
+                         }
+                    }
+	
+				},error:function(){
+					console.log("ajax 통신 실패");
+				}
+	
+			})
+		}
+        
+        // 조회기간 버튼  
+    	// 조회기간 1 구하기
+    	
+    	// 1. 버튼으로 기간 클릭시
+    	function dateSub(day) {
+    		
+    		// 오늘날짜 
+    		var today = new Date();
+    		
+    		// 선택한날짜 == startDay
+    		var sday = today - day*24*60*60*1000; // n일 전
+    		var startDay = new Date(sday);
+    		
+		    var stYear = startDay.getFullYear();
+			var stMonth = ('0' + (startDay.getMonth() + 1)).slice(-2);
+			var stDay = ('0' + startDay.getDate()).slice(-2);
+			
+			var startDateString = stYear + '-' + stMonth  + '-' + stDay;
+    		$("#startDate").val(startDateString);
+    		// console.log($("#startDate").val());
+    	}
+    	
+    	// 3. inputDate 시작날짜 미입력시! == 기본 7일
+    	$('#startDate').ready(function(){
+    		var today = new Date();
+			var sevenDay = new Date(today - 7*24*60*60*1000);
+			
+			var svYear = sevenDay.getFullYear();
+			var svMonth = ('0' + (sevenDay.getMonth() + 1)).slice(-2);
+			var svDay = ('0' + sevenDay.getDate()).slice(-2);
+			
+			var startDateString = svYear + '-' + svMonth  + '-' + svDay;
+			
+			if(startDay != null) {
+				var startDay = '<%= request.getAttribute("startDay")%>'
+			}else {
+    			$("#startDate").val(startDateString);
+			}
+    		// console.log($("#startDate").val());
+		
+		})
+		
+		
+		// 3. inputDate 끝날짜 미입력시! == 오늘날짜
+		$('#endDate').ready(function(){
+		
+			var today = new Date();
+		
+			var edYear = today.getFullYear();
+			var edMonth = ('0' + (today.getMonth() + 1)).slice(-2);
+			var edDay = ('0' + today.getDate()).slice(-2);
+			
+			var endDateString = edYear + '-' + edMonth + '-' + edDay;
+			
+			$("#endDate").val(endDateString);
+    		console.log($("#endDate").val());
+		
+		})
+		
+		
+    		
+    
+    </script>
+    <footer>
     <%@ include file="../common/footer.jsp" %>
-</footer>
+	</footer>
 </body>
 </html>

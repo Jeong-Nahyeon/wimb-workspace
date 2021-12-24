@@ -1,5 +1,7 @@
 package com.wimb.member.model.vo;
 
+import java.sql.Date;
+
 public class Point {
 	
 	private int pointCode;
@@ -7,20 +9,77 @@ public class Point {
 	private String orderCode;
 	private int pointTypeCode;
 	private int point;
-	private String pointDeduct;
+	private String pointReason;
+	private String modifyDate;
+	
+	// 포인트 전체조회문시 필요한 변수 세팅
+	private String mId;
+	private String pointName;
+	private int mPoint;
 	
 	public Point() {}
 
-	public Point(int pointCode, int mCode, String orderCode, int pointTypeCode, int point, String pointDeduct) {
+	public Point(int pointCode, int mCode, String orderCode, int pointTypeCode, int point, String pointReason) {
 		super();
 		this.pointCode = pointCode;
 		this.mCode = mCode;
 		this.orderCode = orderCode;
 		this.pointTypeCode = pointTypeCode;
 		this.point = point;
-		this.pointDeduct = pointDeduct;
+		this.pointReason = pointReason;
 	}
 
+	
+	// 포인트 전체조회용
+	public Point(int mCode, String mId, String orderCode, String pointName ,int point, String pointReason, String modifyDate,
+			int mPoint, int pointTypeCode) {
+		super();
+		this.mCode = mCode;
+		this.orderCode = orderCode;
+		this.point = point;
+		this.pointReason = pointReason;
+		this.modifyDate = modifyDate;
+		this.mId = mId;
+		this.pointName = pointName;
+		this.mPoint = mPoint;
+		this.pointTypeCode = pointTypeCode;
+	}
+
+	
+	
+	public int getmPoint() {
+		return mPoint;
+	}
+
+	public void setmPoint(int mPoint) {
+		this.mPoint = mPoint;
+	}
+
+	public String getModifyDate() {
+		return modifyDate;
+	}
+
+	public void setModifyDate(String modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+
+	public String getmId() {
+		return mId;
+	}
+
+	public void setmId(String mId) {
+		this.mId = mId;
+	}
+
+	public String getPointName() {
+		return pointName;
+	}
+
+	public void setPointName(String pointName) {
+		this.pointName = pointName;
+	}
+
+	
 	public int getPointCode() {
 		return pointCode;
 	}
@@ -61,18 +120,18 @@ public class Point {
 		this.point = point;
 	}
 
-	public String getPointDeduct() {
-		return pointDeduct;
+	public String getPointReason() {
+		return pointReason;
 	}
 
-	public void setPointDeduct(String pointDeduct) {
-		this.pointDeduct = pointDeduct;
+	public void setPointReason(String pointReason) {
+		this.pointReason = pointReason;
 	}
 
 	@Override
 	public String toString() {
 		return "Point [pointCode=" + pointCode + ", mCode=" + mCode + ", orderCode=" + orderCode + ", pointTypeCode="
-				+ pointTypeCode + ", point=" + point + ", pointDeduct=" + pointDeduct + "]";
+				+ pointTypeCode + ", point=" + point + ", pointReason=" + pointReason + "]";
 	}
 	
 	

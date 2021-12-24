@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.member.model.dao.MemberDao;
 import com.wimb.member.model.vo.Member;
+import com.wimb.member.model.vo.Point;
 
 public class MemberService {
 	
@@ -109,6 +110,13 @@ public class MemberService {
 		close(conn);
 		return list;
 		
+	}
+	
+	public ArrayList<Point> selectPoint(String userId){
+		Connection conn = getConnection();
+		ArrayList<Point> list = new MemberDao().selectPoint(conn, userId);
+		close(conn);
+		return list;
 	}
 	
 

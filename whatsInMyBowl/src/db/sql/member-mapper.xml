@@ -160,5 +160,13 @@
 		    OR M_STATUS = 'B'
 	</entry>
 
+	<!-- 포인트 조회문 -->
+	<entry key="selectPoint">
+		SELECT M_CODE, M_ID, ORDER_CODE, POINT_NAME, POINT, POINT_REASON, TO_CHAR(MODIFYDATE, 'YYYY/MM/DD') "MODIFYDATE", M_POINT, POINT_TYPECODE
+		  FROM POINT 
+		  JOIN POINT_CATEGORY USING (POINT_TYPECODE)
+		  JOIN MEMBER USING(M_CODE)
+		 WHERE M_ID = ?
+	</entry>
 
 </properties>
