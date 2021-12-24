@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class InqueryUserEnfrollFormController
  */
 @WebServlet("/userEnrollForm.inq")
-public class InqueryUserEnfrollFormController extends HttpServlet {
+public class InquiryUserEnfrollFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InqueryUserEnfrollFormController() {
+    public InquiryUserEnfrollFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,7 +29,7 @@ public class InqueryUserEnfrollFormController extends HttpServlet {
 		
 		// 사용자 - 1대1문의 작성 폼 연결 컨트롤러
 		
-		request.getRequestDispatcher("views/customerService/InqueryUserEnrollForm.jsp").forward(request, response);
+		request.getRequestDispatcher("views/customerService/InquiryUserEnrollForm.jsp").forward(request, response);
 	}
 
 	/**

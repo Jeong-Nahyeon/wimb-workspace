@@ -11,26 +11,26 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.wimb.common.model.vo.File;
-import com.wimb.customerService.model.vo.Inquery;
+import com.wimb.customerService.model.vo.Inquiry;
 
-public class InqueryDao {
+public class InquiryDao {
 	
 private Properties prop = new Properties();
 	
 	
-	public InqueryDao() {
+	public InquiryDao() {
 		
 		try {
-			prop.loadFromXML(new FileInputStream(InqueryDao.class.getResource("/db/sql/Inquery-mapper.xml").getPath()));
+			prop.loadFromXML(new FileInputStream(InquiryDao.class.getResource("/db/sql/Inquiry-mapper.xml").getPath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public int insertInquery(Connection conn, Inquery inq) {
+	public int insertInquiry(Connection conn, Inquiry inq) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("insertInquery");
+		String sql = prop.getProperty("insertInquiry");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

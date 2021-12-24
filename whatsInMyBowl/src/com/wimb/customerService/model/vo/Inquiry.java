@@ -2,7 +2,7 @@ package com.wimb.customerService.model.vo;
 
 import java.sql.Date;
 
-public class Inquery {
+public class Inquiry {
 	
 	private int iCode;			// 1:1문의 글번호
 	private int mCode;          // 회원번호
@@ -15,9 +15,9 @@ public class Inquery {
 	private Date aDate;         // 답변일
 	private String iStatus;     // 게시여부(Y|N)
 	
-	public Inquery() {}
+	public Inquiry() {}
 
-	public Inquery(int iCode, int mCode, String iCategory, String iTitle, String iContent, String iAnswer, Date iDate,
+	public Inquiry(int iCode, int mCode, String iCategory, String iTitle, String iContent, String iAnswer, Date iDate,
 			String aContent, Date aDate, String iStatus) {
 		super();
 		this.iCode = iCode;
@@ -32,7 +32,7 @@ public class Inquery {
 		this.iStatus = iStatus;
 	}
 	
-	public Inquery(int mCode, String iCategory, String iTitle, String iContent) {
+	public Inquiry(int mCode, String iCategory, String iTitle, String iContent) {
 		super();
 		this.mCode = mCode;
 		this.iCategory = iCategory;
@@ -122,7 +122,7 @@ public class Inquery {
 
 	@Override
 	public String toString() {
-		return "Inquery [iCode=" + iCode + ", mCode=" + mCode + ", iCategory=" + iCategory + ", iTitle=" + iTitle
+		return "Inquiry [iCode=" + iCode + ", mCode=" + mCode + ", iCategory=" + iCategory + ", iTitle=" + iTitle
 				+ ", iContent=" + iContent + ", iAnswer=" + iAnswer + ", iDate=" + iDate + ", aContent=" + aContent
 				+ ", aDate=" + aDate + ", iStatus=" + iStatus + "]";
 	}

@@ -14,20 +14,20 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.oreilly.servlet.MultipartRequest;
 import com.wimb.common.WimbFileRenamePolicy;
 import com.wimb.common.model.vo.File;
-import com.wimb.customerService.model.service.InqueryService;
-import com.wimb.customerService.model.vo.Inquery;
+import com.wimb.customerService.model.service.InquiryService;
+import com.wimb.customerService.model.vo.Inquiry;
 
 /**
  * Servlet implementation class InqueryUserInsertController
  */
 @WebServlet("/userInsert.inq")
-public class InqueryUserInsertController extends HttpServlet {
+public class InquiryUserInsertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InqueryUserInsertController() {
+    public InquiryUserInsertController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,7 +45,7 @@ public class InqueryUserInsertController extends HttpServlet {
 			// 전송용량제한
 			int maxSize = 10 * 1024 * 1024; 
 			// 저장폴더의 물리적 경로
-			String savePath = request.getSession().getServletContext().getRealPath("/resources/images/inquery_upfiles/");
+			String savePath = request.getSession().getServletContext().getRealPath("/resources/images/inquiry_upfiles/");
 			
 			// 전달된 파일 업로드
 			MultipartRequest multi = null;
@@ -56,7 +56,7 @@ public class InqueryUserInsertController extends HttpServlet {
 			String iTitle = multi.getParameter("title");
 			String iContent = multi.getParameter("content");
 			
-			Inquery inq = new Inquery(mCode, iCategory, iTitle, iContent);
+			Inquiry inq = new Inquiry(mCode, iCategory, iTitle, iContent);
 			
 			// File에 여러번 insert할 데이터 뽑기
 			ArrayList<File> list = new ArrayList<>(); // 공지사항 등록 시 첨부파일이 없을 수도 있고, 여러개 존재할수도 있음
@@ -69,14 +69,14 @@ public class InqueryUserInsertController extends HttpServlet {
 					File f = new File();
 					f.setfName(multi.getOriginalFileName(key));
 					f.setfRename(multi.getFilesystemName(key));
-					f.setfPath("resources/images/inquery_upfiles/");
+					f.setfPath("resources/images/inquiry_upfiles/");
 					
 					list.add(f);
 				}
 			}
 			
 			// list : 넘어온 첨부파일이 없다면 null로 전달
-			int result = new InqueryService().insertInquery(inq, list);
+			int result = new InquiryService().insertInquiry(inq, list);
 		
 			if(result > 0) { // 성공 => URL 재요청
 				request.getSession().setAttribute("alertMsg", "1:1문의 등록 완료");
