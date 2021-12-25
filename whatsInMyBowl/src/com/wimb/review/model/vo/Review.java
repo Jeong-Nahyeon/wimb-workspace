@@ -11,6 +11,7 @@ public class Review {
 	private String rMainstatus; // 메인표시여부
 	private String rStatus; // 게시여부
 	private String mainImg; // 대표이미지
+	private String pointStatus;
 	
 	private String mName; // 회원명 => 회원 코드와 같이 조회할 경우...
 	
@@ -19,7 +20,7 @@ public class Review {
 
 
 	public Review(int rCode, String orderCode, int mCode, String pCode, String rContent, String rDate,
-			String rMainstatus, String rStatus, String mainImg) {
+			String rMainstatus, String rStatus, String mainImg, String pointStatus) {
 		super();
 		this.rCode = rCode;
 		this.orderCode = orderCode;
@@ -30,6 +31,7 @@ public class Review {
 		this.rMainstatus = rMainstatus;
 		this.rStatus = rStatus;
 		this.mainImg = mainImg;
+		this.pointStatus = pointStatus;
 	}
 	
 
@@ -44,6 +46,21 @@ public class Review {
 		this.mName = mName;
 	}
 	
+	
+
+	public Review(int rCode, String pCode, String rContent, String rDate, String rMainstatus, String rStatus,
+			String pointStatus, String mName) {
+		super();
+		this.rCode = rCode;
+		this.pCode = pCode;
+		this.rContent = rContent;
+		this.rDate = rDate;
+		this.rMainstatus = rMainstatus;
+		this.rStatus = rStatus;
+		this.pointStatus = pointStatus;
+		this.mName = mName;
+	}
+
 
 	public int getrCode() {
 		return rCode;
@@ -143,6 +160,16 @@ public class Review {
 
 	public void setMainImg(String mainImg) {
 		this.mainImg = mainImg;
+	}
+	
+
+	public String getPointStatus() {
+		return pointStatus;
+	}
+
+
+	public void setPointStatus(String pointStatus) {
+		this.pointStatus = pointStatus;
 	}
 
 

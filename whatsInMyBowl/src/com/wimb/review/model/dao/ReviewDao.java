@@ -379,4 +379,162 @@ public class ReviewDao {
 	
 	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	// 관리자
+	
+	
+	public int selectAdminReviewListCount(Connection conn) {
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminReviewListCount");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	
+	public ArrayList<Review> selectAdminReviewList(Connection conn, PageInfo pi) {
+		
+
+		ArrayList<Review> reviewList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminReviewList");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1; // 시작값
+			int endRow = startRow + pi.getBoardLimit() - 1; // 끝값
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				reviewList.add(new Review(rset.getInt("r_code"),
+										  rset.getString("p_name"),
+										  rset.getString("r_content"),
+										  rset.getString("r_date"),
+										  rset.getString("r_mainstatus"),
+										  rset.getString("r_status"),
+										  rset.getString("point_status"),
+										  rset.getString("m_id")));
+			}
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return reviewList;
+		
+	}
+	
+	
+	public Review selectAdminReviewDetail(Connection conn, int rCode) {
+
+		Review r = new Review();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminReviewDetail");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, rCode);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				r.setrCode(rset.getInt("r_code"));
+				r.setmName(rset.getString("m_id"));
+				r.setpCode(rset.getString("p_name"));
+				r.setrContent(rset.getString("r_content"));
+				r.setrDate(rset.getString("r_date"));
+				r.setrMainstatus(rset.getString("r_mainstatus"));
+				r.setMainImg(rset.getString("mainimg"));
+				
+			}
+			
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return r;
+		
+	}
+	
+	
+	public int updateAdminReviewMainStatus(Connection conn, int rCode, String rMainStatus) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateAdminReviewMainStatus"); // 미완성
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, rMainStatus);
+			pstmt.setInt(2, rCode);
+			
+			result = pstmt.executeUpdate();
+			
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	
+	
+	
+	
 }

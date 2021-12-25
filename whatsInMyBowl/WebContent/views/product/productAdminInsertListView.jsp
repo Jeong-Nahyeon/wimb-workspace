@@ -132,6 +132,8 @@
         font-size:13px;
     }
 
+
+    /* 페이징바, 검색  */
     #paging-bar, #product-search-area{
         /* border:1px solid red; */
         width:1500px;

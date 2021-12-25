@@ -144,7 +144,7 @@
             <li class="menubar-left-text left_link"><a href="<%= contextPath %>/list.apr?cpage=1">상품 등록</a></li>
             <li class="menubar-left-text left_link"><a href="<%= contextPath %>/updateDeleteList.apr?cpage=1">상품 수정 / 삭제</a></li>
             <li class="menubar-left-text left_link"><a href="<%= contextPath %>/orderList.admin?cpage=1">상품 배송관리</a></li>
-            <li class="menubar-left-text left_link"><a href="">리뷰 관리</a></li>
+            <li class="menubar-left-text left_link"><a href="<%= contextPath %>/list.arev?cpage=1">리뷰 관리</a></li>
             <li class="menubar-left-text left_link"><a href="">상품문의 관리</a></li>
         </ul>
     

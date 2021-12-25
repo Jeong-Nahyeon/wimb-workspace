@@ -154,4 +154,69 @@ public class ReviewService {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	// 관리자
+	
+	
+	public int selectAdminReviewListCount() {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new ReviewDao().selectAdminReviewListCount(conn);
+		
+		close(conn);
+		
+		return listCount;
+		
+	}
+	
+	
+	public ArrayList<Review> selectAdminReviewList(PageInfo pi) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Review> reviewList = new ReviewDao().selectAdminReviewList(conn, pi);
+		
+		close(conn);
+		
+		return reviewList;
+		
+	}
+	
+	
+	public Review selectAdminReviewDetail(int rCode) {
+
+		Connection conn = getConnection();
+		
+		Review r = new ReviewDao().selectAdminReviewDetail(conn, rCode);
+		
+		close(conn);
+		
+		return r;
+		
+	}
+	
+	
+	public int updateAdminReviewMainStatus(int rCode, String rMainStatus) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ReviewDao().updateAdminReviewMainStatus(conn, rCode, rMainStatus);
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	
+	
+	
+	
+	
 }

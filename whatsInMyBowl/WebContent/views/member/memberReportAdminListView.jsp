@@ -13,11 +13,16 @@
 <style>
     .outer{
         /* border:1px solid red; */
-        margin:auto;
+        margin-left: 150px;
         margin-top:100px;
-        width:800px;
+        width:1800px;
         height:1000px;
     }
+
+    #menu-title{
+        margin-left:150px;
+    }
+
     #menu-title h2{
         display:inline;
         font-size:25px;
@@ -26,7 +31,7 @@
     #list{
         box-sizing: border-box;
         /* border:1px solid red; */
-        width:790px;
+        width:1500px;
         margin:auto; 
     }
 
@@ -63,8 +68,8 @@
 
     /* 내용 텍스트 길 경우 뒷부분 생략 되는 스타일 */
     .report-content{
-        /* border:1px solid red; */
-        width: 200px;
+        border:1px solid red;
+        width: 400px;
         height: 20px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -153,7 +158,7 @@
                         <td>10</td>
                         <td>21-12-11 18:45</td>
                         <td>욕설</td>
-                        <td><div class="report-content" id="report-detail">신고합니다. 해당 리뷰글에 욕설이 심하네요. 게다가 다른 회원 비방도 하고 있습니다.</div></td>
+                        <td align="center"><div class="report-content" id="report-detail">신고합니다. 해당 리뷰글에 욕설이 심하네요. 게다가 다른 회원 비방도 하고 있습니다.</div></td>
                         <td>user01</td>
                         <td class="reported">user10</td>
                         <td class="reported">4회</td>
