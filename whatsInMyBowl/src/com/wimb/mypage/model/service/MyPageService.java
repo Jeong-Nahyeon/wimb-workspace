@@ -240,4 +240,12 @@ public class MyPageService {
 		close(conn);
 		return result;
 	}
+	
+	// 관리자 주문목록 검색
+	public ArrayList<Orders> searchOrder(String kword, String option){
+		Connection conn = getConnection();
+		ArrayList<Orders> olist = new MyPageDao().searchOrder(conn, kword, option);
+		close(conn);
+		return olist;
+	}
 }

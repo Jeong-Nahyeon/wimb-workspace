@@ -35,11 +35,14 @@ public class AdminOrderSearchController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String kword = request.getParameter("search");
+		String option = request.getParameter("searchType");
+		//System.out.println(kword);
+		//System.out.println(option);
 		
-		ArrayList<Orders> solist = new MyPageService().searchOrder(kword);
+		ArrayList<Orders> olist = new MyPageService().searchOrder(kword, option);
 		
-		request.setAttribute("solist", solist);
-		response.sendRedirect(request.getContextPath() + "/order.admin?keyword=" + kword);
+		request.setAttribute("olist", olist);
+		response.sendRedirect(request.getContextPath() + "/orderList.admin");
 	
 	}
 

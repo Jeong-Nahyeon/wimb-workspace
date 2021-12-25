@@ -227,9 +227,9 @@
                         <tr>
                             <td>
                                 <select name="searchType" style="height: 30px; width: 95px;">
-                                    <option value="userName">주문자명</option>
-                                    <option value="pName">상품명</option>
-                                    <option value="payment">결제유형</option>
+                                    <option value="ORDER_NAME">주문자명</option>
+                                    <option value="ORDER_CODE">주문번호</option>
+                                    <option value="PM_METHOD">결제유형</option>
                                 </select>
                             </td>
                             <td>
@@ -248,7 +248,7 @@
         <script>
         
 	        $("#searchGo").click(function(){
-				location.href = "<%= contextPath %>/order.admin?keyword=" + $("input[name=search]");   			
+				location.href = "<%= contextPath %>/orderList.admin?option=" + $('#searchType option:selected').val() + "&keyword=" + $('input[name=search]');   			
 	   		})
         
         </script>
@@ -258,14 +258,23 @@
        		$("#searchGo").click(function(){
        			
        			var keyword = $("#search").val();
+       			var option = $('#searchType option:selected').val();
        			console.log(keyword);
+       			console.log(option);
        			
        			$.ajax({
        				
        				url:"orderList.admin",
-       				data:{kword:keyword},
+       				data:{
+       					kword:keyword,
+    					option:option
+       				},
        				type:"post",
-       				
+       				success:function(){
+       					
+       				}, error:function(){
+       					console.log("통신실패");
+       				}
        				
        			})
        			
