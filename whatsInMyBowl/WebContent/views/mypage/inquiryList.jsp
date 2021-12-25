@@ -127,16 +127,21 @@
               <% for(Inquiry i : list) { %>
            	   <!--  1:1 문의가  있는데 답변이 안달린경우 -->
               	<% if(i.getiAnswer().equals("N")){ %>
-	                <tr align="center">
+	                <tr align="center" class="answerTr noneAnswer">
 	                  <td><%= i.getiCode() %></td>
 	                  <td><%= loginUser.getmName() %></td>
 	                  <td><%= i.getiTitle() %></td>
 	                  <td><%= i.getiCategory() %></td>
 	                  <td><%= i.getiDate() %></td>
 	                  <td style="color: rgb(155,213,188);">
-	                  	<button id="bt" type="button" onclick="modify()">수정</button>
+	                  	<button id="bt" type="button" class="updatebtn">수정</button>
 	                    <button id="bt" type="button" onclick="modify()">삭제</button>
 	                  </td>
+	                </tr>
+	                <tr class="answer" style="display:none; border-bottom: 1px solid #dee2e6;">
+	                	<td id="FAQ_List_anw_anw" colspan="6">
+	                		<br><%= i.getiContent() %><br><br>
+	                	</td>
 	                </tr>
                 <% } else {%>
                 	<!-- 1:1 문의가  있고 답변이 달린경우 -->
@@ -148,8 +153,18 @@
 	                  <td><%= i.getiDate() %></td>
 	                  <td style="color: rgb(155,213,188); font-weight:bold; font-size:20px;">답변완료</td>
 	                </tr>
-	                <tr class="answer" style="display:none;">
-	                	<td id="FAQ_List_anw_anw" colspan="6" style="border-bottom: 1px solid #dee2e6;">답변</td>	
+	                <tr class="answer" style="display:none; border-bottom: 1px solid #dee2e6;">
+	                	<td id="FAQ_List_anw_anw" colspan="6">
+	                		<br><%= i.getiContent() %><br><br>
+	                	</td>
+	                </tr>
+	                <tr class="answer" style="display:none; border-bottom: 1px solid #dee2e6;">
+	                	<td id="FAQ_List_anw_anw" colspan="6">
+	                		<p>
+	                			<b>답변내용 : <%= i.getaContent() %><br><br><br>
+	                			<b>답변일 : <%= i.getaDate() %>
+	                		</p>
+	                	</td>
 	                </tr>
               	<% } %>
               <% } %>      
@@ -193,10 +208,15 @@
 	        $(".answerTr .answer").hide(); 
 	        $(".answerTr tr:first-child").show(); //열머리글 보여주기
 	        $(".answerTr").click(function(){
-	            $(this).next("tr").toggle();
+	            $(this).siblings(".answer").toggle();
 	        });
 	    });
-	
+		
+	    $(function(){
+	    	$(".noneAnswer .updatebtn").click(function(){
+	    		location.href="<%= contextPath %>/InquiryUpdatForm.my?num=" + $(this).parent().siblings().eq(0).text();
+	    	})
+	    })
 	</script>      
 	        
     

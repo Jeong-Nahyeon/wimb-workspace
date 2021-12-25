@@ -115,6 +115,16 @@ public class MyPageService {
 		return result;
 	}
 	
+	/*
+	// inquiry 수정 시 등록한 글을 불러오는 메소드
+	public Inquiry selectInquiry(int iCode) {
+		Connection conn = getConnection();
+		Inquiry inq = new MyPageDao().selectInquiry(iCode);
+		
+		close(conn);
+		return inq;
+	}
+	*/
 	
 	// 주문목록/배송조회 페이지
 	public ArrayList<MyOrders> orderListDetail(Member m, String startDate, String endDate) {
