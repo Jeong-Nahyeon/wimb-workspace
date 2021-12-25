@@ -39,11 +39,11 @@ public class AjaxPointSearchController extends HttpServlet {
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
 		
-		ArrayList<Point> list = new MemberService().selectPoint(userId); 
+		ArrayList<Point> list = new MemberService().selectPoint(userId, startDate, endDate); 
 
-		System.out.println(userId);
-		System.out.println(startDate);
-		System.out.println(endDate);
+		//System.out.println(userId);
+		//System.out.println(startDate);
+		//System.out.println(endDate);
 		//System.out.println(list);
 		
 		response.setContentType("application/json; charset=UTF-8");

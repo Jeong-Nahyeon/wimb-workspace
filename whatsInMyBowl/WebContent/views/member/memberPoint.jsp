@@ -181,7 +181,7 @@
 
                    
                         for(var i = 0; i<list.length; i++){
-                            if(list[i].pointTypeCode != 50){
+                           
                             	
                            		content += "<tr align='center'>" +
 		                                    "<td>" + list[i].modifyDate + "</td>" + 
@@ -194,21 +194,7 @@
 				                $("#nonListTbody").attr("style", "display:none");
 				                $("#listTbody").html(content);
 
-                            }else{
-                       
-                                content += "<tr align='center'>" +
-                                                "<td>" + list[i].modifyDate + "</td>" + 
-                                                "<td colspan='2'>" + list[i].pointName + "</td>" +
-                                                "<td>" + (list[i].point * -1) + "</td>" + 
-                                                "<td>" + list[i].mPoint + "</td>" + 
-                                            "</tr>";
-                    
-
-                            $("#nonListTbody").attr("style", "display:none");
-                            $("#listTbody").html(content);
-
-                         }
-                    }
+                    	}
 	
 				},error:function(){
 					console.log("ajax 통신 실패");

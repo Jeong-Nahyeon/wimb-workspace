@@ -167,6 +167,41 @@
 		  JOIN POINT_CATEGORY USING (POINT_TYPECODE)
 		  JOIN MEMBER USING(M_CODE)
 		 WHERE M_ID = ?
+		   AND MODIFYDATE BETWEEN ? AND (TO_DATE(?)+1)
+	</entry>
+	
+	<!-- 이메일로 아이디찾기  -->
+	<entry key="searchIdEmail">
+		SELECT M_ID
+		  FROM MEMBER
+		 WHERE M_EMAIL = ?
+		   AND M_NAME = ?
+		   AND M_STATUS = 'Y'
+	</entry>
+	
+	<!-- 폰번호로 아이디찾기  -->
+	<entry key="searchIdPhone">
+		SELECT M_ID
+		  FROM MEMBER
+		 WHERE M_PHONE = ?
+		   AND M_NAME = ?
+		   AND M_STATUS = 'Y'
 	</entry>
 
+	<!-- 비밀번호 찾기위한 아이디, 이름, 이메일 찾기 -->
+	<entry key="searchPwd">
+		SELECT COUNT(*) "COUNT"
+		  FROM MEMBER
+		 WHERE M_ID = ?
+		   AND M_NAME = ?
+		   AND M_EMAIL = ?	
+		   AND M_STATUS = 'Y'
+	</entry>
+	
+	<entry key="changePwd">
+		UPDATE MEMBER
+		   SET M_PWD = ?
+		 WHERE M_ID = ?
+		   AND M_STATUS = 'Y'
+	</entry>
 </properties>
