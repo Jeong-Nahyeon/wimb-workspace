@@ -120,6 +120,17 @@ public class Member {
 		this.status = status;
 		
 	}
+	
+	
+
+	public Member(String mId, String mEmail, String mName) {
+		super();
+		
+		this.mId = mId;
+		this.mEmail = mEmail;
+		this.mName = mName;
+		
+	}
 
 	public int getCount() {
 		return count;

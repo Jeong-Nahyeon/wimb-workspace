@@ -115,7 +115,7 @@
 					<th>아이디<i class="fas fa-star-of-life"></i></th>
 					<td>
 						<input type="text" name="userId" id="userId"  class="req" placeholder="영문자와 숫자, 6~16글자내로 입력" required><br>
-						<div id="checkId">
+						<div id="checkId" class="check-area">
 
 						</div>
 					</td>
@@ -126,29 +126,32 @@
 				</tr>
 				<tr>
 					<th>비밀번호<i class="fas fa-star-of-life"></i></th>
-					<td><input type="password" name="userPwd" id="userPwd" class="req" placeholder="영문자와 숫자, 6~16글자내로 입력" required><br>
-						<div id="checkPwd">
+					<td><input type="password" name="userPwd" id="userPwd" class="req" placeholder="영문자와 숫자, 6~16글자내로 입력" required>
+						<br>
+						<div id="checkPwd" class="check-area">
 
 						</div></td>
 				</tr>
 				<tr>
 					<th>비밀번호 확인<i class="fas fa-star-of-life"></i></th>
-					<td><input type="password" name="userPwdChk" id="userPwdChk" class="req" required><br>
-						<div id="checkPwdchk">
+					<td><input type="password" name="userPwdChk" id="userPwdChk" class="req" required>
+						<input type="hidden" id="userPwdValue" value="NN" >
+						<br>
+						<div id="checkPwdchk" class="check-area">
 
 						</div></td>
 				</tr>
 				<tr>
 					<th>이름<i class="fas fa-star-of-life"></i></th>
 					<td><input type="text" name="userName" id="userName" class="req" required><br>
-						<div id="checkName">
+						<div id="checkName" class="check-area">
 
 						</div></td>
 				</tr>
 				<tr>
 					<th>전화번호<i class="fas fa-star-of-life"></i></th>
 					<td><input type="tel" name="userPhone" id="userPhone" class="req" placeholder="숫자만 입력" required><br>
-						<div id="checkPhone">
+						<div id="checkPhone" class="check-area">
 
 						</div>
 					</td>
@@ -156,18 +159,13 @@
 				<tr>
 					<th>이메일<i class="fas fa-star-of-life"></i></th>
 					<td><input type="email" name="userEmail" id="userEmail" class="req" required><br>
-						<div id="checkEmail">
+						<div id="checkEmail" class="check-area">
 
 						</div></td>
 					<td>
 						<input type="button" style="width:100px;" value="중복확인" onclick="doubleEmailChk();">
 						<input type="hidden" id="emailDupleChk" name="emailDupleChk" value="emailN">
 					</td>
-				</tr>
-				<tr>
-					<th></th>
-					<td><input type="text" name="userEmailCheck" class="req" id="userEmailCheck" required></td>
-					<td><input type="button" style="width:100px" value="인증번호"></td>
 				</tr>
 				<tr>
 					<th>주소<i class="fas fa-star-of-life"></i></th>
@@ -191,7 +189,7 @@
 					<th>생년월일<i class="fas fa-star-of-life"></i></th>
 					<td>
 						<input type="text" name="userBirth" id="userBirth" class="req" placeholder="YYYYMMDD 8글자" required><br>
-						<div id="checkBirth">
+						<div id="checkBirth" class="check-area" >
 
 						</div>
 					</td>
@@ -239,6 +237,7 @@
 					console.log(idExp.test($(this).val()));
 					$('#checkId').text("아이디를 확인해주세요");
 					$('#checkId').css('color', 'red');
+					$("#userId").focus();
 				}
 			});
 			$("#userPwd").blur(function(){
@@ -249,12 +248,14 @@
 					console.log(pwdExp.test($(this).val()));
 					$('#checkPwd').text("비밀번호를 확인해주세요");
 					$('#checkPwd').css('color', 'red');
+					$("#userPwd").focus();
 				}
 			});
 			$("#userPwdChk").blur(function(){
 				if($("#userPwd").val() == $("#userPwdChk").val()){
 					console.log($("#userPwd").val() == $("#userPwdChk").val());
 					$("#checkPwdchk").text('');
+					$("#userPwdValue").attr('value', 'YY');
 				}else{
 					console.log($("#userPwd").val() == $("#userPwdChk").val());
 					$('#checkPwdchk').text("비밀번호가 일치하지 않습니다.");
@@ -264,11 +265,12 @@
 			$("#userName").blur(function(){
 				if(nameExp.test($(this).val())){
 					console.log(nameExp.test($(this).val()));
-				
+					$("#checkName").text('');
 				}else{
 					console.log(nameExp.test($(this).val()));
 					$('#checkName').text("이름을 확인해주세요");
 					$('#checkName').css('color', 'red');
+					$("#userName").focus();
 				}
 			});
 			$("#userPhone").blur(function(){
@@ -279,6 +281,7 @@
 					console.log(phoneExp.test($(this).val()));
 					$('#checkPhone').text("전화번호를 확인해주세요");
 					$('#checkPhone').css('color', 'red');
+					$("#userPhone").focus();
 				}
 			});
 			$("#userEmail").blur(function(){
@@ -289,6 +292,7 @@
 					console.log(emailExp.test($(this).val()));
 					$('#checkEmail').text("이메일 주소를 확인해주세요");
 					$('#checkEmail').css('color', 'red');
+					$("#userEmail").focus();
 				}
 			});
 			$("#userBirth").blur(function(){
@@ -299,6 +303,7 @@
 					console.log(birthExp.test($(this).val()));
 					$('#checkBirth').text("생년월일을 확인해주세요");
 					$('#checkBirth').css('color', 'red');
+					$("#userBirth").focus();
 				}
 			});
 		
@@ -458,7 +463,7 @@
 				const $iddup = $("#idDupleChk");
 				const $emaildup = $("#emailDupleChk");
 
-				if($iddup.val() == 'idY' && $emaildup.val() == 'emailY' && $(".agree").is(":checked")){
+				if($iddup.val() == 'idY' && $emaildup.val() == 'emailY' && $(".agree").is(":checked") && $("#userPwdValue").val() == 'YY'){
 					$("#enrollForm").submit();
 
 				}else{
@@ -473,7 +478,11 @@
 						return false;
 					}
 					if(!($(".agree").is(":checked"))){
-						alert("마케팅 수신 동의에 체크해주세오");
+						alert("마케팅 수신 동의에 체크해주세요");
+						return false;
+					}
+					if(!($("#userPwdChk").val() == 'YY')){
+						alert("비밀번호가 일치하지 않습니다.");
 						return false;
 					}
 				}

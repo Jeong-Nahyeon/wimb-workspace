@@ -366,7 +366,7 @@ public class MemberDao {
 		return list;
 	}
 	
-	public ArrayList<Point> selectPoint(Connection conn, String userId){
+	public ArrayList<Point> selectPoint(Connection conn, String userId, String startDate, String endDate){
 		
 		ArrayList<Point> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -376,6 +376,8 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
+			pstmt.setString(2, startDate);
+			pstmt.setString(3, endDate);
 			
 			rset = pstmt.executeQuery();
 			
@@ -400,6 +402,126 @@ public class MemberDao {
 		
 		return list;
 	}
+	
+	public String searchIdEmail(Connection conn, String userEmail, String userName) {
+		
+		String userId = "";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("searchIdEmail");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userEmail);
+			pstmt.setString(2, userName);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				userId = (rset.getString("m_id"));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return userId;
+	}
+	
+	
+	public String searchIdPhone(Connection conn, String userPhone, String userName) {
+		
+		String userId = "";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("searchIdPhone");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userPhone);
+			pstmt.setString(2, userName);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				userId = (rset.getString("m_id"));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return userId;
+		
+	}
+	
+	public int searchPwd(Connection conn, String userId, String userName, String userEmail) {
+		
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("searchPwd");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userName);
+			pstmt.setString(3, userEmail);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				count = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return count;
+		
+	}
+	
+	public int changePwd(Connection conn, String userId, String userPwd) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("changePwd");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userPwd);
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	
+	
+	
 	
 	
 	

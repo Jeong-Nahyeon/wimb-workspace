@@ -112,12 +112,52 @@ public class MemberService {
 		
 	}
 	
-	public ArrayList<Point> selectPoint(String userId){
+	public ArrayList<Point> selectPoint(String userId, String startDate, String endDate){
 		Connection conn = getConnection();
-		ArrayList<Point> list = new MemberDao().selectPoint(conn, userId);
+		ArrayList<Point> list = new MemberDao().selectPoint(conn, userId, startDate, endDate);
 		close(conn);
 		return list;
 	}
 	
+	public String searchIdEmail(String userEmail, String userName) {
+		Connection conn = getConnection();
+		String userId = new MemberDao().searchIdEmail(conn, userEmail, userName);
+		close(conn);
+		return userId;
+	}
+	
+	public String searchIdPhone(String userPhone, String userName) {
+		Connection conn = getConnection();
+		String userId = new MemberDao().searchIdPhone(conn, userPhone, userName);
+		close(conn);
+		return userId;
+	}
 
+	public int searchPwd(String userId, String userName, String userEmail) {
+		Connection conn = getConnection();
+		int count = new MemberDao().searchPwd(conn, userId, userName, userEmail);
+		close(conn);
+		return count;
+	}
+	
+	
+	public int changePwd(String userId, String userPwd) {
+		Connection conn = getConnection();
+		int result = new MemberDao().changePwd(conn, userId, userPwd);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
 }
