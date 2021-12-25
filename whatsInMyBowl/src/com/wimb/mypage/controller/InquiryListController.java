@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.wimb.common.model.vo.PageInfo;
+import com.wimb.member.model.vo.Member;
 import com.wimb.mypage.model.service.MyPageService;
 import com.wimb.mypage.model.vo.Inquiry;
 
@@ -37,10 +38,9 @@ public class InquiryListController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession();
-		String loginUser = (String)session.getAttribute("loginUser");
-		loginUser.
-		int mCode = Integer.parseInt(request.getParameter("mCode"));
-		System.out.println(mCode);
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int mCode = loginUser.getmCode();
+	
 		// 페이징 처리
 		int listCount;     // 현재 총 배너게시글 갯수
 		int currentPage;   // 현재 페이지
@@ -57,7 +57,7 @@ public class InquiryListController extends HttpServlet {
 		
 		pageLimit = 5;
 		
-		boardLimit = 10;
+		boardLimit = 5;
 		
 		maxPage = (int)Math.ceil((double)listCount / boardLimit);
 		
@@ -72,9 +72,10 @@ public class InquiryListController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);				
 		
 		// 요청 처리
-		ArrayList<Inquiry> list = new MyPageService().selectInquiryList(mCode);
+		ArrayList<Inquiry> list = new MyPageService().selectInquiryList(mCode, pi);
 		
 		// 응답뷰
+		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("views/mypage/inquiryList.jsp").forward(request, response);
 	}

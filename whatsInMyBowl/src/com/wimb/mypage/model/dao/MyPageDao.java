@@ -210,29 +210,33 @@ public class MyPageDao {
 	
 	
 	   // inquiry 목록조회
-	   public ArrayList<Inquiry> selectInquiryList(Connection conn, int mCode) {
+	   public ArrayList<Inquiry> selectInquiryList(Connection conn, int mCode, PageInfo pi) {
 	      ArrayList<Inquiry> list = new ArrayList<>();
 	      ResultSet rset = null;
 	      PreparedStatement pstmt = null;
-	      
-	      System.out.println(mCode);
+	
 	      String sql = prop.getProperty("selectInquiryList");
 	      try {
 	         pstmt = conn.prepareStatement(sql);
+	         int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+	         int endRow = startRow + pi.getBoardLimit() - 1;
+	         
 	         pstmt.setInt(1, mCode);
+	         pstmt.setInt(2, startRow);
+	         pstmt.setInt(3, endRow);
 	         
 	         rset = pstmt.executeQuery();
 	         
 	         while(rset.next()) {
 	            list.add(new Inquiry(rset.getInt("i_code"),
-	                               rset.getInt("m_code"),
-	                               rset.getString("i_category"),
-	                               rset.getString("i_title"),
-	                               rset.getString("i_content"),
-	                               rset.getString("i_answer"),
-	                               rset.getDate("i_date"),
-	                               rset.getString("a_content"),
-	                               rset.getDate("a_date")));
+	                                 rset.getInt("m_code"),
+	                                 rset.getString("i_category"),
+	                                 rset.getString("i_title"),
+	                                 rset.getString("i_content"),
+	                                 rset.getString("i_answer"),
+	                                 rset.getDate("i_date"),
+	                                 rset.getString("a_content"),
+	                                 rset.getDate("a_date")));
 	         }
 	      } catch (SQLException e) {
 	         e.printStackTrace();

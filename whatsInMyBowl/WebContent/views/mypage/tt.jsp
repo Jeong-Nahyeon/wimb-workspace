@@ -18,6 +18,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    /*
+    $(document).ready(function(){
+
+        $("#report tr:odd").addClass("odd");
+        $("#report tr:not(.odd)").hide(); 
+        $("#report tr:first-child").show(); //열머리글 보여주기
+
+        $("#report tr.odd").click(function(){
+            $(this).next("tr").toggle();
+        });
+    });
+    */
+</script>
 <style>
   .outer{
   width: 850px;
@@ -55,7 +69,7 @@
     width: 200px;
   }
   #type{
-    width: 75px;
+    width: 60px;
   }
   #writeDate{
     width: 80px
@@ -95,6 +109,26 @@
         font-size: 10px;
         border: none;
         border-radius: 5%;
+    }
+    .FAQ_List_que{
+    position: relative;
+    padding: 17px 0;
+    cursor: pointer;
+    font-size: 14px;
+    border-bottom: 1px solid #dddddd;
+    }
+    
+    .FAQ_List_que.on>span{
+    font-weight: bold;
+    color: #006633; 
+    }
+    
+    .FAQ_List_anw {
+    display: none;
+    overflow: hidden;
+    font-size: 14px;
+    background-color: #f4f4f2;
+    padding: 27px 0;
     }
 </style>
 </head>
@@ -140,7 +174,7 @@
 	                </tr>
                 <% } else {%>
                 	<!-- 1:1 문의가  있고 답변이 달린경우 -->
-	                <tr align="center" class="answerTr" style="border-bottom: 1px solid #dee2e6;">
+	                <tr align="center" class="FAQ_List_que">
 	                  <td><%= i.getiCode() %></td>
 	                  <td><%= loginUser.getmName() %></td>
 	                  <td><%= i.getiTitle() %></td>
@@ -148,8 +182,10 @@
 	                  <td><%= i.getiDate() %></td>
 	                  <td style="color: rgb(155,213,188); font-weight:bold; font-size:20px;">답변완료</td>
 	                </tr>
-	                <tr class="answer" style="display:none;">
-	                	<td id="FAQ_List_anw_anw" colspan="6" style="border-bottom: 1px solid #dee2e6;">답변</td>	
+	                <tr class="FAQ_List_anw">
+	                	<td id="FAQ_List_anw_anw">답변</td>
+                   		<td style="width: 82%;">sdfsdfsd</td>
+                   		<td style="width: 82%;" colspan="4">sdfsdfsd</td>
 	                </tr>
               	<% } %>
               <% } %>      
@@ -189,14 +225,11 @@
 			location.href = "<%= contextPath %>/myPage.my" // 고객센터 1:1문의로 이동하는 링크걸기
 		}
 		
-	    $(document).ready(function(){
-	        $(".answerTr .answer").hide(); 
-	        $(".answerTr tr:first-child").show(); //열머리글 보여주기
-	        $(".answerTr").click(function(){
-	            $(this).next("tr").toggle();
-	        });
-	    });
-	
+        $(".FAQ_List_que").click(function() {
+            $(this).next(".FAQ_List_anw").stop().slideToggle(300);
+            $(this).toggleClass('on').siblings().removeClass('on');
+            $(this).next(".FAQ_List_anw").siblings(".FAQ_List_anw").slideUp(300); // 1개씩 펼치기
+        });	
 	</script>      
 	        
     

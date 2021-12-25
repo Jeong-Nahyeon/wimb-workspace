@@ -83,9 +83,9 @@ public class MyPageService {
 	}
 	
 	   // inquiry 목록조회
-	   public ArrayList<Inquiry> selectInquiryList(int mCode) {
+	   public ArrayList<Inquiry> selectInquiryList(int mCode, PageInfo pi) {
 	      Connection conn = getConnection();
-	      ArrayList<Inquiry> list = new MyPageDao().selectInquiryList(conn, mCode);
+	      ArrayList<Inquiry> list = new MyPageDao().selectInquiryList(conn, mCode, pi);
 	      close(conn);
 	      return list;
 	   }

@@ -69,19 +69,39 @@
 		   AND M_CODE = ?
 	</entry>
 
-	<entry key="selectInquiryList">
-		SELECT
-		        I_CODE
-		      , M.M_NAME 
-		      , I_TITLE
-		      , I_CATEGORY
-		      , I_DATE
-		      , I_ANSWER
-		  FROM INQUIRY I
-		LEFT JOIN MEMBER M ON (I.M_CODE = M.M_CODE)
-		 ORDER
-		    BY I_CODE DESC
-	</entry>
+   <entry key="selectInquiryList">
+		SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                           SELECT 
+                                 I_CODE
+                               , M_CODE
+                               , I_CATEGORY
+                               , I_TITLE
+                               , I_CONTENT
+                               , I_ANSWER
+                               , I_DATE
+                               , A_CONTENT
+                               , A_DATE
+                            FROM INQUIRY
+                            JOIN MEMBER USING (M_CODE)
+                           WHERE I_STATUS = 'Y'
+                               AND M_CODE = ?
+                           ORDER 
+                              BY I_ANSWER , I_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="selectInquiryListCount">
+      SELECT 
+             COUNT(*) count
+        FROM INQUIRY
+       WHERE I_STATUS = 'Y'
+           AND M_CODE = ?   
+   </entry>
 	
 	<entry key="deleteInquiryList">
 	UPDATE
