@@ -163,296 +163,240 @@
                         <td class="reported">user10</td>
                         <td class="reported">4회</td>
                     </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>21-12-11 18:45</td>
-                        <td>욕설</td>
-                        <td><div class="report-content">신고합니다. 해당 리뷰글에 욕설이 심하네요. 게다가 다른 회원 비방도 하고 있습니다.</div></td>
-                        <td>user01</td>
-                        <td class="reported">user10</td>
-                        <td class="reported">4회</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>21-12-11 18:45</td>
-                        <td>욕설</td>
-                        <td><div class="report-content">신고합니다. 해당 리뷰글에 욕설이 심하네요. 게다가 다른 회원 비방도 하고 있습니다.</div></td>
-                        <td>user01</td>
-                        <td class="reported">user10</td>
-                        <td class="reported">4회</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>21-12-11 18:45</td>
-                        <td>욕설</td>
-                        <td><div class="report-content">신고합니다. 해당 리뷰글에 욕설이 심하네요. 게다가 다른 회원 비방도 하고 있습니다.</div></td>
-                        <td>user01</td>
-                        <td class="reported">user10</td>
-                        <td class="reported">4회</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>21-12-11 18:45</td>
-                        <td>욕설</td>
-                        <td><div class="report-content">신고합니다. 해당 리뷰글에 욕설이 심하네요. 게다가 다른 회원 비방도 하고 있습니다.</div></td>
-                        <td>user01</td>
-                        <td class="reported">user10</td>
-                        <td class="reported">4회</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>21-12-11 18:45</td>
-                        <td>욕설</td>
-                        <td><div class="report-content">신고합니다. 해당 리뷰글에 욕설이 심하네요. 게다가 다른 회원 비방도 하고 있습니다.</div></td>
-                        <td>user01</td>
-                        <td class="reported">user10</td>
-                        <td class="reported">4회</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>21-12-11 18:45</td>
-                        <td>욕설</td>
-                        <td><div class="report-content">신고합니다. 해당 리뷰글에 욕설이 심하네요. 게다가 다른 회원 비방도 하고 있습니다.</div></td>
-                        <td>user01</td>
-                        <td class="reported">user10</td>
-                        <td class="reported">4회</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>21-12-11 18:45</td>
-                        <td>욕설</td>
-                        <td><div class="report-content">신고합니다. 해당 리뷰글에 욕설이 심하네요. 게다가 다른 회원 비방도 하고 있습니다.</div></td>
-                        <td>user01</td>
-                        <td class="reported">user10</td>
-                        <td class="reported">4회</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>21-12-11 18:45</td>
-                        <td>욕설</td>
-                        <td><div class="report-content">신고합니다. 해당 리뷰글에 욕설이 심하네요. 게다가 다른 회원 비방도 하고 있습니다.</div></td>
-                        <td>user01</td>
-                        <td class="reported">user10</td>
-                        <td class="reported">4회</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="">
-                        </td>
-                        <td>10</td>
-                        <td>21-12-11 18:45</td>
-                        <td>욕설</td>
-                        <td><div class="report-content">신고합니다. 해당 리뷰글에 욕설이 심하네요. 게다가 다른 회원 비방도 하고 있습니다.</div></td>
-                        <td>user01</td>
-                        <td class="reported">user10</td>
-                        <td class="reported">4회</td>
-                    </tr>
                 </tbody>
             </table>
 
-            <!-- 페이징바 -->
+            
+            <script>
+                
+                $(function(){
+                    
+                    //  신고글 상세 조회용 ajax
+
+            		$(".review-content-right").on("click", ".review-update-btn", function(){
+					
+                        $.ajax({
+                            url:"updateForm.rev",
+                            data:{rcode:$(this).parent().parent().prev().children().eq(0).val()},
+                            success:function(updateFormList){
+                                console.log(updateFormList);
+                                
+                                // 리뷰내용
+                                const $updateModal = $("#review-update-modal");
+
+                                const $review = updateFormList[0];
+                            console.log(updateFormList[0]);
+                                
+                                const $fileList = updateFormList[1];
+                                console.log(updateFormList[1]);
+                                
+                                $updateModal.find("input[name=rcode]").val($review.rCode);
+                                $updateModal.find("textarea").text($review.rContent);
+                                
+                                // 첨부파일
+
+                                $("#existingFile").html("");
+                                
+                                if($fileList.length != 0){ // 기존의 첨부파일이 있을 경우
+                                    
+                                    let file = "";
+
+                                    for(let i=0; i<$fileList.length; i++){
+                                        
+                                        if($fileList[i] != null){
+                                            file += "<p style='margin:0'>" + $fileList[i].fPath + $fileList[i].fRename + "</p> <br>"
+                                                + "<input type='hidden' name='originfCode' value='" + $fileList[i].fCode + "'>" ;
+                                        }
+                                        
+                                    }
+
+                                    $("#existingFile").html(file);
+
+                                }
+                                
+                                $updateModal.modal({backdrop:false});
+                                
+                            }, error:function(){
+                                console.log("ajax 통신 실패");
+                            }
+                            
+                        });
+                    });
+            		
+
+                    // 블랙리스트 등록용 ajax
+
+
+
+                    // 신고글 삭제용 ajax
+
+                    $("#list-1").on("click", "#delete-review-btn", function(){
+
+                        let checkboxArr = [];
+    
+                        $(".check-delete:checked").each(function(){
+                            checkboxArr.push($(this).val());
+                        });
+                        
+                        const rCodeArr = checkboxArr.join(",");
+
+                    	if(checkboxArr.length == 0){ // 리뷰 체크 안 하고 클릭했을 경우 => 경고 알람창
+
+                    		alert("삭제할 리뷰가 선택되지 않았습니다");
+
+                    	} else{ // 리뷰 체크 후 클릭했을 경우 => 리뷰 삭제 모달창 
+
+                            
+                            // 리뷰 삭제 모달창 열기
+                    		$("#delete-review-modal").modal("show");
+                    		$("#delete-review-modal b").text("선택한 리뷰를 삭제하시겠습니까?");
+                            
+                            // 리뷰 삭제 모달창  => 취소 버튼 클릭 시
+                            $("#delete-cancel-btn").click(function(){
+                                location.reload();
+                            });
+                            
+                            // 리뷰 삭제 모달창  => 확인 버튼 클릭 시
+                            $("#delete-btn").click(function(){
+                                
+                                $.ajax({
+
+                                    url:"delete.arev",
+                                    data:{rCodeArr:rCodeArr},
+                                    success:function(result){ // 매개변수 result로 처리된 행수를 담은 응답 데이터 받아주기
+                                    
+                                    if(result > 0){ // 삭제 성공
+                                        console.log(result);
+                                        // 리뷰 삭제 모달창 모달창 닫기
+                                        $("#delete-review-modal").modal("hide");
+
+                                        // 요청처리 성공 모달창 열기
+                                        $("#request-success-modal").modal("show");
+                                        $("#request-success-modal b").text("성공적으로 삭제되었습니다");
+
+                                        $("#success-btn").click(function(){
+                                            location.reload();
+                                        });
+                                        
+                                    } else{ // 삭제 실패
+                                        alert("상품 삭제 실패");
+                                        location.reload();
+                                    }
+
+                                    }, error:function(){
+                                        console.log("ajax 통신 실패");
+                                    } 
+
+                                });
+
+                            });
+
+                    	}   
+
+                    });
+
+
+            	});
+            
+            </script>
+            
+
+            <!-- 페이징바  -->
             <div id="paging-bar">
-                <a href="">&lt;</a>
-                <a href="">1</a>
-                <a href="">&gt;</a>
+                <% if(currentPage != 1) { %>
+                        <a class ="btn btn-sm" href="<%= contextPath %>/list.arep?cpage=<%= currentPage - 1 %>">&lt;</a>
+                <% } %>
+                
+                <% for(int p=startPage; p<=endPage; p++ ) { %>
+                    <% if(p == currentPage) { %>
+                        <a  class ="btn btn-sm" disabled><%= p %></a>
+                    <% } else { %>
+                        <a class ="btn btn-sm" href="<%= contextPath %>/list.arep?cpage=<%= p %>"><%= p %></a>
+                    <% } %>
+                <% } %>
+                
+                <% if(currentPage != maxPage) { %>
+                        <a class ="btn btn-sm" href="<%= contextPath %>/list.arep?cpage=<%= currentPage + 1 %>">&gt;</a>
+                <% } %>
             </div>
+            
             <br>
 
-            <!-- 회원아이디로 신고내역 검색 -->
-            <form id="select-form" action="" method="get">
-                <table id="product-search">
-                    <tr>
-                        <td>
-                            <span>회원ID</span>
-                        </td>
-                        <td>
-                            <input type="search">
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-sm btn-warning" style="background-color:rgb(255, 225, 90); margin-left:5px;">조회</button>
-                        </td>
-                    </tr>
-                </table>
-            </form>
+            <!-- 신고작성회원으로 신고글 검색 -->
+            <div id="report-search-area">
+                <label for="report-search">신고작성회원 ID</label>
+                <input type="search" id="review-search" name="searchKeyword">
+                <button id="report-search-btn" class="btn btn-sm">조회</button>
+            </div>
+
+            <!-- 신고글 검색용 ajax -->
+            <script>
+                $(function(){
+
+                    $("#report-search-btn").click(function(){
+
+                        if($("#report-search").val() == ""){
+                            alert("검색할 리뷰의 상품명을 입력해 주세요");
+                        } else {
+
+                            $.ajax({
+                                url:"search.arev",
+                                data:{searchKeyword:$("#report-search").val()},
+                                success:function(list){
+                                    
+                                    $("#report-list tbody").html("");
+
+                                        let result = "";
+                                        
+                                        for(let i=0; i<list.length; i++){
+                                            
+                                            result += "<tr>"
+                                                        + "<td><input type='checkbox' class='check-delete' name='checkrCode' value='" + list[i].rCode + "'></td>"
+                                                        + "<td class='review-code'>" + list[i].rCode + "</td>"
+                                                        + "<td>" + list[i].mName + "</td>"
+                                                        + "<td>" + list[i].pCode + "</td>"
+                                                        + "<td>" + list[i].rDate + "</td>"
+                                                        + "<td><div class='review-content'><a class='review-detail'>" + list[i].rContent + "</a></div></td>"
+                                                        + "<td>"  
+                                                                + "<input type='hidden' name='mCode' value='" + list[i].mCode + "'>"
+                                                                + "<input type='hidden' name='orderCode' value='" + list[i].orderCode + "'>"
+                                                                + "<span style='color:salmon'>검색 시 사용불가</span>"
+                                                        + "</td>"          
+                                                        + "<td>" + list[i].rMainstatus + "</td>"
+                                                        + "<td>" + list[i].rStatus + "</td>"         
+                                                    + "</tr>";
+
+                                        }
+
+                                        $("#list-1 span").text(list.length);
+                                        $("#report-list tbody").html(result);
+                                        $("#paging-bar").text("");
+
+
+                                }, error:function(){
+                                    console.log("ajax 통신 실패");
+                                }
+
+                            });
+
+                        }
+
+                    });
+
+                });
+            </script>
+
+
+
         </div>    
 
     </div>
-	
-    <!-- 테스트용 -->
-    <button id="insert-success-btn">블랙리스트 등록 성공창 테스트</button>
-    <button id="delete-success-btn">리뷰신고 삭제 성공창 테스트</button>
-
-    <!-- 블랙리스트 등록 모달창 -->
-
-    <div class="modal fade" id="insert-blackList-modal">
-		<div class="modal-dialog modal-dialog-centered" role="document" >
-			<div class="modal-content blackList-insert-modal" style="width:500px; height:200px; border-radius: 0;">
-				
-				<!-- Modal body -->
-				<div class="modal-body content-area" style="height:100%;">
-                    <div align="center" style="height:100%; padding-top:40px;">
-                        <b>등록사유 : </b>
-                        <input type="text" name="blackListCategory" placeholder="직접입력" list="blackList-category">
-                        <datalist id="blackList-category">
-                            <option>욕설</option>
-                            <option>도배</option>
-                            <option>음란/청소년 유해</option>
-                            <option>티회원 비방</option>
-                            <option>타사 홍보</option>
-                        </datalist>
-                    </div>
-				</div>
-				
-				<!-- Modal footer -->
-				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
-					<div align="center" style="width:100%;">
-						<button type="submit" class="btn" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
-						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">등록</button>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>		
-	<script>
-		$(document).ready(function(){
-			$("#insert-blackList-btn").click(function(){
-			$("#insert-blackList-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
 
 
-    <!-- 블랙리스트 등록 성공 모달창 -->
-
-	<div class="modal fade" id="insert-success-modal">
-		<div class="modal-dialog modal-dialog-centered" role="document" >
-			<div class="modal-content success-insert-modal" style="width:500px; height:200px; border-radius: 0;">
-				
-				<!-- Modal body -->
-				<div class="modal-body content-area" style="height:100%;">
-					<div class="insert-success-img" align="center" style=" height:60%; line-height:150px;">
-                        <i class="fas fa-check fa-4x" style="color:rgb(255, 225, 90);"></i>
-                    </div>
-
-                    <div align="center" style="height:40%; line-height:60px;">
-                        <b>성공적으로 등록되었습니다.</b>
-                    </div>
-				</div>
-				
-				<!-- Modal footer -->
-				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
-					<div align="center" style="width:100%;">
-						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">확인</button>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>		
-	<script>
-		$(document).ready(function(){
-			$("#insert-success-btn").click(function(){
-			$("#insert-success-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
-
-
-    <!-- 리뷰신고 삭제 모달창 -->
-
-    <div class="modal fade" id="delete-report-modal">
-		<div class="modal-dialog modal-dialog-centered" role="document" >
-			<div class="modal-content report-delete-modal" style="width:500px; height:200px; border-radius: 0;">
-				
-				<!-- Modal body -->
-				<div class="modal-body content-area" style="height:100%;">
-                    <div align="center" style="height:100%; line-height:200px;">
-                        <b>신고글을 삭제하시겠습니까?</b>
-                    </div>
-				</div>
-				
-				<!-- Modal footer -->
-				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
-					<div align="center" style="width:100%;">
-						<button type="submit" class="btn" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
-						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">삭제</button>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>		
-	<script>
-		$(document).ready(function(){
-			$("#delete-report-btn").click(function(){
-			$("#delete-report-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
-
-
-    <!-- 리뷰신고 삭제 성공 모달창 -->
-
-	<div class="modal fade" id="delete-success-modal">
-		<div class="modal-dialog modal-dialog-centered" role="document" >
-			<div class="modal-content success-delete-modal" style="width:500px; height:200px; border-radius: 0;">
-				
-				<!-- Modal body -->
-				<div class="modal-body content-area" style="height:100%;">
-					<div class="delete-success-img" align="center" style=" height:60%; line-height:150px;">
-                        <i class="fas fa-check fa-4x" style="color:rgb(255, 225, 90);"></i>
-                    </div>
-
-                    <div align="center" style="height:40%; line-height:60px;">
-                        <b>성공적으로 삭제를 완료했습니다.</b>
-                    </div>
-				</div>
-				
-				<!-- Modal footer -->
-				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
-					<div align="center" style="width:100%;">
-						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">확인</button>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>		
-	<script>
-		$(document).ready(function(){
-			$("#delete-success-btn").click(function(){
-			$("#delete-success-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
 
 
     <!-- 리뷰신고 상세조회 모달창 -->
+
     <div class="modal fade" id="report-detail-modal">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
           <div class="modal-content detail-report-modal">
@@ -537,12 +481,105 @@
         </div>
       </div>
     </div>
+
+
+
+    <!-- 블랙리스트 등록 모달창 -->
+
+    <div class="modal fade" id="insert-blackList-modal">
+		<div class="modal-dialog modal-dialog-centered" role="document" >
+			<div class="modal-content blackList-insert-modal" style="width:500px; height:200px; border-radius: 0;">
+				
+				<!-- Modal body -->
+				<div class="modal-body content-area" style="height:100%;">
+                    <div align="center" style="height:100%; padding-top:40px;">
+                        <b>등록사유 : </b>
+                        <input type="text" name="blackListCategory" placeholder="직접입력" list="blackList-category">
+                        <datalist id="blackList-category">
+                            <option>욕설</option>
+                            <option>도배</option>
+                            <option>음란/청소년 유해</option>
+                            <option>티회원 비방</option>
+                            <option>타사 홍보</option>
+                        </datalist>
+                    </div>
+				</div>
+				
+				<!-- Modal footer -->
+				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
+					<div align="center" style="width:100%;">
+						<button type="submit" class="btn" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
+						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">등록</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>		
 	<script>
 		$(document).ready(function(){
-			$("#report-detail").click(function(){
-			$("#report-detail-modal").modal({backdrop: "static"});
+			$("#insert-blackList-btn").click(function(){
+			$("#insert-blackList-modal").modal({backdrop: "static"});
 			});
 		});
 	</script>
+
+
+    <!-- 신고글 삭제 모달창 -->
+
+    <div class="modal fade" id="delete-report-modal">
+		<div class="modal-dialog modal-dialog-centered" role="document" >
+			<div class="modal-content report-delete-modal" style="width:500px; height:200px; border-radius: 0;">
+				
+				<!-- Modal body -->
+				<div class="modal-body content-area" style="height:100%;">
+                    <div align="center" style="height:100%; line-height:200px;">
+                        <b>신고글을 삭제하시겠습니까?</b>
+                    </div>
+				</div>
+				
+				<!-- Modal footer -->
+				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
+					<div align="center" style="width:100%;">
+						<button type="submit" class="btn" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
+						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">삭제</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>		
+
+
+
+     <!-- 요청처리 성공 모달창 -->
+
+	<div class="modal fade" id="request-success-modal">
+		<div class="modal-dialog modal-dialog-centered" role="document" >
+			<div class="modal-content success-request-modal" style="width:500px; height:200px; border-radius: 0;">
+				
+				<!-- Modal body -->
+				<div class="modal-body content-area" style="height:100%;">
+					<div class="request-success-img" align="center" style=" height:60%; line-height:150px;">
+                        <i class="fas fa-check fa-4x" style="color:rgb(255, 225, 90);"></i>
+                    </div>
+
+                    <div align="center" style="height:40%; line-height:60px;">
+                        <b><!-- 요청처리 성공 메세지 -->></b>
+                    </div>
+				</div>
+				
+				<!-- Modal footer -->
+				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
+					<div align="center" style="width:100%;">
+						<button type="submit" id="success-btn" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">확인</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>		
+
+
 </body>
 </html>

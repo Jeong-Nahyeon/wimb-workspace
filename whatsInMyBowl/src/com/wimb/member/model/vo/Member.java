@@ -24,6 +24,7 @@ public class Member {
 	private Date mBlackDate;    // 블랙리스트등록일
 	private String mBlackReason;// 블랙리스트등록사유
 	private int mPoint;         // 적립금
+	private int mReportCount; 	// 신고누적수
 	
 	private int count; // selectAllMember 구문용 구매횟수
 	private int sum; // selectAllMember 구문용 구매총액
@@ -33,7 +34,7 @@ public class Member {
 	public Member(int mCode, String mName, String mId, String mPwd, String mPhone, String mBirth, String mGender,
 			String mAddress, String subAddress, String postcode, String mEmail, Date enrollDate, String introducer,
 			String status, String quitReason, Date quitDate, String mAd, Date mBlackDate, String mBlackReason,
-			int mPoint) {
+			int mPoint, int mReportCount) {
 		super();
 		this.mCode = mCode;
 		this.mName = mName;
@@ -55,6 +56,7 @@ public class Member {
 		this.mBlackDate = mBlackDate;
 		this.mBlackReason = mBlackReason;
 		this.mPoint = mPoint;
+		this.mReportCount = mReportCount;
 	}
 
 	
@@ -306,6 +308,14 @@ public class Member {
 
 	public void setmPoint(int mPoint) {
 		this.mPoint = mPoint;
+	}
+	
+	public int getmReportCount() {
+		return mReportCount;
+	}
+
+	public void setmReportCount(int mReportCount) {
+		this.mReportCount = mReportCount;
 	}
 
 	@Override

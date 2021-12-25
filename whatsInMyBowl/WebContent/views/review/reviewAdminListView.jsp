@@ -499,14 +499,14 @@
                 <button id="review-search-btn" class="btn btn-sm">조회</button>
             </div>
 
-            <!-- 상품 검색용 ajax -->
+            <!-- 리뷰 검색용 ajax -->
             <script>
                 $(function(){
 
                     $("#review-search-btn").click(function(){
 
                         if($("#review-search").val() == ""){
-                            alert("검색할 상품명을 입력해 주세요");
+                            alert("검색할 리뷰의 상품명을 입력해 주세요");
                         } else {
 
                             $.ajax({
