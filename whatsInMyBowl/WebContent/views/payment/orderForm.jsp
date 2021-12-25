@@ -350,7 +350,7 @@
                             <tr>
                                 <th>적립금 사용</th>
                                 <td>
-                                    <input type="number" name="oPoint" value="0">
+                                    <input type="number" name="oPoint" value="0" id="usePoint">
                                     <button type="button" class="btn btn-sm btn-secondary" onclick="pointAll();">모두사용</button>
                                 </td>
                             </tr>
@@ -524,24 +524,51 @@
             // 적립금 모두사용 클릭 시 값 변경
             function pointAll(){
                 var allPoint = $("#allPoint").text()
+                var total_price = $("#total_price").text();
                 $("input[name='oPoint']").val(allPoint);
+                $("#total_price").text(total_price - allPoint);
             }
 
             // 총 결제 금액, 총 수량
             $(function(){
                 var total_price = 0;
                 var total_count = 0;
+                var usePoint = $("#usePoint").val();
                 $(".price_num").each(function(){
                     total_price += parseInt($(this).text());
+                    //total_price -= userPoint;
                 });
+
+                // 총 수량
                 $(".product-num").each(function(){
                     total_count += parseInt($(this).text());
                 })
-                console.log(total_price)
-                console.log(total_count)
+
+                //console.log(total_price)
+                //console.log(total_count)
                 $("#total_price").text(total_price);
                 $("input[name='total_price']").val(total_price);
                 $("input[name='total_count']").val(total_count);
+
+                
+
+                // 적립금 실시간 적용
+                $("#usePoint").on("propertyChange change keyup paste input", function(){
+                    var currentPoint = $(this).val();
+                    var max = parseInt($("#allPoint").text());
+                    var usePointTotal = 0;
+                    if(currentPoint > max){
+                        usePointTotal = total_price - max;
+                        $(this).val(max);
+                        $("#total_price").text(usePointTotal);
+                    }else{
+                        usePointTotal = total_price - currentPoint;
+                        $("#total_price").text(usePointTotal);
+                    }
+                    //usePoint = currentPoint;
+                });
+
+                
             })
         </script>
 
