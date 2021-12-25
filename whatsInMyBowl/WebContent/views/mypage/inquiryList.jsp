@@ -27,7 +27,7 @@
 </script>
 <style>
   .outer{
-  width: 1000px;
+  width: 800px;
   height: 550px;
   margin: auto;
   margin-top: 50px;
@@ -62,13 +62,13 @@
     width: 200px;
   }
   #type{
-    width: 100px;
+    width: 80px;
   }
   #writeDate{
     width: 50px
   }
   #status{
-    width: 10px;
+    width: 50px;
   }
 
   /* modal button */
@@ -87,111 +87,100 @@
 </style>
 </head>
 <body>
-
 	<%@ include file="../common/myPage.jsp" %>
-    
-        
-        <div class="container" style="width: 700;">
-            <h5>1 : 1 문의</h5>
-            <hr style="border-color: gray;">
-            <table id="report" class="table">
-              <thead class="thead-light" align="center">
-                <tr>
-                  <th id="num">번호</th>
-                  <th id="writer">작성자</th>
-                  <th id="title">제목</th>
-                  <th id="type">문의유형</th>
-                  <th id="writeDate">작성일</th>
-                  <th id="status">답변상태</th>
+	
+  <div class="outer">
+      
+    <div class="container" style="width: 500; margin-left: 70px;">
+      <h5>1 : 1 문의</h5>
+      <hr style="border-color: gray;">
+      <table id="report" class="table">
+        <thead class="thead-light" align="center">
+          <tr>
+          	<th id="num">번호</th>
+            <th id="writer">작성자</th>
+            <th id="title">제목</th>
+            <th id="type">문의유형</th>
+            <th id="writeDate">작성일</th>
+            <th id="status">답변상태</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% if(list.isEmpty()) { %>
+              <!-- case1. 1:1 문의가  없을 경우 -->
+              <tr align="center">
+                  <td colspan="6" style="padding-top: 100px;">1 : 1문의 내역이 없습니다.</td>
+              </tr>
+            <% } else { %>
+              <!-- case2. 1:1 문의가  있을 경우 -->
+              <% for(Inquiry i : list) { %>
+                <tr align="center">
+                  <td><%= i.getiCode() %></td>
+                  <td><%= loginUser.getmName() %></td>
+                  <td><%= i.getiTitle() %></td>
+                  <td><%= i.getiCategory() %></td>
+                  <td><%= i.getiDate() %></td>
+                  <td style="color: rgb(155,213,188);"><%= i.getiAnswer() %></td>
                 </tr>
-              </thead>
-              <tbody>
-              	  <% if(list.isEmpty()) { %>
-		              <!-- case1. 1:1 문의가  없을 경우 -->
-		               <tr align="center">
-		                  <td colspan="6" style="padding-top: 100px;">1 : 1문의 내역이 없습니다.</td>
-		                </tr>
-	              <% } else { %>
-	              <!-- case2. 1:1 문의가  있을 경우 -->
-	              <% for(Inquiry i : list) { %>
-		                <tr align="center">
-		                  <td><%= i.getiCode() %></td>
-		                  <td><%= i.getmName() %></td>
-		                  <td><%= i.getiTitle() %></td>
-		                  <td><%= i.getiCategory() %></td>
-		                  <td><%= i.getiDate() %></td>
-		                  <td style="color: rgb(155,213,188);"><%= i.getiAnswer() %></td>
-		                </tr>
-		                <tr>
-		                    <td colspan="6">             
-		                                문의내용 : 적립금이 안들어왔어요<br><br>
-						                        답변내용 : <br><br>
-						                        상품구매적립금이 안들어와서 확인해주세요!<br><br>
-						                        21.10.30                         
-		                    </td>
-		                </tr>
-		                <% } %>
-		                  
-		                <tr align="center">
-		                  <td>2</td>
-		                  <td>홍길동</td>
-		                  <td>배송이 안왔는데 도착완료라고 떠요.</td>
-		                  <td>배송문의</td>
-		                  <td>21.12.30</td>
-		                  	<!--현재 로그인한 사용자가 해당 글을 쓴 본인일 경우-->
-		                  	
-		                  <td><button id="bt" type="button" onclick="modify()">수정</a></button><br>
-		                    <button id="bt" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><a>삭제</a></button>
-		                  </td>
-		                  
-		                   <!-- The Modal 시작-->
-		                  <div class="modal fade" id="myModal">
-		                  <div class="modal-dialog modal-dialog-centered">
-		                  <div class="modal-content">
-		              
-		                  <!-- Modal Header -->
-		                  <div class="modal-header" style="width: 350px;">
-		                    <h6 class="modal-title">등록하신 1:1 문의를 삭제하시겠습니까?</h6>
-		                  </div>
-		                
-		                  <!-- Modal body -->
-		                  <div class="modal-body" style="width: 350px;">
-		                    <button>취소</button>
-		                    <button><a href="<%= contextPath %>/delete.inquiry"></a>삭제</button>
-		                  </div>
-		                
-		                  <!-- Modal footer  -->
-		                  <div class="modal-footer" style="width: 200px;">
-		                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		                  </div>
-		                
-		                  </div>
-		                  </div>
-		                  </div>
-		                 
-		                   <!-- The Modal 끝 -->
-		                
-		                </tr>
-		                <tr>
-		                    <td colspan="6">             
-		                                문의내용 : 배송이 안왔는데 도착완료라고 떠요.<br><br>
-						                        답변내용 : <br><br>
-						                        배송은 도착완료라고뜨는데 샐러드를 받지못했어요<br><br> 
-						                        22.01.02                   
-						   </td>
-		                </tr>
-		            
-	              </tbody>
-              	<% }  %>
-              	
-            </table>
-            
-            <script>
-            	function modify(){
-            		location.href = "<%= contextPath %>/myPage.my" // 고객센터 1:1문의로 이동하는 링크걸기
-            	}
-            </script>
-          </div>
+              <% } %>
+                    
+                <tr align="center">
+                  <td>2</td>
+                  <td>홍길동</td>
+                  <td>배송이 안왔는데 도착완료라고 떠요.</td>
+                  <td>배송문의</td>
+                  <td>21.12.30</td>
+                    <!--현재 로그인한 사용자가 해당 글을 쓴 본인일 경우-->
+                       
+                  <td><button id="bt" type="button" onclick="modify()">수정</a></button><br>
+                    <button id="bt" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><a>삭제</a></button>
+                  </td>
+                     
+                  <!-- The Modal 시작-->
+                  <div class="modal fade" id="myModal">
+                  <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                 
+                  <!-- Modal Header -->
+                  <div class="modal-header" style="width: 350px;">
+                    <h6 class="modal-title">등록하신 1:1 문의를 삭제하시겠습니까?</h6>
+                  </div>
+                   
+                  <!-- Modal body -->
+                  <div class="modal-body" style="width: 350px;">
+                    <button>취소</button>
+                    <button><a href="<%= contextPath %>/delete.inquiry"></a>삭제</button>
+                  </div>
+                
+                  <!-- Modal footer  -->
+                  <div class="modal-footer" style="width: 200px;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                   
+                  </div>
+                  </div>
+                  </div>
+                    
+                  <!-- The Modal 끝 -->
+                   
+                </tr>
+                <tr>
+                  <td colspan="6">             
+                    문의내용 : 배송이 안왔는데 도착완료라고 떠요.<br><br>
+                    답변내용 : <br><br>
+                    배송은 도착완료라고뜨는데 샐러드를 받지못했어요<br><br> 
+                    22.01.02                   
+                </td>
+                </tr>
+               
+               </tbody>
+              <% }  %>
+               
+           </table>
+           
+         </div>
+
+     </div>   
           <!-- 1:1 문의가 있을때 끝-->
     
           <!-- 1:1 문의가 없을때 시작
@@ -218,8 +207,24 @@
             </table>
           </div>
           -->
-      
-        
+	<script>
+		$(function(){
+			document.hiddenForm.submit();
+		})
+
+		function modify(){
+			location.href = "<%= contextPath %>/myPage.my" // 고객센터 1:1문의로 이동하는 링크걸기
+		}
+		
+	
+
+	</script>      
+	        
     
 </body>
+	<footer>
+		<%@ include file="../common/footer.jsp" %>
+	</footer>
+	
+	
 </html>

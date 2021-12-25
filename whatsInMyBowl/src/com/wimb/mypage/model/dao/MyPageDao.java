@@ -209,39 +209,64 @@ public class MyPageDao {
 	}
 	
 	
-	
-	// inquiry 목록조회
-	public ArrayList<Inquiry> selectInquiryList(Connection conn) {
-		// 여러행 ArrayList<Inquiry>객체
-		ArrayList<Inquiry> list = new ArrayList<>(); // 텅빈리스트
-		
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("selectInquiryList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				list.add(new Inquiry(rset.getInt("i_code"),
-									 rset.getString("m_name"),
-									 rset.getString("i_category"),
-									 rset.getString("i_title"),
-									 rset.getString("i_answer"),
-									 rset.getDate("i_date")));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return list;
-	}
-	
+	   // inquiry 목록조회
+	   public ArrayList<Inquiry> selectInquiryList(Connection conn, int mCode) {
+	      ArrayList<Inquiry> list = new ArrayList<>();
+	      ResultSet rset = null;
+	      PreparedStatement pstmt = null;
+	      
+	      System.out.println(mCode);
+	      String sql = prop.getProperty("selectInquiryList");
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setInt(1, mCode);
+	         
+	         rset = pstmt.executeQuery();
+	         
+	         while(rset.next()) {
+	            list.add(new Inquiry(rset.getInt("i_code"),
+	                               rset.getInt("m_code"),
+	                               rset.getString("i_category"),
+	                               rset.getString("i_title"),
+	                               rset.getString("i_content"),
+	                               rset.getString("i_answer"),
+	                               rset.getDate("i_date"),
+	                               rset.getString("a_content"),
+	                               rset.getDate("a_date")));
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      return list;
+	   }
+	   
+	   // inquiry 목록조회 시 사용할 페이징바
+	   public int selectInquiryListCount(Connection conn, int mCode) {
+	      int listCount = 0;
+	      PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      
+	      String sql = prop.getProperty("selectInquiryListCount");
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setInt(1, mCode);
+	         
+	         rset = pstmt.executeQuery();
+	         if(rset.next()) {
+	            listCount = rset.getInt("count");
+	         }
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      return listCount;
+	   }
 	
 	// inquiry 삭제 dao
 	public int deleteInquiryList(Connection conn, int iCode) {

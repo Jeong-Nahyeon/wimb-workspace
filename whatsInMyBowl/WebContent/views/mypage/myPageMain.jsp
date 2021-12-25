@@ -120,7 +120,7 @@
 <body style="height:100%">
 
 	<%@ include file="../common/myPage.jsp" %>
-		
+
     <div class="outer">
 		
         <!-- 사용자 적립금/찜하기 테이블 시작-->

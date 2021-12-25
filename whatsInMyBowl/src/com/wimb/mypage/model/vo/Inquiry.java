@@ -13,10 +13,25 @@ public class Inquiry {
 	private Date iDate; 		// 최종작성일
 	private String aContent; 	// 답변내용
 	private Date aDate; 		// 답변일
-	private String mName;
+	private String iStatus;     // 게시여부(Y|N)
 	
 	public Inquiry() {}
 
+	public Inquiry(int iCode, int mCode, String iCategory, String iTitle, String iContent, String iAnswer, Date iDate,
+			String aContent, Date aDate, String iStatus) {
+		super();
+		this.iCode = iCode;
+		this.mCode = mCode;
+		this.iCategory = iCategory;
+		this.iTitle = iTitle;
+		this.iContent = iContent;
+		this.iAnswer = iAnswer;
+		this.iDate = iDate;
+		this.aContent = aContent;
+		this.aDate = aDate;
+		this.iStatus = iStatus;
+	}
+	
 	public Inquiry(int iCode, int mCode, String iCategory, String iTitle, String iContent, String iAnswer, Date iDate,
 			String aContent, Date aDate) {
 		super();
@@ -29,18 +44,6 @@ public class Inquiry {
 		this.iDate = iDate;
 		this.aContent = aContent;
 		this.aDate = aDate;
-	}
-	
-	
-
-	public Inquiry(int iCode, String mName, String iCategory, String iTitle, String iAnswer, Date iDate) {
-		super();
-		this.iCode = iCode;
-		this.mName = mName;
-		this.iCategory = iCategory;
-		this.iTitle = iTitle;
-		this.iAnswer = iAnswer;
-		this.iDate = iDate;
 	}
 
 	public int getiCode() {
@@ -57,14 +60,6 @@ public class Inquiry {
 
 	public void setmCode(int mCode) {
 		this.mCode = mCode;
-	}
-	
-	public String getmName() {
-		return mName;
-	}
-
-	public void setmName(String mName) {
-		this.mName = mName;
 	}
 
 	public String getiCategory() {
@@ -123,13 +118,21 @@ public class Inquiry {
 		this.aDate = aDate;
 	}
 
+	public String getiStatus() {
+		return iStatus;
+	}
+
+	public void setiStatus(String iStatus) {
+		this.iStatus = iStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "Inquiry [iCode=" + iCode + ", mCode=" + mCode + ", iCategory=" + iCategory + ", iTitle=" + iTitle
 				+ ", iContent=" + iContent + ", iAnswer=" + iAnswer + ", iDate=" + iDate + ", aContent=" + aContent
-				+ ", aDate=" + aDate + "]";
+				+ ", aDate=" + aDate + ", iStatus=" + iStatus + "]";
 	}
-	
+
 	
 
 	

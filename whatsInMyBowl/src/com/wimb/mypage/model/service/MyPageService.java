@@ -82,20 +82,23 @@ public class MyPageService {
 	
 	}
 	
-	
-	
-	// inquiry 목록조회
-	public ArrayList<Inquiry> selectInquiryList() {
-		Connection conn = getConnection();
-		
-		ArrayList<Inquiry> list = new MyPageDao().selectInquiryList(conn);
-		
-		close(conn);
-		
-		return list;
-		
-	}
-	
+	   // inquiry 목록조회
+	   public ArrayList<Inquiry> selectInquiryList(int mCode) {
+	      Connection conn = getConnection();
+	      ArrayList<Inquiry> list = new MyPageDao().selectInquiryList(conn, mCode);
+	      close(conn);
+	      return list;
+	   }
+	   
+	   // inquiry 목록조회 시 사용할 페이징바
+	   public int selectInquiryListCount(int mCode) {
+	      Connection conn = getConnection();
+	      int listCount = new MyPageDao().selectInquiryListCount(conn, mCode);
+	      close(conn);
+	      
+	      return listCount;
+	   }	
+
 	// inquiry 삭제
 	public int deleteInquiryList(int iCode) {
 		Connection conn = getConnection();	

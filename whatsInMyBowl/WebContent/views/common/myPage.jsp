@@ -122,7 +122,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <a href="<%=contextPath%>/inquiryList.my">1:1문의</a>
+                            <a href="<%=contextPath%>/inquiryList.my?cpage=1">1:1문의</a>
                         </td>
                     </tr>
                     <tr>

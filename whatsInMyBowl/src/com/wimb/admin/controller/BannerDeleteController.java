@@ -34,9 +34,6 @@ public class BannerDeleteController extends HttpServlet {
 		int count =  Integer.parseInt( request.getParameter("count"));
 		String[] arr = request.getParameterValues("checkArr");
 		
-		System.out.println(count);
-		System.out.println(arr[0]);
-		
 		int result = 0;
 		if(arr != null && count > 0) {
 			for(int i=0; i<count; i++) {

@@ -8,7 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.wimb.common.model.vo.PageInfo;
 import com.wimb.mypage.model.service.MyPageService;
 import com.wimb.mypage.model.vo.Inquiry;
 
@@ -34,9 +36,43 @@ public class InquiryListController extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		
+		HttpSession session = request.getSession();
+		String loginUser = (String)session.getAttribute("loginUser");
+		loginUser.
+		int mCode = Integer.parseInt(request.getParameter("mCode"));
+		System.out.println(mCode);
+		// 페이징 처리
+		int listCount;     // 현재 총 배너게시글 갯수
+		int currentPage;   // 현재 페이지
+		int pageLimit;     // 페이징바에 페이지를 몇 개 단위씩 할 건지
+		int boardLimit;    // 한 페이지내에 보여질 게시글 갯수
+		
+		int maxPage;       // 총 페이지 수 
+		int startPage;     // 페이징바의 시작 수
+		int endPage;       // 페이징바의 끝 수
+		
+		listCount = new MyPageService().selectInquiryListCount(mCode);
+		
+		currentPage = Integer.parseInt(request.getParameter("cpage"));
+		
+		pageLimit = 5;
+		
+		boardLimit = 10;
+		
+		maxPage = (int)Math.ceil((double)listCount / boardLimit);
+		
+		startPage = (currentPage-1) / pageLimit * pageLimit + 1;
+		
+		endPage = startPage + pageLimit - 1;
+		
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);				
 		
 		// 요청 처리
-		ArrayList<Inquiry> list = new MyPageService().selectInquiryList();
+		ArrayList<Inquiry> list = new MyPageService().selectInquiryList(mCode);
 		
 		// 응답뷰
 		request.setAttribute("list", list);
