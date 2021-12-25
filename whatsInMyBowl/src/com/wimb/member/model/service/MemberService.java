@@ -1,10 +1,8 @@
 package com.wimb.member.model.service;
 
 
-import static com.wimb.common.JDBCTemplate.close;
-import static com.wimb.common.JDBCTemplate.commit;
-import static com.wimb.common.JDBCTemplate.getConnection;
-import static com.wimb.common.JDBCTemplate.rollback;
+import static com.wimb.common.JDBCTemplate.*;
+
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -13,6 +11,7 @@ import com.wimb.common.model.vo.PageInfo;
 import com.wimb.member.model.dao.MemberDao;
 import com.wimb.member.model.vo.Member;
 import com.wimb.member.model.vo.Point;
+import com.wimb.member.model.vo.PointCategory;
 
 public class MemberService {
 	
@@ -154,10 +153,62 @@ public class MemberService {
 		return result;
 	}
 	
+	public ArrayList<PointCategory> selectPointCategory(){
+		Connection conn = getConnection();
+		ArrayList<PointCategory> list = new MemberDao().selectPointCategory(conn);
+		close(conn);
+		return list;
+	}
 	
+	public int pointCategoryCount() {
+		Connection conn = getConnection();
+		int count = new MemberDao().pointCategoryCount(conn);
+		close(conn);
+		return count;
+	}
 	
+	public ArrayList<PointCategory> addPointCategory(String pointName, int pointAmount) {
+		Connection conn = getConnection();
+		int result = new MemberDao().addPointCategory(conn, pointName, pointAmount);
+		ArrayList<PointCategory> updateList = new ArrayList<>();
+		
+		if(result > 0) {
+			commit(conn);
+			
+			updateList = new MemberDao().selectPointCategory(conn);
+			
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return updateList;
+		
+	}
 	
+	public Member selectMember(String userId) {
+		Connection conn = getConnection();
+		Member m = new MemberDao().selectMember(conn, userId);
+		close(conn);
+		return m;
+	}
 	
-	
+	public Member updateMemberA(Member m) {
+		
+		Connection conn = getConnection();
+		int result = new MemberDao().updateMemberA(conn, m);
+		
+		Member updateMem = null;
+		
+		if(result > 0) {
+			commit(conn);
+			updateMem = new MemberDao().selectMember(conn, m.getmId());
+		}else {
+			rollback(conn);
+		}
+		
+		return updateMem;
+	}
 	
 }

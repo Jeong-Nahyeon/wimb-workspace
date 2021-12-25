@@ -60,6 +60,8 @@ public class Member {
 	}
 
 	
+
+
 	public Member(int mCode, String mName, String mId, String mPwd, String mPhone, String mBirth, String mGender,
 			String mAddress, String subAddress, String postcode, String mEmail, Date enrollDate, String introducer,
 			String status, String quitReason, Date quitDate, String mAd, Date mBlackDate, String mBlackReason,
@@ -107,6 +109,18 @@ public class Member {
 	
 
 	
+	public Member(String mId, String mName, String mPhone, String mEmail, String mAddress, String subAddress, String postcode
+			) {
+		super();
+		this.mName = mName;
+		this.mId = mId;
+		this.mPhone = mPhone;
+		this.mEmail = mEmail;
+		this.mAddress = mAddress;
+		this.subAddress = subAddress;
+		this.postcode = postcode;
+	}
+
 	public Member(String mId, String mPwd, String mName, String mPhone, String mEmail, String mAddress, String subAddress,
 			String postcode, String mAd) {
 		super();

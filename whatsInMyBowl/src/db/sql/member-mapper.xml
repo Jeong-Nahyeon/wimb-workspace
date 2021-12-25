@@ -204,4 +204,49 @@
 		 WHERE M_ID = ?
 		   AND M_STATUS = 'Y'
 	</entry>
+	
+	<!-- 포인트 카테고리 조회 -->
+	<entry key="selectPointCategory">
+		SELECT POINT_TYPECODE, POINT_NAME, POINT_AMOUNT
+		  FROM POINT_CATEGORY
+		 ORDER
+		    BY POINT_TYPECODE DESC
+	</entry>
+	
+	<entry key="pointCategoryCount">
+		SELECT
+			   COUNT(*) COUNT
+		  FROM POINT_CATEGORY
+	</entry>
+	
+	<entry key="addPointCategory">
+		INSERT 
+		  INTO POINT_CATEGORY
+		     ( POINT_TYPECODE 
+		     , POINT_NAME
+		     , POINT_AMOUNT
+		     )
+		VALUES
+			 (
+			   SEQ_PCATEGORY.NEXTVAL
+			 , ?
+			 , ?
+			 )
+	</entry>
+	
+	<entry key="updateMemberA">
+		UPDATE MEMBER
+		   SET M_NAME = ?
+		     , M_PHONE = ?
+		     , M_EMAIL = ?
+		     , M_ADDRESS = ?
+		     , M_SUBADDRESS = ?
+		     , M_POSTCODE = ?
+		 WHERE M_ID = ?
+	</entry>
+	
+	
+	
+	
+	
 </properties>

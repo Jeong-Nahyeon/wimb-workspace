@@ -14,6 +14,7 @@ import java.util.Properties;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.member.model.vo.Member;
 import com.wimb.member.model.vo.Point;
+import com.wimb.member.model.vo.PointCategory;
 
 public class MemberDao {
 	
@@ -519,11 +520,110 @@ public class MemberDao {
 		return result;
 	}
 	
+	public ArrayList<PointCategory> selectPointCategory(Connection conn){
+		
+		ArrayList<PointCategory> list  = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectPointCategory");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new PointCategory(rset.getInt("point_typecode"),
+						 				   rset.getString("point_name"),
+						 				   rset.getInt("point_amount")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 	
+	public int pointCategoryCount(Connection conn) {
+		
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("pointCategoryCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return count;
+	}
 	
+	public int addPointCategory(Connection conn, String pointName, int pointAmount) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("addPointCategory");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pointName);
+			pstmt.setInt(2, pointAmount);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
 	
-	
-	
+	public int updateMemberA(Connection conn, Member m) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateMemberA");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getmName());
+			pstmt.setString(2, m.getmPhone());
+			pstmt.setString(3, m.getmEmail());
+			pstmt.setString(4, m.getmAddress());
+			pstmt.setString(5, m.getSubAddress());
+			pstmt.setString(6, m.getPostcode());
+			pstmt.setString(7, m.getmId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
 	
 	
 	
