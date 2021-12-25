@@ -108,10 +108,10 @@
         cursor: pointer;
     }
 
+    /* 페이징바, 리뷰검색 */
     #paging-bar, #review-search-area{
         /* border:1px solid red; */
         width:1500px;
-        margin-left: 150px;
         text-align:center !important;
     }
 
@@ -176,16 +176,17 @@
             <div id="list-1">
                 <!-- 등록 개수 -->
                 <div align="left">
-                    총 <span style="color:orange; font-weight:bold;">20</span> 건
+                    총 <span style="color:orange; font-weight:bold;"><%= pi.getListCount() %></span> 건
                 </div>
                 <!-- 리뷰삭제 버튼 -->
                 <div align="right">
-                    <button type="button" id="delete-review-btn" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);">선택삭제</button>
+                    <button type="button" id="display-none-btn" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);">리뷰 비노출</button>
+                    <button type="button" id="delete-review-btn" class="btn btn-sm btn-warning" style="background:salmon;">완전삭제</button>
                 </div>
             </div>
 
             <!-- 상품 리뷰 목록 -->
-            <table id="review-list" height="500px" class="table table-hover">
+            <table id="review-list" class="table table-hover">
                 <thead>
                     <tr>
                         <th></th>
@@ -221,9 +222,17 @@
 		                        	</div>
 		                        </td>
 		                        <td>
+                                    <input type="hidden" name="mCode" value="<%= r.getmCode() %>">
+                                    <input type="hidden" name="orderCode" value="<%= r.getOrderCode() %>">
 		                        	<% if(r.getPointStatus().equals("N")) { %>
                                         <!-- 적립금 지금 전 -->
-                                        <a href="" class="btn btn-sm btn-warning">적립금지급</a>
+                                        <% if(r.getrStatus().equals("N")) { %>
+                                            <span style="color:salmon">지급불가</span>    
+                                        <% } else {%>
+                                            
+                                            <a class="btn btn-sm btn-warning point-btn">적립금지급</a>
+                                        
+                                        <% }%>    
 		                            <% } else { %>
                                         <!-- 적립금 지급 후 -->
                                         지급완료
@@ -238,12 +247,13 @@
                 </tbody>
             </table>
 
-            <!-- 리뷰 상세 조회용 ajax -->
+
             <script>
-            
-            	$(function(){
-            		
-            		// 카테고리 옵션별 조회 시 해당 요소가 동적으로 새로 만들어지기 때문에 on메소드 3번 방법으로 작성해야 함!!!
+                
+                $(function(){
+                    
+                    //  리뷰 상세 조회용 ajax
+
             		$("#review-list").on("click", ".review-detail", (function(){
             			$.ajax({
                             url:"detailAjax.arev",
@@ -268,6 +278,8 @@
                                 $("#pName").text(r.pCode);
                                 $("#rContent").text(r.rContent);
                                 
+                                $("#mainImg").attr("src", ""); // 이미지 한번 담기면 계속 담겨서 담기 전에 비워주기
+
                                 if(r.mainImg != null){
                                     $("#mainImg").attr("src", r.mainImg);
                                 }
@@ -279,45 +291,276 @@
                         });
             		}));
             		
+
+
+                    // 적립금 지급용 ajax
+
+                    $("#review-list").on("click", ".point-btn", function(){
+
+                        $.ajax({
+
+                            url:"point.arev",
+                            data:{
+                                rcode:$(this).parent().parent().find("input[name=checkrCode]").val(),
+                                mcode:$(this).parent().find("input[name=mCode]").val(),
+                                orderCode:$(this).parent().find("input[name=orderCode]").val()
+                            },
+                            success:function(result){
+
+                                if(result > 0){
+                                    
+                                    $("#request-success-modal").modal('show');
+                                    $("#request-success-modal b").text("성공적으로 포인트가 지급되었습니다");
+                                    
+                                    $("#success-btn").click(function(){
+                                        location.reload();
+                                    });
+
+                                }else {
+                                    alert("포인트 지급 실패");
+                                }
+
+                            }, error:function(){
+                                console.log("ajax 통신 실패");
+                            }
+
+                        });
+
+                    });
+
+
+
+                    // 리뷰 비노출용 ajax
+
+                    $("#list-1").on("click", "#display-none-btn", function(){
+
+                        let checkboxArr = [];
+    
+                        $(".check-delete:checked").each(function(){
+                            checkboxArr.push($(this).val());
+                        });
+                        
+                        const rCodeArr = checkboxArr.join(",");
+
+                    	if(checkboxArr.length == 0){ // 리뷰 체크 안 하고 클릭했을 경우 => 경고 알람창
+
+                    		alert("비노출 상태로 변경할 리뷰가 선택되지 않았습니다");
+
+                    	} else{ // 리뷰 체크 후 클릭했을 경우 => 리뷰 삭제 모달창 
+
+                            
+                            // 리뷰 비노출 모달창 열기
+                    		$("#delete-review-modal").modal("show");
+                    		$("#delete-review-modal b").text("선택한 리뷰 비노출 상태로 변경하시겠습니까?");
+                            
+                            // 리뷰 비노출 모달창  => 취소 버튼 클릭 시
+                            $("#delete-cancel-btn").click(function(){
+                                location.reload();
+                            });
+                            
+                            // 리뷰 비노출 모달창  => 확인 버튼 클릭 시
+                            $("#delete-btn").click(function(){
+                                
+                                $.ajax({
+
+                                    url:"updateStatus.arev",
+                                    data:{rCodeArr:rCodeArr},
+                                    success:function(result){ // 매개변수 result로 처리된 행수를 담은 응답 데이터 받아주기
+                                    
+                                    if(result > 0){ // 노출수정 성공
+                                        console.log(result);
+                                        // 리뷰 비노출 모달창 모달창 닫기
+                                        $("#delete-review-modal").modal("hide");
+
+                                        // 요청처리 성공 모달창 열기
+                                        $("#request-success-modal").modal("show");
+                                        $("#request-success-modal b").text("성공적으로 비노출 상태가 되었습니다");
+
+                                        $("#success-btn").click(function(){
+                                            location.reload();
+                                        });
+                                        
+                                    } else{ // 삭제 실패
+                                        alert("상품 노출상태 변경 실패");
+                                        location.reload();
+                                    }
+
+                                    }, error:function(){
+                                        console.log("ajax 통신 실패");
+                                    } 
+
+                                });
+
+                            });
+
+                    	}   
+
+                    });
+
+
+
+                    // 리뷰 삭제용 ajax
+
+                    $("#list-1").on("click", "#delete-review-btn", function(){
+
+                        let checkboxArr = [];
+    
+                        $(".check-delete:checked").each(function(){
+                            checkboxArr.push($(this).val());
+                        });
+                        
+                        const rCodeArr = checkboxArr.join(",");
+
+                    	if(checkboxArr.length == 0){ // 리뷰 체크 안 하고 클릭했을 경우 => 경고 알람창
+
+                    		alert("삭제할 리뷰가 선택되지 않았습니다");
+
+                    	} else{ // 리뷰 체크 후 클릭했을 경우 => 리뷰 삭제 모달창 
+
+                            
+                            // 리뷰 삭제 모달창 열기
+                    		$("#delete-review-modal").modal("show");
+                    		$("#delete-review-modal b").text("선택한 리뷰를 삭제하시겠습니까?");
+                            
+                            // 리뷰 삭제 모달창  => 취소 버튼 클릭 시
+                            $("#delete-cancel-btn").click(function(){
+                                location.reload();
+                            });
+                            
+                            // 리뷰 삭제 모달창  => 확인 버튼 클릭 시
+                            $("#delete-btn").click(function(){
+                                
+                                $.ajax({
+
+                                    url:"delete.arev",
+                                    data:{rCodeArr:rCodeArr},
+                                    success:function(result){ // 매개변수 result로 처리된 행수를 담은 응답 데이터 받아주기
+                                    
+                                    if(result > 0){ // 삭제 성공
+                                        console.log(result);
+                                        // 리뷰 삭제 모달창 모달창 닫기
+                                        $("#delete-review-modal").modal("hide");
+
+                                        // 요청처리 성공 모달창 열기
+                                        $("#request-success-modal").modal("show");
+                                        $("#request-success-modal b").text("성공적으로 삭제되었습니다");
+
+                                        $("#success-btn").click(function(){
+                                            location.reload();
+                                        });
+                                        
+                                    } else{ // 삭제 실패
+                                        alert("상품 삭제 실패");
+                                        location.reload();
+                                    }
+
+                                    }, error:function(){
+                                        console.log("ajax 통신 실패");
+                                    } 
+
+                                });
+
+                            });
+
+                    	}   
+
+                    });
+
+
             	});
             
             </script>
    
-    </div>
+            <!-- 페이징바  -->
+            <div id="paging-bar">
+                <% if(currentPage != 1) { %>
+                        <a class ="btn btn-sm" href="<%= contextPath %>/list.arev?cpage=<%= currentPage - 1 %>">&lt;</a>
+                <% } %>
+                
+                <% for(int p=startPage; p<=endPage; p++ ) { %>
+                    <% if(p == currentPage) { %>
+                        <a  class ="btn btn-sm" disabled><%= p %></a>
+                    <% } else { %>
+                        <a class ="btn btn-sm" href="<%= contextPath %>/list.arev?cpage=<%= p %>"><%= p %></a>
+                    <% } %>
+                <% } %>
+                
+                <% if(currentPage != maxPage) { %>
+                        <a class ="btn btn-sm" href="<%= contextPath %>/list.arev?cpage=<%= currentPage + 1 %>">&gt;</a>
+                <% } %>
+            </div>
+            
+            <br>
 
-    <!-- 페이징바  -->
-    <div id="paging-bar">
-        <% if(currentPage != 1) { %>
-                <a class ="btn btn-sm" href="<%= contextPath %>/list.arev?cpage=<%= currentPage - 1 %>">&lt;</a>
-        <% } %>
-        
-        <% for(int p=startPage; p<=endPage; p++ ) { %>
-            <% if(p == currentPage) { %>
-                <a  class ="btn btn-sm" disabled><%= p %></a>
-            <% } else { %>
-                <a class ="btn btn-sm" href="<%= contextPath %>/list.arev?cpage=<%= p %>"><%= p %></a>
-            <% } %>
-        <% } %>
-        
-        <% if(currentPage != maxPage) { %>
-                <a class ="btn btn-sm" href="<%= contextPath %>/list.arev?cpage=<%= currentPage + 1 %>">&gt;</a>
-        <% } %>
-    </div>
-    
-    <br>
+            <!-- 회원아이디로 리뷰 검색 -->
+            <div id="review-search-area">
+                <label for="review-search">상품명</label>
+                <input type="search" id="review-search" name="searchKeyword">
+                <button id="review-search-btn" class="btn btn-sm">조회</button>
+            </div>
 
-    <!-- 회원아이디로 리뷰 검색 -->
-        <div id="review-search-area">
-        <label for="review-search">상품명</label>
-        <input type="search" id="review-search" name="searchKeyword">
-        <button id="review-search-btn" class="btn btn-sm">조회</button>
+            <!-- 상품 검색용 ajax -->
+            <script>
+                $(function(){
+
+                    $("#review-search-btn").click(function(){
+
+                        if($("#review-search").val() == ""){
+                            alert("검색할 상품명을 입력해 주세요");
+                        } else {
+
+                            $.ajax({
+                                url:"search.arev",
+                                data:{searchKeyword:$("#review-search").val()},
+                                success:function(list){
+                                    
+                                    $("#review-list tbody").html("");
+
+                                        let result = "";
+                                        
+                                        for(let i=0; i<list.length; i++){
+                                            
+                                            result += "<tr>"
+                                                        + "<td><input type='checkbox' class='check-delete' name='checkrCode' value='" + list[i].rCode + "'></td>"
+                                                        + "<td class='review-code'>" + list[i].rCode + "</td>"
+                                                        + "<td>" + list[i].mName + "</td>"
+                                                        + "<td>" + list[i].pCode + "</td>"
+                                                        + "<td>" + list[i].rDate + "</td>"
+                                                        + "<td><div class='review-content'><a class='review-detail'>" + list[i].rContent + "</a></div></td>"
+                                                        + "<td>"  
+                                                                + "<input type='hidden' name='mCode' value='" + list[i].mCode + "'>"
+                                                                + "<input type='hidden' name='orderCode' value='" + list[i].orderCode + "'>"
+                                                                + "<span style='color:salmon'>검색 시 사용불가</span>"
+                                                        + "</td>"          
+                                                        + "<td>" + list[i].rMainstatus + "</td>"
+                                                        + "<td>" + list[i].rStatus + "</td>"         
+                                                    + "</tr>";
+
+                                        }
+
+                                        $("#list-1 span").text(list.length);
+                                        $("#review-list tbody").html(result);
+                                        $("#paging-bar").text("");
+
+
+                                }, error:function(){
+                                    console.log("ajax 통신 실패");
+                                }
+
+                            });
+
+                        }
+
+                    });
+
+                });
+            </script>
+
         </div>
 
-    <!-- 테스트용 -->
-    <button id="delete-success-btn">리뷰 삭제 성공창 테스트</button>
-	
+    </div>
 
-    
+
 	
     <!-- 리뷰 상세조회 모달창 -->
     <div class="modal fade" id="review-detail-modal">
@@ -367,8 +610,8 @@
                             </tr>
                             <tr>
                                 <td colspan="4">
-                                    <div style="width:100%; padding:5px;">
-                                    	<img id="mainImg" src="" width="100%">
+                                    <div style="width:100%; padding-top:5px;">
+                                    	<img id="mainImg" src="" style="width:100%; padding:0;">
                                     </div>
                                 </td>
                             </tr>
@@ -389,17 +632,11 @@
           </div>
         </div>
       </div>
-    </div>
-	<script>
-		$(document).ready(function(){
-			$("#review-detail-btn").click(function(){
-			$("#review-detail-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
+    
 
 
-    <!-- 리뷰 삭제 모달창 -->
+
+    <!-- 리뷰 비노출/삭제 모달창 -->
 
     <div class="modal fade" id="delete-review-modal">
 		<div class="modal-dialog modal-dialog-centered" role="document" >
@@ -408,64 +645,50 @@
 				<!-- Modal body -->
 				<div class="modal-body content-area" style="height:100%;">
                     <div align="center" style="height:100%; line-height:200px;">
-                        <b>선택한 리뷰를 삭제하시겠습니까? (삭제 후 복구 불가)</b>
+                        <b></b>
                     </div>
 				</div>
 				
 				<!-- Modal footer -->
 				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
 					<div align="center" style="width:100%;">
-						<button type="submit" class="btn" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
-						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">삭제</button>
+						<button type="submit" id="delete-cancel-btn" class="btn" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
+						<button type="submit" id="delete-btn" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">확인</button>
 					</div>
 				</div>
 
 			</div>
 		</div>
 	</div>		
-	<script>
-		$(document).ready(function(){
-			$("#delete-review-btn").click(function(){
-			$("#delete-review-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
 
 
-    <!-- 리뷰삭제 성공 모달창 -->
+    <!-- 요청처리 성공 모달창 -->
 
-	<div class="modal fade" id="delete-success-modal">
+	<div class="modal fade" id="request-success-modal">
 		<div class="modal-dialog modal-dialog-centered" role="document" >
-			<div class="modal-content success-delete-modal" style="width:500px; height:200px; border-radius: 0;">
+			<div class="modal-content success-request-modal" style="width:500px; height:200px; border-radius: 0;">
 				
 				<!-- Modal body -->
 				<div class="modal-body content-area" style="height:100%;">
-					<div class="delete-success-img" align="center" style=" height:60%; line-height:150px;">
+					<div class="request-success-img" align="center" style=" height:60%; line-height:150px;">
                         <i class="fas fa-check fa-4x" style="color:rgb(255, 225, 90);"></i>
                     </div>
 
                     <div align="center" style="height:40%; line-height:60px;">
-                        <b>리뷰 삭제를 완료했습니다.</b>
+                        <b><!-- 요청처리 메세지 --></b>
                     </div>
 				</div>
 				
 				<!-- Modal footer -->
 				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
 					<div align="center" style="width:100%;">
-						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">확인</button>
+						<button type="submit" id="success-btn" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;" data-dismiss="modal">확인</button>
 					</div>
 				</div>
 
 			</div>
 		</div>
 	</div>		
-	<script>
-		$(document).ready(function(){
-			$("#delete-success-btn").click(function(){
-			$("#delete-success-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
 
 
 </body>

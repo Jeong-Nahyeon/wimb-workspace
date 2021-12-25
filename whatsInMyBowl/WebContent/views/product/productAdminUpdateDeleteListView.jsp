@@ -612,57 +612,59 @@
             <label for="product-search">상품명</label>
             <input type="search" id="product-search" name="searchKeyword">
             <button id="product-search-btn" class="btn btn-sm">조회</button>
-            </div>
-            <script>
-                $(function(){
+        </div>
 
-                $("#product-search-btn").click(function(){
+        <!-- 상품 검색용 ajax -->
+        <script>
+            $(function(){
 
-                    if($("#product-search").val() == ""){
-                        alert("검색할 상품명을 입력해 주세요");
-                    } else {
+            $("#product-search-btn").click(function(){
 
-                        $.ajax({
-                            url:"search.apr",
-                            data:{searchKeyword:$("#product-search").val()},
-                            success:function(list){
+                if($("#product-search").val() == ""){
+                    alert("검색할 상품명을 입력해 주세요");
+                } else {
+
+                    $.ajax({
+                        url:"search.apr",
+                        data:{searchKeyword:$("#product-search").val()},
+                        success:function(list){
+                            
+                            $("#product-list tbody").html("");
+
+                                let result = "";
                                 
-                                $("#product-list tbody").html("");
-
-                                    let result = "";
+                                for(let i=0; i<list.length; i++){
                                     
-                                    for(let i=0; i<list.length; i++){
-                                        
-                                        result += "<tr>"
-                                                    + "<td><input type='checkbox' disabled></td>"
-                                                    + "<td>" + list[i].pCode + "</td>"
-                                                    + "<td><a class='product-name'>" + list[i].pName + "</a></td>"
-                                                    + "<td>" + list[i].pProvider + "</td>"
-                                                    + "<td>" + list[i].pProvidePrice + "</td>"
-                                                    + "<td>" + list[i].pPrice + "</td>"
-                                                    + "<td>" + list[i].pStock + "</td>"
-                                                    + "<td>" + list[i].pShow + "</td>"
-                                                + "</tr>";
-                                                
-                                    }
+                                    result += "<tr>"
+                                                + "<td><input type='checkbox' disabled></td>"
+                                                + "<td>" + list[i].pCode + "</td>"
+                                                + "<td><a class='product-name'>" + list[i].pName + "</a></td>"
+                                                + "<td>" + list[i].pProvider + "</td>"
+                                                + "<td>" + list[i].pProvidePrice + "</td>"
+                                                + "<td>" + list[i].pPrice + "</td>"
+                                                + "<td>" + list[i].pStock + "</td>"
+                                                + "<td>" + list[i].pShow + "</td>"
+                                            + "</tr>";
+                                            
+                                }
 
-                                    $("#list-2 span").text(list.length);
-                                    $("#product-list tbody").html(result);
-                                    $("#paging-bar").text("");
+                                $("#list-2 span").text(list.length);
+                                $("#product-list tbody").html(result);
+                                $("#paging-bar").text("");
 
 
-                            }, error:function(){
+                        }, error:function(){
 
-                        }
-
-                    });
-
-                }
+                    }
 
                 });
 
-                });
-            </script>
+            }
+
+            });
+
+            });
+        </script>
 
 
     </div>

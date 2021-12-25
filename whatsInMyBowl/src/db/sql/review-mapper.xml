@@ -161,6 +161,8 @@
 		           FROM (
 		                  SELECT 
 		                         R_CODE
+		                       , ORDER_CODE
+		                       , M_CODE  
 		                       , M_ID
 		                       , P_NAME
 		                       , R_CONTENT
@@ -171,6 +173,7 @@
 		                   FROM REVIEW
 		                   JOIN MEMBER USING (M_CODE)
 		                   JOIN PRODUCT USING (P_CODE)
+              			  WHERE R_ADMINSHOW = 'Y'
 		                  ORDER 
 		                     BY R_CODE DESC
 		                ) R
@@ -198,6 +201,73 @@
 		   SET R_MAINSTATUS = ?
 		 WHERE R_STATUS = 'Y'
 		   AND R_CODE = ?
+	</entry>
+	
+	<entry key="updateAdminPointStatus">
+		UPDATE REVIEW
+		   SET POINT_STATUS = 'Y'
+		 WHERE R_CODE = ?
+		   AND R_STATUS = 'Y'
+	</entry>
+	
+	<entry key="insertAdminReviewPoint">
+		INSERT
+		  INTO POINT
+		  ( POINT_CODE
+		  , M_CODE
+		  , ORDER_CODE
+		  , POINT_TYPECODE
+		  , POINT
+		  )
+		  VALUES
+		  ( SEQ_POINT.NEXTVAL
+		  , ?
+		  , ?
+		  , 20
+		  , 500
+		  )
+	</entry>
+	
+	<entry key="deleteAdminReview">
+		UPDATE REVIEW
+		   SET R_ADMINSHOW = 'N'
+		     , R_STATUS = 'N'
+		     , R_MAINSTATUS = 'N'
+		 WHERE R_CODE = ?
+	</entry>
+	
+	<entry key="updateAdminReviewStatus">
+		UPDATE REVIEW
+		   SET R_STATUS = 'N'
+		     , R_MAINSTATUS = 'N'
+		 WHERE R_CODE = ?
+	</entry>
+	
+	<entry key="selectAdminReviewSearchList">
+		SELECT *
+		  FROM (
+		         SELECT ROWNUM RNUM, R.*
+		           FROM (
+		                  SELECT 
+		                         R_CODE
+		                       , ORDER_CODE  
+		                       , M_CODE 
+		                       , M_ID
+		                       , P_NAME
+		                       , R_CONTENT
+		                       , TO_CHAR(R_DATE, 'YYYY.MM.DD') R_DATE
+		                       , R_MAINSTATUS
+		                       , R_STATUS
+		                       , POINT_STATUS
+		                   FROM REVIEW
+		                   JOIN MEMBER USING (M_CODE)
+		                   JOIN PRODUCT USING (P_CODE)
+		                  WHERE R_ADMINSHOW = 'Y'
+		                    AND P_NAME LIKE '%' || ? || '%'
+		                  ORDER 
+		                     BY R_CODE DESC
+		                ) R
+		       )
 	</entry>
 
 </properties>
