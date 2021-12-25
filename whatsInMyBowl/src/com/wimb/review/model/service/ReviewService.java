@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import com.wimb.common.model.vo.File;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.payment.model.vo.Order;
+import com.wimb.product.model.dao.ProductDao;
 import com.wimb.product.model.vo.Product;
 import com.wimb.review.model.dao.ReviewDao;
 import com.wimb.review.model.vo.Report;
@@ -130,6 +131,12 @@ public class ReviewService {
 		
 		int result = new ReviewDao().deleteReview(conn, rCode);
 		
+		if(result > 0) { 
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
 		close(conn);
 		
 		return result;
@@ -142,6 +149,12 @@ public class ReviewService {
 		Connection conn = getConnection();
 		
 		int result = new ReviewDao().insertReportReview(conn, report);
+		
+		if(result > 0) { 
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
 		
 		close(conn);
 		
@@ -208,11 +221,91 @@ public class ReviewService {
 		
 		int result = new ReviewDao().updateAdminReviewMainStatus(conn, rCode, rMainStatus);
 		
+		if(result > 0) { 
+//			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
 		close(conn);
 		
 		return result;
 		
 	}
+	
+	
+	public int insertUpdateAdminReviewPoint(int rCode, String orderCode, int mCode) {
+		
+		Connection conn = getConnection();
+		
+		int result1 = new ReviewDao().updateAdminPointStatus(conn, rCode);
+		
+		int result2 = new ReviewDao().insertAdminReviewPoint(conn, orderCode, mCode);
+		
+		if(result1 > 0 && result2 > 0) { // 둘다 성공
+			commit(conn);
+		} else { // 둘다 실패
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result1 * result2;
+		
+	}
+	
+	
+	public int deleteAdminReview(String[] rCode) {
+
+		Connection conn = getConnection();
+		
+		int result = new ReviewDao().deleteAdminReview(conn, rCode);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	
+	public int updateAdminReviewStatus(String[] rCode) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ReviewDao().updateAdminReviewStatus(conn, rCode);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	
+	public ArrayList<Review> selectAdminReviewSearchList(String searchKeyword) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Review> searchList = new ReviewDao().selectAdminReviewSearchList(conn, searchKeyword);
+		
+		close(conn);
+		
+		return searchList;
+	
+	}
+	
+	
 	
 	
 	

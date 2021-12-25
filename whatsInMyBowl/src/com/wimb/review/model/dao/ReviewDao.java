@@ -442,14 +442,22 @@ public class ReviewDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				reviewList.add(new Review(rset.getInt("r_code"),
-										  rset.getString("p_name"),
-										  rset.getString("r_content"),
-										  rset.getString("r_date"),
-										  rset.getString("r_mainstatus"),
-										  rset.getString("r_status"),
-										  rset.getString("point_status"),
-										  rset.getString("m_id")));
+				
+				Review r = new Review();
+				
+				r.setrCode(rset.getInt("r_code"));
+				r.setOrderCode(rset.getString("order_code"));
+				r.setmCode(rset.getInt("m_code"));
+				r.setmName(rset.getString("m_id"));
+				r.setpCode(rset.getString("p_name"));
+				r.setrContent(rset.getString("r_content"));
+				r.setrDate(rset.getString("r_date"));
+				r.setrMainstatus(rset.getString("r_mainstatus"));
+				r.setrStatus(rset.getString("r_status"));
+				r.setPointStatus(rset.getString("point_status"));
+				
+				reviewList.add(r);
+				
 			}
 						
 		} catch (SQLException e) {
@@ -499,7 +507,7 @@ public class ReviewDao {
 			close(rset);
 			close(pstmt);
 		}
-		
+	
 		return r;
 		
 	}
@@ -531,6 +539,167 @@ public class ReviewDao {
 		return result;
 		
 	}
+	
+	
+	public int updateAdminPointStatus(Connection conn, int rCode) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateAdminPointStatus"); // 미완성
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, rCode);
+			
+			result = pstmt.executeUpdate();
+			
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+			
+	}
+	
+	
+	public int insertAdminReviewPoint(Connection conn, String orderCode, int mCode) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertAdminReviewPoint"); // 미완성
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, mCode);
+			pstmt.setString(2, orderCode);
+			
+			result = pstmt.executeUpdate();
+			
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+			
+	}
+	
+	
+	public int deleteAdminReview(Connection conn, String[] rCode) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteAdminReview"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			for(String r : rCode) {
+				
+				pstmt.setInt(1, Integer.parseInt(r));
+				
+				result += pstmt.executeUpdate();
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public int updateAdminReviewStatus(Connection conn, String[] rCode) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateAdminReviewStatus"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			for(String r : rCode) {
+				
+				pstmt.setInt(1, Integer.parseInt(r));
+				
+				result += pstmt.executeUpdate();
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public ArrayList<Review> selectAdminReviewSearchList(Connection conn, String searchKeyword) {
+		
+		ArrayList<Review> searchList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminReviewSearchList"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, searchKeyword);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Review r = new Review();
+				
+				r.setrCode(rset.getInt("r_code"));
+				r.setOrderCode(rset.getString("order_code"));
+				r.setmCode(rset.getInt("m_code"));
+				r.setmName(rset.getString("m_id"));
+				r.setpCode(rset.getString("p_name"));
+				r.setrContent(rset.getString("r_content"));
+				r.setrDate(rset.getString("r_date"));
+				r.setrMainstatus(rset.getString("r_mainstatus"));
+				r.setrStatus(rset.getString("r_status"));
+				r.setPointStatus(rset.getString("point_status"));
+				
+				searchList.add(r);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return searchList;
+		
+	}
+	
 	
 	
 	
