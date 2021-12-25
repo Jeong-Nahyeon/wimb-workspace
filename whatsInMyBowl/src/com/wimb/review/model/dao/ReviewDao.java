@@ -2,6 +2,7 @@ package com.wimb.review.model.dao;
 
 import java.io.FileInputStream;
 
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +17,7 @@ import com.wimb.common.model.vo.File;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.payment.model.vo.Order;
 import com.wimb.product.model.vo.Product;
-import com.wimb.review.model.vo.Report;
+import com.wimb.report.model.vo.Report;
 import com.wimb.review.model.vo.Review;
 
 public class ReviewDao {

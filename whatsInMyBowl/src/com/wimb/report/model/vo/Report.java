@@ -1,4 +1,4 @@
-package com.wimb.review.model.vo;
+package com.wimb.report.model.vo;
 
 public class Report {
 	

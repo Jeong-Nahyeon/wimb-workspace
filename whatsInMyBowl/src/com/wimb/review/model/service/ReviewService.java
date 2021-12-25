@@ -1,6 +1,7 @@
 package com.wimb.review.model.service;
 
 import static com.wimb.common.JDBCTemplate.close;
+
 import static com.wimb.common.JDBCTemplate.commit;
 import static com.wimb.common.JDBCTemplate.getConnection;
 import static com.wimb.common.JDBCTemplate.rollback;
@@ -14,7 +15,7 @@ import com.wimb.payment.model.vo.Order;
 import com.wimb.product.model.dao.ProductDao;
 import com.wimb.product.model.vo.Product;
 import com.wimb.review.model.dao.ReviewDao;
-import com.wimb.review.model.vo.Report;
+import com.wimb.report.model.vo.Report;
 import com.wimb.review.model.vo.Review;
 
 public class ReviewService {

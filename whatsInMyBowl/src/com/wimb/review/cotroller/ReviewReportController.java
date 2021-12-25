@@ -2,6 +2,8 @@ package com.wimb.review.cotroller;
 
 import java.io.IOException;
 
+
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.wimb.member.model.vo.Member;
 import com.wimb.review.model.service.ReviewService;
-import com.wimb.review.model.vo.Report;
+import com.wimb.report.model.vo.Report;
 
 /**
  * Servlet implementation class ReviewReportController
