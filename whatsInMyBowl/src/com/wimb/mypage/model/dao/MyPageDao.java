@@ -1110,6 +1110,46 @@ public class MyPageDao {
 		}
 		return result;
 	}
-
+	
+	// 관리자 주문취소
+	public int adminCancelOrder(Connection conn, String oCode, String pmCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("adminCancelOrder");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, oCode);
+			pstmt.setString(2, pmCode);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	
+	// 관리자 주문UPDATE
+	public int adminUpdateCancel(Connection conn, String oCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("adminUpdateCancel");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, oCode);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
 	
 }

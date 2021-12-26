@@ -181,8 +181,9 @@
                 <% }else { %>
                 	<% for(Orders od : olist) { %>
 	                    <tr>
-	                        <td><input type="checkbox"></td>
+	                        <td><input class='ck' type="checkbox"></td>
 	                        <td><%= od.getrNum() %></td>
+	                        <td class="pmCode" style="display:none;"><%= od.getPmCode() %>></td>
 	                        <td class="oCode"><%= od.getOrderCode() %></td>
 	                        <td><%= od.getmName() %></td>
 	                        <% if(od.getCuCode() == null) { %>
@@ -272,7 +273,7 @@
 	                     for(let i=0; i<olist.length; i++){
 	                         
 	                         result += "<tr>"
-	                                     + "<td><input type='checkbox'></td>"
+	                                     + "<td><input class='ck' type='checkbox'></td>"
 	                                     + "<td>" + olist[i].rNum + "</td>"
 	                                     + "<td class='oCOde'>" + olist[i].orderCode + "</td>"
 	                                     + "<td>" + olist[i].mName + "</td>";
@@ -546,6 +547,66 @@
 			})
 		})
 	</script>
+	
+	<!-- 선택삭제 -->
+	<script>
+		$("#cancel").on('click', function(){
+		  promise3()
+			.then(successCheck3)
+			.catch(failCheck3);
+		})
+					
+		function promise3(){
+			
+			var result = confirm("선택한 주문을 취소하시겠습니까?");
+					
+				if(result) {
+					
+					var count = $(".ck:checked").length;
+					var oCodes = new Array();
+					var pmCodes = new Array();
+					$(".ck:checked").each(function(){
+			   			oCodes.push($(this).parent().siblings(".oCode").text())
+			   			pmCodes.push($(this).parent().siblings(".pmCode").text())
+					}); // checked 담기
+			   			console.log(oCodes);
+					    console.log(pmCodes)
+			   			console.log(count);
+					return new Promise(function(resolve, reject){
+		   					
+			   			$.ajax({
+			   				url:"cancelOrder.admin",
+			   				datatype:"json",
+			   				traditional:true,
+			   				type:"post",
+			   				data: {
+								count:count,		   				
+			   					oCodes:oCodes,
+			   					pmCodes:pmCodes
+			   				},
+			   				success:function(result){
+			   					console.log("프로미스1 성공")
+		                    	resolve(result);
+			   				}, error:function(){
+			   					console.log("ajax통신실패")
+			   				}
+			   					
+			   			}) //ajax
+		   			})
+						
+				}
+					
+		} // delete
+				
+		function successCheck3(){
+			alert("주문이 취소되었습니다.");
+			location.reload();
+		}
+		
+		function failCheck3(){
+		   alert("요청실패\n관리자에게 문의하세요.")
+		} 
+   </script>
 	
 	
 	<!-- 버튼 조회 -->
