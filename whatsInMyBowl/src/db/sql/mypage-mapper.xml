@@ -509,4 +509,16 @@
        WHERE F_REFCODE = ?
          AND F_REF = 'I'
    </entry>
+   
+   <entry key="insertHeart">
+		INSERT 
+		  INTO HEART 
+		     ( M_CODE
+		     , P_CODE
+		     ) 
+		     VALUES
+		     ( ?
+		     , ?
+		     )
+	</entry>
 </properties>

@@ -285,4 +285,18 @@ public class MyPageService {
 		close(conn);
 		return olist;
 	}
+	
+	// 찜리스트 insert
+	public int insertHeart(Member m, String pCode) {
+		Connection conn = getConnection();
+		int result = new MyPageDao().insertHeart(conn, m, pCode);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return(result);
+	}
+
 }

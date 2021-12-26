@@ -304,7 +304,7 @@
 								<!-- case1. 찜 안 했을 경우 -->
 								<i class="far fa-heart fa-2x heart-btn"></i>
 								<!-- case2. 찜 했을 경우 -->
-								<!-- <i class="fas fa-heart fa-2x heart-btn"></i> -->
+								<i class="fas fa-heart fa-2x heart-btn2" style="display:none;"></i>
 		
 								<i class="fas fa-cart-plus fa-2x cart-btn"></i>
 							</div>
@@ -509,7 +509,35 @@
 
 			</div>
 		</div>
-	</div>		
+	</div>
+	
+	
+	<!-- 찜하기 기능 -->
+	<script>
+		$(".product").on("click", ".heart-btn", function(){
+			
+			var pCode = $(this).siblings("input[name=pcode]").val();
+			console.log(pCode);
+			
+			$.ajax({
+				
+				url:"insertHeart.my",
+				data:{pcode:pCode},
+				type:"post",
+				success:function(result){
+					if(result > 0) {
+						alert("해당 상품을 찜리스트에 추가하였습니다.");
+						//$(this).child(".heart-btn").attr('class','.heart-btn2');
+						//$(this).child(".heart-btn").css("display", "inline-block");
+					}
+				}, error:function(){
+					console.log("통신실패");
+				}
+				
+			})
+	
+		});
+	</script>		
 
 </body>
 </html>

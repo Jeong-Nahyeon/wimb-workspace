@@ -833,6 +833,7 @@ public class MyPageDao {
 		return olist;
 	}
 	
+	// 관리자 환불 목록 리스트
 	public ArrayList<Orders> adminRefundList(Connection conn, PageInfo pi) {
 		ArrayList<Orders> olist = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -886,6 +887,7 @@ public class MyPageDao {
 		
 	}
 	
+	// 관리자 취소목록 리스트
 	public ArrayList<Orders> adminCancelList(Connection conn, PageInfo pi) {
 		ArrayList<Orders> olist = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -938,5 +940,26 @@ public class MyPageDao {
 		return olist;
 		
 	}
+	
+	// 찜리스트 insert
+	public int insertHeart(Connection conn, Member m, String pCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertHeart");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, m.getmCode());
+			pstmt.setString(2, pCode);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 	
 }
