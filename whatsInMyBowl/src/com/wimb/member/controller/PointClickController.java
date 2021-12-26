@@ -32,7 +32,14 @@ public class PointClickController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-
+		int userNo = Integer.parseInt(request.getParameter("userNo"));
+		
+		//System.out.println(userNo);
+		
+		Point ttp = new MemberService().totalPointSelect(userNo);
+		
+		request.setAttribute("ttp", ttp);
+		
 		request.getRequestDispatcher("views/member/memberPoint.jsp").forward(request, response);
 		
 	}

@@ -47,16 +47,19 @@ public class MemberService {
 	public int insertMember(Member m) {
 		
 		Connection conn = getConnection();
-		int result = new MemberDao().insertMember(conn, m);
-		
+		int result1 = new MemberDao().insertMember(conn, m);
+		//int result2 = 0;
 		close(conn);
 		
-		if(result > 0) {
+		if(result1 > 0) {
+			
+			//result2 = new MemberDao().insertPoint(conn, m.getmCode());
 			commit(conn);
+			
 		}else {
 			rollback(conn);
 		}
-		return result;
+		return result1;
 		
 	}
 	
@@ -218,4 +221,13 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
+	
+	public Point totalPointSelect(int userNo) {
+		
+		Connection conn = getConnection();
+		Point ttp = new MemberDao().totalPointSelect(conn, userNo);
+		close(conn);
+		return ttp;
+	}
+	
 }

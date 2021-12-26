@@ -79,7 +79,9 @@
 	<%@ include file="../common/myPage.jsp" %>
     <% 
 		String userId = loginUser.getmId();
-        int point = loginUser.getmPoint();
+        Point ttp = (Point)request.getAttribute("ttp");
+        
+        int userPoint = ttp.getTtlPoint();
 	%>
 	
 
@@ -94,7 +96,7 @@
                     현재 적립금
                 </div>
                 <div style="color:rgb(155, 213, 189); font-weight: 900; font-size: 24px;">
-                    <%= point %>원
+                    <%= userPoint %>원
                 </div>
             </div>
             <br clear="both">
@@ -129,10 +131,9 @@
                 <table id="pointListTable">
                     <thead>
                         <tr style="background-color:rgba(231, 231, 231, 0.438);" height="30" align="center">
-                            <th>날짜</td>
-                            <th colspan="2">내용</th>
-                            <th>포인트내역</th>
-                            <th>잔여포인트</th>
+                            <th width="120">날짜</td>
+                            <th width="200" colspan="2">내용</th>
+                            <th width="120">포인트내역</th>
                         </tr>
                     </thead>
                     
@@ -187,7 +188,6 @@
 		                                    "<td>" + list[i].modifyDate + "</td>" + 
 		                                    "<td colspan='2'>" + list[i].pointName + "</td>" +
 		                                    "<td>" + list[i].point + "</td>" + 
-		                                    "<td>" + list[i].mPoint + "</td>" + 
 		                                "</tr>";
 		                
 		

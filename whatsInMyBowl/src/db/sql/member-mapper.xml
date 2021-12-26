@@ -164,7 +164,7 @@
 	<entry key="selectPoint">
 		SELECT M_CODE, M_ID, ORDER_CODE, POINT_NAME, POINT, POINT_REASON, TO_CHAR(MODIFYDATE, 'YYYY/MM/DD') "MODIFYDATE", M_POINT, POINT_TYPECODE
 		  FROM POINT 
-		  JOIN POINT_CATEGORY USING (POINT_TYPECODE)
+		  LEFT JOIN POINT_CATEGORY USING (POINT_TYPECODE)
 		  JOIN MEMBER USING(M_CODE)
 		 WHERE M_ID = ?
 		   AND MODIFYDATE BETWEEN ? AND (TO_DATE(?)+1)
@@ -251,8 +251,43 @@
 		     , M_QUITDATE = SYSDATE
 		 WHERE M_CODE = ?
 	</entry>
+		
+	<!-- 기간별 남은 포인트 조회 -->
+	<entry key="selectRemainPoint">
+		SELECT M_CODE, SUM(POINT) "POINT"
+		  FROM (SELECT M_CODE, MODIFYDATE, SUM(POINT)"POINT"
+		            FROM POINT
+		            GROUP BY ROLLUP(M_CODE, MODIFYDATE)
+		            HAVING MODIFYDATE BETWEEN '1900-12-01' AND (TO_DATE(?)+1)
+		            ORDER BY M_CODE)
+		GROUP BY M_CODE
+		HAVING M_CODE = ?
+	</entry>
 	
+	<!-- 전체 포인트 조회 -->
+	<entry key="totalPointSelect">
+		SELECT M_CODE, SUM(POINT) "TTL_POINT"
+		  FROM POINT
+		 GROUP 
+		    BY M_CODE
+		HAVING M_CODE= ?
+	</entry>
 	
-	
-	
+	<!-- 회원가입시 포인트 주는 구문 -->
+	<entry key="insertPoint">
+		INSERT 
+		  INTO POINT 
+		     (
+		       POINT_CODE
+		     , M_CODE
+		     , POINT_TYPECODE
+		     , POINT
+		     )
+		VALUES
+		 	 (
+		 	   SEQ_POINT.NEXTVAL
+		 	 , ?
+		 	 , 10
+		 	 , 1000)
+	</entry>
 </properties>

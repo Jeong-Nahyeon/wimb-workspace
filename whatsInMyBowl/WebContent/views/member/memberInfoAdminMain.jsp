@@ -15,7 +15,7 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
 	
-    String userId = loginUser.getmId();
+
 %>
 
 <!DOCTYPE html>
@@ -389,10 +389,12 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
             function promise1(){
                 return new Promise(function(resolve, reject){
                 	
+                    var userId = '<%=loginUser.getmId()%>';
+                    console.log(userId);
                     $.ajax({
                         url:"pwdCheck.me",
                         data:{
-                            
+                            userId:userId,
                             userPwd:$("#adminPassword").val()
                         },
                         success:function(result){
@@ -442,7 +444,8 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
             }
 
             function successCheck(){
-                alert("회원 탈퇴처리 완료되었습니다.")
+                alert("회원 탈퇴처리 완료되었습니다.");
+                $("#deleteBtn").attr('style', 'color:lightgrey;')
                 location.reload();
             }
 

@@ -17,6 +17,10 @@ public class Point {
 	private String pointName;
 	private int mPoint;
 	
+	// 전체포인트 조회시 필요한 변수
+	private int ttlPoint;
+	
+
 	public Point() {}
 
 	public Point(int pointCode, int mCode, String orderCode, int pointTypeCode, int point, String pointReason) {
@@ -47,6 +51,13 @@ public class Point {
 
 	
 	
+	public int getTtlPoint() {
+		return ttlPoint;
+	}
+	
+	public void setTtlPoint(int ttlPoint) {
+		this.ttlPoint = ttlPoint;
+	}
 	public int getmPoint() {
 		return mPoint;
 	}

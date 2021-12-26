@@ -30,12 +30,12 @@ public class AjaxPwdCheckController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String userId = "admin01";
-		//String userId = request.getParameter("userId");
+		//String userId = "admin01";
+		String userId = request.getParameter("userId");
 		String checkPwd = request.getParameter("userPwd");
 		
-		System.out.println(userId);
-		System.out.println(checkPwd);
+		//System.out.println(userId);
+		//System.out.println(checkPwd);
 		
 		int count = new MemberService().pwdCheck(userId, checkPwd);
 		
