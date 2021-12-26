@@ -164,7 +164,7 @@
                                     <label for="uploadBtn2" class="btn_file" style="vertical-align: middle;">추가</label>
                                     <input type="file" id="uploadBtn2" class="uploadBtn" name="file2">
                                 </div>
-
+								<br>
                             </div>
 
                         </td>
@@ -200,7 +200,31 @@
 	            $(this).siblings(".answer").toggle();
 	        });
 	    });
-	
+		
+	    /* 첨부파일 js*/
+        var uploadFile = $('.fileBox .uploadBtn');
+        uploadFile.on('change', function(){
+            if(window.FileReader){
+                var filename = $(this)[0].files[0].name;
+            } else {
+                var filename = $(this).val().split('/').pop().split('\\').pop();
+            }
+            $(this).siblings('.fileName').val(filename);
+        });
+
+        var uploadFile = $('.fileBox .uploadBtn2');
+        uploadFile.on('change', function(){
+            if(window.FileReader){
+                var filename = $(this)[0].files[0].name;
+            } else {
+                var filename = $(this).val().split('/').pop().split('\\').pop();
+            }
+            $(this).siblings('.fileName').val(filename);
+        });
+        function enrollPage(){
+            
+            location.href = "<%=contextPath%>/memberEnrollForm.me";
+        }	    
 	</script>      
 	        
     
