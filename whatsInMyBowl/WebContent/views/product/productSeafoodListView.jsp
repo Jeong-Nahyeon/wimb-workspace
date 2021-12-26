@@ -503,14 +503,12 @@
 	
 	<!-- 찜하기 기능 (지은)-->
 	<script>
-		$(".main-btns").on("click", ".heart-btn", function(){
+		$('.product').on("click", ".heart-btn", function(){
 			
-			var pCode = $("#productCode").val();
+			var pCode = $(this).siblings("input[name=pcode]").val();
 			console.log(pCode);
 			
-			if(<%= loginUser.getmCode() %> == null) {
-				alert('로그인 후 이용가능합니다.');
-			}else {
+			
 				console.log("실행확인");
 				$.ajax({
 					url:"heartDetail.my",
@@ -519,8 +517,11 @@
 					success:function(result){
 						if(result > 0) {
 							alert("해당 상품을 찜리스트에 추가하였습니다.");
-							//$(this).child(".heart-btn").attr('class','.heart-btn2');
-							//$(this).child(".heart-btn").css("display", "inline-block");
+							
+							result = "";
+							result += 
+								"<i class='fas fa-heart fa-2x heart-btn2' style='color:#9BD5BD;'></i>"
+							$(this).html(result);
 						}else {
 							alert("이미 담은 상품입니다.")
 						}
@@ -529,10 +530,10 @@
 					}
 					
 				})
-			}
+			
 	
 		});
-	</script>		
-
+	</script>
+	
 </body>
 </html>
