@@ -211,4 +211,11 @@ public class MemberService {
 		return updateMem;
 	}
 	
+	public int deleteMemberA(int userNo) {
+		
+		Connection conn = getConnection();
+		int result = new MemberDao().deleteMemberA(conn, userNo);
+		close(conn);
+		return result;
+	}
 }

@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-<%@ page import="com.wimb.common.model.vo.PageInfo, java.util.ArrayList, com.wimb.member.model.vo.Member" %>
+<%@ page import="com.wimb.common.model.vo.PageInfo, 
+java.util.ArrayList, com.wimb.member.model.vo.Member" 
+%>
+<%@ include file="../common/adminBar.jsp" %>
 <%
+    
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
 	int listCount = (Integer)request.getAttribute("listCount");
@@ -10,6 +14,8 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
+	
+    String userId = loginUser.getmId();
 %>
 
 <!DOCTYPE html>
@@ -64,9 +70,16 @@
     #modalHeader{
     	width:500px;
     	padding: 25px;
-    	
     }
-    .atag:hover{cursor: pointer;}
+    #memberListTable>tbody a{
+        text-decoration: none;
+        color:rgb(226, 181, 32);
+        font-weight: 900;
+    }
+    #memberListTable>tbody a:hover{
+        cursor: pointer;
+        opacity: 0.5;
+    }
     <!--모달창 스크롤-->
     .modal-content{
         overflow-y: initial !important
@@ -75,7 +88,7 @@
        
         overflow-y: auto;
     }
-    #updateBtnModal, #deleteBtnModal{
+    .btnModal{
         background-color: rgb(250, 223, 76);
         border:none;
         margin: 1px;
@@ -91,10 +104,19 @@
         border-bottom-style: 1px solid lightgrey;
     }
     #infoTable th, #infoTable td{border-bottom: 1px solid rgb(224, 224, 224);}
+
+    <!--회원 삭제 모달-->
+    .delete_text{
+        text-align: center;
+    }
+    .delete_text span{
+        display: block;
+        margin: 10px 0;
+    }   
 </style>
 </head>
 <body>
-    <%@ include file="../common/adminBar.jsp"%>
+   
     <div class="outer">
         <div id="mainTitle">
             <h2 id="mainTitle1">회원관리</h2>
@@ -105,7 +127,7 @@
                 총 회원 수 <b style="color: rgb(250, 209, 76);"><%=listCount%></b>명
             </p>
             <div width="800" align="right">
-                <button id="selectDeleteBtn">
+                <button id="selectDeleteBtn"  data-toggle="modal" data-target="#deleteMemberModal">
                     선택삭제
                 </button>
             </div>
@@ -113,7 +135,7 @@
         <table id="memberListTable" border style="font-size:12px; text-align: center;">
         	<thead>
 	            <tr style="background-color:rgba(231, 231, 231, 0.438);" >
-	                <th width="20" height="30">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+	                <th width="20" height="30"><input type="checkbox" id="checkAll" name="check"></th>
 	                <th width="50">번호</th>
 	                <th width="80">ID</th>
 	                <th width="60">회원명</th>
@@ -128,14 +150,14 @@
 	        </thead>
 	        <tbody>
 	        	<% if(list.isEmpty()){ %>
-	        	<tr>
-	        		<td colspan="10">조회된 회원이 없습니다.</td>
-	        	</tr>
+                    <tr>
+                        <td colspan="10">조회된 회원이 없습니다.</td>
+                    </tr>
 	        	<%}else { %>
 	        		<% for(Member m : list){ %>
 			            <tr>
-			                <td><input type="checkbox"></td>
-			                <td><%= m.getmCode() %></td>
+			                <td class="checkArea"><input type="checkbox" class="checkOne" name="check"></td>
+			                <td class="userNo"><%= m.getmCode() %></td>
 			                <td  >
 			                    <a class="atag" data-toggle="modal" data-target="#updateModal"><%= m.getmId() %></a>
 			                    <input type="hidden"  name="userId" value="<%= m.getmId()%>">
@@ -153,7 +175,7 @@
                             	<input type="hidden"  name="userStatus" value="<%= m.getStatus()%>">
                             </th>
 			                <td>
-			                    <button id="deleteBtn">삭제</button>
+			                    <button id="deleteBtn" data-toggle="modal" data-target="#adminPwdChkModal">삭제</button>
 			                </td>
 			            </tr>
 			    	<% } %>
@@ -188,75 +210,141 @@
         <div class="modal-dialog">
             <div class="modal-content">
         
-            <!-- Modal Header -->
-            <div id="modalHeader">
-                	<h5 class="modal-title" align="center">회원 상세 정보</h5>
-               
-            </div>
-        
-            <!-- Modal body -->
-            <div class="modal-body" align="center" id="infoModalBody">
-                <form action="<%=contextPath%>/updateMemAdmin.me" method="post">
-                    <table width="470" id="infoTable">
-                    
-                        <tr>
-                            <th width="80">아이디</i>
-                                
-                            </th>
-                            <td align="left" colspan="2">
-                                <input type="text" id="userIdM" name="userIdM" value="" readonly>                       
-                            </td>
-                            <th width="80">회원상태</i>
-                                
-                            </th>
-                            <td align="left" colspan="2">
-                                <input type="text" id="userStatusM" name="userStatusM" value="" >                       
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>이름</th>
-                            <td colspan="4"><input type="text" name="userNameM" id="userNameM" class="req" value=""required><br>
-                                <div id="checkName">
-        
-                                </div></td>
-                        </tr>
-                        <tr>
-                            <th>전화번호</th>
-                            <td colspan="4"><input type="tel" name="userPhoneM" id="userPhoneM" class="req" value="" required><br>
-                                <div id="checkPhone">
-        
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>이메일</th>
-                            <td colspan="4"><input type="email" name="userEmailM" id="userEmailM" class="req" value="" ><br>
-                                <div id="checkEmail">
-        
-                                </div></td>
-                        </tr>
-                        <tr>
-                            <th>주소</th>
-                            <td colspan="4"><input type="text" name="userAddress1" id="userAddress1" class="req" value="" autocomplete="off"></td>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <td colspan="2"><input type="text" name="userAddress2" id="userAddress2" class="req" value="" required></td>
-                            <td colspan="2"><input type="text" name="postcode" id="postcode" style="width:100px" value=""></td>
-                        </tr>
-                    </table>
-                    <button type="submit" id="updateBtnModal">수정</button>
-                    <button id="deleteBtnModal">삭제</button>
-                </form>
-                <br><br>
+                <!-- Modal Header -->
+                <div id="modalHeader">
+                        <h5 class="modal-title" align="center">회원 상세 정보</h5>
+                
+                </div>
+            
+                <!-- Modal body -->
+                <div class="modal-body" align="center" id="infoModalBody">
+                    <form action="<%=contextPath%>/updateMemAdmin.me" method="post">
+                        <table width="470" id="infoTable">
+                        
+                            <tr>
+                                <th width="80">아이디</i>
+                                    
+                                </th>
+                                <td align="left" colspan="2">
+                                    <input type="text" id="userIdM" name="userIdM" value="" readonly>                       
+                                </td>
+                                <th width="80">회원상태</i>
+                                    
+                                </th>
+                                <td align="left" colspan="2">
+                                    <input type="text" id="userStatusM" name="userStatusM" value="" readonly>                       
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>이름</th>
+                                <td colspan="4"><input type="text" name="userNameM" id="userNameM" class="req" value=""required><br>
+                                    <div id="checkName">
+            
+                                    </div></td>
+                            </tr>
+                            <tr>
+                                <th>전화번호</th>
+                                <td colspan="4"><input type="tel" name="userPhoneM" id="userPhoneM" class="req" value="" required><br>
+                                    <div id="checkPhone">
+            
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>이메일</th>
+                                <td colspan="4"><input type="email" name="userEmailM" id="userEmailM" class="req" value="" ><br>
+                                    <div id="checkEmail">
+            
+                                    </div></td>
+                            </tr>
+                            <tr>
+                                <th>주소</th>
+                                <td colspan="4"><input type="text" name="userAddress1" id="userAddress1" class="req" value="" autocomplete="off"></td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td colspan="2"><input type="text" name="userAddress2" id="userAddress2" class="req" value="" required></td>
+                                <td colspan="2"><input type="text" name="postcode" id="postcode" style="width:100px" value=""></td>
+                            </tr>
+                        </table>
+                        <button type="submit" class="btnModal" id="updateBtnModal">수정</button>
+                        <button class="btnModal" id="deleteBtnModal" data-toggle="modal" data-target="#deleteMemberModal">삭제</button>
+                    </form>
+                    <br><br>
+                </div>
             </div>
         </div>
+    </div>
+    
+    
+    <!-- 회원 삭제 모달-->
+    <!-- The Modal -->
+    <div class="modal" id="deleteMemberModal" height="300">
+        <div class="modal-dialog">
+            <div class="modal-content">
         
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <!-- <form action="" >  -->
+                        <div class="delete_text" align="center">
+                            <span>선택하신 회원을 삭제합니다.</span>
+                            <span>정말 삭제하시겠습니까?</span>
+                            <span>(삭제 후 복구불가)</span>
+                        </div>
+                        <div align="center">
+                            <button class="btnModal" id="memberDeleteBtn" data-toggle="modal" data-target="#adminPwdChkModal">삭제</button>
+                            <button type="reset" class="btnModal" data-dismiss="modal">취소</button>
+                        </div>
+                    <!-- </form>  -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 관리자 비밀번호 입력 모달 -->
+    <div class="modal" id="adminPwdChkModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+        
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <!--<form action="" > -->
+                        <div class="delete_text" align="center">
+                            <span>관리자 비밀번호 입력</span>
+                            <input type="password" id="adminPassword" placeholder="비밀번호 입력">
+                        </div>
+                        <div class="delete_btn" align="center">
+                            <button class="btnModal" onclick="pwdcheck();">삭제</button>
+                            <button type="reset" class="btnModal" data-dismiss="modal">취소</button>
+                        </div>
+                    <!--</form>-->
+                </div>
+            </div>
+        </div>
     </div>
     <script>
 
-        
+        // 개별 삭제버튼 클릭시 자동으로 체크박스 선택
+        $(document).on('click', "#deleteBtn", function(){
+            
+            $(this).parent().siblings(".checkArea").children().prop("checked", true);
+        });
 
+        // 전체 체크버튼 클릭시 전체 체크박스 선택
+        $(function(){
+            $("#checkAll").click(function(){
+                var chk = $(this).is(":checked");
+
+                if(chk){
+                    $(".checkArea input").attr('checked', true);
+                }else{
+                    $(".checkArea input").attr('checked', false);
+                }
+            })
+
+        });
+
+        // 회원 id클릭시 정보 및 수정창 뜨도록
         $(document).on('click', ".atag", function(){
 
             var userId = $(this).text();
@@ -286,12 +374,88 @@
             });
 	    });
 	    
+        // 회원 삭제시
+        $("#adminPwdChkModal").on('show.bs.modal', function(e){
+            $("#deleteMemberModal").modal("hide")
+        })
+        
+            function pwdcheck(){
+                promise1()
+                .then(promise2)
+                .then(successCheck)
+                .catch(pwdcheckFail);
+            }
 
-	 
+            function promise1(){
+                return new Promise(function(resolve, reject){
+                	
+                    $.ajax({
+                        url:"pwdCheck.me",
+                        data:{
+                            
+                            userPwd:$("#adminPassword").val()
+                        },
+                        success:function(result){
+                            if(result == 'NNNNY'){
+                                console.log("일치");
+                                resolve(result);
+                            }else{
+                                console.log("불일치");
+                                reject(result);
+                            }
+                        },
+                        error:function(){
+                            console.log("ajax 통신 실패");
+                        }
+                    })
+                })
+            }
+
+            function promise2(){
+                var count = $("input[name='check']:checked").length;
+                var checkArr = new Array();
+                $("input[name='check']:checked").each(function(){
+                    checkArr.push($(this).parent().siblings(".userNo").text())
+                    
+                }); 
+                console.log(checkArr);
+                console.log(count);
+                return new Promise(function(resolve, reject){
+                    $.ajax({
+                        url:"selectDelete.me",
+                        dataType:"json",
+                        traditional:true,
+                        data:{
+                            count:count,
+                            checkArr:checkArr
+                         
+                        },
+                        success:function(result){
+                            console.log("프로미스2 성공")
+                            resolve(result);
+                        },
+                        error:function(){
+                            console.log("ajax 통신 실패");
+                        }
+                    })
+                })
+            }
+
+            function successCheck(){
+                alert("회원 탈퇴처리 완료되었습니다.")
+                location.reload();
+            }
+
+            function pwdcheckFail(){
+                alert("비밀번호가 일치하지 않습니다.")
+                $("#adminPassword").val("")
+                $("#adminPassword").focus();
+            }
+    
 	
 	  
    
     </script>
-</div>
+    
 </body>
 </html>

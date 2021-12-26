@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.wimb.member.model.service.MemberService;
 
 /**
- * Servlet implementation class AjaxPwdCheckController
+ * Servlet implementation class AjaxMemberDeleteController
  */
-@WebServlet("/pwdCheck.me")
-public class AjaxPwdCheckController extends HttpServlet {
+@WebServlet("/selectDelete.me")
+public class AjaxMemberDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxPwdCheckController() {
+    public AjaxMemberDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,21 +29,29 @@ public class AjaxPwdCheckController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		request.setCharacterEncoding("UTF-8");
+		int count =  Integer.parseInt(request.getParameter("count"));
+		String[] arr = request.getParameterValues("checkArr");
 		
-		String userId = "admin01";
-		//String userId = request.getParameter("userId");
-		String checkPwd = request.getParameter("userPwd");
-		
-		System.out.println(userId);
-		System.out.println(checkPwd);
-		
-		int count = new MemberService().pwdCheck(userId, checkPwd);
-		
-		if(count > 0) {
-			response.getWriter().print("NNNNY");
-		}else{
-			response.getWriter().print("NNNNN");
+		int result = 0;
+	
+		if(arr != null && count > 0) {
+			for(int i=0; i<count; i++) {
+				int userNo = Integer.parseInt(arr[i]);
+				result = new MemberService().deleteMemberA(userNo);
+			}
 		}
+		
+		if(result > 0) {
+			//response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().print(result);
+		}else {
+			request.setAttribute("errorMsg", "회원 삭제 실패");
+			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
+		}
+		
+		
 	}
 
 	/**

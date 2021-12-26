@@ -245,6 +245,12 @@
 		 WHERE M_ID = ?
 	</entry>
 	
+	<entry key="deleteMemberA">
+		UPDATE MEMBER
+		   SET M_STATUS = 'N'
+		     , M_QUITDATE = SYSDATE
+		 WHERE M_CODE = ?
+	</entry>
 	
 	
 	
