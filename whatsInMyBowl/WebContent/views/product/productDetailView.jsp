@@ -410,6 +410,8 @@
 
 					<div class="content">
 						<h4 style="font-weight: bolder;"><%= p.getpName() %></h4>
+						<!-- 장바구니 관련 상품코드 -->
+						<input type="hidden" id="productCode" value="<%= p.getpCode() %>">
 						<br>
 						<% if(p.getDiscountPrice() != 0) { %>
 							<!-- case1. 할인가 -->
@@ -521,7 +523,7 @@
 								<button id="buy-btn" class="btn">바로구매</button>
 							</td>
 							<td class="cart-btn" width="40%">
-								<button id="cart-btn" class="btn">장바구니</button>
+								<button id="cart-btn" class="btn" onclick="addCartProduct();">장바구니</button>
 							</td>
 						</tr>
 					</table>
@@ -629,20 +631,39 @@
 				<div class="modal-footer button-area">
 					<div class="cart-success-btns" align="center" style="width:100%;">
 						<button type="button" class="btn btn-sm" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
-						<button type="submit" id="cart-page-btn" class="btn btn-sm" style="background:#9BD5BD; margin:0px 5px;">확인</button>
+						<button type="submit" id="cart-page-btn" class="btn btn-sm" style="background:#9BD5BD; margin:0px 5px;" onclick="location.href='<%= contextPath%>/cartlist.cart'">확인</button>
 					</div>
 				</div>
 
 			</div>
 		</div>
 	</div>		
+	
 	<script>
-		$(document).ready(function(){
-			$("#cart-btn").click(function(){
-			$("#cart-success-modal").modal({backdrop: "static"});
-			});
-		});
-	</script>
+		function addCartProduct(){
+			var productCode = $("#productCode").val();
+			var productCount = $("#amount").val();
 
+			$.ajax({
+				url:"addcartpro.cart",
+				data:{
+					productCode:productCode,
+					productCount:productCount
+				},
+				success:function(result){
+					if(result == 1){
+						$("#cart-success-modal").modal("show");
+					}else{
+						alert("이미 담겨있는 상품으로 수량을 변경했습니다.");
+					}
+				},
+				error:function(){
+
+				}
+			})
+
+
+		}
+	</script>
 </body>
 </html>

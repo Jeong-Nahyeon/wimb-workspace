@@ -355,7 +355,7 @@
                     </div>
 
                     <div class="custom_order">
-                        <form action="<%=contextPath%>/order.pay" method="post" id="orderEnroll-form">
+                        <!--<form action="<%=contextPath%>/order.pay" method="post" id="orderEnroll-form">-->
                             <div class="customOrder_table">
 
                             </div>
@@ -367,14 +367,91 @@
     
                             <div class="customOrder_btn" align="right">
                                 <button id="customOrder_order">주문하기</button>
-                                <button type="submit" id="customOrder_cart">장바구니</button>
+                                <button type="button" id="customOrder_cart" onclick="addCartCustom();">장바구니</button>
                             </div>
-                        </form>
+                        <!--</form>-->
 
                     </div>
                 </div>
-                <!-- form의 데이터를 배열로 전달 -->
-                
+                <!-- 장바구니 클릭 시 ajax  -->
+                <script>
+                    function addCartCustom(){
+                        var arrCustomCode = [];
+                        var arrCustomCount = [];
+                        var itemPrice = $("#total_sum").text();
+                        var saladName = $("#saladName").val();
+                        var userNum = $("#userNum").val();
+
+                        $(".order_ciCode").each(function(){
+                            arrCustomCode.push($(this).val());
+                        });
+                        $("input[name='saladCount']").each(function(){
+                            arrCustomCount.push($(this).val());
+                        })
+
+                        $.ajax({
+                            url:"addcartcu.cart",
+                            dataType:"json",
+                            traditional:true,
+                            data:{
+                                arrCustomCode:arrCustomCode,
+                                arrCustomCount:arrCustomCount
+                            },
+                            success:function(result){
+                                console.log(result);
+                                if(result == 1 ){
+                                    $("#cart-success-modal").modal("show");
+                                }else {
+                                    alert("이미 담겨있는 상품입니다.");
+                                }
+                            },
+                            error:function(){
+
+                            }
+                        })
+                    }
+                    
+                </script>
+
+                <!-- 장바구니 담기 성공 모달창  -->
+                <div class="modal fade" id="cart-success-modal">
+                    <div class="modal-dialog" role="document" style="width:500px; height:350px;">
+                        <div class="modal-content success-cart-modal">
+                            
+                            <!-- Modal Header -->
+                            <div class="modal-header title-area">
+                                <h6 class="modal-title">장바구니 담기</h6>
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                            </div>
+                            
+                            <!-- Modal body -->
+                            <div class="modal-body content-area">
+                                <div class="cart-success-img" align="center" style=" height:40%;">
+                                    <i class="fas fa-cart-plus fa-4x" style="color:#9BD5BD;"></i>
+                                </div>
+
+                                <div class="cart-success-content" align="center" style=" height:60%;">
+                                    <br>
+                                    <b>상품이 장바구니에 담겼습니다.</b>
+                                    <br>
+                                    바로 확인하시겠습니까?
+                                </div>
+
+                            </div>
+                            
+                            <!-- Modal footer -->
+                            <div class="modal-footer button-area">
+                                <div class="cart-success-btns" align="center" style="width:100%;">
+                                    <button type="button" class="btn btn-sm" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
+                                    <button type="submit" id="cart-page-btn" class="btn btn-sm" style="background:#9BD5BD; margin:0px 5px;" onclick="location.href='<%= contextPath%>/cartlist.cart'">
+                                        확인
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>	
 
                 <!-- 가운데 세로선-->
                 <div id="main_line"></div>

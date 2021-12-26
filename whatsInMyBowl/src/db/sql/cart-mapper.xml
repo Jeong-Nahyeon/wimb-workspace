@@ -10,4 +10,56 @@
 		  LEFT  JOIN PRODUCT P ON (C.P_CODE = P.P_CODE)
 		 WHERE C.M_CODE = ?
 	</entry>
+	
+	<entry key="findCartCustom">
+		SELECT *
+		  FROM CART
+		 WHERE M_CODE = ?
+		   AND CU_CODE = ?
+	</entry>
+	
+	<entry key="insertCartCustom">
+		INSERT 
+		  INTO CART
+		  (
+		    M_CODE
+		  , CU_CODE
+		  , CA_AMOUNT
+		  )
+		  VALUES
+		  (
+		    ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="findCartProduct">
+		SELECT *
+		  FROM CART
+		 WHERE M_CODE = ?
+		   AND P_CODE = ?
+	</entry>
+	
+	<entry key="updateProductAmount">
+		UPDATE CART
+		   SET CA_AMOUNT = ?
+		 WHERE P_CODE = ?
+	</entry>
+	
+	<entry key="insertCartProduct">
+		INSERT 
+		  INTO CART
+		  (
+		    M_CODE
+		  , P_CODE
+		  , CA_AMOUNT
+		  )
+		  VALUES
+		  (
+		    ?
+		  , ?
+		  , ?
+		  )
+	</entry>
 </properties>

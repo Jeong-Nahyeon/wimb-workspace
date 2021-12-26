@@ -54,4 +54,119 @@ public class CartDao {
 		return list;
 	}
 
+	
+	// 장바구니에 해당 상품이 있는지 확인하는 메소드
+	public boolean findCartCustom(Connection conn, Cart c) {
+		boolean check = false;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("findCartCustom");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c.getmCode());
+			pstmt.setString(2, c.getCuCode());
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				check = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return check;
+	}
+
+	// 장바구니 테이블에 커스텀 상품 등록
+	public int insertCartCustom(Connection conn, Cart c) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertCartCustom");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c.getmCode());
+			pstmt.setString(2, c.getCuCode());
+			pstmt.setInt(3, c.getCaAmount());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		 
+		return result;
+	}
+
+	// 장바구니에 해당 완제품 있는지 확인
+	public boolean findCartProduct(Connection conn, Cart c) {
+		boolean check = false;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("findCartProduct");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c.getmCode());
+			pstmt.setString(2, c.getpCode());
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				check = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return check;
+	}
+
+	// 장바구니 상품 수량 변경
+	public int updateProductAmount(Connection conn, Cart c) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateProductAmount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c.getCaAmount());
+			pstmt.setString(2, c.getpCode());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	// 장바구니에 완제품 상품 등록
+	public int insertCartProduct(Connection conn, Cart c) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertCartProduct");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c.getmCode());
+			pstmt.setString(2, c.getpCode());
+			pstmt.setInt(3, c.getCaAmount());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		 
+		return result;
+	}
+
 }

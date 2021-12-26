@@ -184,7 +184,10 @@
                                     <td><a href=""><i class="far fa-heart" style="font-size:25px;" id="heartIcon"></i></a></td>
                                     <td><input type="number" id="itemAmount" min="0" value="<%= c.getCaAmount() %>"></td>
                                     <td>3,000원</td>
-                                    <td><span class="price_num"><%= c.getpPrice() %></span>원</td>
+                                    <td>
+                                        <span class="price_num product_price"></span>원
+                                        <input type="hidden" id="productPrice" value="<%= c.getpPrice() %>">
+                                    </td>
                                     <td><a href=""><i class="fas fa-times" style="font-size:25px; color:black;" ></i></a></td>
                                 </tr>
                             <% } %>
@@ -234,8 +237,18 @@
         $(function(){
             var total_price = 0;
             var allTotal_price = 0;
-            var delivery_price = parseInt($("#delivery_price").text());
-            
+            var delivery_price = parseInt($("#delivery_price").text()) * 1000;
+            console.log(delivery_price)
+            // 완제품 가격 표시
+            var productTotalPrice = 0;
+            var productPrice = $("#productPrice").val()
+            var productCount = $("#productPrice").parent().siblings().children("#itemAmount").val();
+            console.log(productCount)
+            productTotalPrice = productPrice * parseInt(productCount);
+            console.log(productTotalPrice)
+            $(".product_price").text(productTotalPrice)
+
+            // 상품 전체 금액
             $(".price_num").each(function(){
                 total_price += parseInt($(this).text());
             });
@@ -243,6 +256,7 @@
             $("#total_price").text(total_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $("#pay_price").text(allTotal_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
 
+            
         })
     </script>
     <footer>
