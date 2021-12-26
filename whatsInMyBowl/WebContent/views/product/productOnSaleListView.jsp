@@ -486,6 +486,34 @@
 			</div>
 		</div>
 	</div>		
+	
+	<!-- 찜하기 기능 -->
+	<script>
+		$(".product").on("click", ".heart-btn", function(){
+			
+			var pCode = $(this).siblings("input[name=pcode]").val();
+			console.log(pCode);
+			
+			$.ajax({
+				
+				url:"heartVegan.my",
+				data:{pcode:pCode},
+				type:"post",
+				success:function(result){
+					if(result > 0) {
+						alert("해당 상품을 찜리스트에 추가하였습니다.");
+						//$(this).child(".heart-btn").attr('class','.heart-btn2');
+						//$(this).child(".heart-btn").css("display", "inline-block");
+					}
+				}, error:function(){
+					alert("로그인 후 이용가능합니다.")
+					location.reload();
+				}
+				
+			})
+	
+		});
+	</script>		
 
 </body>
 </html>

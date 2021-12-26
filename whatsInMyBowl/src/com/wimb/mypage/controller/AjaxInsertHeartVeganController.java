@@ -1,7 +1,6 @@
 package com.wimb.mypage.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,16 +11,16 @@ import com.wimb.member.model.vo.Member;
 import com.wimb.mypage.model.service.MyPageService;
 
 /**
- * Servlet implementation class AjaxInsertHeartController
+ * Servlet implementation class AjaxInsertHeartVeganController
  */
-@WebServlet("/insertHeart.my")
-public class AjaxInsertHeartController extends HttpServlet {
+@WebServlet("/heartVegan.my")
+public class AjaxInsertHeartVeganController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxInsertHeartController() {
+    public AjaxInsertHeartVeganController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,15 +29,13 @@ public class AjaxInsertHeartController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-	
+		
 		Member m = ((Member)request.getSession().getAttribute("loginUser"));
 		String pCode = request.getParameter("pcode");
 	
 		int result = new MyPageService().insertHeart(m, pCode);
 		response.getWriter().print(result);
 		
-	
 	}
 
 	/**
