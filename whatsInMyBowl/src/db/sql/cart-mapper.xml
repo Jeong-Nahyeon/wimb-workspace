@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="selectCart">
+		SELECT C.M_CODE, C.CU_CODE, CU.CU_NAME, C.P_CODE, P.P_NAME, CA_AMOUNT,
+        		CU.CU_PRICE, P.P_PRICE
+		  FROM CART C
+		  LEFT  JOIN CUSTOM CU ON (C.CU_CODE = CU.CU_CODE)
+		  LEFT  JOIN PRODUCT P ON (C.P_CODE = P.P_CODE)
+		 WHERE C.M_CODE = ?
+	</entry>
+</properties>

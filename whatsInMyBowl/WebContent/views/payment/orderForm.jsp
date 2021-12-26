@@ -526,7 +526,7 @@
                 var allPoint = $("#allPoint").text()
                 var total_price = $("#total_price").text();
                 $("input[name='oPoint']").val(allPoint);
-                $("#total_price").text(total_price - allPoint);
+                $("#total_price").text((total_price - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             }
 
             // 총 결제 금액, 총 수량
