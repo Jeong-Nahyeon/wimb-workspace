@@ -18,13 +18,13 @@ import com.wimb.member.model.vo.Member;
  * Servlet implementation class AjaxCartInsertCartController
  */
 @WebServlet("/addcartcu.cart")
-public class AjaxCartInsertCartController extends HttpServlet {
+public class AjaxCartInsertCustomController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxCartInsertCartController() {
+    public AjaxCartInsertCustomController() {
         super();
         // TODO Auto-generated constructor stub
     }

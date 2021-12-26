@@ -1,6 +1,7 @@
-package com.wimb.payment;
+package com.wimb.payment.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -93,12 +94,12 @@ public class OrderCashCompleteController extends HttpServlet {
 		
 		if(result2 > 0) {
 			order = new PaymentService().selectOrder(orderCode);
-			custom = new PaymentService().selectCustomName(orderCode);
-			product = new PaymentService().selectProductName(orderCode);	
+			ArrayList<PaymentCustom> customList = new PaymentService().selectCustomName(orderCode);
+			ArrayList<PaymentProduct> productList = new PaymentService().selectProductName(orderCode);	
 			Payment p = new PaymentService().selectPayment(pmCode);
 			request.setAttribute("order", order);
-			request.setAttribute("custom", custom);
-			request.setAttribute("product", product);
+			request.setAttribute("custom", customList);
+			request.setAttribute("product", productList);
 			request.setAttribute("payment", p);
 		}
 		

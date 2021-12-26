@@ -639,6 +639,7 @@
 		</div>
 	</div>		
 	
+	<!-- 장바구니 관련 스크립트 (나경) -->
 	<script>
 		function addCartProduct(){
 			var productCode = $("#productCode").val();
@@ -664,6 +665,23 @@
 
 
 		}
+	</script>
+
+	<!-- 주문하기 관련 스크립트 (나경)-->
+	<script>
+
+		$(document).ready(function(){
+			$(document).on('click', '#buy-btn', function(){
+				var form = $('<form></form>');
+				form.attr('action', '<%= contextPath %>/order.pay');
+				form.attr('method', 'post');
+				form.appendTo('body');
+				form.append($('<input type="hidden" value="' + $("#productCode").val() + '"name="saladCode">'));
+				form.append($('<input type="hidden" value="' + $("#amount").val() + '"name="saladCount">'));
+				form.append($('<input type="hidden" value="' + $(".total-price-area").text() + '"name="saladPrice">'));
+				form.submit();
+			} )
+		})
 	</script>
 </body>
 </html>

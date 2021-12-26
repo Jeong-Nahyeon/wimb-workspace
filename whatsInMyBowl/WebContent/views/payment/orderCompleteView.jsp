@@ -287,7 +287,7 @@
                     </table>
                     <hr style="margin-top: 30px;">
                 </div>
-                <button id="check" class="btn btn-sm">확 인</button>
+                <button id="check" class="btn btn-sm" onclick="location.href='<%= contextPath %>'">확 인</button>
             </div>
         </div>
         <%@ include file="../common/footer.jsp" %>
