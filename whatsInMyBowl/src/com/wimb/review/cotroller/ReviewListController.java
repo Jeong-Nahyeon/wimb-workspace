@@ -46,8 +46,8 @@ public class ReviewListController extends HttpServlet {
 		
 		String pCode = request.getParameter("pcode"); // 요청 시 전달된 상품코드
 		String pName = request.getParameter("pname"); // 요청 시 전달된 상품명
-		Member m = (Member)(request.getSession().getAttribute("loginUser")); // 현재 로그인한 회원 정보
-				
+		
+	
 		listCount = new ReviewService().selectReviewListCount(pCode);
 		
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
@@ -72,12 +72,28 @@ public class ReviewListController extends HttpServlet {
 		
 		Product p = new ReviewService().selectProduct(pCode);
 		
+		// 해당 상품 후기 작성 가능 확인용
+		Member m = (Member)(request.getSession().getAttribute("loginUser")); // 현재 로그인한 회원 정보
+		
 		if(m != null) {
 			
 			Order orderInfo = new ReviewService().selectOrderList(pCode, m.getmCode());
 			request.setAttribute("orderInfo", orderInfo);
 			
 		}
+		
+		// 포토후기 조회용
+		if(request.getParameter("photo") != null) {
+			listCount = new ReviewService().selectReviewPhotoListCount(pCode);
+			
+			PageInfo photoPi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
+			
+			ArrayList<Review> photoList = new ReviewService().selectReviewPhotoList(photoPi, pCode);
+			
+			request.setAttribute("photoPi", photoPi);
+			request.setAttribute("photoList", photoList);
+		}
+		
 
 		request.setAttribute("product", p);
 		request.setAttribute("pi", pi);

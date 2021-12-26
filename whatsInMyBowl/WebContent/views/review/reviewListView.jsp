@@ -19,19 +19,19 @@
 		
 	// 주문 정보
 	Order orderInfo = (Order)(request.getAttribute("orderInfo"));
-	
-	// 수정용 상세 리뷰 정보
-	//Review review = (Review)(session.getAttribute("review"));
-	
-	// 수정용 첨부파일 => null 가능
-	//ArrayList<File> fileList = (ArrayList<File>)(session.getAttribute("fileList"));
-	
+
 	// 페이징용
     PageInfo pi = (PageInfo)(request.getAttribute("pi"));
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
+	
+	
+	// 포토 리뷰 정보
+	ArrayList<Review> photoList = (ArrayList<Review>)(request.getAttribute("photoList"));
+	PageInfo photoPi = (PageInfo)(request.getAttribute("photoPi"));
+	
 	
 	// 성공 알림용
 	String detailMsg = (String)(session.getAttribute("detailMsg"));
@@ -130,6 +130,11 @@
         padding:10px;
         margin-bottom:10px;
 	}
+	
+	.detail-content{
+        /*border:1px solid red;*/
+        cursor: pointer;
+    }
 
     /* 상품후기 수정, 삭제, 신고 버튼 */
 	
@@ -246,19 +251,25 @@
         width:100%;
     }
 
-
+    /* 리뷰 상세 모달창 */
+    #reviewDetail{
+        box-sizing:border-box;
+        width:100%;
+        height:500px;
+        text-align: center;
+    } 
     
 </style>
 </head>
 <body>
-    <!-- 요청처리 성공 알림 -->
+    <!-- 요청처리 알림 -->
     <% if(detailMsg != null) { %>
         <script>
             
             $(function(){
-                
-                $("#review-success-modal b").text("<%= detailMsg %>");
-                $("#review-success-modal").modal({backdrop: false});
+            	
+            	$("#request-message-modal b").text("<%= detailMsg %>");
+                $("#request-message-modal").modal({backdrop: false});
                 
                 <% session.removeAttribute("detailMsg"); %>
 	            
@@ -279,7 +290,7 @@
                 <a href="<%= contextPath %>/reviewList.rev?cpage=1&pcode=<%= product.getpCode() %>&pname=<%= product.getpName() %>#review">전체후기</a> 
             </div>
             <div class="review-btn1-right">
-                <a href="">포토후기</a>
+                <a href="<%= contextPath %>/reviewList.rev?cpage=1&pcode=<%= product.getpCode() %>&pname=<%= product.getpName() %>&photo=list#review">포토후기</a>
             </div>
         </div>
 
@@ -291,47 +302,121 @@
 	            </div>
             <% } else { %>
 	            <!-- case2. 리뷰 있을 경우 -->
-	           	<% for(Review r : reviewList) { %>
-                    
-                    <div class="review-content-left">
-                        <input type="hidden" name="rCode" value="<%= r.getrCode() %>">
-                        	<% if(r.getMainImg() != null) { %>
-                        <img src="<%= r.getMainImg() %>">
-                        <% } else { %>
-                        	<i class="far fa-images fa-4x" style="margin-top:55px; color:lightgray;"></i>
-                        <% } %>
-                    </div>
-                    <div class="review-content-right">
-                        <b><%= r.getmName() %></b> <span>&nbsp;&#124;&nbsp;</span><span> <%= r.getrDate() %></span>
-                        <span style="margin-left:20px;">
-							<% if(loginUser != null) { %>
-							<% if( r.getmCode() == loginUser.getmCode()) { %>                        
-                                <a class="review-update-btn">수정</a>
-                                <span>&nbsp;&#124;&nbsp;</span>
-                                <a class="review-delete-btn">삭제</a>
-                            <% } else { %>
-                                <a class="review-report-btn">신고</a>
-                            <% } %>
-                            <% } %>
-                        </span>
-                        <p>
-                            <br>
-                            <%= r.getrContent() %>
-                        </p> 
-                    </div>
-                    
-	            <% } %>
+	            <% if(photoList == null ) { %>
+		           	<% for(Review r : reviewList) { %>
+	                    
+	                    <div class="review-content-left">
+	                        <input type="hidden" name="rCode" value="<%= r.getrCode() %>">
+	                        	<% if(r.getMainImg() != null) { %>
+	                        <img src="<%= r.getMainImg() %>">
+	                        <% } else { %>
+	                        	<i class="far fa-images fa-4x" style="margin-top:55px; color:lightgray;"></i>
+	                        <% } %>
+	                    </div>
+	                    <div class="review-content-right">
+	                        <b><%= r.getmName() %></b> <span>&nbsp;&#124;&nbsp;</span><span> <%= r.getrDate() %></span>
+	                        <span style="margin-left:20px;">
+								<% if(loginUser != null) { %>
+									<% if( r.getmCode() == loginUser.getmCode()) { %>                        
+		                                <a class="review-update-btn">수정</a>
+		                                <span>&nbsp;&#124;&nbsp;</span>
+		                                <a class="review-delete-btn">삭제</a>
+		                            <% } else { %>
+		                                <a class="review-report-btn">신고</a>
+		                            <% } %>
+	                            <% } %>
+	                        </span>
+	                        <p class="detail-content">
+	                            <br>
+	                            <%= r.getrContent() %>
+	                        </p> 
+	                    </div>
+	                    
+		            <% } %>
+	            <% } else { %>
+	            	<% for(Review pr :photoList) { %>
+	                    
+	                    <div class="review-content-left">
+	                        <input type="hidden" name="rCode" value="<%= pr.getrCode() %>">
+	                        	<% if(pr.getMainImg() != null) { %>
+	                        <img src="<%= pr.getMainImg() %>">
+	                        <% } else { %>
+	                        	<i class="far fa-images fa-4x" style="margin-top:55px; color:lightgray;"></i>
+	                        <% } %>
+	                    </div>
+	                    <div class="review-content-right">
+	                        <b><%= pr.getmName() %></b> <span>&nbsp;&#124;&nbsp;</span><span> <%= pr.getrDate() %></span>
+	                        <span style="margin-left:20px;">
+								<% if(loginUser != null) { %>
+									<% if( pr.getmCode() == loginUser.getmCode()) { %>                        
+		                                <a class="review-update-btn">수정</a>
+		                                <span>&nbsp;&#124;&nbsp;</span>
+		                                <a class="review-delete-btn">삭제</a>
+		                            <% } else { %>
+		                                <a class="review-report-btn">신고</a>
+		                            <% } %>
+	                            <% } %>
+	                        </span>
+	                        <p class="detail-content">
+	                            <br>
+	                            <%= pr.getrContent() %>
+	                        </p> 
+	                    </div>
+	                    
+		            <% } %>
+		         <% } %>
             <% } %>
         </div>
         
-        <!-- 
-            리뷰 수정버튼 클릭 시
-             => 리뷰 정보 조회 후 리뷰수정 모달창 열어서 데이터 뿌려주기
-        -->
+        
         <script>
             
             $(function(){
 
+                // 리뷰 클릭 시 => 상세 모달창
+                $(".review-content").on("click", ".detail-content", function(){
+
+                    $.ajax({
+                        url:"detail.rev",
+                        data:{rcode:$(this).parent().prev().find("input[name=rCode]").val()},
+                        success:function(detailList){
+
+                            const $review = detailList[0];
+                            const $fileList = detailList[1];
+
+                            $("#reviewName").text($review.mName);
+                            $("#reviewDate").text($review.rDate);
+                            $("#detailContent p").text($review.rContent);
+
+                            if($fileList.length != 0){
+
+                                let reviewImg = "";
+
+                                for(let i=0; i<$fileList.length; i++){
+
+                                    reviewImg += "<img src='" + $fileList[i].fPath + $fileList[i].fRename + "' width='100%'> <br>";
+
+                                    $("#detailImg").html(reviewImg);
+
+                                }
+                            } else {
+                                $("#detailImg").text("등록된 사진 없음");
+                            }
+
+                            $("#review-detail-modal").modal({backdrop:false});
+
+                        }, error:function(){
+                            console.log("ajax 통신 실패");
+                        }
+
+                    });
+
+                });
+
+
+
+
+                // 수정버튼 클릭 시
                 $(".review-content-right").on("click", ".review-update-btn", function(){
 					
 					$.ajax({
@@ -362,17 +447,20 @@
 
                                 for(let i=0; i<$fileList.length; i++){
                                     
+                                	let key = "originfCode" +(i+1);
+                                	
                                     if($fileList[i] != null){
-                                        file += "<p style='margin:0'>" + $fileList[i].fPath + $fileList[i].fRename + "</p> <br>"
-                                              + "<input type='hidden' name='originfCode' value='" + $fileList[i].fCode + "'>" ;
+                                        file += "<p style='margin:0'>" + $fileList[i].fName + "</p> <br>"
+                                              + "<input type='hidden' name='" + key + "' value='" + $fileList[i].fCode + "'>" ;
                                     }
                                     
                                 }
 
                                 $("#existingFile").html(file);
-
+                                
                             }
 		        			
+                           
 		        			$updateModal.modal({backdrop:false});
 							
 						}, error:function(){
@@ -451,19 +539,35 @@
             <div class="review-btn2-left" style="width:20%"></div>
             <!-- 페이징바 -->
             <div class="review-btn2-center"> 
+            	<% if(photoPi != null ) { %>
+	            	<% if(photoPi.getCurrentPage() != 1 && photoList.size() != 0) { %>
+	                	<a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= photoPi.getCurrentPage() - 1 %>&pcode=<%= product.getpCode() %>&pname=<%= product.getpName() %>">&lt;</a>
+	                <% } %>
+	                <% for(int p=photoPi.getStartPage(); p<=photoPi.getEndPage(); p++) { %>
+	                	<% if(p == photoPi.getCurrentPage()) { %>
+	               			<a href="#"><%= p %></a>
+	               		<% } else { %>
+	               			<a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= p %>&pcode=<%= product.getpCode() %>&pname=<%= product.getpName() %>&photo=list"><%= p %></a>
+	               		<% } %>
+	                <% } %>
+	                <% if(photoPi.getCurrentPage() != maxPage && photoList.size() != 0) { %>
+	               	 <a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= photoPi.getCurrentPage() + 1 %>&pcode=<%= product.getpCode() %>&pname=<%= product.getpName() %>&photo=list">&gt;</a>
+	                <% } %>
+	            <% } else { %>
 	            	<% if(currentPage != 1 && reviewList.size() != 0) { %>
-	                	<a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= currentPage - 1 %>&pcode=<%= product.getpCode() %>">&lt;</a>
+	                	<a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= currentPage - 1 %>&pcode=<%= product.getpCode() %>&pname=<%= product.getpName() %>&photo=list">&lt;</a>
 	                <% } %>
 	                <% for(int p=startPage; p<=endPage; p++) { %>
 	                	<% if(p == currentPage) { %>
 	               			<a href="#"><%= p %></a>
 	               		<% } else { %>
-	               			<a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= p %>&pcode=<%= product.getpCode() %>"><%= p %></a>
+	               			<a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= p %>&pcode=<%= product.getpCode() %>&pname=<%= product.getpName() %>"><%= p %></a>
 	               		<% } %>
 	                <% } %>
 	                <% if(currentPage != maxPage && reviewList.size() != 0) { %>
-	               	 <a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= currentPage + 1 %>&pcode=<%= product.getpCode() %>">&gt;</a>
+	               	 <a href="<%= request.getContextPath() %>/reviewList.rev?cpage=<%= currentPage + 1 %>&pcode=<%= product.getpCode() %>&pname=<%= product.getpName() %>">&gt;</a>
 	                <% } %>
+	            <% } %>    
             </div>
             <% if(loginUser != null) { %>
 	            <div class="review-btn2-right">
@@ -580,6 +684,73 @@
 	</div>
 
 
+    <!-- 리뷰 상세 모달창 -->
+
+    <div class="modal fade" id="review-detail-modal">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content detail-review-modal">
+                
+                <!-- Modal Header -->
+                <div class="modal-header title-area">
+                    <h6 class="modal-title" style="margin-left:350px; font-weight:bolder;">후기 상세</h6>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body content-area" align="center">
+
+                       <div class="review-detail-content" style="box-sizing:border-box; width:750px;">
+
+                           <div class="review-product">
+                               <div class="review-product-img">
+                                    <img src="<%= product.getFilePath() %><%= product.getpMainImg() %>" width="100px" height="100px">
+                               </div>
+                               <div class="review-product-name">
+                                    <h4 name="pname" style="margin-top: 40px;"><%= product.getpName() %></h4>
+                               </div>
+                           </div>
+
+                           <hr>
+
+                           <table id="reviewDetail">
+                                <tr>
+                                    <th style="height:30px; border-right:2px solid lightgray;">작성자</th>
+                                    <td id="reviewName"></td>
+                                    <th style="height:30px; border-right:2px solid lightgray;">등록일</th>
+                                    <td id="reviewDate"></td>
+                                </tr>
+                                <tr><th height="50px" colspan="4">내용</th></tr>
+                                <tr>
+                                    <td id="detailContent" colspan="4" style="border:1px solid lightgray; padding:5px;">
+                                        <p style="width:100%;">
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr><th colspan="4" height="50px">----- 등록된 리뷰 사진 -----</th></tr>
+                                <tr>
+                                    <td colspan="4" id="detailImg">
+                                        <!-- 등록되어 있는 리뷰 사진 -->
+                                    </td>
+                                </tr>
+                           </table>
+
+                       </div>
+
+                </div>
+
+				<!-- Modal footer -->
+                <div class="modal-footer button-area">
+                    <div class="btns" align="center" style="width:100%;">
+						<button type="button" class="btn" style="border:1px solid lightgray;" data-dismiss="modal">확인</button>
+					</div>
+                </div>
+
+			</div>	
+		</div>	
+	</div>
+
+
+
 	<!-- 리뷰수정 모달창 -->
 
     <div class="modal fade" id="review-update-modal">
@@ -607,6 +778,7 @@
                                     <img src="<%= product.getFilePath() %><%= product.getpMainImg() %>" width="100px" height="100px">
                                </div>
                                <div class="review-product-name">
+                               		<input type="hidden" name="mcode">
                                     <h4 name="pname" style="margin-top: 40px;"><%= product.getpName() %></h4>
                                </div>
                            </div>
@@ -614,7 +786,7 @@
                            <hr>
 
                            <table class="review-form-content" id="reviewUpdateForm">
-                                <tr><th>내용</th></tr>
+                                <tr><th colspan="4">내용</th></tr>
                                 <tr>
                                     <td><textarea name="reviewContent" rows="15" style="resize:none;"></textarea></td>
                                 </tr>
@@ -654,9 +826,9 @@
 
 	<!-- 리뷰등록/수정 성공 모달창 -->
 
-	<div class="modal fade" id="review-success-modal">
+	<div class="modal fade" id="request-message-modal">
 		<div class="modal-dialog modal-dialog-centered" role="document" style="width:500px; height:350px;">
-			<div class="modal-content success-review-modal">
+			<div class="modal-content message-request-modal">
 				
 				<!-- Modal Header -->
 				<div class="modal-header title-area">
@@ -665,11 +837,11 @@
 				
 				<!-- Modal body -->
 				<div class="modal-body content-area">
-					<div class="review-success-img" align="center" style=" height:40%;">
+					<div class="request-message-img" align="center" style=" height:40%;">
                         <i class="fas fa-check fa-4x" style="color:#9BD5BD;"></i>
                     </div>
 
-                    <div class="review-success-content" align="center" style=" height:60%;">
+                    <div class="request-message-content" align="center" style=" height:60%;">
                         <br>
                         <b></b>
                         <br>
@@ -679,7 +851,7 @@
 				<!-- Modal footer -->
 				<div class="modal-footer button-area">
 					<div class="cart-success-btns" align="center" style="width:100%;">
-						<button type="submit" id="my-page-btn" class="btn" style="background:#9BD5BD;" data-dismiss="modal">확인</button>
+						<button type="submit" class="btn" style="background:#9BD5BD;" data-dismiss="modal">확인</button>
 					</div>
 				</div>
 

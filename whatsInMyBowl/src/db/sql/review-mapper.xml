@@ -147,6 +147,118 @@
 		  )
 	</entry>
 	
+	<entry key="selectReviewDetail">
+		SELECT
+		       R_CODE
+		     , M_NAME
+		     , R_CONTENT
+		     , TO_CHAR(R_DATE, 'YYYY.MM.DD') R_DATE
+		  FROM REVIEW
+		  JOIN MEMBER USING (M_CODE)
+		  JOIN PRODUCT USING (P_CODE)
+		 WHERE R_CODE = ?
+	</entry>
+	
+	<entry key="selectReviewDetailFileList">
+		SELECT 
+		       F_CODE
+		     , F_RENAME
+		     , F_PATH
+		  FROM "FILE"
+		 WHERE F_REFCODE = ?
+	</entry>
+	
+	<entry key="selectReviewPhotoListCount">
+		SELECT COUNT(*) COUNT
+		  FROM REVIEW
+		 WHERE P_CODE = ?
+		   AND R_STATUS = 'Y'
+		   AND MAINIMG IS NOT NULL
+	</entry>
+	
+	<entry key="selectReviewPhotoList">
+		SELECT *
+		  FROM (
+		         SELECT ROWNUM RNUM, R.*
+		           FROM (
+		                  SELECT
+		                         R_CODE
+                               , M_CODE  
+		                       , M_NAME
+		                       , P_NAME
+		                       , R_CONTENT
+                               , MAINIMG
+		                       , TO_CHAR(R_DATE, 'YYYY.MM.DD') R_DATE
+		                    FROM REVIEW
+		                    JOIN MEMBER USING (M_CODE)
+		                    JOIN PRODUCT USING (P_CODE)
+		                   WHERE R_STATUS = 'Y'
+		                     AND P_CODE = ?
+                             AND MAINIMG IS NOT NULL
+		                   ORDER
+		                      BY R_CODE DESC
+		                ) R
+		       )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="updateReviewOnly">
+		UPDATE REVIEW
+		   SET R_CONTENT = ?
+		 WHERE R_CODE = ?
+	</entry>
+	
+	<entry key="updateReview">
+		UPDATE REVIEW
+		   SET R_CONTENT = ?
+		     , MAINIMG = ?
+		 WHERE R_CODE = ?
+	</entry>
+	
+	<entry key="updateReviewUpdateFile">
+		UPDATE "FILE"
+		   SET F_NAME = ?
+		     , F_RENAME = ?
+		     , F_PATH = ?
+		     , F_EXTENSION = ?
+		 WHERE F_CODE = ?
+	</entry>
+	
+	<entry key="updateReviewInsertFile">
+		INSERT
+		  INTO "FILE"
+		  (
+		    F_CODE
+		  , F_NAME
+		  , F_RENAME
+		  , F_PATH
+		  , F_EXTENSION
+		  , F_REF
+		  , F_REFCODE
+		  )
+		  VALUES
+		  (
+		    SEQ_FILE.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , 'R'
+		  , ?
+		  )
+	</entry>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	<entry key="selectAdminReviewListCount">

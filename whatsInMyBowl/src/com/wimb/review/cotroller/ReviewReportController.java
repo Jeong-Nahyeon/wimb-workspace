@@ -41,12 +41,10 @@ public class ReviewReportController extends HttpServlet {
 		
 		// 신고리뷰번호
 		int rCode = Integer.parseInt(request.getParameter("rcode"));
-		System.out.println(rCode);
 		
 		// 신고글작성자 회원번호
 		Member m = (Member)(request.getSession().getAttribute("loginUser"));
 		int mCode = m.getmCode();
-		System.out.println(mCode);
 		
 		// 신고사유 카테고리
 		String reportCategory = request.getParameter("reportCategory");
@@ -59,11 +57,11 @@ public class ReviewReportController extends HttpServlet {
 		int result = new ReviewService().insertReportReview(report);
 		
 			if(result > 0) {
-				request.getSession().setAttribute("detailMsg", "성공적으로 신고되었습니다.");
+				request.getSession().setAttribute("detailMsg", "성공적으로 신고되었습니다");
 				response.sendRedirect(request.getContextPath() + "/reviewList.rev?cpage=1&pcode=" + pCode + "&pname=" + pName + "#review");
 			} else {
-				request.setAttribute("errorMsg","후기 등록을 실패했습니다.");
-				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+				request.getSession().setAttribute("detailMsg", "해당 리뷰 신고를 실패했습니다");
+				response.sendRedirect(request.getContextPath() + "/reviewList.rev?cpage=1&pcode=" + pCode + "&pname=" + pName + "#review");
 			}
 		
 	}

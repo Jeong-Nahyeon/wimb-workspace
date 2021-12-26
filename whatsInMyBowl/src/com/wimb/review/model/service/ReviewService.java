@@ -165,6 +165,129 @@ public class ReviewService {
 	
 	
 	
+	public Review selectReviewDetail(int rCode) {
+		
+		Connection conn = getConnection();
+		
+		Review r = new ReviewDao().selectReviewDetail(conn, rCode);
+		
+		close(conn);
+		
+		return r;
+	
+	}
+	
+	
+	public ArrayList<File> selectReviewDetailFileList(int rCode) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<File> list = new ReviewDao().selectReviewDetailFileList(conn, rCode);
+		
+		close(conn);
+		
+		return list;
+		
+	}
+	
+	
+	public int selectReviewPhotoListCount(String pCode) {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new ReviewDao().selectReviewPhotoListCount(conn, pCode);
+		
+		close(conn);
+		
+		return listCount;
+		
+	}
+	
+	
+	public ArrayList<Review> selectReviewPhotoList(PageInfo pi, String pCode) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Review> photoList = new ReviewDao().selectReviewPhotoList(conn, pi, pCode);
+		
+		close(conn);
+		
+		return photoList;
+		
+	}
+	
+	
+	public int updateReviewOnly(Review r) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ReviewDao().updateReviewOnly(conn, r);
+		
+		if(result > 0) { 
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+	
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	
+	public int updateReviewUpdateFile(Review r, ArrayList<File> fileList1) {
+		
+		Connection conn = getConnection();
+		
+		int result1 = 0;
+		
+		if(r.getMainImg() != null) { // 대표이미지 파일 부분에 새로운 파일이 추가 되었을 경우
+			result1 = new ReviewDao().updateReview(conn, r);
+		} else { // 대표 이미지 파일 부분 외에 새로운 파일이 추가되었을 경우
+			result1 = new ReviewDao().updateReviewOnly(conn, r);
+		}
+		
+		int result2 = new ReviewDao().updateReviewUpdateFile(conn, fileList1);
+		
+		if(result1 > 0 && result2 > 0) { 
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+	
+		close(conn);
+		
+		return result1 * result2;
+		
+	}
+	
+	
+	public int updateReviewInsertFile(Review r, ArrayList<File> fileList2) {
+		
+		Connection conn = getConnection();
+		
+		int result1 = 0;
+		
+		if(r.getMainImg() != null) { // 대표이미지 파일 부분에 새로운 파일이 추가 되었을 경우
+			result1 = new ReviewDao().updateReview(conn, r);
+		} else { // 대표 이미지 파일 부분 외에 새로운 파일이 추가되었을 경우
+			result1 = new ReviewDao().updateReviewOnly(conn, r);
+		}
+		
+		int result2 = new ReviewDao().updateReviewInsertFile(conn, fileList2);
+		
+		if(result1 > 0 && result2 > 0) { 
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+	
+		close(conn);
+		
+		return result1 * result2;
+		
+	}
 	
 	
 	
@@ -223,7 +346,7 @@ public class ReviewService {
 		int result = new ReviewDao().updateAdminReviewMainStatus(conn, rCode, rMainStatus);
 		
 		if(result > 0) { 
-//			commit(conn);
+			commit(conn);
 		} else {
 			rollback(conn);
 		}

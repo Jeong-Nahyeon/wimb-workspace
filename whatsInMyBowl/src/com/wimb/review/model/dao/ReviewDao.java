@@ -378,6 +378,319 @@ public class ReviewDao {
 	}
 	
 	
+	public Review selectReviewDetail(Connection conn, int rCode) {
+
+		Review r = new Review();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReviewDetail");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, rCode);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				r.setrCode(rset.getInt("r_code"));
+				r.setmName(rset.getString("m_name"));
+				r.setrContent(rset.getString("r_content"));
+				r.setrDate(rset.getString("r_date"));
+				
+			}
+			
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return r;
+		
+	}
+	
+	
+	public ArrayList<File> selectReviewDetailFileList(Connection conn, int rCode) {
+
+		ArrayList<File> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReviewDetailFileList");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, rCode);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				File f = new File();
+				
+				f.setfCode(rset.getInt("f_code"));
+				f.setfRename(rset.getString("f_rename"));
+				f.setfPath(rset.getString("f_path"));
+				
+				list.add(f);
+				
+			}
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	
+	public int selectReviewPhotoListCount(Connection conn, String pCode) {
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReviewPhotoListCount");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, pCode);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	
+	public ArrayList<Review> selectReviewPhotoList(Connection conn, PageInfo pi, String pCode) {
+
+		ArrayList<Review> photoList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReviewPhotoList");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1; // 시작값
+			int endRow = startRow + pi.getBoardLimit() - 1; // 끝값
+			
+			pstmt.setString(1, pCode);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				photoList.add(new Review(rset.getInt("r_code"),
+										  rset.getInt("m_code"),
+										  rset.getString("p_name"),
+										  rset.getString("r_content"),
+										  rset.getString("r_date"),
+										  rset.getString("mainimg"),
+										  rset.getString("m_name")));
+			}
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return photoList;
+		
+	}
+	
+	
+	public int updateReview(Connection conn, int rCode, String rContent) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateReview");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, rContent);
+			pstmt.setInt(2, rCode);
+			
+			result = pstmt.executeUpdate();
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public int updateReviewOnly(Connection conn, Review r) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateReviewOnly"); // 미완성 sql문
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, r.getrContent());
+			pstmt.setInt(2, r.getrCode());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public int updateReview(Connection conn, Review r) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateReview"); // 미완성 sql문
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, r.getrContent());
+			
+			if(r.getMainImg() == null) {
+				pstmt.setNull(2, java.sql.Types.VARCHAR);
+			} else {
+				pstmt.setString(2, r.getMainImg());
+			}
+			
+			pstmt.setInt(3, r.getrCode());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public int updateReviewUpdateFile(Connection conn, ArrayList<File> fileList1) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateReviewUpdateFile"); // 미완성 sql문
+		
+		try {
+			
+			for(File f : fileList1) {
+
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, f.getfName());
+				pstmt.setString(2, f.getfRename());
+				pstmt.setString(3, f.getfPath());
+				pstmt.setString(4, f.getfExtension());
+				pstmt.setInt(5, f.getfCode());
+				
+				result = pstmt.executeUpdate();
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public int updateReviewInsertFile(Connection conn, ArrayList<File> fileList2) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateReviewInsertFile"); // 미완성 sql문
+		
+		try {
+			
+			for(File f : fileList2) {
+
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, f.getfName());
+				pstmt.setString(2, f.getfRename());
+				pstmt.setString(3, f.getfPath());
+				pstmt.setString(4, f.getfExtension());
+				pstmt.setInt(5, f.getfRefCode());
+				
+				result = pstmt.executeUpdate();
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	

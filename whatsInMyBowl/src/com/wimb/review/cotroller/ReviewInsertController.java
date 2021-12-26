@@ -86,7 +86,7 @@ public class ReviewInsertController extends HttpServlet {
 			
 			if(result > 0) { // 성공
 				
-				request.getSession().setAttribute("detailMsg", "성공적으로 후기를 등록했습니다.");
+				request.getSession().setAttribute("detailMsg", "성공적으로 후기를 등록했습니다");
 				response.sendRedirect(request.getContextPath() + "/reviewList.rev?cpage=1&pcode=" + pCode + "&pname=" + pName + "#review");
 			
 			} else { // 실패
