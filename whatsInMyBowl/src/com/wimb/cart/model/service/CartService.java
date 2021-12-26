@@ -69,4 +69,28 @@ public class CartService {
 		return result;
 	}
 
+	// 장바구니 커스텀 상품 삭제
+	public int deleteCartCustom(Cart c) {
+		Connection conn = getConnection();
+		int result = new CartDao().deleteCartCustom(conn, c);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
+
+	// 장바구니 완제품 상품 삭제
+	public int deleteCartProduct(Cart c) {
+		Connection conn = getConnection();
+		int result = new CartDao().deleteCartProduct(conn, c);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
+
 }

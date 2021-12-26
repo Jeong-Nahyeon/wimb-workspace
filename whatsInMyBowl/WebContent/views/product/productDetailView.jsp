@@ -711,7 +711,7 @@
 							alert("이미 담은 상품입니다.")
 						}
 					}, error:function(){
-						console.log("통신실패")
+						alert("로그인 후 이용가능합니다.")
 					}
 					
 				})

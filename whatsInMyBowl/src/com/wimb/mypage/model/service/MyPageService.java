@@ -330,5 +330,33 @@ public class MyPageService {
 		close(conn);
 		return(result);
 	}
+	
+	// 관리자 주문취소
+	public int adminCancelOrder(String oCode, String pmCode) {
+		Connection conn = getConnection();
+		int result = new MyPageDao().adminCancelOrder(conn, oCode, pmCode);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	// 관리자 취소 update
+	public int adminUpdateCancel(String oCode) {
+		Connection conn = getConnection();
+		int result = new MyPageDao().adminUpdateCancel(conn, oCode);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 
 }

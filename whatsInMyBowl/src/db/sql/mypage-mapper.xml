@@ -617,4 +617,28 @@
 		     , ?
 		     )
 	</entry>
+	
+	<entry key="adminCancelOrder">
+		INSERT
+		  INTO CANCELATION
+		     (
+		       CANCEL_CODE
+		     , ORDER_CODE
+		     , PM_CODE
+		     , CANCEL_REASON  
+		     )
+		     VALUES
+		     (
+		       'CAN'||SEQ_CANCEL.NEXTVAL
+		     , ?
+		     , ?
+		     , '관리자요청취소'  
+		     )
+	</entry>
+	
+	<entry key="adminUpdateCancel">
+		UPDATE "ORDER"
+		   SET ORDER_STATUS = '주문취소'
+		 WHERE ORDER_CODE = ?  
+	</entry>
 </properties>

@@ -169,4 +169,44 @@ public class CartDao {
 		return result;
 	}
 
+	// 장바구니 커스텀 삭제
+	public int deleteCartCustom(Connection conn, Cart c) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteCartCustom");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c.getmCode());
+			pstmt.setString(2, c.getCuCode());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	// 장바구니 완제품 삭제
+	public int deleteCartProduct(Connection conn, Cart c) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteCartProduct");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c.getmCode());
+			pstmt.setString(2, c.getCuCode());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }
