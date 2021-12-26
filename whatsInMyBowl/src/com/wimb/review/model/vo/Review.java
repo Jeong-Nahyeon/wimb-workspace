@@ -14,7 +14,7 @@ public class Review {
 	private String pointStatus;
 	
 	private String mName; // 회원명 => 회원 코드와 같이 조회할 경우...
-	
+	private String mId; // 회원 아이디
 	
 	public Review() {}
 
@@ -172,12 +172,24 @@ public class Review {
 		this.pointStatus = pointStatus;
 	}
 
+	
+	public String getmId() {
+		return mId;
+	}
+	
+	
+	public void setmId(String mId) {
+		this.mId = mId;
+	}
 
+	
 	@Override
 	public String toString() {
 		return "Review [rCode=" + rCode + ", orderCode=" + orderCode + ", mCode=" + mCode + ", pCode=" + pCode
 				+ ", rContent=" + rContent + ", rDate=" + rDate + ", rMainstatus=" + rMainstatus + ", rStatus="
 				+ rStatus + "]";
 	}
+
+
 
 }

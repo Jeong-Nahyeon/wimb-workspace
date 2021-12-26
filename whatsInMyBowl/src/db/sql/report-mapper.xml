@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="selectAdminReportListCount">
+		SELECT COUNT(*) COUNT
+		  FROM REPORT RP
+		  JOIN REVIEW RV ON (RP.R_CODE = RV.R_CODE)
+		  JOIN MEMBER M ON (RV.M_CODE = M.M_CODE)
+		 WHERE REPORT_ADMINSHOW = 'Y'
+	</entry>
+	
+	<entry key="selectAdminReportList">
+		SELECT *
+		  FROM (
+		         SELECT ROWNUM RNUM, R.*
+		           FROM (
+		                  SELECT 
+		                         REPORT_CODE
+		                       , RP.M_CODE FROM_M
+		                       , RP.R_CODE R_CODE
+		                       , TO_CHAR(REPORT_DATE, 'YYYY-MM-DD HH:MI') REPORT_DATE
+		                       , REPORT_CATEGORY
+		                       , REPORT_CONTENT
+		                       , RV.M_CODE TO_M
+		                       , M_REPORTCOUNT
+		                    FROM REPORT RP
+		                    JOIN REVIEW RV ON (RP.R_CODE = RV.R_CODE)
+		                    JOIN MEMBER M ON (RV.M_CODE = M.M_CODE)
+		                   WHERE REPORT_ADMINSHOW = 'Y'
+		                   ORDER
+		                      BY REPORT_CODE DESC
+		               ) R  
+		       )     
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectAdminReviewDetail">
+		SELECT
+		       M_ID
+		     , M_NAME
+		     , R_DATE
+		     , R_CONTENT
+		  FROM REVIEW
+		  JOIN MEMBER USING (M_CODE)
+		 WHERE R_CODE =  ?
+	</entry>
+	
+	<entry key="selectAdminReportDetail">
+		 SELECT 
+		        M_ID
+		      , M_NAME
+		      , REPORT_DATE
+		      , REPORT_CATEGORY
+		      , REPORT_CONTENT
+		   FROM REPORT
+		   JOIN MEMBER USING (M_CODE)
+		  WHERE REPORT_CODE = ?
+	</entry>
+	
+	<entry key="selectAdminReportSearchList">
+		SELECT *
+		  FROM (
+		         SELECT ROWNUM RNUM, R.*
+		           FROM (
+		                  SELECT 
+		                         REPORT_CODE
+		                       , RP.M_CODE FROM_M
+		                       , RP.R_CODE R_CODE
+		                       , TO_CHAR(REPORT_DATE, 'YYYY.MM.DD HH:MI') REPORT_DATE
+		                       , REPORT_CATEGORY
+		                       , REPORT_CONTENT
+		                       , RV.M_CODE TO_M
+		                       , M_ID TO_M_ID
+		                       , M_REPORTCOUNT
+		                    FROM REPORT RP
+		                    JOIN REVIEW RV ON (RP.R_CODE = RV.R_CODE)
+		                    JOIN MEMBER M ON (RV.M_CODE = M.M_CODE)
+		                   WHERE REPORT_ADMINSHOW = 'Y'
+		                   ORDER
+		                      BY REPORT_CODE DESC
+		               ) R  
+		         WHERE TO_M LIKE '%' || ? || '%'     
+       )
+	</entry>
+	
+
+</properties>

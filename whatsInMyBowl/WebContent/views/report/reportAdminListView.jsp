@@ -1,5 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.wimb.common.model.vo.PageInfo, java.util.ArrayList, com.wimb.report.model.vo.Report" %>   
+    
+<%
+	// 완제품 페이지 요청처리 알람창용
+	String reportMsg = (String)(session.getAttribute("reportMsg"));
+	
+	// 페이징바 처리
+	PageInfo pi = (PageInfo)(request.getAttribute("pi"));
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+	
+	// 리뷰 전체 조회
+	ArrayList<Report> reportList = (ArrayList<Report>)(request.getAttribute("reportList"));
+
+
+%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,15 +88,16 @@
 
     /* 내용 텍스트 길 경우 뒷부분 생략 되는 스타일 */
     .report-content{
-        border:1px solid red;
+        /* border:1px solid red; */
         width: 400px;
         height: 20px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        cursor:pointer;
     }
 
-    .reported{color:red;}
+    .reported{color:salmon;}
 
     #select-form span{
         border:1px solid lightgray;
@@ -96,6 +117,34 @@
         padding:5px 15px;
     }
 
+    /* 페이징바, 리뷰검색 */
+    #paging-bar, #report-search-area{
+        /* border:1px solid red; */
+        width:1500px;
+        text-align:center !important;
+    }
+
+    #report-search-area label{
+        border:1px solid lightgray;
+        border-radius:3px;
+        padding:3px 15px;
+        margin:0;
+    }
+
+    #report-search-area input{
+        border:1px solid lightgray;
+        border-radius:3px;
+        width:250px;
+        height:30px;
+        margin:0;
+    }
+
+    #report-search-area button{
+        background:rgb(255, 225, 90);
+        padding:4px 15px;
+        margin:0;
+    }
+
 
     /* 리뷰신고 상세 조회 모달창 */
     #report-detail-modal{
@@ -106,6 +155,22 @@
 </style>
 </head>
 <body>
+
+	<!-- 요청처리 성공 알림 -->
+	<% if(reportMsg != null) { %>
+	<script>
+		
+		$(function(){
+			
+			$("#request-success-modal b").text("<%= reportMsg %>");
+			$("#request-success-modal").modal({backdrop: "static"});
+			
+		});
+		
+		<% session.removeAttribute("reportMsg"); %>
+	
+	</script>
+	<% } %>
 
 	<%@ include file="../common/adminBar.jsp" %>
 
@@ -120,7 +185,7 @@
             <div id="list-1">
                 <!-- 등록 개수 -->
                 <div align="left">
-                    총 <span style="color:orange; font-weight:bold;">20</span> 건
+                    총 <span style="color:orange; font-weight:bold;"><%= pi.getListCount() %></span> 건
                 </div>
                 <!-- 블랙리스트 추가 및 신고내역 삭제 버튼 -->
                 <div align="right">
@@ -129,12 +194,12 @@
                         블랙리스트 등록 시 로그인 안되게 해야 함
                     -->
                     <button type="button" id="insert-blackList-btn" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);" data-toggle="modal" data-target="#insert-modal" data-backdrop="static" data-keyboard="false">블랙리스트추가</button>
-                    <button type="button" id="delete-report-btn" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);">선택삭제</button>
+                    <button type="button" id="delete-report-btn" class="btn btn-sm btn-warning" style="background:salmon;">완전삭제</button>
                 </div>
             </div>
 
             <!-- 신고내역 목록 -->
-            <table id="report-list" height="500px" class="table table-hover">
+            <table id="report-list" class="table table-hover">
                 <thead>
                     <tr>
                         <th></th>
@@ -148,21 +213,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="8">등록된 신고내역이 없습니다.</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="" id="" value="user01">
-                        </td>
-                        <td>10</td>
-                        <td>21-12-11 18:45</td>
-                        <td>욕설</td>
-                        <td align="center"><div class="report-content" id="report-detail">신고합니다. 해당 리뷰글에 욕설이 심하네요. 게다가 다른 회원 비방도 하고 있습니다.</div></td>
-                        <td>user01</td>
-                        <td class="reported">user10</td>
-                        <td class="reported">4회</td>
-                    </tr>
+                	<% if(reportList == null) { %>
+	                    <tr>
+	                        <td colspan="8">등록된 신고내역이 없습니다.</td>
+	                    </tr>
+                    <% } else { %>
+	                    <% for(Report r : reportList) {%>
+		                    <tr>
+		                        <td>
+		                            <input type="checkbox" name="check">
+		                        </td>
+		                        <td class="reportCode"><%= r.getReportCode() %></td>
+		                        <td class="reportDate"><%= r.getReportDate() %></td>
+		                        <td class="reportCategory"><%= r.getReportCategory() %></td>
+		                        <td align="center">
+		                        	<input type="hidden" name="rCode" value="<%= r.getrCode() %>">
+		                        	<div class="report-content"><%= r.getReportContent() %></div>
+		                        </td>
+		                        <td class="reportmCode"><%= r.getmCode() %></td>
+		                        <td class="reviewmCode"><%= r.getReportedMemberCode() %></td>
+		                        <td class="reportCount"><%= r.getmReportCount() %>회</td>
+		                    </tr>
+	                    <% } %>
+                    <% } %>
                 </tbody>
             </table>
 
@@ -173,48 +246,35 @@
                     
                     //  신고글 상세 조회용 ajax
 
-            		$(".review-content-right").on("click", ".review-update-btn", function(){
+            		$("#report-list").on("click", ".report-content", function(){
 					
                         $.ajax({
-                            url:"updateForm.rev",
-                            data:{rcode:$(this).parent().parent().prev().children().eq(0).val()},
-                            success:function(updateFormList){
-                                console.log(updateFormList);
-                                
-                                // 리뷰내용
-                                const $updateModal = $("#review-update-modal");
+                            url:"detail.arep",
+                            data:{
+                                rcode:$(this).prev().val(),
+                                reportCode:$(this).parent().parent().find(".reportCode").text()
+                            },
+                            success:function(detailList){
 
-                                const $review = updateFormList[0];
-                            console.log(updateFormList[0]);
-                                
-                                const $fileList = updateFormList[1];
-                                console.log(updateFormList[1]);
-                                
-                                $updateModal.find("input[name=rcode]").val($review.rCode);
-                                $updateModal.find("textarea").text($review.rContent);
-                                
-                                // 첨부파일
+                                const $review = detailList[0];
+                                const $report = detailList[1];
 
-                                $("#existingFile").html("");
+                                // 신고작성회원
+                                $("#reportId").text($report.mId);
+                                $("#reportName").text($report.mName);
+                                $("#reportDate").text($report.reportDate);
+                                $("#reportCategory").text($report.reportCategory);
+                                $("#reportContent").text($report.reportContent);
+
+
+                                // 신고대상회원
+                                $("#reviewId").text($review.mId);
+                                $("#reviewName").text($review.mName);
+                                $("#reviewDate").text($review.rDate);
+                                $("#reviewContent").text($review.rContent);
                                 
-                                if($fileList.length != 0){ // 기존의 첨부파일이 있을 경우
-                                    
-                                    let file = "";
+                                $("#report-detail-modal").modal("show");
 
-                                    for(let i=0; i<$fileList.length; i++){
-                                        
-                                        if($fileList[i] != null){
-                                            file += "<p style='margin:0'>" + $fileList[i].fPath + $fileList[i].fRename + "</p> <br>"
-                                                + "<input type='hidden' name='originfCode' value='" + $fileList[i].fCode + "'>" ;
-                                        }
-                                        
-                                    }
-
-                                    $("#existingFile").html(file);
-
-                                }
-                                
-                                $updateModal.modal({backdrop:false});
                                 
                             }, error:function(){
                                 console.log("ajax 통신 실패");
@@ -300,7 +360,7 @@
             
             </script>
             
-
+            
             <!-- 페이징바  -->
             <div id="paging-bar">
                 <% if(currentPage != 1) { %>
@@ -319,13 +379,13 @@
                         <a class ="btn btn-sm" href="<%= contextPath %>/list.arep?cpage=<%= currentPage + 1 %>">&gt;</a>
                 <% } %>
             </div>
-            
+           
             <br>
 
             <!-- 신고작성회원으로 신고글 검색 -->
             <div id="report-search-area">
-                <label for="report-search">신고작성회원 ID</label>
-                <input type="search" id="review-search" name="searchKeyword">
+                <label for="report-search">신고대상회원번호</label>
+                <input type="search" id="report-search" name="searchKeyword">
                 <button id="report-search-btn" class="btn btn-sm">조회</button>
             </div>
 
@@ -336,14 +396,14 @@
                     $("#report-search-btn").click(function(){
 
                         if($("#report-search").val() == ""){
-                            alert("검색할 리뷰의 상품명을 입력해 주세요");
+                            alert("검색할 신고대상회원의 회원번호를 입력해 주세요");
                         } else {
 
                             $.ajax({
-                                url:"search.arev",
+                                url:"search.arep",
                                 data:{searchKeyword:$("#report-search").val()},
                                 success:function(list){
-                                    
+                                    console.log(list);
                                     $("#report-list tbody").html("");
 
                                         let result = "";
@@ -351,19 +411,17 @@
                                         for(let i=0; i<list.length; i++){
                                             
                                             result += "<tr>"
-                                                        + "<td><input type='checkbox' class='check-delete' name='checkrCode' value='" + list[i].rCode + "'></td>"
-                                                        + "<td class='review-code'>" + list[i].rCode + "</td>"
-                                                        + "<td>" + list[i].mName + "</td>"
-                                                        + "<td>" + list[i].pCode + "</td>"
-                                                        + "<td>" + list[i].rDate + "</td>"
-                                                        + "<td><div class='review-content'><a class='review-detail'>" + list[i].rContent + "</a></div></td>"
-                                                        + "<td>"  
-                                                                + "<input type='hidden' name='mCode' value='" + list[i].mCode + "'>"
-                                                                + "<input type='hidden' name='orderCode' value='" + list[i].orderCode + "'>"
-                                                                + "<span style='color:salmon'>검색 시 사용불가</span>"
-                                                        + "</td>"          
-                                                        + "<td>" + list[i].rMainstatus + "</td>"
-                                                        + "<td>" + list[i].rStatus + "</td>"         
+                                                        + "<td><input type='checkbox' name='check'></td>"
+                                                        + "<td class='reportCode'>" + list[i].reportCode + "</td>"
+                                                        + "<td class='reportDate'>" + list[i].reportDate + "</td>"
+                                                        + "<td class='reportCategory'>" + list[i].reportCategory + "</td>"
+                                                        + "<td align='center'>"
+                                                            + "<input type='hidden' name='rCode' value='" + list[i].rCode +"'>"
+                                                            + "<div class='report-content'>" + list[i].reportContent + "</div>"
+                                                        + "</td>"    
+                                                        + "<td calss='reportmCode'>" + list[i].mCode + "</td>"
+                                                        + "<td calss='reviewmCode'>" + list[i].reportedMemberCode + "</td>"
+                                                        + "<td calss='reportCount'>" + list[i].mReportCount + "</td>"
                                                     + "</tr>";
 
                                         }
@@ -413,29 +471,24 @@
                 <table style="width:100%; height:320px; margin:10px;">
                     <tr>
                         <th>아이디</th>
-                        <td colspan="3">user02</td>
+                        <td colspan="3" id="reportId">user02</td>
                     </tr>
                     <tr>
                         <th>회원명</th>
-                        <td colspan="3">김신고</td>
+                        <td colspan="3" id="reportName">김신고</td>
                     </tr>
                     <tr>
                         <th>신고시간</th>
-                        <td>2021-12-12 18:25</td>
+                        <td id="reportDate">2021-12-12 18:25</td>
                         <th>신고사유</th>
-                        <td>욕설</td>
+                        <td id="reportCategory">욕설</td>
                     </tr>
                     <tr>
                         <th colspan="4">신고내용</th>
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <div style="border:1px solid lightgray; width:100%; height:200px; padding:5px;">
-                                신고된리뷰내용 <br>
-                                신고된리뷰내용 <br>
-                                신고된리뷰내용 <br>
-                                신고된리뷰내용 <br>
-                                신고된리뷰내용 <br>
+                            <div id="reportContent" style="border:1px solid lightgray; width:100%; height:200px; padding:5px;">
                             </div>
                         </td>
                     </tr>
@@ -446,23 +499,18 @@
                 <table style="width:100%; height:280px; margin:10px;">
                     <tr>
                         <th>아이디</th>
-                        <td>user10</td>
+                        <td id="reviewId">user10</td>
                         <th>회원명</th>
-                        <td>김트롤</td>
+                        <td id="reviewName">김트롤</td>
                         <th>작성시간</th>
-                        <td>2021-12-12 15:24</td>
+                        <td id="reviewDate">2021-12-12 15:24</td>
                     </tr>
                     <tr>
                         <th colspan="6">리뷰내용</th>
                     </tr>
                     <tr>
                         <td colspan="6">
-                            <div style="border:1px solid lightgray; width:100%; height:200px; padding:5px;">
-                                신고된리뷰내용 <br>
-                                신고된리뷰내용 <br>
-                                신고된리뷰내용 <br>
-                                신고된리뷰내용 <br>
-                                신고된리뷰내용 <br>
+                            <div id="reviewContent" style="border:1px solid lightgray; width:100%; height:200px; padding:5px;">
                             </div>
                         </td>
                     </tr>

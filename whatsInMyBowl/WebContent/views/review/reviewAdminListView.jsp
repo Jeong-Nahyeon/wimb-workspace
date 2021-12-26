@@ -4,7 +4,7 @@
 <%@ page import="com.wimb.common.model.vo.PageInfo, java.util.ArrayList, com.wimb.review.model.vo.Review" %>   
 
 <%	
-    // 완제품 페이지 요청처리 알람창용
+    // 리뷰관리 페이지 요청처리 알람창용
     String reviewMsg = (String)(session.getAttribute("reviewMsg"));
 
 	// 페이징바 처리
