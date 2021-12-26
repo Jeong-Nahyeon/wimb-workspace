@@ -487,33 +487,38 @@
 		</div>
 	</div>		
 	
-	<!-- 찜하기 기능 -->
+	<!-- 찜하기 기능 (지은)-->
 	<script>
-		$(".product").on("click", ".heart-btn", function(){
+		$(".main-btns").on("click", ".heart-btn", function(){
 			
-			var pCode = $(this).siblings("input[name=pcode]").val();
+			var pCode = $("#productCode").val();
 			console.log(pCode);
 			
-			$.ajax({
-				
-				url:"heartVegan.my",
-				data:{pcode:pCode},
-				type:"post",
-				success:function(result){
-					if(result > 0) {
-						alert("해당 상품을 찜리스트에 추가하였습니다.");
-						//$(this).child(".heart-btn").attr('class','.heart-btn2');
-						//$(this).child(".heart-btn").css("display", "inline-block");
+			if(<%= loginUser.getmCode() %> == null) {
+				alert('로그인 후 이용가능합니다.');
+			}else {
+				console.log("실행확인");
+				$.ajax({
+					url:"heartDetail.my",
+					data:{pcode:pCode},
+					type:"post",
+					success:function(result){
+						if(result > 0) {
+							alert("해당 상품을 찜리스트에 추가하였습니다.");
+							//$(this).child(".heart-btn").attr('class','.heart-btn2');
+							//$(this).child(".heart-btn").css("display", "inline-block");
+						}else {
+							alert("이미 담은 상품입니다.")
+						}
+					}, error:function(){
+						console.log("통신실패")
 					}
-				}, error:function(){
-					alert("로그인 후 이용가능합니다.")
-					location.reload();
-				}
-				
-			})
+					
+				})
+			}
 	
 		});
-	</script>		
+	</script>	
 
 </body>
 </html>
