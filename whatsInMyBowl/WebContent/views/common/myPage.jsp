@@ -97,7 +97,7 @@
                     </tr>
                     <tr>
                         <td style="padding-bottom: 45px;">
-                        	<form action="<%=contextPath%>/pointClick.me" id="pointUserForm">
+                        	<form action="<%=contextPath%>/pointClick.me" id="pointUserForm" method="post">
                             	<a id="pointA" onclick="submit();">
                             	<input type="hidden" id="userNo" name="userNo" value="<%=userNoCode%>">
                             	적립금
