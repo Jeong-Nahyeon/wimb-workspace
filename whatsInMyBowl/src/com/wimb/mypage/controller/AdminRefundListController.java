@@ -1,4 +1,4 @@
-package com.wimb.mypage;
+package com.wimb.mypage.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,13 +18,13 @@ import com.wimb.mypage.model.vo.Orders;
  * Servlet implementation class AjaxAdminRefundListController
  */
 @WebServlet("/refundList.admin")
-public class AjaxAdminRefundListController extends HttpServlet {
+public class AdminRefundListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxAdminRefundListController() {
+    public AdminRefundListController() {
         super();
         // TODO Auto-generated constructor stub
     }

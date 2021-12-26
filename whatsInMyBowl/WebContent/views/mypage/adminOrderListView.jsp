@@ -554,6 +554,18 @@
 			location.href = "<%= contextPath %>/refundList.admin?cpage=1"
 			
 		})
+		
+		$("#cancelList").on('click', function(){
+			
+			location.href = "<%= contextPath %>/cancelList.admin?cpage=1"
+			
+		})
+		
+		$("#orderList").on('click', function(){
+			
+			location.href = "<%= contextPath %>/orderList.admin?cpage=1"
+			
+		})
 	</script>
 
 

@@ -269,4 +269,12 @@ public class MyPageService {
 		close(conn);
 		return olist;
 	}
+	
+	// 관리자 취소내역 리스트검색
+	public ArrayList<Orders> adminCancelList(PageInfo pi) {
+		Connection conn = getConnection();
+		ArrayList<Orders> olist = new MyPageDao().adminCancelList(conn, pi);
+		close(conn);
+		return olist;
+	}
 }
