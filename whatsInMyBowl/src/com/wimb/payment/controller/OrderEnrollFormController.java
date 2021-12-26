@@ -34,16 +34,39 @@ public class OrderEnrollFormController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String[] saladCode = request.getParameterValues("saladCode");
-		String[] saladCount = request.getParameterValues("saladCount");
+		String[] saladCount2 = request.getParameterValues("saladCount");
 		String[] saladPrice = request.getParameterValues("saladPrice");
 		
 		//String[] saladCode = {"CU1001", "CU1002", "CU1003", "CU1004"};
 		//String[] saladCount = {"1", "1", "2", "3"};
 		//String[] saladPrice = {"10000", "15000", "9000", "13000"};
 		
-		System.out.println(saladCode[0]);
-		System.out.println(saladCount[0]);
-		System.out.println(saladPrice[0]);
+		//System.out.println(saladCode[0]);
+		//System.out.println(saladCount2[0]);
+		//System.out.println(saladPrice[0]);
+		//System.out.println(saladCode);
+		//System.out.println(saladCount2);
+		System.out.println(saladCount2.length);
+		
+		for(int i=0; i<saladCode.length; i++) {
+			System.out.println("샐러드 코드 : " + saladCode[i]);
+		}
+		
+		for(int i=0; i<saladCount2.length; i++) {
+			System.out.println("샐러드 코드 : " + saladCount2[i]);
+		}
+		
+		int[] saladCount = new int[saladCount2.length];
+		if(saladCount2 != null) {
+			//saladCount = new int[saladCount2.length];
+			for(int i=0; i<saladCount2.length;i++) {
+				try {
+					saladCount[i]=Integer.parseInt(saladCount2[i]);
+				}catch(NumberFormatException e) {
+					
+				}
+			}
+		}
 		
 		
 		PaymentCustom custom = new PaymentCustom();
@@ -55,11 +78,11 @@ public class OrderEnrollFormController extends HttpServlet {
 		for(int i=0; i<saladCode.length; i++) {
 			if(saladCode[i].startsWith("CU")) {
 				custom = new PaymentService().selectCustom(saladCode[i]);
-				custom.setCuCount(Integer.parseInt(saladCount[i]));
+				custom.setCuCount(saladCount[i]);
 				customList.add(custom);
 			}else if(saladCode[i].startsWith("P")) {
 				product = new PaymentService().selectProduct(saladCode[i]);
-				product.setpCount(Integer.parseInt(saladCount[i]));
+				product.setpCount(saladCount[i]);
 				product.setpPrice(Integer.parseInt(saladPrice[i]));
 				productList.add(product);
 			}

@@ -366,7 +366,7 @@
                             </div>
     
                             <div class="customOrder_btn" align="right">
-                                <button id="customOrder_order">주문하기</button>
+                                <button id="customOrder_order" onclick="orderCustom();">주문하기</button>
                                 <button type="button" id="customOrder_cart" onclick="addCartCustom();">장바구니</button>
                             </div>
                         <!--</form>-->
@@ -375,20 +375,20 @@
                 </div>
                 <!-- 장바구니 클릭 시 ajax  -->
                 <script>
+
                     function addCartCustom(){
                         var arrCustomCode = [];
                         var arrCustomCount = [];
                         var itemPrice = $("#total_sum").text();
                         var saladName = $("#saladName").val();
                         var userNum = $("#userNum").val();
-
+                
                         $(".order_ciCode").each(function(){
                             arrCustomCode.push($(this).val());
                         });
                         $("input[name='saladCount']").each(function(){
                             arrCustomCount.push($(this).val());
                         })
-
                         $.ajax({
                             url:"addcartcu.cart",
                             dataType:"json",
@@ -410,7 +410,35 @@
                             }
                         })
                     }
+
+                    // 주문하기 버튼 클릭시 form 처리
+                    function orderCustom(){
+                        var arrCustomCode = [];
+                        var arrCustomCount = [];
+                        var itemPrice = $("#total_sum").text();
+                        $(".order_ciCode").each(function(){
+                            arrCustomCode.push($(this).val());
+                        });
+                        $("input[name='saladCount']").each(function(){
+                            arrCustomCount.push($(this).val());
+                        })
+                        console.log(arrCustomCode);
+                        console.log(arrCustomCode.length)
+
+                        var form = $('<form></form>');
+                        form.attr('action', '<%= contextPath %>/order.pay');
+                        form.attr('method', 'post');
+                        form.appendTo('body');
+                        for(var i=0;i<arrCustomCode.length;i++){
+                            form.append($('<input type="hidden" value="' + arrCustomCode[i] + '"name="saladCode">'));
+                            form.append($('<input type="hidden" value="' + arrCustomCount[i] + '"name="saladCount">'));
+                            form.append($('<input type="hidden" value="' + itemPrice[i] + '"name="saladPrice">'));
+                        }
+                        form.submit();
+                    }
+
                     
+                 
                 </script>
 
                 <!-- 장바구니 담기 성공 모달창  -->
