@@ -128,7 +128,7 @@ private Properties prop = new Properties();
 			
 			while(rset.next()) {
 				list.add(new Inquiry(rset.getInt("i_code"),
-						             rset.getInt("m_code"),
+						             rset.getString("m_name"),
 						             rset.getString("i_category"),
 						             rset.getString("i_title"),
 						             rset.getString("i_content"),
@@ -193,7 +193,7 @@ private Properties prop = new Properties();
 			
 			while(rset.next()) {
 				list.add(new Inquiry(rset.getInt("i_code"),
-						             rset.getInt("m_code"),
+						             rset.getString("m_name"),
 						             rset.getString("i_category"),
 						             rset.getString("i_title"),
 						             rset.getString("i_content"),
