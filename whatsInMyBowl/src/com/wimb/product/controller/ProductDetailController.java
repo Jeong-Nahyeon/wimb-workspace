@@ -41,7 +41,7 @@ public class ProductDetailController extends HttpServlet {
 		Product p = new ProductService().selectProduct(pCode);
 		
 		request.setAttribute("p", p);
-		request.getRequestDispatcher("views/product/productDetailView.jsp").forward(request, response);;
+		request.getRequestDispatcher("views/product/productDetailView.jsp").forward(request, response);
 		
 	}
 
