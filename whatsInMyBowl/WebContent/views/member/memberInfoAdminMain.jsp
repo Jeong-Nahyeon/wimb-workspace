@@ -61,7 +61,7 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
         width: 800px;
         font-size: 12px;
     }
-    #updateBtn, #deleteBtn, #selectDeleteBtn{
+    #updateBtn, #deleteBtn, #selectDeleteBtn, .smallBtn{
         background-color: rgb(250, 223, 76);
         border:none;
         margin: 1px;
@@ -84,7 +84,7 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
     .modal-content{
         overflow-y: initial !important
     }
-    .modal-body{
+    .modal-body, .modal-footer{
        
         overflow-y: auto;
     }
@@ -97,14 +97,21 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
         height:30px;
         margin: 20px 10px;
     }
-    #infoTable input{
+    #infoTable input, #pointTable input{
         width:100%;
         font-size: 12px;
         border-style:none;
         border-bottom-style: 1px solid lightgrey;
     }
-    #infoTable th, #infoTable td{border-bottom: 1px solid rgb(224, 224, 224);}
-
+    #infoTable th, #infoTable td, #pointTable th, #pointTable td {
+        border-bottom: 1px solid rgb(224, 224, 224);
+        font-size: 12px;
+    }
+    #pointListTable{
+        width:90%;
+        border-bottom: 1px solid rgb(224, 224, 224);
+        font-size: 12px;
+    }
     <!--회원 삭제 모달-->
     .delete_text{
         text-align: center;
@@ -113,6 +120,9 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
         display: block;
         margin: 10px 0;
     }   
+    .modal-body{
+        overflow-x: hidden;
+    }
 </style>
 </head>
 <body>
@@ -127,7 +137,7 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
                 총 회원 수 <b style="color: rgb(250, 209, 76);"><%=listCount%></b>명
             </p>
             <div width="800" align="right">
-                <button id="selectDeleteBtn"  data-toggle="modal" data-target="#deleteMemberModal">
+                <button id="selectDeleteBtn" class="smallBtn" data-toggle="modal" data-target="#deleteMemberModal">
                     선택삭제
                 </button>
             </div>
@@ -158,7 +168,7 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
 			            <tr>
 			                <td class="checkArea"><input type="checkbox" class="checkOne" name="check"></td>
 			                <td class="userNo"><%= m.getmCode() %></td>
-			                <td  >
+			                <td class="idTag">
 			                    <a class="atag" data-toggle="modal" data-target="#updateModal"><%= m.getmId() %></a>
 			                    <input type="hidden"  name="userId" value="<%= m.getmId()%>">
 			                </td>
@@ -167,7 +177,7 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
 			                <td><%= m.getCount() %></td>
 			                <td><%= m.getSum() %></td>
 			                <td>
-			                    <a href=""><%= m.getmPoint() %></a>
+			                    <a class="pointTag"data-toggle="modal" data-target="#pointModal"><%= m.getmPoint() %></a>
 			                </td>
 			                <td><%= m.getEnrollDate() %></td>
                             <th>
@@ -268,7 +278,7 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
                             </tr>
                         </table>
                         <button type="submit" class="btnModal" id="updateBtnModal">수정</button>
-                        <button class="btnModal" id="deleteBtnModal" data-toggle="modal" data-target="#deleteMemberModal">삭제</button>
+                        <button class="btnModal" id="deleteBtnModal" data-toggle="modal" data-dismiss="modal">취소</button>
                     </form>
                     <br><br>
                 </div>
@@ -322,7 +332,99 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
             </div>
         </div>
     </div>
+
+    <!-- 적립금 관리 모달-->
+    <div class="modal " id="pointModal" height="500">
+     
+        <div class="modal-dialog">
+            <div class="modal-content">
+        
+                <!-- Modal Header -->
+                <div id="pointModalHeader">
+                        <h5 class="modal-title" align="center">적립금 상세 내역</h5>
+                
+                </div>
+            
+                <!-- Modal body -->
+                <div class="modal-body" align="center" id="pointModalBody">
+                  
+                        <table width="470" id="pointTable">
+                            <!-- 구현하고싶다..
+                            <tr>
+                                <th width="120">아이디</th>
+                                <td align="left" colspan="6">
+                                    <input type="text" id="userIdPM" name="userIdM" value="" readonly>                       
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>누적적립금</th>
+                                <td ><input type="text" name="getPoint" id="ugetPoint"  value=""readonly></td>
+                               
+                                <th width="80">사용적립금</th>
+                                <td>
+                                    <input type="text" id="usedPoint" name="usedPoint" value="" readonly>                       
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>사용가능 적립금</th>
+                                <td colspan="6"><input type="tel" name="usablePoint" id="usablePoint"  value="" readonly><br>
+                               
+                                </td>
+                            </tr>
+                            -->
+                            <br><br>
+                            <tbody>
+                                <div id="pointListTable" height="300">
+                                    
+                                    <table id="pointListTable" >
+                                        <thead>
+                                            <tr style="background-color:rgba(231, 231, 231, 0.438);" height="30" align="center">
+                                                <th width="20%">날짜</td>
+                                                <th width="50%" colspan="2">내용</th>
+                                                <th width="20%">포인트내역</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody id="nonListTbody">
+                                            <tr align="center">
+                                                   <td colspan="5" width="600" height="250" style="border-bottom: 1px solid lightgrey;">
+                                                       조회된 포인트 내역이 없습니다.
+                                                   </td>
+                                              </tr>
+                                        </tbody>
+                                        <tbody id="listTbody">
+                                                    
+                                        </tbody>
+                                       
+                                       
+                                    </table>
+                                </div>
+                            </tbody>
+                        </table>
+                        
+                     
+                   
+                    <br><br>
+                </div>
+
+                <!-- Modal footer 구현못할듯 ㅎ
+                <div class="modal-footer" >
+                    <form action="<%=contextPath%>/updatePointAdmin.me" method="post">
+
+                        <button type="submit" class="smallBtn" id="updatePointBtn">수정</button>
+                        <button class="smallBtn" data-dismiss="modal">취소</button>
+                    </form>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    
     <script>
+        //모달창 스크롤
+        $(document).ready(function () {
+             $('head').append('<style type="text/css">.modal .modal-body {max-height: ' + ($('body').height() * .5) 
+                + 'px;overflow-y: auto;}.modal-open .modal{overflow-y: hidden !important;}</style>');
+        });
 
         // 개별 삭제버튼 클릭시 자동으로 체크박스 선택
         $(document).on('click', "#deleteBtn", function(){
@@ -455,9 +557,63 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
                 $("#adminPassword").focus();
             }
     
+        // 적립금 상세 보기 
+        
+        $(document).on('click', ".pointTag", function(){
+			
+
+           
+            let userId = $(this).parent().siblings(".idTag").children(".atag").text();
+           // let userId = 'user01';
+            let $startDate = '1900-01-01';
+            
+            let today = new Date();
+		
+			let edYear = today.getFullYear();
+			let edMonth = ('0' + (today.getMonth() + 1)).slice(-2);
+			let edDay = ('0' + today.getDate()).slice(-2);
+			
+			let $endDate = edYear + '-' + edMonth + '-' + edDay;
+
+            console.log(userId);
+            console.log($startDate);
+            console.log($endDate);
+             
+           	var list = [];
+           	
+			$.ajax({
+				url:"pointCheck.me",
+				data:{
+                    userId:userId,
+                    startDate:$startDate,
+                    endDate:$endDate 
+                },
+				type:"post",
+				success:function(list){
+                    var content = "";
+
+                   
+                        for(var i = 0; i<list.length; i++){
+                           
+                            	
+                           		content += "<tr align='center'>" +
+		                                    "<td>" + list[i].modifyDate + "</td>" + 
+		                                    "<td colspan='2'>" + list[i].pointName + "</td>" +
+		                                    "<td>" + list[i].point + "</td>" + 
+		                                "</tr>";
+		                
+		
+				                $("#nonListTbody").attr("style", "display:none");
+				                $("#listTbody").html(content);
+
+                    	}
 	
-	  
-   
+				},error:function(){
+					console.log("ajax 통신 실패");
+				}
+	
+			})
+		});    
     </script>
     
 </body>

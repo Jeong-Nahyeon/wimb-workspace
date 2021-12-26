@@ -56,9 +56,9 @@ public class MemberEnrollController extends HttpServlet {
 		
 		int result = new MemberService().insertMember(m);
 		
-		
+		HttpSession session = request.getSession();
 		if(result > 0) {
-			
+			request.setAttribute("alertMsg", "회원가입에 성공했습니다.");
 			response.sendRedirect(request.getContextPath());
 		} else {
 			
