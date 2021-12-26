@@ -62,4 +62,18 @@
 		  , ?
 		  )
 	</entry>
+	
+	<entry key="deleteCartCustom">
+		DELETE
+		  FROM CART
+		 WHERE M_CODE = ?
+		   AND CU_CODE = ?
+	</entry>
+	
+	<entry key="deleteCartProduct">
+		DELETE
+		  FROM CART
+		 WHERE M_CODE = ?
+		   AND P_CODE = ?
+	</entry>
 </properties>
