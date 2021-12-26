@@ -229,7 +229,7 @@
    <script>
    		$(".delete").on('click', function(){
    			
-   			if(confirm("해당상품을 취소하시겠습니까?")) {
+   			if(confirm("해당상품을 삭제하시겠습니까?")) {
    				
    				var pCode = $(this).parent().siblings(".pCode").text();
    				//console.log(pCode)
@@ -255,12 +255,12 @@
     <!-- 장바구니 선택담기 -->
 	<script>
 		$("#checkedCart").on('click', function(){
-		  promise1()
-			.then(successCheck)
-			.catch(failCheck);
+		  promise2()
+			.then(successCheck2)
+			.catch(failCheck2);
 		})
 					
-		function promise1(){
+		function promise2(){
 					
 			var result = confirm("선택한 상품을 장바구니로 이동하시겠습니까?");
 					
@@ -298,12 +298,12 @@
 					
 		} // delete
 				
-		function successCheck(){
+		function successCheck2(){
 			alert("상품이 장바구니에 담겼습니다.");
 			location.reload();
 		}
 		
-		function failCheck(){
+		function failCheck2(){
 		   alert("장바구니 담기에 실패하였습니다.")
 		} 
    </script>

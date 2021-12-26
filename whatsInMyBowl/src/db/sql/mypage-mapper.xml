@@ -266,14 +266,12 @@
 		  INTO CART
 		  (
 		    M_CODE
-		  , CA_CATEGORY
-		  , CA_CODE
+		  , P_CODE
 		  , CA_AMOUNT
 		  )
 		  VALUES
 		  (
 		    ?
-		  , 'P'
 		  , ?
 		  , 1
 		  )
