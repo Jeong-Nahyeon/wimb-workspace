@@ -567,19 +567,23 @@
 			
 			$.ajax({
 				
-				url:"insertHeart.my",
+				url:"heartDetail.my",
 				data:{pcode:pCode},
 				type:"post",
 				success:function(result){
 					if(result > 0) {
 						alert("해당 상품을 찜리스트에 추가하였습니다.");
-						//$(this).child(".heart-btn").attr('class','.heart-btn2');
-						//$(this).child(".heart-btn").css("display", "inline-block");
+						
+						result = "";
+						result += 
+							"<i class='fas fa-heart fa-2x heart-btn2' style='color:#9BD5BD;'></i>"
+						$(this).html(result);
+					}else {
+						alert("이미 담은 상품입니다.")
 					}
 				}, error:function(){
-					console.log("통신실패");
+					alert("로그인 후 이용가능합니다.")
 				}
-				
 			})
 	
 		});
