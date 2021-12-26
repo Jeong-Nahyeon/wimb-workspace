@@ -47,6 +47,31 @@ public class Inquiry {
 		this.iTitle = iTitle;
 		this.iContent = iContent;
 	}
+		
+	public Inquiry(int iCode, int mCode, String iCategory, String iTitle, String iContent, String iAnswer, Date iDate) {
+		super();
+		this.iCode = iCode;
+		this.mCode = mCode;
+		this.iCategory = iCategory;
+		this.iTitle = iTitle;
+		this.iContent = iContent;
+		this.iAnswer = iAnswer;
+		this.iDate = iDate;
+	}
+	
+	public Inquiry(int iCode, int mCode, String iCategory, String iTitle, String iContent, String iAnswer, Date iDate,
+			String aContent, Date aDate) {
+		super();
+		this.iCode = iCode;
+		this.mCode = mCode;
+		this.iCategory = iCategory;
+		this.iTitle = iTitle;
+		this.iContent = iContent;
+		this.iAnswer = iAnswer;
+		this.iDate = iDate;
+		this.aContent = aContent;
+		this.aDate = aDate;
+	}
 
 	public int getiCode() {
 		return iCode;

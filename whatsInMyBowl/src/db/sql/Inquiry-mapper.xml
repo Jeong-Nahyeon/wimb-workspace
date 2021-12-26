@@ -49,16 +49,71 @@
 		   )	
 	</entry>
 	
-	<entry key="">
-	
-	
+	<entry key="selectInquiryProcessingListCount">
+		SELECT
+		       COUNT(*) count
+		  FROM INQUIRY
+		 WHERE I_ANSWER = 'N'	
+		   AND I_STATUS = 'Y'
 	</entry>
 	
-	<entry key="">
-	
+	<entry key="selectInquiryProcessingAdminView">
+		SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT
+                               I_CODE
+                             , M_CODE
+                             , I_CATEGORY
+                             , I_TITLE
+                             , I_CONTENT
+                             , I_ANSWER
+                             , I_DATE
+                          FROM INQUIRY
+                         WHERE I_STATUS = 'Y'
+                           AND I_ANSWER = 'N'
+                         ORDER
+                            BY I_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?
 	
 	</entry>
+
+	<entry key="selectInquiryCompletionListCount">
+		SELECT
+		       COUNT(*) count
+		  FROM INQUIRY
+		 WHERE I_ANSWER = 'Y'	
+		   AND I_STATUS = 'Y'
+	</entry>
 	
+	<entry key="selectInquiryCompletionAdminView">
+		SELECT *
+          FROM (
+                SELECT ROWNUM RNUM, A.*
+                  FROM (
+                        SELECT
+                               I_CODE
+                             , M_CODE
+                             , I_CATEGORY
+                             , I_TITLE
+                             , I_CONTENT
+                             , I_ANSWER
+                             , I_DATE
+                             , A_CONTENT
+                             , A_DATE
+                          FROM INQUIRY
+                         WHERE I_STATUS = 'Y'
+                           AND I_ANSWER = 'Y'
+                         ORDER
+                            BY I_CODE DESC
+                        ) A
+                )
+        WHERE RNUM BETWEEN ? AND ?
+	
+	</entry>	
 	<entry key="">
 	
 	
