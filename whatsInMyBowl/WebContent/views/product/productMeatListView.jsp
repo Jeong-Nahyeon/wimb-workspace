@@ -299,6 +299,8 @@
 						<div class="product">
 							<div class="product-img">
 								<input type="hidden" name="pcode" value="<%= p.getpCode() %>">
+								<input type="hidden" name="pPrice" id="" value="<%= p.getpPrice() %>">
+								<input type="hidden" name="pName" id="" value="<%= p.getpName() %>">
 								<img src="<%= contextPath %>/<%= p.getFilePath() + p.getpMainImg() %>">
 							
 								<!-- case1. 찜 안 했을 경우 -->
@@ -306,13 +308,13 @@
 								<!-- case2. 찜 했을 경우 -->
 								<!-- <i class="fas fa-heart fa-2x heart-btn"></i> -->
 		
-								<i class="fas fa-cart-plus fa-2x cart-btn"></i>
+								<i class="fas fa-cart-plus fa-2x cart-btn add_cart"></i>
 							</div>
 		
 							<h6><%=  p.getpName() %></h6>
 							<% if(p.getDiscountPrice() != 0) { %>
 								<!-- case1. 할인가 -->
-								<span style="text-decoration: line-through; color:lightgray; margin:0;"><%= p.getpPrice() %>원</span>
+								<span style="text-decoration: line-through; color:lightgray; margin:0;" class="discount"><%= p.getpPrice() %>원</span>
 								<h4 style="color:salmon; display:inline-block; margin:0;"><%= p.getDiscountPrice() %>원</h4>
 							<% } else {%>
 								<!-- case2. 원가 -->
@@ -393,7 +395,7 @@
                 
                 <!-- Modal body -->
                 <div class="modal-body cart-content-area">
-                    <form action="" id="cart-insert-form" method="get">
+                    <!--<form action="" id="cart-insert-form" method="get">-->
                       
 						<div class="cart-product">
 						   
@@ -403,7 +405,8 @@
 
 						   <div class="cart-product-content">
 								
-								<h4 style="font-weight:bolder; margin-bottom: 30px;" align="left">닭가슴살 샐러드</h4>
+								<h4 style="font-weight:bolder; margin-bottom: 30px;" align="left" class="productName"></h4>
+								<input type="hidden" class="productCode">
 								
 								<span>수량 선택</span>
 								<span style="margin-left:50px;">
@@ -413,7 +416,7 @@
 								</span>
 								<hr>
 
-								<h2 style="font-weight: bolder; color:#9BD5BD;" align="right">4900원</h2>
+								<h2 style="font-weight: bolder; color:#9BD5BD;" align="right" class="productPrice"></h2>
 						   
 							</div>
 
@@ -445,20 +448,65 @@
 
 					   </div>
 					   
-                    </form>
+                    <!--</form>-->
                 </div>
                 
                 <!-- Modal footer -->
                 <div class="modal-footer button-area">
 					<div class="btns" align="center" style="width:100%;">
 						<button type="reset" id="cart-close-btn" class="btn btn-sm" data-dismiss="modal">취소</button>
-						<button type="submit" id="cart-insert-btn" class="btn btn-sm" style="background:#9BD5BD; margin:0px 5px;" form="cart-insert-form">등록</button>
+						<button type="button" id="cart-insert-btn" class="btn btn-sm" style="background:#9BD5BD; margin:0px 5px;" onclick="addCartProduct();">등록</button>
 					</div>
                 </div>
             
             </div>
         </div>
     </div>
+
+	<!-- 장바구니 담기 ajax (나경)-->
+	<script>
+
+		$(document).on("click", ".add_cart", function(){
+			var productName = $(this).siblings("input[name='pName']").val()
+			var productCode = $(this).siblings("input[name='pcode']").val()
+			var productPrice = 0;
+			if($(this).parent().siblings(".discount").length > 0){
+				productPrice = $(this).parent().siblings("h4").text()
+				console.log(productPrice)
+			}else{
+				productPrice = $(this).siblings("input[name='pPrice']").val()
+			}
+			$(".modal-body .productName").text(productName);
+			$(".modal-body .productPrice").text(productPrice);
+			$(".modal-body .productCode").val(productCode);
+		})
+
+		function addCartProduct(){
+			var productCode = $(".productCode").val();
+			var productCount = $("#amount").val();
+			console.log(productCode);
+			console.log(productCount);
+
+			$.ajax({
+				url:"addcartpro.cart",
+				data:{
+					productCode:productCode,
+					productCount:productCount
+				},
+				success:function(result){
+					if(result == 1){
+						$("#cart-modal").modal("hide");
+						$("#cart-success-modal").modal("show");
+					}else{
+						alert("이미 담겨있는 상품으로 수량을 변경했습니다.");
+					}
+				},
+				error:function(){
+					console.log("ajax 통신 실패");
+				}
+			})
+		}
+	</script>
 
 
 		   
@@ -493,7 +541,7 @@
 				<div class="modal-footer button-area">
 					<div class="cart-success-btns" align="center" style="width:100%;">
 						<button type="button" class="btn btn-sm" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
-						<button type="submit" id="cart-page-btn" class="btn btn-sm" style="background:#9BD5BD; margin:0px 5px;">확인</button>
+						<button type="submit" id="cart-page-btn" class="btn btn-sm" style="background:#9BD5BD; margin:0px 5px;" onclick="location.href='<%= contextPath%>/cartlist.cart'">확인</button>
 					</div>
 				</div>
 
