@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.wimb.mypage.model.service.MyPageService;
 import com.wimb.mypage.model.vo.Orders;
 
@@ -34,15 +35,17 @@ public class AdminOrderSearchController extends HttpServlet {
 	
 		request.setCharacterEncoding("UTF-8");
 		
-		String kword = request.getParameter("search");
-		String option = request.getParameter("searchType");
-		//System.out.println(kword);
-		//System.out.println(option);
+		String kword = request.getParameter("kword");
+		String option = request.getParameter("option");
 		
 		ArrayList<Orders> olist = new MyPageService().searchOrder(kword, option);
 		
-		request.setAttribute("olist", olist);
-		response.sendRedirect(request.getContextPath() + "/orderList.admin");
+		
+		response.setContentType("application/json; charset=UTF-8");
+		new Gson().toJson(olist, response.getWriter());	
+		
+		
+		
 	
 	}
 

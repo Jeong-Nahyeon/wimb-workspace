@@ -261,4 +261,12 @@ public class MyPageService {
 		close(conn);
 		return olist;
 	}
+	
+	// 관리자 환불내역 리스트검색
+	public ArrayList<Orders> adminRefundList(PageInfo pi) {
+		Connection conn = getConnection();
+		ArrayList<Orders> olist = new MyPageDao().adminRefundList(conn, pi);
+		close(conn);
+		return olist;
+	}
 }

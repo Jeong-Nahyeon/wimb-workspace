@@ -739,9 +739,7 @@ public class MyPageDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, option);
-			pstmt.setString(2, kword);
-			
+			pstmt.setString(1, kword);
 			
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
@@ -780,6 +778,59 @@ public class MyPageDao {
 			close(pstmt);
 		}
 		return olist;
+	}
+	
+	public ArrayList<Orders> adminRefundList(Connection conn, PageInfo pi) {
+		ArrayList<Orders> olist = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("adminRefundList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql); // 미완성된 sql문
+
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Orders od = new Orders(rset.getString("order_code"),
+						               rset.getInt("m_code"),
+						               rset.getString("pm_code"),
+						               rset.getInt("order_amount"),
+						               rset.getString("order_name"),
+						               rset.getString("order_address"),
+						               rset.getString("order_subaddress"),
+						               rset.getInt("order_zipcode"),
+						               rset.getString("order_phone"),
+						               rset.getString("order_email"),
+						               rset.getString("order_request"),
+						               rset.getInt("order_point"),
+						               rset.getString("company"),
+						               rset.getString("invoice"),
+						               rset.getString("order_status"),
+						               rset.getDate("order_date"),
+						               rset.getInt("rnum"),
+						               rset.getString("p_code"),
+						               rset.getString("p_name"),
+						               rset.getString("cu_code"),
+						               rset.getString("cu_name"),
+						               rset.getInt("pm_totalcost"),
+						               rset.getInt("pm_finalcost"),
+						               rset.getString("pm_method"));
+				olist.add(od);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return olist;
+		
 	}
 	
 	

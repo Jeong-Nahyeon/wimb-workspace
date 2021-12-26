@@ -142,8 +142,8 @@
         </div>
 
         <div class="menus">
-            <button type="button" id="orderLIst"><b>주문내역</b></button>
-            <button type="button" id="refundLIst"><b>환불내역</b></button>
+            <button type="button" id="orderList"><b>주문내역</b></button>
+            <button type="button" id="refundList"><b>환불내역</b></button>
             <button type="button" id="cancelList"><b>취소내역</b></button>
         </div>
         
@@ -226,7 +226,7 @@
                     <table class="search-area">
                         <tr>
                             <td>
-                                <select name="searchType" style="height: 30px; width: 95px;">
+                                <select id="searchType" style="height: 30px; width: 95px;">
                                     <option value="ORDER_NAME">주문자명</option>
                                     <option value="ORDER_CODE">주문번호</option>
                                     <option value="PM_METHOD">결제유형</option>
@@ -244,37 +244,62 @@
 
 
         </div>
+		
+		
         
-        <script>
-        
-	        $("#searchGo").click(function(){
-				location.href = "<%= contextPath %>/orderList.admin?option=" + $('#searchType option:selected').val() + "&keyword=" + $('input[name=search]');   			
-	   		})
-        
-        </script>
         
         <!-- 검색키워드 넘기기 -->
         <script>
        		$("#searchGo").click(function(){
        			
-       			var keyword = $("#search").val();
-       			var option = $('#searchType option:selected').val();
-       			console.log(keyword);
-       			console.log(option);
+       			var keyword = $("input[name=search]").val();
+       			//console.log(keyword);
        			
        			$.ajax({
        				
-       				url:"orderList.admin",
+       				url:"orderSearch.admin",
        				data:{
        					kword:keyword,
-    					option:option
        				},
        				type:"post",
-       				success:function(){
-       					
-       				}, error:function(){
-       					console.log("통신실패");
-       				}
+       				success:function(olist){
+       					console.log(olist);
+	       				 $(".list tbody").html("");
+	
+	                     var result = "";
+	                     
+	                     for(let i=0; i<olist.length; i++){
+	                         
+	                         result += "<tr>"
+	                                     + "<td><input type='checkbox'></td>"
+	                                     + "<td>" + olist[i].rNum + "</td>"
+	                                     + "<td class='oCOde'>" + olist[i].orderCode + "</td>"
+	                                     + "<td>" + olist[i].mName + "</td>";
+	                                     if(olist.pName == null) {
+	                                    	 result += "<td class='atag'><a data-toggle='modal' data-target=''#myModal'>" + olist[i].cuName + "</a></td>";
+	                                     }else if(olist.cuName == null){
+	                                    	 result += "<td class='atag'><a data-toggle='modal' data-target=''#myModal'>" + olist[i].pName + "</a></td>"; 
+	                                     }
+	                                     result +=
+	                                      "<td>" + olist[i].totalCost + "</td>"
+	                                     + "<td>" + olist[i].finalCost + "</td>"
+	                                     + "<td>3000원</td>"
+	                                     + "<td>" + olist[i].pmMethod + "</td>"
+	                                     + "<td>" + olist[i].company + "</td>"
+	                                     + "<td>" + olist[i].invoice + "</td>"
+	                                     + "<td>" + olist[i].status + "</td>"
+	                                 + "</tr>";
+	                                 
+	                         
+	                                 
+	                     }
+	
+	                     $(".list tbody").html(result);
+	                     $(".paging-area").text("");
+    					
+    				}, error:function() {
+    					console.log("통신에러")
+    				}
        				
        			})
        			
@@ -521,8 +546,15 @@
 		})
 	</script>
 	
-
-
+	
+	<!-- 환불내역 조회 -->
+	<script>
+		$("#refundList").on('click', function(){
+			
+			location.href = "<%= contextPath %>/refundList.admin?cpage=1"
+			
+		})
+	</script>
 
 
         

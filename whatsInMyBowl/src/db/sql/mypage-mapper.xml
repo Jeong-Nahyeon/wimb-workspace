@@ -360,37 +360,85 @@
 	</entry>
 	
 	<entry key="searchOrder">
-		SELECT 
-		       ORDER_CODE
-		     , OD.M_CODE
-		     , PM_CODE
-		     , ORDER_AMOUNT
-		     , ORDER_NAME
-		     , ORDER_ADDRESS
-		     , ORDER_SUBADDRESS
-		     , ORDER_ZIPCODE
-		     , ORDER_PHONE
-		     , ORDER_EMAIL
-		     , ORDER_REQUEST
-		     , ORDER_POINT
-		     , NVL(ORDER_COMPANY, '-') COMPANY 
-		     , NVL(ORDER_INVOICE, '-') INVOICE
-		     , ORDER_STATUS
-		     , ORDER_DATE
-		     , P_CODE
-		     , P_NAME
-		     , CU_CODE
-		     , CU_NAME
-		     , PM_TOTALCOST
-		     , PM_FINALCOST
-		     , PM_METHOD
-		FROM "ORDER" OD
-		JOIN PAYMENT USING (PM_CODE)
-		JOIN SUBORDER USING (ORDER_CODE)
-		LEFT JOIN CUSTOM USING (CU_CODE)
-		LEFT JOIN PRODUCT USING (P_CODE)
-		WHERE ? LIKE ?;
-		ORDER 
-		BY ORDER_CODE ASC;
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT 
+					           ORDER_CODE
+					         , OD.M_CODE
+					         , PM_CODE
+					         , ORDER_AMOUNT
+					         , ORDER_NAME
+					         , ORDER_ADDRESS
+					         , ORDER_SUBADDRESS
+					         , ORDER_ZIPCODE
+					         , ORDER_PHONE
+					         , ORDER_EMAIL
+					         , ORDER_REQUEST
+					         , ORDER_POINT
+					         , NVL(ORDER_COMPANY, '-') COMPANY 
+					         , NVL(ORDER_INVOICE, '-') INVOICE
+					         , ORDER_STATUS
+					         , ORDER_DATE
+					         , P_CODE
+					         , P_NAME
+					         , CU_CODE
+					         , CU_NAME
+					         , PM_TOTALCOST
+					         , PM_FINALCOST
+					         , PM_METHOD
+					 FROM "ORDER" OD
+					 JOIN PAYMENT USING (PM_CODE)
+					 JOIN SUBORDER USING (ORDER_CODE)
+					 LEFT JOIN CUSTOM USING (CU_CODE)
+					 LEFT JOIN PRODUCT USING (P_CODE)
+					WHERE ORDER_NAME LIKE '%' || ? || '%'
+					ORDER 
+					   BY ORDER_CODE ASC
+		                ) A
+		        )
+	</entry>
+	
+	<entry key="adminRefundList">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT 
+					           ORDER_CODE
+					         , OD.M_CODE
+					         , PM_CODE
+					         , ORDER_AMOUNT
+					         , ORDER_NAME
+					         , ORDER_ADDRESS
+					         , ORDER_SUBADDRESS
+					         , ORDER_ZIPCODE
+					         , ORDER_PHONE
+					         , ORDER_EMAIL
+					         , ORDER_REQUEST
+					         , ORDER_POINT
+					         , NVL(ORDER_COMPANY, '-') COMPANY 
+					         , NVL(ORDER_INVOICE, '-') INVOICE
+					         , ORDER_STATUS
+					         , ORDER_DATE
+					         , P_CODE
+					         , P_NAME
+					         , CU_CODE
+					         , CU_NAME
+					         , PM_TOTALCOST
+					         , PM_FINALCOST
+					         , PM_METHOD
+					 FROM "ORDER" OD
+					 JOIN PAYMENT USING (PM_CODE)
+					 JOIN SUBORDER USING (ORDER_CODE)
+					 LEFT JOIN CUSTOM USING (CU_CODE)
+					 LEFT JOIN PRODUCT USING (P_CODE)
+					WHERE ORDER_STATUS = '제품환불' 
+					ORDER 
+					   BY ORDER_CODE ASC
+		                ) A
+		        )
+		  WHERE RNUM BETWEEN ? AND ?
 	</entry>
 </properties>
