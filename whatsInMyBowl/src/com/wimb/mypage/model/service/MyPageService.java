@@ -270,20 +270,52 @@ public class MyPageService {
 		return olist;
 	}
 	
-	// 관리자 환불내역 리스트검색
-	public ArrayList<Orders> adminRefundList(PageInfo pi) {
+	// 관리자 환불 페이징처리
+	public int selectRListCount() {
 		Connection conn = getConnection();
-		ArrayList<Orders> olist = new MyPageDao().adminRefundList(conn, pi);
+		int listCount = new MyPageDao().selectRListCount(conn);
 		close(conn);
-		return olist;
+		return listCount;
 	}
 	
-	// 관리자 취소내역 리스트검색
+	// 관리자 환불목록 검색
+	public ArrayList<Orders> searchRefund(String kword, String option){
+		Connection conn = getConnection();
+		ArrayList<Orders> rlist = new MyPageDao().searchRefund(conn, kword, option);
+		close(conn);
+		return rlist;
+	}
+	
+	// 관리자 환불내역 리스트
+	public ArrayList<Orders> adminRefundList(PageInfo pi) {
+		Connection conn = getConnection();
+		ArrayList<Orders> rlist = new MyPageDao().adminRefundList(conn, pi);
+		close(conn);
+		return rlist;
+	}
+	
+	// 관리자 취소목록 검색
+	public ArrayList<Orders> searchCancel(String kword, String option){
+		Connection conn = getConnection();
+		ArrayList<Orders> clist = new MyPageDao().searchCancel(conn, kword, option);
+		close(conn);
+		return clist;
+	}
+	
+	// 관리자 취소 페이징처리
+	public int selectCListCount() {
+		Connection conn = getConnection();
+		int listCount = new MyPageDao().selectCListCount(conn);
+		close(conn);
+		return listCount;
+	}
+	
+	// 관리자 취소내역 리스트
 	public ArrayList<Orders> adminCancelList(PageInfo pi) {
 		Connection conn = getConnection();
-		ArrayList<Orders> olist = new MyPageDao().adminCancelList(conn, pi);
+		ArrayList<Orders> clist = new MyPageDao().adminCancelList(conn, pi);
 		close(conn);
-		return olist;
+		return clist;
 	}
 	
 	// 찜리스트 insert

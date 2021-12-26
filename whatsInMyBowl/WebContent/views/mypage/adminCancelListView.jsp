@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList, com.wimb.mypage.model.vo.Orders, com.wimb.common.model.vo.PageInfo" %>
 <%
-	ArrayList<Orders> olist = (ArrayList<Orders>)request.getAttribute("olist");
+	ArrayList<Orders> clist = (ArrayList<Orders>)request.getAttribute("clist");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
 	int currentPage = pi.getCurrentPage();
@@ -152,7 +152,6 @@
                 <label><b>총</b></label>
                 <label id="countNo"><b>87</b></label>
                 <label><b>건</b></label>
-                <button type="button" id="cancel">주문 취소</button>
             </div>
             <table class="list" width="1000">
                 <thead>
@@ -172,14 +171,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                <% if(olist == null) { %>
+                <% if(clist == null) { %>
                 	<tr>
                         <td colspan="12" style="height:300px;">조회내역이 없습니다.</td>
                     </tr>
                 
                 
                 <% }else { %>
-                	<% for(Orders od : olist) { %>
+                	<% for(Orders od : clist) { %>
 	                    <tr>
 	                        <td><input type="checkbox"></td>
 	                        <td><%= od.getrNum() %></td>
@@ -206,19 +205,19 @@
             <div class="paging-area" style="width:1000px; padding-bottom:40px;" align="center">
 			
 				<% if (currentPage != 1) { %>
-                <button onclick="location.href='<%= contextPath %>/orderList.admin?cpage=<%= currentPage -1 %>';"> &lt; </button>
+                <button onclick="location.href='<%= contextPath %>/cancelList.admin?cpage=<%= currentPage -1 %>';"> &lt; </button>
                 <% } %>
 					
 				<% for(int p=startPage; p<=endPage; p++) { %>
                     <% if(p == currentPage) { %>
                     <button disabled><%= p %></button>
                     <% }else { %>
-                    <button onclick="location.href='<%= contextPath %>/orderList.admin?cpage=<%= p %>';"><%= p %></button>
+                    <button onclick="location.href='<%= contextPath %>/cancelList.admin?cpage=<%= p %>';"><%= p %></button>
                 	<% } %>
                 <% } %>
                 
                 <% if(currentPage != maxPage) { %>
-                <button onclick="location.href='<%= contextPath %>/orderList.admin?cpage=<%= currentPage +1%>';"> &gt; </button>
+                <button onclick="location.href='<%= contextPath %>/cancelList.admin?cpage=<%= currentPage +1%>';"> &gt; </button>
             	<% } %>
             </div>
 
@@ -228,6 +227,8 @@
                             <td>
                                 <select id="searchType" style="height: 30px; width: 95px;">
                                     <option value="ORDER_NAME">주문자명</option>
+                                    <option value="ORDER_CODE">주문번호</option>
+                                    <option value="PM_METHOD">결제유형</option>
                                 </select>
                             </td>
                             <td>
@@ -251,44 +252,41 @@
        		$("#searchGo").click(function(){
        			
        			var keyword = $("input[name=search]").val();
-       			var option = $("option:selected").val();
        			//console.log(keyword);
-       			console.log(option);
        			
        			$.ajax({
        				
-       				url:"orderSearch.admin",
+       				url:"cancelSearch.admin",
        				data:{
        					kword:keyword,
-       					option:option
        				},
        				type:"post",
-       				success:function(olist){
-       					
+       				success:function(clist){
+       					//console.log(olist);
 	       				 $(".list tbody").html("");
 	
 	                     var result = "";
 	                     
-	                     for(let i=0; i<olist.length; i++){
+	                     for(let i=0; i<clist.length; i++){
 	                         
 	                         result += "<tr>"
 	                                     + "<td><input type='checkbox'></td>"
-	                                     + "<td>" + olist[i].rNum + "</td>"
-	                                     + "<td class='oCOde'>" + olist[i].orderCode + "</td>"
-	                                     + "<td>" + olist[i].mName + "</td>";
-	                                     if(olist[i].pName == null) {
-	                                    	 result += "<td class='atag'><a data-toggle='modal' data-target=''#myModal'>" + olist[i].cuName + "</a></td>";
+	                                     + "<td>" + clist[i].rNum + "</td>"
+	                                     + "<td class='oCOde'>" + clist[i].orderCode + "</td>"
+	                                     + "<td>" + clist[i].mName + "</td>";
+	                                     if(clist[i].pName == null) {
+	                                    	 result += "<td class='atag'><a data-toggle='modal' data-target=''#myModal'>" + clist[i].cuName + "</a></td>";
 	                                     }else {
-	                                    	 result += "<td class='atag'><a data-toggle='modal' data-target=''#myModal'>" + olist[i].pName + "</a></td>"; 
+	                                    	 result += "<td class='atag'><a data-toggle='modal' data-target=''#myModal'>" + clist[i].pName + "</a></td>"; 
 	                                     }
 	                                     result +=
-	                                      "<td>" + olist[i].totalCost + "</td>"
-	                                     + "<td>" + olist[i].finalCost + "</td>"
+	                                      "<td>" + clist[i].totalCost + "</td>"
+	                                     + "<td>" + clist[i].finalCost + "</td>"
 	                                     + "<td>3000원</td>"
-	                                     + "<td>" + olist[i].pmMethod + "</td>"
-	                                     + "<td>" + olist[i].company + "</td>"
-	                                     + "<td>" + olist[i].invoice + "</td>"
-	                                     + "<td>" + olist[i].status + "</td>"
+	                                     + "<td>" + clist[i].pmMethod + "</td>"
+	                                     + "<td>" + clist[i].company + "</td>"
+	                                     + "<td>" + clist[i].invoice + "</td>"
+	                                     + "<td>" + clist[i].status + "</td>"
 	                                 + "</tr>";
 	                                 
 	                         
@@ -377,9 +375,13 @@
                     <!-- Modal body -->
                     <div class="modal-body">
 	                        <table>
-	                            <tr id="detail12">
+	                            <tr>
+	                            	<th>택배사</th>
+	                            	<td><input type='text' class='company' placeholder='주문이 취소되었습니다.' readonly></td>
 	                            </tr>
-	                            <tr id="detail13">
+	                            <tr>
+	                            	<th>운송장번호</th>
+	                            	<td><input type='text' class='invoice' placeholder='주문이 취소되었습니다.' readonly></td>
 	                            </tr>
 	                        </table>
                     </div>
@@ -481,31 +483,7 @@
 			        
 		        	$("#detail11").html(result11);
 					
-		        	//택배사
-		        	var result12 = "";
-		        	if(od.company === '-') {
-		        		result12 +=
-		        				"<th>" + "택배사" + "</td>"
-		        			  + "<td><input type='text' class='company' placeholder='택배사 입력'></td>";
-		        	}else {
-		        		result12 +=
-	        				"<th>" + "택배사" + "</td>"
-	        			  + "<td><input type='text' value='" + od.company + "' readonly></td>";
-		        	}
-		        	$("#detail12").html(result12);
 		        	
-		        	// 송장번호
-		        	var result13 = "";
-		        	if(od.invoice === '-') {
-		        		result13 +=
-		        				"<th>" + "운송장번호" + "</td>"
-		        			  + "<td><input type='text' class='invoice' placeholder='운송장번호 입력'></td>";
-		        	}else {
-		        		result13 +=
-	        				"<th>" + "운송장번호" + "</td>"
-	        			  + "<td><input type='text' value='" + od.invoice + "' readonly></td>";
-		        	}
-		        	$("#detail13").html(result13);
 				},error:function(){
 					console.log("상세정보 불러오기 통신 실패");
 				}
@@ -515,37 +493,7 @@
 		
 	</script>
 	
-	<script>
-		$('#submit').on('click', function(){
-			
-			var oCode = $('.orderCode').text();
-			var com = $('.company').val();
-			var inv = $('.invoice').val();
-			
-			$.ajax({
-				
-				url:"insertPost.admin",
-				type:"post",
-				data:{
-					oCode:oCode,
-					com:com,
-					inv:inv
-				}
-				, success:function(result) {
-					console.log(result);
-					if(result > 0) {
-						alert("배송정보를 입력하였습니다.");						
-					}else{
-						alert("요청에 실패하였습니다.\n관리자에게 문의하세요.")
-					}
-				}, error:function() {
-					console.log("통신에러")
-				}
-			
-				
-			})
-		})
-	</script>
+	
 	
 	
 	<!-- 버튼 조회 -->

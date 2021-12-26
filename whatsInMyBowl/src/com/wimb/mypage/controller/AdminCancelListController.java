@@ -42,7 +42,7 @@ public class AdminCancelListController extends HttpServlet {
 		int startPage;   // 페이징바 시작수
 		int endPage;     // 페이징바 끝수
 		
-		listCount = new MyPageService().selectListCount();
+		listCount = new MyPageService().selectCListCount();
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		pageLimit = 10;
 		listLimit = 10;
@@ -57,11 +57,11 @@ public class AdminCancelListController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, listLimit, maxPage, startPage, endPage);
 		
 				
-		ArrayList<Orders> olist = new MyPageService().adminCancelList(pi);
+		ArrayList<Orders> clist = new MyPageService().adminCancelList(pi);
 		
 		request.setAttribute("pi", pi);
-		request.setAttribute("olist", olist);
-		request.getRequestDispatcher("views/mypage/adminOrderListView.jsp").forward(request, response);
+		request.setAttribute("clist", clist);
+		request.getRequestDispatcher("views/mypage/adminCancelListView.jsp").forward(request, response);
 	
 	}
 
