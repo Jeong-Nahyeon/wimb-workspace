@@ -659,7 +659,7 @@
 					}
 				},
 				error:function(){
-
+					console.log("ajax 통신 실패");
 				}
 			})
 
