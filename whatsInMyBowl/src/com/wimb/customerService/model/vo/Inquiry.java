@@ -14,8 +14,6 @@ public class Inquiry {
 	private String aContent;    // 답변내용
 	private Date aDate;         // 답변일
 	private String iStatus;     // 게시여부(Y|N)
-	
-	public Inquiry() {}
 
 	public Inquiry(int iCode, int mCode, String iCategory, String iTitle, String iContent, String iAnswer, Date iDate,
 			String aContent, Date aDate, String iStatus) {
@@ -34,6 +32,16 @@ public class Inquiry {
 	
 	public Inquiry(int mCode, String iCategory, String iTitle, String iContent) {
 		super();
+		this.mCode = mCode;
+		this.iCategory = iCategory;
+		this.iTitle = iTitle;
+		this.iContent = iContent;
+	}
+	
+	
+	public Inquiry(int iCode, int mCode, String iCategory, String iTitle, String iContent) {
+		super();
+		this.iCode = iCode;
 		this.mCode = mCode;
 		this.iCategory = iCategory;
 		this.iTitle = iTitle;

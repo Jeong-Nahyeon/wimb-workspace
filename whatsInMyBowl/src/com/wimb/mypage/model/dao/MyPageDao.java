@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.wimb.common.model.vo.File;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.member.model.vo.Member;
 import com.wimb.mypage.model.vo.Inquiry;
@@ -208,101 +209,153 @@ public class MyPageDao {
 		
 	}
 	
-	
-	   // inquiry 목록조회
-	   public ArrayList<Inquiry> selectInquiryList(Connection conn, int mCode, PageInfo pi) {
-	      ArrayList<Inquiry> list = new ArrayList<>();
-	      ResultSet rset = null;
-	      PreparedStatement pstmt = null;
-	
-	      String sql = prop.getProperty("selectInquiryList");
-	      try {
-	         pstmt = conn.prepareStatement(sql);
-	         int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
-	         int endRow = startRow + pi.getBoardLimit() - 1;
-	         
-	         pstmt.setInt(1, mCode);
-	         pstmt.setInt(2, startRow);
-	         pstmt.setInt(3, endRow);
-	         
-	         rset = pstmt.executeQuery();
-	         
-	         while(rset.next()) {
-	            list.add(new Inquiry(rset.getInt("i_code"),
-	                                 rset.getInt("m_code"),
-	                                 rset.getString("i_category"),
-	                                 rset.getString("i_title"),
-	                                 rset.getString("i_content"),
-	                                 rset.getString("i_answer"),
-	                                 rset.getDate("i_date"),
-	                                 rset.getString("a_content"),
-	                                 rset.getDate("a_date")));
-	         }
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      } finally {
-	         close(rset);
-	         close(pstmt);
-	      }
-	      return list;
-	   }
-	   
-	   // inquiry 목록조회 시 사용할 페이징바
-	   public int selectInquiryListCount(Connection conn, int mCode) {
-	      int listCount = 0;
-	      PreparedStatement pstmt = null;
-	      ResultSet rset = null;
-	      
-	      String sql = prop.getProperty("selectInquiryListCount");
-	      try {
-	         pstmt = conn.prepareStatement(sql);
-	         pstmt.setInt(1, mCode);
-	         
-	         rset = pstmt.executeQuery();
-	         if(rset.next()) {
-	            listCount = rset.getInt("count");
-	         }
-	         
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      } finally {
-	         close(rset);
-	         close(pstmt);
-	      }
-	      return listCount;
-	   }
-	
-	// inquiry 삭제 dao
-	public int deleteInquiryList(Connection conn, int iCode) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("deleteInquiryList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, iCode);
-			
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
-	
-	/*
-	// inquiry 수정 시 등록한 글을 불러오는 메소드
-	public Inquiry selectInquiry(Connection conn, int iCode) {
-		Inquiry inq = null;
-		ResultSet rset = null;
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("");
-		
-	}
-	*/
+    // inquiry 목록조회
+    public ArrayList<Inquiry> selectInquiryList(Connection conn, int mCode, PageInfo pi) {
+       ArrayList<Inquiry> list = new ArrayList<>();
+       ResultSet rset = null;
+       PreparedStatement pstmt = null;
+ 
+       String sql = prop.getProperty("selectInquiryList");
+       try {
+          pstmt = conn.prepareStatement(sql);
+          int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+          int endRow = startRow + pi.getBoardLimit() - 1;
+          
+          pstmt.setInt(1, mCode);
+          pstmt.setInt(2, startRow);
+          pstmt.setInt(3, endRow);
+          
+          rset = pstmt.executeQuery();
+          
+          while(rset.next()) {
+             list.add(new Inquiry(rset.getInt("i_code"),
+                                  rset.getInt("m_code"),
+                                  rset.getString("i_category"),
+                                  rset.getString("i_title"),
+                                  rset.getString("i_content"),
+                                  rset.getString("i_answer"),
+                                  rset.getDate("i_date"),
+                                  rset.getString("a_content"),
+                                  rset.getDate("a_date")));
+          }
+       } catch (SQLException e) {
+          e.printStackTrace();
+       } finally {
+          close(rset);
+          close(pstmt);
+       }
+       return list;
+    }
+    
+    // inquiry 목록조회 시 사용할 페이징바
+    public int selectInquiryListCount(Connection conn, int mCode) {
+       int listCount = 0;
+       PreparedStatement pstmt = null;
+       ResultSet rset = null;
+       
+       String sql = prop.getProperty("selectInquiryListCount");
+       try {
+          pstmt = conn.prepareStatement(sql);
+          pstmt.setInt(1, mCode);
+          
+          rset = pstmt.executeQuery();
+          if(rset.next()) {
+             listCount = rset.getInt("count");
+          }
+          
+       } catch (SQLException e) {
+          e.printStackTrace();
+       } finally {
+          close(rset);
+          close(pstmt);
+       }
+       return listCount;
+    }
+ 
+ // inquiry 삭제 dao
+ public int deleteInquiryList(Connection conn, int iCode) {
+    int result = 0;
+    PreparedStatement pstmt = null;
+    String sql = prop.getProperty("deleteInquiryList");
+    
+    try {
+       pstmt = conn.prepareStatement(sql);
+       pstmt.setInt(1, iCode);
+       
+       result = pstmt.executeUpdate();
+    } catch (SQLException e) {
+       e.printStackTrace();
+    } finally {
+       close(pstmt);
+    }
+    
+    return result;
+ }
+ 
+ // inquiry 수정 시 등록한 글을 불러오는 메소드
+ public Inquiry selectInquiry(Connection conn, int mCode, int iCode) {
+    Inquiry inq = null;
+    ResultSet rset = null;
+    PreparedStatement pstmt = null;
+    
+    String sql = prop.getProperty("selectInquiry");
+    
+    try {
+       pstmt = conn.prepareStatement(sql);
+       pstmt.setInt(1, mCode);
+       pstmt.setInt(2, iCode);
+
+       rset = pstmt.executeQuery();
+       if(rset.next()) {
+          inq = new Inquiry(rset.getInt("i_code"),
+                          rset.getInt("m_code"),
+                          rset.getString("i_category"),
+                          rset.getString("i_title"),
+                          rset.getString("i_content"),
+                          rset.getDate("i_date"));
+       }
+    } catch (SQLException e) {
+       e.printStackTrace();
+    } finally {
+       close(rset);
+       close(pstmt);
+    }
+    return inq;
+    
+ }
+ 
+ // inquiry 수정 시 첨부파일을 불러오는 메소드
+ public ArrayList<File> selectInquiryFile(Connection conn, int iCode){
+    ArrayList<File> list = new ArrayList<>();
+    PreparedStatement pstmt = null;
+    ResultSet rset = null;
+    
+    String sql = prop.getProperty("selectInquiryFile");
+    
+    try {
+       pstmt = conn.prepareStatement(sql);
+       pstmt.setInt(1, iCode);
+       
+       rset = pstmt.executeQuery();
+       
+       while(rset.next()) {
+          list.add(new File(rset.getInt("f_code"),
+                    rset.getString("f_name"),
+                    rset.getString("f_rename"),
+                    rset.getString("f_path")));
+       }
+       
+       
+    } catch (SQLException e) {
+       e.printStackTrace();
+    } finally {
+       close(rset);
+       close(pstmt);
+    }
+    return list;
+    
+ }
+
 	
 	// 주문목록/배송조회 페이지
 	public ArrayList<MyOrders> orderListDetail(Connection conn, Member m, String startDate, String endDate) {

@@ -483,4 +483,30 @@
 		        )
 		  WHERE RNUM BETWEEN ? AND ?
 	</entry>
+	
+   
+   <entry key="selectInquiry">
+      SELECT 
+             I_CODE
+           , M_CODE
+           , I_CATEGORY
+           , I_TITLE
+           , I_CONTENT
+           , I_DATE
+        FROM INQUIRY
+       WHERE I_STATUS='Y'
+         AND M_CODE = ?   
+         AND I_CODE = ?
+   </entry>
+   
+   <entry key="selectInquiryFile">
+      SELECT
+             F_CODE
+           , F_NAME
+           , F_RENAME
+           , F_PATH
+        FROM "FILE"
+       WHERE F_REFCODE = ?
+         AND F_REF = 'I'
+   </entry>
 </properties>

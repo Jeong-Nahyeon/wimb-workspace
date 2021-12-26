@@ -115,6 +115,7 @@
 		     , F_PATH
 		  FROM "FILE"
 		 WHERE F_REFCODE = ?	
+		   AND F_REF = 'N'
 	</entry>
 	
 	<!-- 수정 시 공통적으로  수행되는 update문 -->

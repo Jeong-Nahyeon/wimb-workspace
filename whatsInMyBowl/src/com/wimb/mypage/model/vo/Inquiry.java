@@ -46,6 +46,25 @@ public class Inquiry {
 		this.aDate = aDate;
 	}
 
+	public Inquiry(int iCode, int mCode, String iCategory, String iTitle, String iContent, Date iDate) {
+		super();
+		this.iCode = iCode;
+		this.mCode = mCode;
+		this.iCategory = iCategory;
+		this.iTitle = iTitle;
+		this.iContent = iContent;
+		this.iDate = iDate;
+	}
+	
+	public Inquiry(int iCode, int mCode, String iCategory, String iTitle, String iContent) {
+		super();
+		this.iCode = iCode;
+		this.mCode = mCode;
+		this.iCategory = iCategory;
+		this.iTitle = iTitle;
+		this.iContent = iContent;
+	}
+
 	public int getiCode() {
 		return iCode;
 	}

@@ -8,6 +8,7 @@ import static com.wimb.common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.wimb.common.model.vo.File;
 import com.wimb.common.model.vo.PageInfo;
 import com.wimb.member.model.vo.Member;
 import com.wimb.mypage.model.dao.MyPageDao;
@@ -82,49 +83,56 @@ public class MyPageService {
 	
 	}
 	
-	   // inquiry 목록조회
-	   public ArrayList<Inquiry> selectInquiryList(int mCode, PageInfo pi) {
-	      Connection conn = getConnection();
-	      ArrayList<Inquiry> list = new MyPageDao().selectInquiryList(conn, mCode, pi);
-	      close(conn);
-	      return list;
-	   }
-	   
-	   // inquiry 목록조회 시 사용할 페이징바
-	   public int selectInquiryListCount(int mCode) {
-	      Connection conn = getConnection();
-	      int listCount = new MyPageDao().selectInquiryListCount(conn, mCode);
-	      close(conn);
-	      
-	      return listCount;
-	   }	
+    // inquiry 목록조회
+    public ArrayList<Inquiry> selectInquiryList(int mCode, PageInfo pi) {
+       Connection conn = getConnection();
+       ArrayList<Inquiry> list = new MyPageDao().selectInquiryList(conn, mCode, pi);
+       close(conn);
+       return list;
+    }
+    
+    // inquiry 목록조회 시 사용할 페이징바
+    public int selectInquiryListCount(int mCode) {
+       Connection conn = getConnection();
+       int listCount = new MyPageDao().selectInquiryListCount(conn, mCode);
+       close(conn);
+       
+       return listCount;
+    }   
 
-	// inquiry 삭제
-	public int deleteInquiryList(int iCode) {
-		Connection conn = getConnection();	
-		int result = new MyPageDao().deleteInquiryList(conn, iCode);
-		
-		if(result > 0) {
-			commit(conn);
-		} else {
-			rollback(conn);
-		}
-		
-		close(conn);
-	
-		return result;
-	}
-	
-	/*
-	// inquiry 수정 시 등록한 글을 불러오는 메소드
-	public Inquiry selectInquiry(int iCode) {
-		Connection conn = getConnection();
-		Inquiry inq = new MyPageDao().selectInquiry(iCode);
-		
-		close(conn);
-		return inq;
-	}
-	*/
+ // inquiry 삭제
+ public int deleteInquiryList(int iCode) {
+    Connection conn = getConnection();   
+    int result = new MyPageDao().deleteInquiryList(conn, iCode);
+    
+    if(result > 0) {
+       commit(conn);
+    } else {
+       rollback(conn);
+    }
+    
+    close(conn);
+ 
+    return result;
+ }
+ 
+ // inquiry 수정 시 등록한 글을 불러오는 메소드
+ public Inquiry selectInquiry(int mCode, int iCode) {
+    Connection conn = getConnection();
+    Inquiry inq = new MyPageDao().selectInquiry(conn, mCode, iCode);
+    
+    close(conn);
+    return inq;
+ }
+ 
+ // inquiry 수정 시 첨부파일을 불러오는 메소드
+ public ArrayList<File> selectInquiryFile(int iCode){
+    Connection conn = getConnection();
+    ArrayList<File> list = new MyPageDao().selectInquiryFile(conn, iCode);
+    close(conn);
+    return list;
+ }
+
 	
 	// 주문목록/배송조회 페이지
 	public ArrayList<MyOrders> orderListDetail(Member m, String startDate, String endDate) {
