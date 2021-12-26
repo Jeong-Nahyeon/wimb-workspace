@@ -274,7 +274,7 @@
         <div class="sidebarWrap">
             <div class="sidebar">
                 <div style="border-bottom:1px solid lightgrey">
-                    <a href=""><i class="fas fa-heart"></i></a>
+                    <a href="<%= contextPath %>/heartList.my"><i class="fas fa-heart"></i></a>
                 </div>
                 <div style="border-bottom:1px solid lightgrey">
                     <a href=""><i class="fas fa-cart-plus"></i></a>
