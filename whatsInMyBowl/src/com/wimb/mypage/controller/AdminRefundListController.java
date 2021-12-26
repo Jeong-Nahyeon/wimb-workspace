@@ -35,34 +35,34 @@ public class AdminRefundListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// -- 페이징 처리 --
-		int listCount;    // 총 list갯수
-		int currentPage; // 현재페이지
-		int pageLimit;   // 페이징바 최대갯수
-		int listLimit;  // 한 페이지에 보여질 list갯수
-		int maxPage;     // 가장 마지막 페이지
-		int startPage;   // 페이징바 시작수
-		int endPage;     // 페이징바 끝수
+		int rlistCount;    // 총 list갯수
+		int rcurrentPage; // 현재페이지
+		int rpageLimit;   // 페이징바 최대갯수
+		int rlistLimit;  // 한 페이지에 보여질 list갯수
+		int rmaxPage;     // 가장 마지막 페이지
+		int rstartPage;   // 페이징바 시작수
+		int rendPage;     // 페이징바 끝수
 		
-		listCount = new MyPageService().selectListCount();
-		currentPage = Integer.parseInt(request.getParameter("cpage"));
-		pageLimit = 10;
-		listLimit = 10;
-		maxPage = (int)Math.ceil((double)listCount / listLimit);
-		startPage = (currentPage -1) / pageLimit * pageLimit + 1;
-		endPage = startPage + pageLimit -1;
+		rlistCount = new MyPageService().selectRListCount();
+		rcurrentPage = Integer.parseInt(request.getParameter("cpage"));
+		rpageLimit = 10;
+		rlistLimit = 10;
+		rmaxPage = (int)Math.ceil((double)rlistCount / rlistLimit);
+		rstartPage = (rcurrentPage -1) / rpageLimit * rpageLimit + 1;
+		rendPage = rstartPage + rpageLimit -1;
 		
-		if(endPage > maxPage) {
-			endPage = maxPage;
+		if(rendPage > rmaxPage) {
+			rendPage = rmaxPage;
 		}
 		
-		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, listLimit, maxPage, startPage, endPage);
+		PageInfo pi = new PageInfo(rlistCount, rcurrentPage, rpageLimit, rlistLimit, rmaxPage, rstartPage, rendPage);
 		
 				
-		ArrayList<Orders> olist = new MyPageService().adminRefundList(pi);
+		ArrayList<Orders> rlist = new MyPageService().adminRefundList(pi);
 		
 		request.setAttribute("pi", pi);
-		request.setAttribute("olist", olist);
-		request.getRequestDispatcher("views/mypage/adminOrderListView.jsp").forward(request, response);
+		request.setAttribute("rlist", rlist);
+		request.getRequestDispatcher("views/mypage/adminRefundListView.jsp").forward(request, response);
 	}
 
 	/**

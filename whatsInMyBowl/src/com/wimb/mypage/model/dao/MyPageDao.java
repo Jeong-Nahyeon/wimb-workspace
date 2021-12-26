@@ -833,9 +833,84 @@ public class MyPageDao {
 		return olist;
 	}
 	
+	// 관리자 환불목록 검색
+	public ArrayList<Orders> searchRefund(Connection conn, String kword, String option) {
+		ArrayList<Orders> rlist = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("searchRefund");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, kword);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Orders od = new Orders(rset.getString("order_code"),
+						               rset.getInt("m_code"),
+						               rset.getString("pm_code"),
+						               rset.getInt("order_amount"),
+						               rset.getString("order_name"),
+						               rset.getString("order_address"),
+						               rset.getString("order_subaddress"),
+						               rset.getInt("order_zipcode"),
+						               rset.getString("order_phone"),
+						               rset.getString("order_email"),
+						               rset.getString("order_request"),
+						               rset.getInt("order_point"),
+						               rset.getString("company"),
+						               rset.getString("invoice"),
+						               rset.getString("order_status"),
+						               rset.getDate("order_date"),
+						               rset.getInt("rnum"),
+						               rset.getString("p_code"),
+						               rset.getString("p_name"),
+						               rset.getString("cu_code"),
+						               rset.getString("cu_name"),
+						               rset.getInt("pm_totalcost"),
+						               rset.getInt("pm_finalcost"),
+						               rset.getString("pm_method"));
+				rlist.add(od);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return rlist;
+	}
+	
+	// 관리자 환불 페이징처리
+	public int selectRListCount(Connection conn) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectRListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+	
 	// 관리자 환불 목록 리스트
 	public ArrayList<Orders> adminRefundList(Connection conn, PageInfo pi) {
-		ArrayList<Orders> olist = new ArrayList<>();
+		ArrayList<Orders> rlist = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("adminRefundList");
@@ -875,7 +950,7 @@ public class MyPageDao {
 						               rset.getInt("pm_totalcost"),
 						               rset.getInt("pm_finalcost"),
 						               rset.getString("pm_method"));
-				olist.add(od);
+				rlist.add(od);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -883,13 +958,88 @@ public class MyPageDao {
 			close(rset);
 			close(pstmt);
 		}
-		return olist;
+		return rlist;
 		
 	}
 	
+	// 관리자 취소목록 검색
+		public ArrayList<Orders> searchCancel(Connection conn, String kword, String option) {
+			ArrayList<Orders> clist = new ArrayList<>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("searchCancel");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, kword);
+				
+				rset = pstmt.executeQuery();
+				while(rset.next()) {
+					Orders od = new Orders(rset.getString("order_code"),
+							               rset.getInt("m_code"),
+							               rset.getString("pm_code"),
+							               rset.getInt("order_amount"),
+							               rset.getString("order_name"),
+							               rset.getString("order_address"),
+							               rset.getString("order_subaddress"),
+							               rset.getInt("order_zipcode"),
+							               rset.getString("order_phone"),
+							               rset.getString("order_email"),
+							               rset.getString("order_request"),
+							               rset.getInt("order_point"),
+							               rset.getString("company"),
+							               rset.getString("invoice"),
+							               rset.getString("order_status"),
+							               rset.getDate("order_date"),
+							               rset.getInt("rnum"),
+							               rset.getString("p_code"),
+							               rset.getString("p_name"),
+							               rset.getString("cu_code"),
+							               rset.getString("cu_name"),
+							               rset.getInt("pm_totalcost"),
+							               rset.getInt("pm_finalcost"),
+							               rset.getString("pm_method"));
+					clist.add(od);
+				}
+				
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return clist;
+		}
+	
+	// 관리자 취소 페이징처리
+	public int selectCListCount(Connection conn) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectCListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+		
 	// 관리자 취소목록 리스트
 	public ArrayList<Orders> adminCancelList(Connection conn, PageInfo pi) {
-		ArrayList<Orders> olist = new ArrayList<>();
+		ArrayList<Orders> clist = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("adminCancelList");
@@ -929,7 +1079,7 @@ public class MyPageDao {
 						               rset.getInt("pm_totalcost"),
 						               rset.getInt("pm_finalcost"),
 						               rset.getString("pm_method"));
-				olist.add(od);
+				clist.add(od);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -937,7 +1087,7 @@ public class MyPageDao {
 			close(rset);
 			close(pstmt);
 		}
-		return olist;
+		return clist;
 		
 	}
 	
