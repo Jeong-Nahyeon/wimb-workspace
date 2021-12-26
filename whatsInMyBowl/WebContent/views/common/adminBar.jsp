@@ -134,8 +134,8 @@
         <ul>
             <li class="menubar-left-title">회원관리</li>
             <li class="menubar-left-text left_link"><a href="<%= contextPath %>/infoAdminClick.me?cpage=1">회원 정보 관리</a></li>
-            <li class="menubar-left-text left_link"><a href="">신고내역</a></li>
-            <li class="menubar-left-text left_link"><a href="">블랙리스트</a></li>
+            <li class="menubar-left-text left_link"><a href="<%= contextPath %>/list.arep?cpage=1">신고내역</a></li>
+            <li class="menubar-left-text left_link"><a href="<%= contextPath %>/list.black?cpage=1">블랙리스트</a></li>
             <li class="menubar-left-text left_link"><a href="<%= contextPath %>/pointCategory.me">적립금 관리</a></li>
         </ul>
     

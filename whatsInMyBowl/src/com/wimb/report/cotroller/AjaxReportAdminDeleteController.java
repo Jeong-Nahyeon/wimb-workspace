@@ -1,7 +1,6 @@
 package com.wimb.report.cotroller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
 import com.wimb.report.model.service.ReportService;
-import com.wimb.report.model.vo.Report;
 
 /**
- * Servlet implementation class ReportAdminSearchListController
+ * Servlet implementation class AjaxReportAdminDeleteController
  */
-@WebServlet("/search.arep")
-public class ReportAdminSearchListController extends HttpServlet {
+@WebServlet("/delete.arep")
+public class AjaxReportAdminDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReportAdminSearchListController() {
+    public AjaxReportAdminDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,12 +30,12 @@ public class ReportAdminSearchListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String searchKeyword = request.getParameter("searchKeyword");
+		String[] reportCode = request.getParameter("reportCodeArr").split(",");
 		
-		ArrayList<Report> searchList = new ReportService().selectAdminReportSearchList(searchKeyword);
+		int result = new ReportService().deleteAdminReport(reportCode);
 		
-		response.setContentType("application/json; charset=UTF-8");
-		new Gson().toJson(searchList, response.getWriter());
+		// 처리된 행 수(0 || 0 이상) 응답 데이터로 전달
+		response.getWriter().print(result);
 		
 	}
 

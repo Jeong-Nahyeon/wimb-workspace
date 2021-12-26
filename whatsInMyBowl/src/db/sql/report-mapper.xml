@@ -84,5 +84,75 @@
        )
 	</entry>
 	
+	<entry key="deleteAdminReport">
+		UPDATE REPORT
+		   SET REPORT_ADMINSHOW = 'N'
+		 WHERE REPORT_CODE = ?
+	</entry>	
+	
+	<entry key="insertAdminBlackList">
+		UPDATE MEMBER
+		   SET M_STATUS = 'B'
+		     , M_BLACKDATE = SYSDATE
+		     , M_BLACKREASON = ?
+		 WHERE M_CODE = ?
+	</entry>
+	
+	<entry key="selectAdminBlackListCount">
+		SELECT COUNT(*) COUNT
+		FROM MEMBER
+		WHERE M_STATUS = 'B'
+	</entry>
+	
+	<entry key="selectAdminBlackList">
+		SELECT *
+		  FROM (
+		         SELECT ROWNUM RNUM, M.*
+		           FROM (
+		                  SELECT
+		                         M_CODE
+		                       , M_ID
+		                       , M_NAME
+		                       , M_PHONE
+		                       , M_BLACKDATE
+		                       , M_BLACKREASON
+		                       , M_REPORTCOUNT
+		                  FROM MEMBER
+		                  WHERE M_STATUS = 'B'
+		                  ORDER
+                   			 BY M_BLACKDATE DESC
+		               ) M
+		      )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectAdminSearchBlackList">
+		SELECT *
+		  FROM (
+		         SELECT ROWNUM RNUM, M.*
+		           FROM (
+		                  SELECT
+		                         M_CODE
+		                       , M_ID
+		                       , M_NAME
+		                       , M_PHONE
+		                       , M_BLACKDATE
+		                       , M_BLACKREASON
+		                       , M_REPORTCOUNT
+		                  FROM MEMBER
+		                  WHERE M_STATUS = 'B'
+		                  ORDER
+                    		 BY M_BLACKDATE DESC
+		               ) M
+		         WHERE M_ID LIKE '%' || ? || '%'         
+		      )
+	</entry>
+	
+	<entry key="deleteAdminBlackList">
+		UPDATE MEMBER
+		   SET M_STATUS = 'Y'
+		     , M_BLACKDATE = NULL
+		 WHERE M_CODE = ?
+	</entry>
 
 </properties>

@@ -3,7 +3,7 @@
 <%@ page import="com.wimb.common.model.vo.PageInfo, java.util.ArrayList, com.wimb.report.model.vo.Report" %>   
     
 <%
-	// 완제품 페이지 요청처리 알람창용
+	// 신고내역 요청처리 알람창용
 	String reportMsg = (String)(session.getAttribute("reportMsg"));
 	
 	// 페이징바 처리
@@ -14,7 +14,7 @@
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
 	
-	// 리뷰 전체 조회
+	// 신고글 전체 조회
 	ArrayList<Report> reportList = (ArrayList<Report>)(request.getAttribute("reportList"));
 
 
@@ -146,12 +146,6 @@
     }
 
 
-    /* 리뷰신고 상세 조회 모달창 */
-    #report-detail-modal{
-
-    }
-
-
 </style>
 </head>
 <body>
@@ -193,7 +187,7 @@
                         체크박스로 블랙리스트 추가용이랑 삭제용을 둘 다 쓸 수 없을 것 같음...?
                         블랙리스트 등록 시 로그인 안되게 해야 함
                     -->
-                    <button type="button" id="insert-blackList-btn" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);" data-toggle="modal" data-target="#insert-modal" data-backdrop="static" data-keyboard="false">블랙리스트추가</button>
+                    <button type="button" id="insert-blackList-btn" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);">블랙리스트추가</button>
                     <button type="button" id="delete-report-btn" class="btn btn-sm btn-warning" style="background:salmon;">완전삭제</button>
                 </div>
             </div>
@@ -221,7 +215,7 @@
 	                    <% for(Report r : reportList) {%>
 		                    <tr>
 		                        <td>
-		                            <input type="checkbox" name="check">
+		                            <input type="checkbox" class="check-report">
 		                        </td>
 		                        <td class="reportCode"><%= r.getReportCode() %></td>
 		                        <td class="reportDate"><%= r.getReportDate() %></td>
@@ -284,51 +278,123 @@
                     });
             		
 
+
                     // 블랙리스트 등록용 ajax
+
+                    $("#list").on("click", "#insert-blackList-btn", function(){
+
+                        let checkboxArr = [];
+    
+                        $(".check-report:checked").each(function(){
+                            checkboxArr.push($(this).parent().parent().find(".reviewmCode").text());
+                        });
+                        
+                        const reviewmCodeArr = checkboxArr.join(",");
+
+                        console.log(reviewmCodeArr);
+
+                    	if(checkboxArr.length == 0){ // 체크 안 하고 클릭했을 경우 => 경고 알람창
+
+                    		alert("삭제할 신고글이 선택되지 않았습니다");
+
+                    	} else{ // 체크 후 클릭했을 경우 => 블랙리스트 등록 모달창 모달창 
+
+                            
+                            // 블랙리스트 등록 모달창 열기
+                    		$("#insert-blackList-modal").modal("show");
+                            
+                            // 블랙리스트 등록 모달창 모달창  => 취소 버튼 클릭 시
+                            $("#insert-cancel-btn").click(function(){
+                                location.reload();
+                            });
+                            
+                            // 블랙리스트 등록 모달창 모달창  => 등록 버튼 클릭 시
+                            $("#insert-btn").click(function(){
+                                
+                                $.ajax({
+
+                                    url:"insertBlackList.arep",
+                                    data:{
+                                        reviewmCodeArr:reviewmCodeArr,
+                                        blackReason:$("#insert-blackList-modal input[name=blackListCategory]").val()
+                                    },
+                                    success:function(result){ // 매개변수 result로 처리된 행수를 담은 응답 데이터 받아주기
+                                    
+                                    if(result > 0){ // 등록 성공
+                                        console.log(result);
+                                        // 블랙리스트 등록 모달창 모달창 모달창 닫기
+                                        $("#insert-blackList-modal").modal("hide");
+
+                                        // 요청처리 성공 모달창 열기
+                                        $("#request-success-modal").modal("show");
+                                        $("#request-success-modal b").text("성공적으로 등록되었습니다");
+
+                                        $("#success-btn").click(function(){
+                                            location.reload();
+                                        });
+                                        
+                                    } else{ // 등록 실패
+                                        alert("블랙리스트 등록 실패");
+                                        location.reload();
+                                    }
+
+                                    }, error:function(){
+                                        console.log("ajax 통신 실패");
+                                    } 
+
+                                });
+
+                            });
+
+                    	}   
+
+                    });
+
 
 
 
                     // 신고글 삭제용 ajax
 
-                    $("#list-1").on("click", "#delete-review-btn", function(){
+                    $("#list").on("click", "#delete-report-btn", function(){
 
                         let checkboxArr = [];
     
-                        $(".check-delete:checked").each(function(){
-                            checkboxArr.push($(this).val());
+                        $(".check-report:checked").each(function(){
+                            checkboxArr.push($(this).parent().next().text());
                         });
                         
-                        const rCodeArr = checkboxArr.join(",");
+                        const reportCodeArr = checkboxArr.join(",");
 
-                    	if(checkboxArr.length == 0){ // 리뷰 체크 안 하고 클릭했을 경우 => 경고 알람창
+                        console.log(reportCodeArr);
 
-                    		alert("삭제할 리뷰가 선택되지 않았습니다");
+                    	if(checkboxArr.length == 0){ // 체크 안 하고 클릭했을 경우 => 경고 알람창
 
-                    	} else{ // 리뷰 체크 후 클릭했을 경우 => 리뷰 삭제 모달창 
+                    		alert("삭제할 신고글이 선택되지 않았습니다");
+
+                    	} else{ // 체크 후 클릭했을 경우 => 신고글 삭제 모달창 
 
                             
-                            // 리뷰 삭제 모달창 열기
-                    		$("#delete-review-modal").modal("show");
-                    		$("#delete-review-modal b").text("선택한 리뷰를 삭제하시겠습니까?");
+                            // 신고글 삭제 모달창 열기
+                    		$("#delete-report-modal").modal("show");
                             
-                            // 리뷰 삭제 모달창  => 취소 버튼 클릭 시
+                            // 신고글 삭제 모달창  => 취소 버튼 클릭 시
                             $("#delete-cancel-btn").click(function(){
                                 location.reload();
                             });
                             
-                            // 리뷰 삭제 모달창  => 확인 버튼 클릭 시
+                            // 신고글 삭제 모달창  => 삭제 버튼 클릭 시
                             $("#delete-btn").click(function(){
                                 
                                 $.ajax({
 
-                                    url:"delete.arev",
-                                    data:{rCodeArr:rCodeArr},
+                                    url:"delete.arep",
+                                    data:{reportCodeArr:reportCodeArr},
                                     success:function(result){ // 매개변수 result로 처리된 행수를 담은 응답 데이터 받아주기
                                     
                                     if(result > 0){ // 삭제 성공
                                         console.log(result);
-                                        // 리뷰 삭제 모달창 모달창 닫기
-                                        $("#delete-review-modal").modal("hide");
+                                        // 신고글 삭제 모달창 모달창 닫기
+                                        $("#delete-report-modal").modal("hide");
 
                                         // 요청처리 성공 모달창 열기
                                         $("#request-success-modal").modal("show");
@@ -339,7 +405,7 @@
                                         });
                                         
                                     } else{ // 삭제 실패
-                                        alert("상품 삭제 실패");
+                                        alert("신고글 삭제 실패");
                                         location.reload();
                                     }
 
@@ -403,7 +469,7 @@
                                 url:"search.arep",
                                 data:{searchKeyword:$("#report-search").val()},
                                 success:function(list){
-                                    console.log(list);
+
                                     $("#report-list tbody").html("");
 
                                         let result = "";
@@ -411,7 +477,7 @@
                                         for(let i=0; i<list.length; i++){
                                             
                                             result += "<tr>"
-                                                        + "<td><input type='checkbox' name='check'></td>"
+                                                        + "<td><input type='checkbox' class='check-report'></td>"
                                                         + "<td class='reportCode'>" + list[i].reportCode + "</td>"
                                                         + "<td class='reportDate'>" + list[i].reportDate + "</td>"
                                                         + "<td class='reportCategory'>" + list[i].reportCategory + "</td>"
@@ -471,17 +537,17 @@
                 <table style="width:100%; height:320px; margin:10px;">
                     <tr>
                         <th>아이디</th>
-                        <td colspan="3" id="reportId">user02</td>
+                        <td colspan="3" id="reportId"></td>
                     </tr>
                     <tr>
                         <th>회원명</th>
-                        <td colspan="3" id="reportName">김신고</td>
+                        <td colspan="3" id="reportName"></td>
                     </tr>
                     <tr>
                         <th>신고시간</th>
-                        <td id="reportDate">2021-12-12 18:25</td>
+                        <td id="reportDate"></td>
                         <th>신고사유</th>
-                        <td id="reportCategory">욕설</td>
+                        <td id="reportCategory"></td>
                     </tr>
                     <tr>
                         <th colspan="4">신고내용</th>
@@ -499,11 +565,11 @@
                 <table style="width:100%; height:280px; margin:10px;">
                     <tr>
                         <th>아이디</th>
-                        <td id="reviewId">user10</td>
+                        <td id="reviewId"></td>
                         <th>회원명</th>
-                        <td id="reviewName">김트롤</td>
+                        <td id="reviewName"></td>
                         <th>작성시간</th>
-                        <td id="reviewDate">2021-12-12 15:24</td>
+                        <td id="reviewDate"></td>
                     </tr>
                     <tr>
                         <th colspan="6">리뷰내용</th>
@@ -556,8 +622,8 @@
 				<!-- Modal footer -->
 				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
 					<div align="center" style="width:100%;">
-						<button type="submit" class="btn" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
-						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">등록</button>
+						<button type="submit" id="insert-cancel-btn" class="btn" style="border:1px solid lightgray; margin:0px 5px;">취소</button>
+						<button type="submit" id="insert-btn" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">등록</button>
 					</div>
 				</div>
 
@@ -589,8 +655,8 @@
 				<!-- Modal footer -->
 				<div class="modal-footer button-area" style="border:none; background: white; border-radius: 0;">
 					<div align="center" style="width:100%;">
-						<button type="submit" class="btn" style="border:1px solid lightgray; margin:0px 5px;" data-dismiss="modal">취소</button>
-						<button type="submit" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">삭제</button>
+						<button type="submit" id="delete-cancel-btn" class="btn" style="border:1px solid lightgray; margin:0px 5px;">취소</button>
+						<button type="submit" id="delete-btn" class="btn" style="background:rgb(255, 225, 90); margin:0px 5px;">삭제</button>
 					</div>
 				</div>
 
@@ -613,7 +679,7 @@
                     </div>
 
                     <div align="center" style="height:40%; line-height:60px;">
-                        <b><!-- 요청처리 성공 메세지 -->></b>
+                        <b><!-- 요청처리 성공 메세지 --></b>
                     </div>
 				</div>
 				

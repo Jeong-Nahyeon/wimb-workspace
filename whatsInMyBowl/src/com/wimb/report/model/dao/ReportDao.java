@@ -9,10 +9,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 
 import com.wimb.common.model.vo.PageInfo;
+import com.wimb.member.model.vo.Member;
 import com.wimb.product.model.vo.Product;
 import com.wimb.report.model.vo.Report;
 import com.wimb.review.model.vo.Review;
@@ -227,6 +230,214 @@ private Properties prop = new Properties();
 		
 	}
 	
+	
+	public int deleteAdminReport(Connection conn, String[] reportCode) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteAdminReport"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			for(String r : reportCode) {
+				
+				pstmt.setInt(1, Integer.parseInt(r));
+				
+				result += pstmt.executeUpdate();
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public int insertAdminBlackList(Connection conn, String[] reportedMemberCode, String blackReason) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertAdminBlackList"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			for(String m : reportedMemberCode) {
+				
+				pstmt.setString(1, blackReason);
+				pstmt.setInt(2, Integer.parseInt(m));
+				
+				result += pstmt.executeUpdate();
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public int selectAdminBlackListCount(Connection conn) {
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminBlackListCount");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+						
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	
+	public ArrayList<Member> selectAdminBlackList(Connection conn, PageInfo pi) {
+
+		ArrayList<Member> blackList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminBlackList");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1; // 시작값
+			int endRow = startRow + pi.getBoardLimit() - 1; // 끝값
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Member m = new Member();
+				m.setmCode(rset.getInt("m_code"));
+				m.setmId(rset.getString("m_id"));
+				m.setmName(rset.getString("m_name"));
+				m.setmPhone(rset.getString("m_phone"));
+				m.setmBlackDate(rset.getDate("m_blackdate"));
+				m.setmBlackReason(rset.getString("m_blackreason"));
+				m.setmReportCount(rset.getInt("m_reportcount"));
+				
+				blackList.add(m);
+			}
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return blackList;
+		
+	}
+	
+	
+	public ArrayList<Member> selectAdminSearchBlackList(Connection conn, String searchKeyword) {
+		
+		ArrayList<Member> searchList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminSearchBlackList"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, searchKeyword);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Member m = new Member();
+				
+				m.setmCode(rset.getInt("m_code"));
+				m.setmId(rset.getString("m_id"));
+				m.setmName(rset.getString("m_name"));
+				m.setmPhone(rset.getString("m_phone"));
+				m.setmBlackDate(rset.getDate("m_blackdate"));
+				m.setmBlackReason(rset.getString("m_blackreason"));
+				m.setmReportCount(rset.getInt("m_reportcount"));
+				
+				searchList.add(m);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return searchList;
+		
+	}
+	
+	
+	public int deleteAdminBlackList(Connection conn, String[] mCode) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteAdminBlackList"); // 미완성 sql문
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			for(String m : mCode) {
+				
+				pstmt.setInt(1, Integer.parseInt(m));
+				
+				result += pstmt.executeUpdate();
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
 	
 	
 
