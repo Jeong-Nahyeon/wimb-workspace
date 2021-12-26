@@ -59,7 +59,8 @@
         color:black;
         font-size: small;
     }
-    .menu a:hover {
+    #pointA{cursor:pointer}
+    .menu a:hover, #pointA:hover {
     	text-decoration:none;
     	color:lightgrey;
     }
@@ -68,7 +69,7 @@
 </head>
 <body>
     <%@ include file="../common/menubar.jsp" %>
-    
+    <% int userNoCode = loginUser.getmCode(); %>
     
     <!-- 마이페이지 사이드바 시작-->
     <div id="mypageNav">
@@ -96,7 +97,12 @@
                     </tr>
                     <tr>
                         <td style="padding-bottom: 45px;">
-                            <a href="<%=contextPath%>/pointClick.me">적립금</a>
+                        	<form action="<%=contextPath%>/pointClick.me" id="pointUserForm">
+                            	<a id="pointA" onclick="submit();">
+                            	<input type="hidden" id="userNo" name="userNo" value="<%=userNoCode%>">
+                            	적립금
+                            	</a>
+                            </form>
                         </td>
                     </tr>
                     <tr>
@@ -141,6 +147,11 @@
     </div>  
     <!-- 마이페이지 사이드바 끝-->
      
+    <script>
+        function submit(){
+            $("#pointUserForm").submit();
+        }
+    </script>
    
 </body>
 </html>
