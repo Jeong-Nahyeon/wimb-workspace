@@ -125,8 +125,8 @@
 	            <tr>
 	                <td class="header_num"><%= inq.getiCode() %></td>
 	                <td class="header_category"><%= inq.getiCategory() %></td>
-	                <td class="header_writer"><%= inq.getmCode() %></td>
-	                <td class="header_title"><%= inq.getiTitle() %></td>
+	                <td class="header_writer"><%= inq.getmName() %></td>
+	                <td class="header_title"><a><%= inq.getiTitle() %></a></td>
 	                <td class="header_enrolldate"><%= inq.getiDate() %></td>
 	                <td class="header_status"><%= inq.getiAnswer() %></td>
 	                <td class="header_enddate"><%= inq.getaDate() %></td>

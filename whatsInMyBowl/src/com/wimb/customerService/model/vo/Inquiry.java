@@ -15,6 +15,8 @@ public class Inquiry {
 	private Date aDate;         // 답변일
 	private String iStatus;     // 게시여부(Y|N)
 
+	private String mName;		// 회원명
+	
 	public Inquiry(int iCode, int mCode, String iCategory, String iTitle, String iContent, String iAnswer, Date iDate,
 			String aContent, Date aDate, String iStatus) {
 		super();
@@ -71,6 +73,41 @@ public class Inquiry {
 		this.iDate = iDate;
 		this.aContent = aContent;
 		this.aDate = aDate;
+	}
+	
+	public Inquiry(int iCode, String mName, String iCategory, String iTitle, String iContent, String iAnswer, Date iDate) {
+		super();
+		this.iCode = iCode;
+		this.mName = mName;
+		this.iCategory = iCategory;
+		this.iTitle = iTitle;
+		this.iContent = iContent;
+		this.iAnswer = iAnswer;
+		this.iDate = iDate;
+	}
+
+	
+	public Inquiry(int iCode, String mName, String iCategory, String iTitle, String iContent, String iAnswer, Date iDate,
+			String aContent, Date aDate) {
+		super();
+		this.iCode = iCode;
+		this.iCategory = iCategory;
+		this.iTitle = iTitle;
+		this.iContent = iContent;
+		this.iAnswer = iAnswer;
+		this.iDate = iDate;
+		this.aContent = aContent;
+		this.aDate = aDate;
+		this.mName = mName;
+	}
+	
+	
+	public String getmName() {
+		return mName;
+	}
+
+	public void setmName(String mName) {
+		this.mName = mName;
 	}
 
 	public int getiCode() {
