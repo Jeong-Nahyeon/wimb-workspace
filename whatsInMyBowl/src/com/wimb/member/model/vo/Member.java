@@ -16,7 +16,6 @@ public class Member {
 	private String postcode;    // 우편번호
 	private String mEmail;      // 이메일
 	private Date enrollDate;    // 회원가입일
-	private String introducer;  // 추천인
 	private String status;      // 회원상태
 	private String quitReason;  // 탈퇴사유
 	private Date quitDate;      // 탈퇴일
@@ -32,9 +31,9 @@ public class Member {
 	public Member() {}
 
 	public Member(int mCode, String mName, String mId, String mPwd, String mPhone, String mBirth, String mGender,
-			String mAddress, String subAddress, String postcode, String mEmail, Date enrollDate, String introducer,
+			String mAddress, String subAddress, String postcode, String mEmail, Date enrollDate, 
 			String status, String quitReason, Date quitDate, String mAd, Date mBlackDate, String mBlackReason,
-			int mPoint, int mReportCount) {
+			 int mReportCount, int mPoint) {
 		super();
 		this.mCode = mCode;
 		this.mName = mName;
@@ -48,22 +47,21 @@ public class Member {
 		this.postcode = postcode;
 		this.mEmail = mEmail;
 		this.enrollDate = enrollDate;
-		this.introducer = introducer;
 		this.status = status;
 		this.quitReason = quitReason;
 		this.quitDate = quitDate;
 		this.mAd = mAd;
 		this.mBlackDate = mBlackDate;
 		this.mBlackReason = mBlackReason;
-		this.mPoint = mPoint;
 		this.mReportCount = mReportCount;
+		this.mPoint = mPoint;
 	}
 
 	
 
 
 	public Member(int mCode, String mName, String mId, String mPwd, String mPhone, String mBirth, String mGender,
-			String mAddress, String subAddress, String postcode, String mEmail, Date enrollDate, String introducer,
+			String mAddress, String subAddress, String postcode, String mEmail, Date enrollDate,
 			String status, String quitReason, Date quitDate, String mAd, Date mBlackDate, String mBlackReason,
 			int mPoint) {
 		super();
@@ -79,7 +77,6 @@ public class Member {
 		this.postcode = postcode;
 		this.mEmail = mEmail;
 		this.enrollDate = enrollDate;
-		this.introducer = introducer;
 		this.status = status;
 		this.quitReason = quitReason;
 		this.quitDate = quitDate;
@@ -90,7 +87,7 @@ public class Member {
 	}
 
 	public Member(String mName, String mId, String mPwd, String mPhone, String mBirth, String mGender, String mAddress,
-			String subAddress, String postcode, String mEmail, String introducer, String mAd) {
+			String subAddress, String postcode, String mEmail, String mAd) {
 		super();
 		this.mName = mName;
 		this.mId = mId;
@@ -102,7 +99,6 @@ public class Member {
 		this.subAddress = subAddress;
 		this.postcode = postcode;
 		this.mEmail = mEmail;
-		this.introducer = introducer;
 		this.mAd = mAd;
 	}
 	
@@ -287,14 +283,7 @@ public class Member {
 		this.enrollDate = enrollDate;
 	}
 
-	public String getIntroducer() {
-		return introducer;
-	}
-
-	public void setIntroducer(String introducer) {
-		this.introducer = introducer;
-	}
-
+	
 	public String getStatus() {
 		return status;
 	}
@@ -364,7 +353,7 @@ public class Member {
 		return "Member [mCode=" + mCode + ", mName=" + mName + ", mId=" + mId + ", mPwd=" + mPwd + ", mPhone=" + mPhone
 				+ ", mBirth=" + mBirth + ", mGender=" + mGender + ", mAddress=" + mAddress + ", subAddress="
 				+ subAddress + ", postcode=" + postcode + ", mEmail=" + mEmail + ", enrollDate=" + enrollDate
-				+ ", introducer=" + introducer + ", status=" + status + ", quitReason=" + quitReason + ", quitDate="
+				+ ", status=" + status + ", quitReason=" + quitReason + ", quitDate="
 				+ quitDate + ", mAd=" + mAd + ", mBlackDate=" + mBlackDate + ", mBlackReason=" + mBlackReason
 				+ ", mPoint=" + mPoint + "]";
 	}

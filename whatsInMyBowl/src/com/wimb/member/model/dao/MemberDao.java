@@ -60,7 +60,6 @@ public class MemberDao {
 							   rset.getString("m_postcode"),
 							   rset.getString("m_email"),
 							   rset.getDate("m_enrolldate"),
-							   rset.getString("m_introducer"),
 							   rset.getString("m_status"),
 							   rset.getString("m_quitreason"),
 							   rset.getDate("m_quitdate"),
@@ -154,8 +153,7 @@ public class MemberDao {
 			pstmt.setString(8, m.getSubAddress());
 			pstmt.setString(9, m.getPostcode());
 			pstmt.setString(10, m.getmEmail());
-			pstmt.setString(11, m.getIntroducer());
-			pstmt.setString(12, m.getmAd());
+			pstmt.setString(11, m.getmAd());
 			
 			result = pstmt.executeUpdate();
 			
@@ -281,7 +279,6 @@ public class MemberDao {
 							   rset.getString("m_postcode"),
 							   rset.getString("m_email"),
 							   rset.getDate("m_enrolldate"),
-							   rset.getString("m_introducer"),
 							   rset.getString("m_status"),
 							   rset.getString("m_quitreason"),
 							   rset.getDate("m_quitdate"),

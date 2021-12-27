@@ -17,7 +17,6 @@
 		     , M_POSTCODE
 		     , M_EMAIL
 		     , M_ENROLLDATE
-		     , M_INTRODUCER
 		     , M_STATUS
 		     , M_QUITREASON
 		     , M_QUITDATE
@@ -62,13 +61,11 @@
 	     , M_SUBADDRESS
 	     , M_POSTCODE
 	     , M_EMAIL
-	     , M_INTRODUCER
 	     , M_AD
 	     )
 	VALUES
 	    (
 	      SEQ_MEMBER.NEXTVAL
-	    , ?
 	    , ?
 	    , ?
 	    , ?
@@ -127,7 +124,6 @@
 		     , M_POSTCODE
 		     , M_EMAIL
 		     , M_ENROLLDATE
-		     , M_INTRODUCER
 		     , M_STATUS
 		     , M_QUITREASON
 		     , M_QUITDATE

@@ -205,10 +205,6 @@
 						<label for="disagree">선택안함</label>
 					</td>
 				</tr>
-				<tr>
-					<th>추천인</th>
-					<td><input type="text" name="introducer" id="introducer"></td>
-				</tr>
 			</table>
 			<div id="submitBox" align="center">
 				<input type="submit" value="가입 하기" id="submitBtn">
