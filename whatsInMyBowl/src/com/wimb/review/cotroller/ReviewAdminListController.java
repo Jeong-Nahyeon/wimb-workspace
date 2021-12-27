@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wimb.common.model.vo.PageInfo;
+import com.wimb.member.model.vo.Member;
 import com.wimb.product.model.service.ProductService;
 import com.wimb.product.model.vo.Product;
 import com.wimb.review.model.service.ReviewService;
@@ -66,10 +67,22 @@ public class ReviewAdminListController extends HttpServlet {
 		
 		ArrayList<Review> reviewList = new ReviewService().selectAdminReviewList(pi);
 		
-		request.setAttribute("pi", pi);
-		request.setAttribute("reviewList", reviewList);
 		
-		request.getRequestDispatcher("views/review/reviewAdminListView.jsp").forward(request, response);
+		Member loginUser = (Member)(request.getSession().getAttribute("loginUser"));
+		
+		if(loginUser != null) {
+			
+			request.setAttribute("pi", pi);
+			request.setAttribute("reviewList", reviewList);
+			
+			request.getRequestDispatcher("views/review/reviewAdminListView.jsp").forward(request, response);
+			
+		} else {
+			
+			request.setAttribute("errorMsg", "로그인 후 이용 가능합니다.");
+			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
+		
+		}
 		
 	}
 

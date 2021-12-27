@@ -5,7 +5,7 @@ public class Review {
 	private int rCode; // 리뷰번호
 	private String orderCode; // 주문번호
 	private int mCode; // 회원번호
-	private String pCode; // 완제품 상품코드 | 상품명
+	private String pCode; // 완제품 상품코드 
 	private String rContent; // 리뷰내용
 	private String rDate; // 최종등록일
 	private String rMainstatus; // 메인표시여부
@@ -15,6 +15,7 @@ public class Review {
 	
 	private String mName; // 회원명 => 회원 코드와 같이 조회할 경우...
 	private String mId; // 회원 아이디
+	private String pName; // 상품명
 	
 	public Review() {}
 
@@ -59,6 +60,31 @@ public class Review {
 		this.rStatus = rStatus;
 		this.pointStatus = pointStatus;
 		this.mName = mName;
+	}
+
+
+	public Review(int rCode, int mCode, String pCode, String rContent, String rDate, String mainImg, String mName,
+			String pName) {
+		super();
+		this.rCode = rCode;
+		this.mCode = mCode;
+		this.pCode = pCode;
+		this.rContent = rContent;
+		this.rDate = rDate;
+		this.mainImg = mainImg;
+		this.mName = mName;
+		this.pName = pName;
+	}
+
+
+	public Review(int rCode, int mCode, String pCode, String rContent, String mainImg, String pName) {
+		super();
+		this.rCode = rCode;
+		this.mCode = mCode;
+		this.pCode = pCode;
+		this.rContent = rContent;
+		this.mainImg = mainImg;
+		this.pName = pName;
 	}
 
 
@@ -183,12 +209,24 @@ public class Review {
 	}
 
 	
+	
+	public String getpName() {
+		return pName;
+	}
+	
+	
+	public void setpName(String pName) {
+		this.pName = pName;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "Review [rCode=" + rCode + ", orderCode=" + orderCode + ", mCode=" + mCode + ", pCode=" + pCode
 				+ ", rContent=" + rContent + ", rDate=" + rDate + ", rMainstatus=" + rMainstatus + ", rStatus="
 				+ rStatus + "]";
 	}
+
 
 
 

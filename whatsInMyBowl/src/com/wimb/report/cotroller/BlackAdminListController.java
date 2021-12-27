@@ -64,10 +64,22 @@ public class BlackAdminListController extends HttpServlet {
 		
 		ArrayList<Member> blackList = new ReportService().selectAdminBlackList(pi);
 		
-		request.setAttribute("pi", pi);
-		request.setAttribute("blackList", blackList);
 		
-		request.getRequestDispatcher("views/report/reportBlackListAdminView.jsp").forward(request, response);
+		Member loginUser = (Member)(request.getSession().getAttribute("loginUser"));
+		
+		if(loginUser != null) {
+
+			request.setAttribute("pi", pi);
+			request.setAttribute("blackList", blackList);
+			
+			request.getRequestDispatcher("views/report/reportBlackListAdminView.jsp").forward(request, response);
+			
+		} else {
+			
+			request.setAttribute("errorMsg", "로그인 후 이용 가능합니다.");
+			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
+		
+		}
 		
 	}
 

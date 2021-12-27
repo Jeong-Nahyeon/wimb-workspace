@@ -20,6 +20,28 @@ import com.wimb.review.model.vo.Review;
 
 public class ReviewService {
 	
+	
+	/** 메인 베스트 리뷰 조회 해주는 메소드
+	 * @return
+	 */
+	public ArrayList<Review> selectMainBestReviewList(){
+		
+		Connection conn = getConnection();
+				
+		ArrayList<Review> bestList = new ReviewDao().selectMainBestReviewList(conn);
+		
+		close(conn);
+		
+		return bestList;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	public int selectReviewListCount(String pCode) {
 		
 		Connection conn = getConnection();

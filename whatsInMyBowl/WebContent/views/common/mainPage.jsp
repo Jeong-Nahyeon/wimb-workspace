@@ -58,6 +58,25 @@
 	.cartBtn{margin-left: -30px; margin-top: 140px;}
 	.bestMenu, .bestReview{width: 700px;}
 	.bestMenu td, .bestReview td{text-align: center;}
+
+
+
+	/* 내용 텍스트 길 경우 뒷부분 생략 되는 스타일 */
+    .review-content{
+        /* border:1px solid red; */
+		margin-left:20px;
+        width: 190px;
+        height: 70px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .review-detail{
+        color:black;
+        cursor: pointer;
+    }
+
 </style>
 </head>
 <body>
@@ -76,46 +95,10 @@
 			<p style="font-size:xx-large;">BEST</p>
 		</div>
 		<div style="text-align: right;">
-			<a href="" >더보기</a>
+			<a href="<%= contextPath %>/bestList.pr" >더보기</a>
 		</div>
 		<table class="bestMenu" align="center">
-			<tr height="200">
-				<td>
-					<a href=""><img src="<%= contextPath %>/resources/images/LOGO.png"></a>
-					<a href="" class="heartBtn"><i class="fas fa-heart"></i></a>
-					<a href="" class="cartBtn"><i class="fas fa-cart-plus"></i></a>
-				</td>
-				<td>
-					<a href=""><img src="<%= contextPath %>/resources/images/LOGO.png"></a>
-					<a href="" class="heartBtn"><i class="fas fa-heart"></i></a>
-					<a href="" class="cartBtn"><i class="fas fa-cart-plus"></i></a>
-				</td>
-				<td>
-					<a href=""><img src="<%= contextPath %>/resources/images/LOGO.png"></a>
-					<a href="" class="heartBtn"><i class="fas fa-heart"></i></a>
-					<a href="" class="cartBtn"><i class="fas fa-cart-plus"></i></a>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<p>
-						상품명 <br>
-						가격
-					</p>
-				</td>
-				<td>
-					<p>
-						상품명 <br>
-						가격
-					</p>
-				</td>
-				<td>
-					<p>
-						상품명 <br>
-						가격
-					</p>
-				</td>
-			</tr>
+			<!-- 베스트 상품 3위까지만 보여줄 자리 -->
 		</table>
 	</div>
 	<div id="bestReviewBox">
@@ -123,7 +106,7 @@
 			<p style="font-size:xx-large;">Best Review</p>
 		</div>
 		<div style="text-align: right;">
-			<a href="">더보기</a>
+			<!--<a href="">더보기</a>--> <!-- 모달창으로 상세 내용 보여져서 일단 패스 --> 
 		</div>
 		<table class="bestReview" align="center">
 			<tr height="200">
@@ -140,17 +123,20 @@
 			<tr>
 				<td>
 					<p>
-						리뷰내용요약
+						등록된 베스트 후기가<br>
+						없습니다
 					</p>
 				</td>
 				<td>
 					<p>
-						리뷰내용요약
+						등록된 베스트 후기가<br>
+						없습니다
 					</p>
 				</td>
 				<td>
 					<p>
-						리뷰내용요약
+						등록된 베스트 후기가<br>
+						없습니다
 					</p>
 				</td>
 			</tr>
@@ -163,6 +149,9 @@
 	<script>
 	$(function(){
 		test4();
+		
+		bestMenu();
+		bestReview();
 	})
 	
 	function test4(){
@@ -183,8 +172,131 @@
 			}
 		});
 		
+	}
+	
+	
+	
+	
+	
+	
+	// 베스트 메뉴 조회 (나현)
+	function bestMenu(){
+		
+		$.ajax({
+			
+			url:"bestMenu.main",
+			success:function(bestMenuList){
+				
+				console.log(bestMenuList);
+
+				if(bestMenuList != null){
+					let result = "<tr height='200'>"
+									+ "<td>"
+										+ "<a href='<%= contextPath %>/detail.pr?pcode=" + bestMenuList[0].pCode + "'>"
+												+ "<img src='<%= contextPath %>/" + bestMenuList[0].filePath + bestMenuList[0].pMainImg + "'>"
+										+ "</a>"
+									+ "</td>"
+									+ "<td>"
+										+ "<a href='<%= contextPath %>/detail.pr?pcode='" + bestMenuList[1].pCode + "'>"
+												+ "<img src='<%= contextPath %>/" + bestMenuList[1].filePath + bestMenuList[1].pMainImg + "'>"
+										+ "</a>"
+									+ "</td>"	
+									+ "<td>"
+										+ "<a href='<%= contextPath %>/detail.pr?pcode='" + bestMenuList[2].pCode + "'>"
+												+ "<img src='<%= contextPath %>/" + bestMenuList[2].filePath + bestMenuList[2].pMainImg + "'>"
+										+ "</a>"
+									+ "</td>"
+									
+								+ "</tr>"
+								+ "<tr>"
+									+ "<td>"
+										+ "<p style='font-weight:bolder'>" + bestMenuList[0].pName + "<br>" + bestMenuList[0].pPrice + "</p>"
+									+ "</td>"	
+									+ "<td>"
+										+ "<p style='font-weight:bolder'>" + bestMenuList[1].pName + "<br>" + bestMenuList[1].pPrice + "</p>"
+									+ "</td>"
+									+ "<td>"
+										+ "<p style='font-weight:bolder'>" + bestMenuList[2].pName + "<br>" + bestMenuList[2].pPrice + "</p>"
+									+ "</td>"
+								+ "</tr>";
+								
+					$(".bestMenu").html(result);
+				}	
+					
+			}, error:function(){
+				console.log("ajax 통신 실패");
+			}
+			
+		});
 		
 	}
+
+
+
+
+	// 베스트 리뷰 조회 (나현)
+	function bestReview(){
+		
+		$.ajax({
+			
+			url:"bestReview.main",
+			success:function(bestReviewList){
+				
+				console.log(bestReviewList);
+				
+
+				if(bestReviewList != null){
+					let result = "<tr height='200'>"
+									+ "<td>"
+										+ "<a href='<%= contextPath %>/detail.pr?pcode=" + bestReviewList[0].pCode + "'>"
+												+ "<img src='<%= contextPath %>/" + bestReviewList[0].mainImg + "'>"
+										+ "</a>"
+									+ "</td>"
+									+ "<td>"
+										+ "<a href='<%= contextPath %>/detail.pr?pcode=" + bestReviewList[1].pCode + "'>"
+												+ "<img src='<%= contextPath %>/" + bestReviewList[1].mainImg + "'>"
+										+ "</a>"
+									+ "</td>"	
+									+ "<td>"
+										+ "<a href='<%= contextPath %>/detail.pr?pcode=" + bestReviewList[2].pCode + "'>"
+												+ "<img src='<%= contextPath %>/" + bestReviewList[2].mainImg + "'>"
+										+ "</a>"
+									+ "</td>"
+									
+								+ "</tr>"
+								+ "<tr height='100'>"
+									+ "<td>"
+										+ "<b style='color:#9BD5BD'>" + bestReviewList[0].pName + "</b>"
+										+ "<div class='review-content'>"
+											+ "<a class='review-detail'>" + bestReviewList[0].rContent + "</a>"
+										+ "</div>"
+									+ "</td>"	
+									+ "<td>"
+										+ "<b style='color:#9BD5BD'>" + bestReviewList[1].pName + "</b>"
+										+ "<div class='review-content'>"
+											+ "<a class='review-detail'>" + bestReviewList[1].rContent + "</a>"
+										+ "</div>"
+									+ "</td>"
+									+ "<td>"
+										+ "<b style='color:#9BD5BD'>" + bestReviewList[2].pName + "</b>"
+										+ "<div class='review-content'>"
+											+ "<a class='review-detail'>" + bestReviewList[2].rContent + "</a>"
+										+ "</div>"
+									+ "</td>"
+								+ "</tr>";
+								
+					$(".bestReview").html(result);
+				}	
+					
+			}, error:function(){
+				console.log("ajax 통신 실패");
+			}
+			
+		});
+		
+	}
+
+
 	
 	</script>
 </body>

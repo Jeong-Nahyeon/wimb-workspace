@@ -31,6 +31,58 @@ public class ProductDao {
 	}
 	
 	
+	
+	/** 메인 베스트 메뉴 조회 해주는 메소드
+	 * @param conn
+	 * @return
+	 */
+	public ArrayList<Product> selectMainBestMenuList(Connection conn){
+		
+		ArrayList<Product> bestList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
+		String sql = prop.getProperty("selectMainBestMenuList"); 
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				
+				bestList.add(new Product(rset.getString("p_code"),
+										  rset.getString("p_name"),
+										  rset.getString("p_category"),
+										  rset.getInt("p_price"),
+										  rset.getString("p_mainimg"),
+										  rset.getInt("p_stock"),
+										  rset.getInt("discount"),
+										  filePath));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return bestList;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	/** 회원용 페이징바용 완제품 총 개수 반환해주는 메소드
 	 * @param conn
 	 * @return  :  완제품 총 개수

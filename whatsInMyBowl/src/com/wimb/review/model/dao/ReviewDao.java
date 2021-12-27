@@ -37,6 +37,61 @@ public class ReviewDao {
 	}
 	
 	
+	
+	/** 메인 베스트 리뷰 조회 해주는 메소드
+	 * @param conn
+	 * @return
+	 */
+	public ArrayList<Review> selectMainBestReviewList(Connection conn){
+		
+		ArrayList<Review> bestList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		// 파일저장경로
+		String filePath = "resources/images/product_images/";
+		
+		String sql = prop.getProperty("selectMainBestReviewList"); 
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				
+				bestList.add(new Review(rset.getInt("r_code"),
+									    rset.getInt("m_code"),
+							  		    rset.getString("p_code"),
+								  	    rset.getString("r_content"),
+									    rset.getString("mainimg"),
+									    rset.getString("p_name")));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return bestList;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public int selectReviewListCount(Connection conn, String pCode) {
 		
 		int listCount = 0;

@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
+
+	<entry key="selectMainBestReviewList">
+		SELECT *
+		  FROM (
+		         SELECT ROWNUM RNUM, R.*
+		           FROM (
+		                  SELECT 
+		                         R_CODE
+		                       , M_CODE 
+		                       , P_CODE
+		                       , P_NAME
+		                       , R_CONTENT
+		                       , MAINIMG
+		                       , p_MAINIMG
+		                   FROM REVIEW
+		                   JOIN MEMBER USING (M_CODE)
+		                   JOIN PRODUCT USING (P_CODE)
+		                  WHERE R_ADMINSHOW = 'Y'
+		                    AND R_STATUS = 'Y'
+		                    AND R_MAINSTATUS = 'Y'
+		                  ORDER 
+		                     BY R_CODE DESC
+		                ) R
+		       )
+		 WHERE RNUM BETWEEN 1 AND 3
+	</entry>
+
+	
+
+
+
 	
 	<entry key="selectReviewListCount">
 		SELECT COUNT(*) COUNT

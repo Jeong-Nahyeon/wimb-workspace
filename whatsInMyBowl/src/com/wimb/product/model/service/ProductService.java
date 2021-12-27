@@ -11,6 +11,28 @@ import com.wimb.product.model.vo.Product;
 
 public class ProductService {
 	
+	// 메인용
+	
+	/** 메인 베스트 메뉴 조회 해주는 메소드
+	 * @return
+	 */
+	public ArrayList<Product> selectMainBestMenuList(){
+		
+		Connection conn = getConnection();
+				
+		ArrayList<Product> bestList = new ProductDao().selectMainBestMenuList(conn);
+		
+		close(conn);
+		
+		return bestList;
+		
+	}
+	
+	
+	
+	
+	
+	
 	// 회원용
 	
 	/** 회원용 페이징바용 완제품 총 개수 반환해주는 메소드

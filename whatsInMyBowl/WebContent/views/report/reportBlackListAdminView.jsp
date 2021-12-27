@@ -170,7 +170,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                	<% if(blackList == null) { %>
+                	<% if(blackList.isEmpty()) { %>
 	                    <tr>
 	                        <td colspan="8">등록된 블랙리스트가 없습니다.</td>
 	                    </tr>

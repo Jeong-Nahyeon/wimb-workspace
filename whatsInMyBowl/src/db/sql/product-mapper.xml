@@ -2,6 +2,49 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 	
+	
+	<entry key="selectMainBestMenuList">
+		SELECT *
+		  FROM (
+		         SELECT ROWNUM RNUM, P.*
+		           FROM (
+		                  SELECT
+		                         P_CODE
+		                       , P_NAME
+		                       , P_CATEGORY
+		                       , P_PRICE
+		                       , P_MAINIMG
+		                       , P_STOCK
+		                       , SUM(NVL(SUB_AMOUNT, 0)) SALES
+				               , <![CDATA[
+		                         CASE WHEN SUM(NVL(SUB_AMOUNT, 0)) BETWEEN 0 AND 3 AND P_CODE < 'P1010' THEN (P_PRICE - P_PRICE * 0.05)
+				                      ELSE 0
+				                  END DISCOUNT
+		                         ]]>
+		                    FROM SUBORDER
+		                   RIGHT
+		                    JOIN  PRODUCT USING (P_CODE)
+		                   WHERE P_SHOW = 'Y' 
+		                     AND P_ADMINSHOW = 'Y'
+		                   GROUP
+		                      BY P_CODE, P_NAME, P_CATEGORY, P_PRICE, P_MAINIMG, P_STOCK
+		                   ORDER
+		                      BY SALES DESC
+		                ) P
+		       )
+		 WHERE RNUM BETWEEN 1 AND 3
+	</entry>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<entry key="selectListCount">
 		SELECT COUNT(*) COUNT
 		  FROM (

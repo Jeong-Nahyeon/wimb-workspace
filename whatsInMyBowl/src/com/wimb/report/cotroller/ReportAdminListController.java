@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wimb.common.model.vo.PageInfo;
+import com.wimb.member.model.vo.Member;
 import com.wimb.report.model.service.ReportService;
 import com.wimb.report.model.vo.Report;
 
@@ -64,10 +65,21 @@ public class ReportAdminListController extends HttpServlet {
 		
 		ArrayList<Report> reportList = new ReportService().selectAdminReportList(pi);
 		
-		request.setAttribute("pi", pi);
-		request.setAttribute("reportList", reportList);
+		Member loginUser = (Member)(request.getSession().getAttribute("loginUser"));
 		
-		request.getRequestDispatcher("views/report/reportAdminListView.jsp").forward(request, response);
+		if(loginUser != null) {
+			
+			request.setAttribute("pi", pi);
+			request.setAttribute("reportList", reportList);
+			
+			request.getRequestDispatcher("views/report/reportAdminListView.jsp").forward(request, response);
+			
+		} else {
+			
+			request.setAttribute("errorMsg", "로그인 후 이용 가능합니다.");
+			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
+		
+		}
 		
 	}
 

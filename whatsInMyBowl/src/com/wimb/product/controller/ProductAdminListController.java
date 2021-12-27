@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wimb.common.model.vo.PageInfo;
+import com.wimb.member.model.vo.Member;
 import com.wimb.product.model.service.ProductService;
 import com.wimb.product.model.vo.Product;
 
@@ -65,10 +66,24 @@ public class ProductAdminListController extends HttpServlet {
 		// 전체 샐러드 조회
 		ArrayList<Product> totalList = new ProductService().selectAdminProductList(pi);
 		
-		request.setAttribute("pi", pi);
-		request.setAttribute("totalList", totalList);
 		
-		request.getRequestDispatcher("views/product/productAdminInsertListView.jsp").forward(request, response);
+		Member loginUser = (Member)(request.getSession().getAttribute("loginUser"));
+		
+		if(loginUser != null) {
+			
+			request.setAttribute("pi", pi);
+			request.setAttribute("totalList", totalList);
+			
+			request.getRequestDispatcher("views/product/productAdminInsertListView.jsp").forward(request, response);
+			
+		} else {
+			
+			request.setAttribute("errorMsg", "로그인 후 이용 가능합니다.");
+			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
+		
+		}
+		
+		
 		
 	}
 
