@@ -368,17 +368,19 @@
                         	<img class="inputImg" height="280" style="display: block;">
                         </td>
                     </tr>
+                    
                 </table>
-                <div class="two_btn" align="center" style="margin-top: 20px;">
+
+                <div class="two_btn" align="center" style="margin-top: 20px; width:130px;">
                     <button type="button" style="background-color:gray; margin-right: 10px;">취소</button>
                     <button type="submit">등록</button>
                 </div>
-
+    
+                    
             </form>
 
         </div>
     </div>
-    
             <!-- 배너 삭제 관련 모달-->
             <!-- The Modal -->
             <div class="modal" id="banner_delete_Modal">
