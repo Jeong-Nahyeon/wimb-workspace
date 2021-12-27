@@ -185,7 +185,7 @@
 </head>
 <body style="height:100%">
     <div class="wrap" id="wrap" align="center">
-        <div class="search-area">           
+        <div class="search-area"> 
             <input type="text" name="search" id="search">  
             <button id="searchBtn" onclick=""><i class="fas fa-search"></i></button>  
         </div>
@@ -268,14 +268,14 @@
         </div>
         <div id="wholeMenu">
             <ul id="navi-detail">
-                <li><a href="">Best 메뉴</a></li>
-                <li><a href="">세일</a></li>
-                <li><a href="">커스텀</a></li>
-                <li><a href="">샐러드</a>
+                <li><a href="<%= contextPath %>/bestList.pr">Best 메뉴</a></li>
+                <li><a href="<%= contextPath %>/onSaleList.pr?cpage=1">세일</a></li>
+                <li><a href="<%= contextPath %>/loginInput.me">커스텀</a></li>
+                <li><a href="<%= contextPath %>/list.pr?cpage=1">샐러드</a>
                     <ul>
-                        <li><a href="">비건샐러드</a></li>
-                        <li><a href="">육류샐러드</a></li>
-                        <li><a href="">해산물샐러드</a></li>
+                        <li><a href="<%= contextPath %>/veganList.pr?cpage=1">비건샐러드</a></li>
+                        <li><a href="<%= contextPath %>/meatList.pr?cpage=1">육류샐러드</a></li>
+                        <li><a href="<%= contextPath %>/seafoodList.pr?cpage=1">해산물샐러드</a></li>
                     </ul>
                 </li>
                 <li><a href="<%= contextPath %>/userView.no?cpage=1"">고객센터</a>
