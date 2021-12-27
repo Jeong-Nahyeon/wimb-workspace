@@ -199,6 +199,7 @@
                                     <td colspan="6" width="350" align="left">
                                         <%= c.getpName() %>
                                         <input type="hidden" name="saladCode" class="saladCode" value="<%= c.getpCode() %>">
+                                        <input type="hidden" name="mCode" value="<%= loginUser.getmCode() %>">
                                     </td>
                                     <td><a href=""><i class="far fa-heart" style="font-size:25px;" id="heartIcon"></i></a></td>
                                     <td><input type="number" name="itemAmount" class="itemAmount" min="0" value="<%= c.getCaAmount() %>"></td>
@@ -281,18 +282,21 @@
             $("#total_price").text(total_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $("#pay_price").text(allTotal_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
 
-            
+            $("#checkAll").on('click', function(){
+                if($(this).is(':checked')){
+                    $("input[type=checkbox]").prop("checked", true);
+                }else{
+                    $("input[type=checkbox]").prop("checked", false);
+                }
+            })
+
+
         })
     </script>
 
     <!-- 삭제 -->
     <script>
-        
-        $(document).on('click', ".xdelete", function(){
-            $(this).parent().siblings().children("input[name='check']").prop("checked", true)
-        })
-
-        $(".chooseDelete, .xdelete").click(function(){
+        $(".chooseDelete").click(function(){
             var mCode = $("input[name='mCode']").val();
             var count = $("input[name='check']:checked").length;
             var checkArr = new Array();
@@ -309,6 +313,27 @@
                 data:{
                     mCode:mCode,
                     saladCode:checkArr
+                },
+                success:function(result){
+                    location.reload();
+                },
+                error:function(){
+                    console.log("ajax 통신 실패");
+                }
+            })
+        })
+
+        $(".xdelete").click(function(){
+            var saladCode = $(this).parent().siblings().children(".saladCode").val();
+            var mCode = $("input[name='mCode']").val();
+            $.ajax({
+                url:"deletecart.cart",
+                type:"post",
+                dataType:"json",
+                traditional:true,
+                data:{
+                    mCode:mCode,
+                    saladCode:saladCode
                 },
                 success:function(result){
                     location.reload();
