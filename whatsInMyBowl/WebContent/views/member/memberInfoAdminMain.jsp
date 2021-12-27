@@ -8,8 +8,9 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
     
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
-	int listCount = (Integer)request.getAttribute("listCount");
 	
+    int listCount = (Integer)request.getAttribute("listCount");
+
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
@@ -97,13 +98,13 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
         height:30px;
         margin: 20px 10px;
     }
-    #infoTable input, #pointTable input{
+    #infoTable input, #pointListTable input{
         width:100%;
         font-size: 12px;
         border-style:none;
         border-bottom-style: 1px solid lightgrey;
     }
-    #infoTable th, #infoTable td, #pointTable th, #pointTable td {
+    #infoTable th, #infoTable td, #pointListTable th, #pointListTable td {
         border-bottom: 1px solid rgb(224, 224, 224);
         font-size: 12px;
     }
@@ -348,32 +349,8 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
                 <!-- Modal body -->
                 <div class="modal-body" align="center" id="pointModalBody">
                   
-                        <table width="470" id="pointTable">
-                            <!-- 구현하고싶다..
-                            <tr>
-                                <th width="120">아이디</th>
-                                <td align="left" colspan="6">
-                                    <input type="text" id="userIdPM" name="userIdM" value="" readonly>                       
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>누적적립금</th>
-                                <td ><input type="text" name="getPoint" id="ugetPoint"  value=""readonly></td>
-                               
-                                <th width="80">사용적립금</th>
-                                <td>
-                                    <input type="text" id="usedPoint" name="usedPoint" value="" readonly>                       
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>사용가능 적립금</th>
-                                <td colspan="6"><input type="tel" name="usablePoint" id="usablePoint"  value="" readonly><br>
-                               
-                                </td>
-                            </tr>
-                            -->
-                            <br><br>
-                            <tbody>
+                        
+                            
                                 <div id="pointListTable" height="300">
                                     
                                     <table id="pointListTable" >
@@ -399,8 +376,7 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
                                        
                                     </table>
                                 </div>
-                            </tbody>
-                        </table>
+                       
                         
                      
                    

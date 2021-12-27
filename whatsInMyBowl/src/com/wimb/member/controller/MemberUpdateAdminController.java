@@ -50,15 +50,14 @@ public class MemberUpdateAdminController extends HttpServlet {
 		Member updateM = new MemberService().updateMemberA(m);
 		System.out.println(updateM);
 	
-		HttpSession session = request.getSession();
 		
-		if(updateM == null) {
-			session.setAttribute("alertMsg", "회원정보 변경 실패");
-			request.getRequestDispatcher("/views/member/memberInfoAdminMain.jsp").forward(request, response);
+		if(updateM != null) {
+			request.getSession().setAttribute("alertMsg", "회원정보 변경 성공");
+			response.sendRedirect(request.getContextPath() + "/infoAdminClick.me?cpage=1");
 		
 		}else {	
-			session.setAttribute("alertMsg", "회원정보 변경 성공");
-			request.getRequestDispatcher("/views/member/memberInfoAdminMain.jsp").forward(request, response);
+			request.getSession().setAttribute("eerrorMsg", "회원정보 변경 실패");
+			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
 		}
 	}
 

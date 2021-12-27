@@ -44,7 +44,6 @@ public class MemberEnrollController extends HttpServlet {
 		String subAddress = request.getParameter("userAddress2");
 		String postcode = request.getParameter("postcode");
 		String email = request.getParameter("userEmail");
-		String introducer = request.getParameter("introducer");
 		String[] adArr = request.getParameterValues("ad");
 		
 		String ad = "";
@@ -52,13 +51,14 @@ public class MemberEnrollController extends HttpServlet {
 			ad = String.join(",", adArr);
 		}
 		
-		Member m = new Member(userName, userId, userPwd, phone, birth, gender, address, subAddress, postcode, email, introducer, ad);
+		Member m = new Member(userName, userId, userPwd, phone, birth, gender, address, subAddress, postcode, email, ad);
 		
 		int result = new MemberService().insertMember(m);
 		
 		HttpSession session = request.getSession();
+		
 		if(result > 0) {
-			request.setAttribute("alertMsg", "회원가입에 성공했습니다.");
+			session.setAttribute("alertMsg", "회원가입에 성공했습니다.");
 			response.sendRedirect(request.getContextPath());
 		} else {
 			
