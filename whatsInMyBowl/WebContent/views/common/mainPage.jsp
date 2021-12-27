@@ -60,12 +60,34 @@
 	.bestMenu td, .bestReview td{text-align: center;}
 
 
+	/* 베스트 리뷰 스타일 */
+
+	.best-review{
+		/* border:1px solid red; */
+		width:30%;
+		height:100%;
+		float:left;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+
+	#best-reviews-area img{
+		width:100%;
+		height:190px;
+		margin-bottom:10px;
+		cursor: pointer !important;
+	}
+
+	#best-reviews-area b{ 
+		color:#9BD5BD;
+		margin-bottom:10px;
+	}
 
 	/* 내용 텍스트 길 경우 뒷부분 생략 되는 스타일 */
     .review-content{
         /* border:1px solid red; */
-		margin-left:20px;
-        width: 190px;
+		margin-top:10px;
+        width: 100%;
         height: 70px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -74,7 +96,6 @@
 
     .review-detail{
         color:black;
-        cursor: pointer;
     }
 
 </style>
@@ -141,6 +162,15 @@
 				</td>
 			</tr>
 		</table>
+
+
+		<!-- 베스트 리뷰 조회될 경우 -->
+		<div id="best-reviews-area" align="center" style="height:300px">
+			<!-- 베스트 리뷰 영역-->
+		</div>
+
+
+
 		
 		<footer>
 			<%@ include file="../common/footer.jsp" %>
@@ -193,17 +223,17 @@
 					let result = "<tr height='200'>"
 									+ "<td>"
 										+ "<a href='<%= contextPath %>/detail.pr?pcode=" + bestMenuList[0].pCode + "'>"
-												+ "<img src='<%= contextPath %>/" + bestMenuList[0].filePath + bestMenuList[0].pMainImg + "'>"
+												+ "<img style='cursor:pointer' src='<%= contextPath %>/" + bestMenuList[0].filePath + bestMenuList[0].pMainImg + "'>"
 										+ "</a>"
 									+ "</td>"
 									+ "<td>"
 										+ "<a href='<%= contextPath %>/detail.pr?pcode=" + bestMenuList[1].pCode + "'>"
-												+ "<img src='<%= contextPath %>/" + bestMenuList[1].filePath + bestMenuList[1].pMainImg + "'>"
+												+ "<img style='cursor:pointer' src='<%= contextPath %>/" + bestMenuList[1].filePath + bestMenuList[1].pMainImg + "'>"
 										+ "</a>"
 									+ "</td>"	
 									+ "<td>"
 										+ "<a href='<%= contextPath %>/detail.pr?pcode=" + bestMenuList[2].pCode + "'>"
-												+ "<img src='<%= contextPath %>/" + bestMenuList[2].filePath + bestMenuList[2].pMainImg + "'>"
+												+ "<img style='cursor:pointer' src='<%= contextPath %>/" + bestMenuList[2].filePath + bestMenuList[2].pMainImg + "'>"
 										+ "</a>"
 									+ "</td>"
 									
@@ -242,50 +272,29 @@
 			url:"bestReview.main",
 			success:function(bestReviewList){
 				
-				console.log(bestReviewList);
 				
-
+				let result = "";
 				if(bestReviewList != null){
-					let result = "<tr height='200'>"
-									+ "<td>"
-										+ "<a href='<%= contextPath %>/detail.pr?pcode=" + bestReviewList[0].pCode + "'>"
-												+ "<img src='<%= contextPath %>/" + bestReviewList[0].mainImg + "'>"
-										+ "</a>"
-									+ "</td>"
-									+ "<td>"
-										+ "<a href='<%= contextPath %>/detail.pr?pcode=" + bestReviewList[1].pCode + "'>"
-												+ "<img src='<%= contextPath %>/" + bestReviewList[1].mainImg + "'>"
-										+ "</a>"
-									+ "</td>"	
-									+ "<td>"
-										+ "<a href='<%= contextPath %>/detail.pr?pcode=" + bestReviewList[2].pCode + "'>"
-												+ "<img src='<%= contextPath %>/" + bestReviewList[2].mainImg + "'>"
-										+ "</a>"
-									+ "</td>"
-									
-								+ "</tr>"
-								+ "<tr height='100'>"
-									+ "<td>"
-										+ "<b style='color:#9BD5BD'>" + bestReviewList[0].pName + "</b>"
-										+ "<div class='review-content'>"
-											+ "<a class='review-detail'>" + bestReviewList[0].rContent + "</a>"
-										+ "</div>"
-									+ "</td>"	
-									+ "<td>"
-										+ "<b style='color:#9BD5BD'>" + bestReviewList[1].pName + "</b>"
-										+ "<div class='review-content'>"
-											+ "<a class='review-detail'>" + bestReviewList[1].rContent + "</a>"
-										+ "</div>"
-									+ "</td>"
-									+ "<td>"
-										+ "<b style='color:#9BD5BD'>" + bestReviewList[2].pName + "</b>"
-										+ "<div class='review-content'>"
-											+ "<a class='review-detail'>" + bestReviewList[2].rContent + "</a>"
-										+ "</div>"
-									+ "</td>"
-								+ "</tr>";
-								
-					$(".bestReview").html(result);
+					
+					// console.log(bestReviewList);
+					$(".bestReview").text("");
+					
+					for(let i=0; i<bestReviewList.length; i++){
+
+						result += "<div class='best-review'>" 
+									+ "<a href='<%= contextPath %>/detail.pr?pcode=" + bestReviewList[i].pCode + "'>"
+										+ "<img src='<%= contextPath %>/" + bestReviewList[i].mainImg + "'>"	
+									+ "</a>"
+									+ "<b>" + bestReviewList[i].pName + "</b>"
+									+ "<div class='review-content'>"
+										+ "<a class='review-detail'>"  + bestReviewList[i].rContent + "</a>"
+									+ "</div>"
+								+ "</div>";		
+
+					}
+					console.log(result);	
+					$("#best-reviews-area").html(result);
+
 				}	
 					
 			}, error:function(){
