@@ -70,7 +70,7 @@ public class ReviewAdminListController extends HttpServlet {
 		
 		Member loginUser = (Member)(request.getSession().getAttribute("loginUser"));
 		
-		if(loginUser != null) {
+		if(loginUser != null && loginUser.getmId().equals("admin01")) {
 			
 			request.setAttribute("pi", pi);
 			request.setAttribute("reviewList", reviewList);
@@ -79,7 +79,7 @@ public class ReviewAdminListController extends HttpServlet {
 			
 		} else {
 			
-			request.setAttribute("errorMsg", "로그인 후 이용 가능합니다.");
+			request.setAttribute("errorMsg", "관리자만 이용 가능합니다.");
 			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);
 		
 		}
