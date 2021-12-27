@@ -220,7 +220,7 @@
                 <% } %>
                 <% for(PaymentCustom pcu : customList ){ %>
 	                <div>
-	                    <img src="<%= pcu.getCuMainImg() %>">
+	                    <img src="<%= contextPath %>/resources/images/LOGO.png">
 	                    <span class="product-name"><%= pcu.getCuName() %></span>
 	                    <span class="product-num"><%= pcu.getCuCount() %></span><span>개</span>
 	                    <span class="product-price"><label class="price_num"><%= pcu.getCuPrice() %></label>원</span>
@@ -526,7 +526,7 @@
                 var allPoint = $("#allPoint").text()
                 var total_price = $("#total_price").text();
                 $("input[name='oPoint']").val(allPoint);
-                $("#total_price").text((total_price - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                $("#total_price").text(total_price - allPoint);
             }
 
             // 총 결제 금액, 총 수량

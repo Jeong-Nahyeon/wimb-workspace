@@ -36,7 +36,7 @@
     button{padding: 0; }
     .fas{vertical-align: middle;}
     input[type="text"]{padding: 0 5px 1px 4px; outline: none; box-sizing: border-box;}
-    .wrap{
+    .outer{
         /*border: 2px solid red;*/
         width: 100%; 
         height: auto;
@@ -266,7 +266,7 @@
 </head>
 <body>
 
-    <div class="wrap">
+    <div class="outer">
 
         <div id="header">
             <%@ include file="../common/menubar.jsp" %>
