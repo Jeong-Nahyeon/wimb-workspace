@@ -5,6 +5,7 @@
 %>
 <%
 	ArrayList<MyOrders> clist = (ArrayList<MyOrders>)request.getAttribute("clist");
+    System.out.println(clist);
  %>    
 
 <!DOCTYPE html>
@@ -241,12 +242,11 @@
 	                            
 	                            <td><%= od.getPmTotalCost() %>원<br>[<%= od.getOrderAmount() %>개]</td>
 	                            
-	                            <% if(od.getCancelCode() == null) { %>
+	                             <% if(od.getCancelCode() == null) { %>
 	                            	
 	                            	<!-- 환불일경우 -->
 	                            	<% if(od.getrStatus().equals("N")) { %>
 	                            		<td>환불<br>진행중</td>
-	                            		<td>-</td>
 	                            	<% } else if(od.getrStatus().equals("Y")) { %>
 	                            		<td>환불<br>처리완료</td>
 	                            		<td><%= od.getRcompDate() %></td>

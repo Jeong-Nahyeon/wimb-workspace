@@ -488,7 +488,7 @@
 		        		result12 +=
 		        				"<th>" + "택배사" + "</td>"
 		        			  + "<td><input type='text' class='company' placeholder='택배사 입력'></td>";
-		        	}else {
+		        	}else if(!od.company === '-' || od.orderStatus === '제품환불' || od.orderStatus === '주문취소') {
 		        		result12 +=
 	        				"<th>" + "택배사" + "</td>"
 	        			  + "<td><input type='text' value='" + od.company + "' readonly></td>";
@@ -501,7 +501,7 @@
 		        		result13 +=
 		        				"<th>" + "운송장번호" + "</td>"
 		        			  + "<td><input type='text' class='invoice' placeholder='운송장번호 입력'></td>";
-		        	}else {
+		        	}else if(!od.invoice === '-' || od.orderStatus === '제품환불' || od.orderStatus === '주문취소') {
 		        		result13 +=
 	        				"<th>" + "운송장번호" + "</td>"
 	        			  + "<td><input type='text' value='" + od.invoice + "' readonly></td>";

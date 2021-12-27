@@ -95,7 +95,7 @@
         height: 25px;
     }
     .orderList button:hover{background-color: rgb(155, 213, 189);}
-    a {
+    .listView a {
         text-decoration: none;
         color:black;
     }
@@ -137,7 +137,7 @@
         text-align: center;
         color: red;
     }
-    a:link { 
+    .listView a:link { 
     	text-decoration:none;
     	color:black;
     }
@@ -217,14 +217,14 @@
 		                             	[<span class="oCode"><%= od.getOrderCode() %></span>]
 	                            	</td>
                     				<% if(od.getpName() == null) { %>
-                    					<td width="90"><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"></a></td>
-                    					<td><a href="상품상세페이지"><%= od.getCuName() %></a></td>
+                    					<td width="90"><a href="<%= contextPath %>/item.cu"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"></a></td>
+                    					<td><a href="<%= contextPath %>/item.cu"><b><%= od.getCuName() %></b></a></td>
                    					<% }else { %>
-                   						<td width="90"><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getFilePath() + od.getpMainImg() %>"></a></td>
-                 						<td><a href="상품상세페이지"><%= od.getpName() %></a></td>
+                   						<td width="90"><a href="<%= contextPath %>/detail.pr?pcode=<%= od.getpCode() %>"><img src="<%= contextPath %>/<%= od.getFilePath() + od.getpMainImg() %>"></a></td>
+                 						<td><a href="<%= contextPath %>/detail.pr?pcode=<%= od.getpCode() %>"><b><%= od.getpName() %></b></a></td>
                  					<% } %>
                  					<td><%= od.getPmTotalCost() %>원/<%= od.getOrderAmount() %>개</td> 
-                 					<td><a href="주문목록/배송조회 이동"><%= od.getOrderStatus() %></a></td> 
+                 					<td><%= od.getOrderStatus() %></td> 
                    					<td>
                    						<% if(od.getOrderStatus().equals("결제대기") || od.getOrderStatus().equals("결제완료") || od.getOrderStatus().equals("배송준비")) { %>
 		                                	
@@ -234,7 +234,6 @@
 	                                	<% }else if(od.getOrderStatus().equals("배송중")) { %>
 	                                		
 	                                		<!--주문상태가 배송중일 때만 가능-->
-                                            <button type="button"  onclick="location.href='리뷰작성페이지이동'">리뷰작성</button>
                                 			<button class="refundDo" type="button" data-toggle="modal" data-target="#refundModal">환불요청</button>
                                 			<form method="post" class="postApi">
 									            <div class="form-group" style="display:none;">
@@ -246,13 +245,13 @@
 									            <div class="form-group" style="display:none;">
 									              <input type="text" class="form-control" name="t_invoice" id="t_invoice" value="<%= od.getOrderInvoice() %>">
 									            </div>
-									            <button type="submit">배송조회</button>
+									            <button type="submit" class="submit">배송조회</button>
 									        </form>
                                 		
                                 		<% }else if(od.getOrderStatus().equals("배송완료")){ %>
                                 			
                                 			<!--주문상태가 배송완료일 때만 가능-->
-                                			<button type="button"  onclick="location.href='리뷰작성페이지이동'">리뷰작성</button>
+                                			<button type="button"  onclick="location.href='<%= contextPath %>/detail.pr?pcode=<%= od.getpCode() %>#review'">리뷰작성</button>
                                 			<button class="refundDo" type="button" data-toggle="modal" data-target="#refundModal">환불요청</button>
                                 			<form method="post" class="postApi">
 									            <div class="form-group" style="display:none;">
@@ -264,7 +263,7 @@
 									            <div class="form-group" style="display:none;">
 									              <input type="text" class="form-control" name="t_invoice" id="t_invoice" value="<%= od.getOrderInvoice() %>">
 									            </div>
-									            <button type="submit">배송조회</button>
+									            <button type="submit" class="submit">배송조회</button>
 									        </form>
                                 		<% }else { %>
                                 			
@@ -290,7 +289,7 @@
 			this.action = "http://info.sweettracker.co.kr/tracking/5";
             this.method = 'POST';
             this.target = 'pop_target';
-        }).trigger("submit");
+        })
 		
 	</script>
    
@@ -312,7 +311,7 @@
         		//console.log(pmCode);
         		
         		$.ajax({
-        			url:"refundInsert.my",
+        			url:"cancelInsert.my",
         			type:"post",
         			data:{
         				orderCode:oCode,
@@ -322,6 +321,7 @@
         				
         				if(result>0) {
         					alert("상품이 취소되었습니다.");
+        					location.reload();
         				}
         				
         			}, error:function(){
@@ -367,6 +367,7 @@
 		        				
 		        				if(result>0) {
 		        					alert("환불이 요청되었습니다.");
+		        					location.reload();
 		        				}
 		        				
 		        				
@@ -474,10 +475,11 @@
 			
 			var startDateString = svYear + '-' + svMonth  + '-' + svDay;
 			
-			if(startDay != null) {
-				var startDay = '<%= request.getAttribute("startDay")%>'
-			}else {
-    			$("#startDate").val(startDateString);
+			var startDay = '<%=request.getAttribute("startDay") %>';
+			if(startDay != 'null'){
+				$("#startDate").val(startDay);
+			}else{
+				$("#startDate").val(startDateString);
 			}
     		// console.log($("#startDate").val());
 		

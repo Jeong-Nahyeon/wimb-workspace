@@ -131,6 +131,26 @@ public class MyOrders {
 	
 	
 	
+	public MyOrders(String orderCode, int orderAmount, String orderCompany, String orderInvoice, String orderStatus,
+			Date orderDate, String cuName, String cuMainImg, String pName, String pMainImg, int pmTotalCost,
+			String pmCode, String filePath, String pCode) {
+		super();
+		this.orderCode = orderCode;
+		this.orderAmount = orderAmount;
+		this.orderCompany = orderCompany;
+		this.orderInvoice = orderInvoice;
+		this.orderStatus = orderStatus;
+		this.orderDate = orderDate;
+		this.cuName = cuName;
+		this.cuMainImg = cuMainImg;
+		this.pName = pName;
+		this.pMainImg = pMainImg;
+		this.pmTotalCost = pmTotalCost;
+		this.pmCode = pmCode;
+		this.filePath = filePath;
+		this.pCode = pCode;
+	}
+
 	public String getpCode() {
 		return pCode;
 	}

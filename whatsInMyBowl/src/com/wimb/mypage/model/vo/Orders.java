@@ -86,6 +86,31 @@ public class Orders {
 		this.invoice = invoice;
 	}
 	
+	
+	
+
+	public Orders(String orderCode, String mName, String address, String subAddress, int zipCode, String phone,
+			String email, String request, int point, String company, String invoice, String status, Date orderDate,
+			String pCode, String pName, String cuCode, String cuName) {
+		super();
+		this.orderCode = orderCode;
+		this.mName = mName;
+		this.address = address;
+		this.subAddress = subAddress;
+		this.zipCode = zipCode;
+		this.phone = phone;
+		this.email = email;
+		this.request = request;
+		this.point = point;
+		this.company = company;
+		this.invoice = invoice;
+		this.status = status;
+		this.orderDate = orderDate;
+		this.pCode = pCode;
+		this.pName = pName;
+		this.cuCode = cuCode;
+		this.cuName = cuName;
+	}
 
 	public String getOrderCode() {
 		return orderCode;

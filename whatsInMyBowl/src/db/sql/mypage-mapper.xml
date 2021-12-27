@@ -15,6 +15,7 @@
 		     , P_NAME
 		     , P_MAINIMG
 		     , PM_TOTALCOST
+		     , PM_CODE
 		  FROM "ORDER" OD
 		  JOIN SUBORDER USING (ORDER_CODE)
 		  JOIN PAYMENT USING (PM_CODE)
@@ -22,6 +23,8 @@
 		  LEFT JOIN PRODUCT USING (P_CODE)
 		 WHERE OD.M_CODE = ?
            AND ORDER_DATE BETWEEN (SYSDATE - 30) AND SYSDATE
+         ORDER
+            BY ORDER_DATE DESC
 	</entry>
 	
 	<entry key="orderStatus1">
@@ -125,13 +128,16 @@
 		     , P_MAINIMG
 		     , PM_TOTALCOST
 		     , PM_CODE
+		     , P_CODE
 		  FROM "ORDER" OD
 		  JOIN SUBORDER USING (ORDER_CODE)
 		  JOIN PAYMENT USING (PM_CODE)
 		  LEFT JOIN CUSTOM USING (CU_CODE)
 		  LEFT JOIN PRODUCT USING (P_CODE)
 		 WHERE OD.M_CODE = ?
-		 AND ORDER_DATE BETWEEN ? AND ?
+		   AND ORDER_DATE BETWEEN ? AND ?
+		 ORDER
+            BY ORDER_DATE DESC
 	</entry>
 	
 	<entry key="insertCancel">
@@ -210,6 +216,8 @@
 		 WHERE OD.M_CODE = ?
 		   AND ORDER_DATE BETWEEN ? AND ?
 		   AND (ORDER_STATUS = '제품환불' OR ORDER_STATUS = '주문취소')
+	     ORDER
+            BY ORDER_DATE DESC
 	</entry>
 	
 	<entry key="selectRCDetail">
@@ -240,6 +248,8 @@
 		  LEFT JOIN CUSTOM USING (CU_CODE)
 		  LEFT JOIN PRODUCT USING (P_CODE)
 		 WHERE ORDER_CODE = ?
+		 ORDER
+            BY ORDER_DATE DESC
 	</entry>
 	
 	<entry key="selectHeart">
@@ -318,7 +328,7 @@
 					 LEFT JOIN CUSTOM USING (CU_CODE)
 					 LEFT JOIN PRODUCT USING (P_CODE)
 					ORDER 
-					   BY ORDER_CODE ASC
+					   BY ORDER_DATE DESC
 		                ) A
 		        )
 		  WHERE RNUM BETWEEN ? AND ?
@@ -332,6 +342,7 @@
 		      , ORDER_PHONE
 		      , ORDER_EMAIL
 		      , ORDER_ZIPCODE
+		      , ORDER_STATUS
 		      , ORDER_ADDRESS
 		      , ORDER_SUBADDRESS
 		      , ORDER_REQUEST
@@ -393,7 +404,7 @@
 					 LEFT JOIN PRODUCT USING (P_CODE)
 					WHERE ORDER_NAME LIKE '%' || ? || '%'
 					ORDER 
-					   BY ORDER_CODE ASC
+					   BY ORDER_DATE DESC
 		                ) A
 		        )
 	</entry>
@@ -435,7 +446,7 @@
 					WHERE ORDER_NAME LIKE '%' || ? || '%'
 					  AND ORDER_STATUS = '제품환불' 
 					ORDER 
-					   BY ORDER_CODE ASC
+					   BY ORDER_DATE DESC
 		                ) A
 		        )
 	</entry>
@@ -483,7 +494,7 @@
 					 LEFT JOIN PRODUCT USING (P_CODE)
 					WHERE ORDER_STATUS = '제품환불' 
 					ORDER 
-					   BY ORDER_CODE ASC
+					   BY ORDER_DATE DESC
 		                ) A
 		        )
 		  WHERE RNUM BETWEEN ? AND ?
@@ -526,7 +537,7 @@
 					WHERE ORDER_NAME LIKE '%' || ? || '%'
 					  AND ORDER_STATUS = '주문취소' 
 					ORDER 
-					   BY ORDER_CODE ASC
+					   BY ORDER_DATE DESC
 		                ) A
 		        )
 	</entry>
@@ -574,7 +585,7 @@
 					 LEFT JOIN PRODUCT USING (P_CODE)
 					WHERE ORDER_STATUS = '주문취소' 
 					ORDER 
-					   BY ORDER_CODE ASC
+					   BY ORDER_DATE DESC
 		                ) A
 		        )
 		  WHERE RNUM BETWEEN ? AND ?

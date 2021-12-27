@@ -387,7 +387,8 @@ public class MyPageDao {
 										   rset.getString("p_mainimg"),
 										   rset.getInt("pm_totalcost"),
 										   rset.getString("pm_code"),
-										   filePath));
+										   filePath,
+										   rset.getString("p_code")));
 		} 
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -744,13 +745,14 @@ public class MyPageDao {
 						               rset.getString("order_email"),
 						               rset.getString("order_request"),
 						               rset.getInt("order_point"),
+						               rset.getString("company"),
+						               rset.getString("invoice"),
+						               rset.getString("order_status"),
 						               rset.getDate("order_date"),
 						               rset.getString("p_code"),
 						               rset.getString("p_name"),
 						               rset.getString("cu_code"),
-						               rset.getString("cu_name"),
-						               rset.getString("company"),
-						               rset.getString("invoice"));
+						               rset.getString("cu_name"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
