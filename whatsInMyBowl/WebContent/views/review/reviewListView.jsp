@@ -968,9 +968,6 @@
     <div class="modal fade" id="report-review-modal">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content review-report-modal">
-                <input type="hidden" name="rcode">
-                <input type="hidden" name="pcode" value="<%= product.getpCode() %>">
-                <input type="hidden" name="pname" value="<%= product.getpName() %>">
                 <!-- Modal Header -->
                 <div class="modal-header title-area">
                     <h6 class="modal-title" style="margin-left:350px; font-weight:bolder;">후기신고</h6>
@@ -980,6 +977,8 @@
                 <!-- Modal body -->
                 <div class="modal-body content-area">
                     <form action="<%= contextPath %>/report.rev" id="report-review-form" method="post">
+                        <input type="hidden" name="pcode" value="<%= product.getpCode() %>">
+                        <input type="hidden" name="pname" value="<%= product.getpName() %>">
 					   <input type="hidden" name="rcode">
                        <div class="report-review-content" style="box-sizing:border-box; width:750px;">
 

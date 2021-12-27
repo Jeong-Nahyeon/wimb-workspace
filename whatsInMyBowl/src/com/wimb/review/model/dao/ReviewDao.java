@@ -255,6 +255,12 @@ public class ReviewDao {
 			pstmt.setString(3, r.getpCode());
 			pstmt.setString(4, r.getrContent());
 			
+			if(r.getMainImg() != null) {
+				pstmt.setString(5, r.getMainImg());
+			} else {
+				pstmt.setNull(5, java.sql.Types.VARCHAR);
+			}
+			
 			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {

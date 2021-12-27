@@ -94,10 +94,12 @@
 		  , M_CODE
 		  , P_CODE
 		  , R_CONTENT
+		  , MAINIMG
 		  )
 		  VALUES
 		  (
 		    SEQ_REVIEW.NEXTVAL
+		  , ?
 		  , ?
 		  , ?
 		  , ?

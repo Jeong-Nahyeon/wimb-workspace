@@ -39,6 +39,9 @@ public class ReviewReportController extends HttpServlet {
 		String pCode = request.getParameter("pcode");
 		String pName = request.getParameter("pname");
 		
+		//System.out.println(pCode);
+		//System.out.println(pName);
+		
 		// 신고리뷰번호
 		int rCode = Integer.parseInt(request.getParameter("rcode"));
 		

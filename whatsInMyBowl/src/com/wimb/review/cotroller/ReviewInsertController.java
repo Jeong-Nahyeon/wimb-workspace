@@ -67,15 +67,26 @@ public class ReviewInsertController extends HttpServlet {
 				String key = "file" + i;
 				
 				if(multiRequest.getOriginalFileName(key) != null) { // 첨부파일 존재할 경우
+					
 					String changeName = multiRequest.getFilesystemName(key);
+					
+					String filePath = "resources/images/review_images/";
 					
 					File f = new File();
 					f.setfName(multiRequest.getOriginalFileName(key));
 					f.setfRename(changeName);
-					f.setfPath("resources/images/review_images/");
+					f.setfPath(filePath);
 					f.setfExtension(changeName.substring(changeName.lastIndexOf(".")));
 					
 					list.add(f);
+					
+					
+					// file1에서 첨부파일 넘어올 경우 리뷰의 대표 이미지로 등록 
+					if(key.equals("file1")) { 
+						
+						r.setMainImg(filePath + changeName);
+						
+					}
 					
 				}
 				
