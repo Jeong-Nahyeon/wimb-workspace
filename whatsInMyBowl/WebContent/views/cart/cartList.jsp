@@ -176,11 +176,11 @@
                                         <input type="hidden" name="mCode" value="<%= loginUser.getmCode() %>">
                                     </td>
                                     <td><a href=""><i class="far fa-heart" style="font-size:25px;" id="heartIcon"></i></a></td>
-                                    <td><input type="number" name="itemAmount" class="itemAmount" min="0" value="<%= c.getCaAmount() %>"></td>
+                                    <td><input type="number" name="itemAmount" class="itemAmount" min="1" max="1" value="<%= c.getCaAmount() %>"></td>
                                     <td>3,000원</td>
                                     <td>
                                         <span class="price_num"><%= c.getCuPrice() %></span>원
-                                        <input type="hidden" name="productPrice" class="productPrice" value="<%= c.getCuPrice() %>">
+                                        <input type="hidden" name="productPrice" class="customPrice" value="<%= c.getCuPrice() %>">
                                     </td>
                                     <td>
                                         <a class="xdelete">
@@ -202,10 +202,16 @@
                                         <input type="hidden" name="mCode" value="<%= loginUser.getmCode() %>">
                                     </td>
                                     <td><a href=""><i class="far fa-heart" style="font-size:25px;" id="heartIcon"></i></a></td>
-                                    <td><input type="number" name="itemAmount" class="itemAmount" min="0" value="<%= c.getCaAmount() %>"></td>
+                                    <td><input type="number" name="itemAmount" class="itemAmount" min="1" value="<%= c.getCaAmount() %>"></td>
                                     <td>3,000원</td>
                                     <td>
-                                        <span class="price_num product_price"></span>원
+                                        <span class="price_num product_price">
+                                            <% if(c.getpPrice() > 0){ %>
+                                            	<% int price = c.getpPrice() * c.getCaAmount(); %>
+                                            	<% c.setpPrice(price); %>
+                                            <% } %>
+                                            <%= c.getpPrice() %>
+                                        </span>원
                                         <input type="hidden" name="productPrice" class="productPrice" value="<%= c.getpPrice() %>">
                                     </td>
                                     <td>
@@ -265,14 +271,15 @@
             var allTotal_price = 0;
             var delivery_price = parseInt($("#delivery_price").text()) * 1000;
             console.log(delivery_price)
+
             // 완제품 가격 표시
             var productTotalPrice = 0;
             var productPrice = $(".productPrice").val()
             var productCount = $(".productPrice").parent().siblings().children(".itemAmount").val();
-            console.log(productCount)
+            //console.log(productCount)
             productTotalPrice = productPrice * parseInt(productCount);
-            console.log(productTotalPrice)
-            $(".product_price").text(productTotalPrice)
+            //console.log(productTotalPrice)
+            //$(".product_price").text(productTotalPrice)
 
             // 상품 전체 금액
             $(".price_num").each(function(){

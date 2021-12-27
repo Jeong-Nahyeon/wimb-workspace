@@ -476,6 +476,7 @@
 	<script>
 
 		$(document).on("click", ".add_cart", function(){
+			$("#amount").val(1);
 			var productName = $(this).siblings("input[name='pName']").val()
 			var productCode = $(this).siblings("input[name='pcode']").val()
 			var productimg = $(this).siblings("img").attr("src");
@@ -511,6 +512,7 @@
 						$("#cart-success-modal").modal("show");
 					}else{
 						alert("이미 담겨있는 상품으로 수량을 변경했습니다.");
+						location.reload();
 					}
 				},
 				error:function(){
@@ -557,7 +559,7 @@
 
 			</div>
 		</div>
-	</div>	
+	</div>
 	
 	<!-- 찜하기 기능 (지은)-->
 	<script>
