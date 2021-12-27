@@ -278,7 +278,7 @@
                         <li><a href="">해산물샐러드</a></li>
                     </ul>
                 </li>
-                <li><a href="">고객센터</a>
+                <li><a href="<%= contextPath %>/userView.no?cpage=1"">고객센터</a>
                     <ul>
                         <li><a href="">FAQ</a></li>
                         <li><a href="">Q&A</a></li>

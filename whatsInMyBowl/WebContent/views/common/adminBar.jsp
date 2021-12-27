@@ -160,13 +160,14 @@
             <li class="menubar-left-text left_link"><a href="<%= contextPath %>/adminProcessingListView.inq?cpage=1">1:1 문의</a></li>
             <li class="menubar-left-text left_link"><a href="<%= contextPath %>/adminList.faq?cpage=1">자주묻는 질문</a></li>
         </ul>
-    
+    	<!-- 
         <ul class="lastul">
             <li class="menubar-left-title">통계</li>
             <li class="menubar-left-text left_link"><a href="<%= contextPath %>/member.statistics">회원 수 통계</a></li>
             <li class="menubar-left-text left_link"><a href="">상품 수 통계</a></li>
             <li class="menubar-left-text left_link"><a href="">판매량 통계</a></li>
-        </ul>
+        </ul>	
+    	 -->
     </div>
 	<script>
 		$(".left_link a").on("click", function () {
