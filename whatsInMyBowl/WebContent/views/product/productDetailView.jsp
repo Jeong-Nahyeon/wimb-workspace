@@ -583,18 +583,16 @@
 			</div>
 		</div>
 		
-
-		<!-- 나경님 영역 => include로 합치기 -->
-		<!-- 상품 문의 -->
-		<div id="product-QnA" class="product-QnA">
+		<!-- 
+		나경님 영역 => include로 합치기 
+		상품 문의 
+		 <div id="product-QnA" class="product-QnA"> 
 			상품문의영역
-			<!-- 
 			<div class="product-QnA-title"></div>
 			<div class="product-QnA-content"></div>
 			<div class="product-QnA-btns"></div>
-			-->
 		</div> 
-	
+		-->
 
 	</div>
 
@@ -693,7 +691,7 @@
 			var pCode = $("#productCode").val();
 			console.log(pCode);
 			
-			if(<%= loginUser %> == null) {
+			if('<%= loginUser %>' == null) {
 				alert('로그인 후 이용가능합니다.');
 			}else {
 				console.log("실행확인");

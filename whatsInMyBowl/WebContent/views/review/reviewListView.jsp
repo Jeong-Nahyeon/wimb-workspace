@@ -271,13 +271,12 @@
             	$("#request-message-modal b").text("<%= detailMsg %>");
                 $("#request-message-modal").modal({backdrop: false});
                 
-                <% session.removeAttribute("detailMsg"); %>
 	            
             });
 
             
-        </script>
-            
+            </script>
+            <% session.removeAttribute("detailMsg"); %>
 	<% } %>
 
     <div id="review" class="review">
@@ -578,34 +577,63 @@
     </div>
 
     <!-- 리뷰등록 모달창 열기 기능 -->
-    	<% if(orderInfo != null && orderInfo.getoCode() != null) { %>
-            <%for(Review r : reviewList) { %>
-                <%if(r.getmCode() != loginUser.getmCode()) {  %>
-	                <script>
-	                    $(function(){
-	                            $("#review-insert-btn").click(function(){
-	                                
-	                                $("#review-insert-modal").modal({backdrop:false});
-	                                $(".review-product input[name=ocode]").val("<%= orderInfo.getoCode() %>");
-	                                $(".review-product input[name=mcode]").val("<%= orderInfo.getmCode() %>");
+    	<% if(orderInfo != null && orderInfo.getoCode() != null) { // 로그인한 회원의 배송 완료 단계의 주문 정보가 있을 경우 %>
+            <% System.out.println(orderInfo); %>
+            <% System.out.println(reviewList); %>
 
-	                            });
-	                    });
-	                
-	                </script>
-                <% } else { %>
-                	<script>
-	                    $(function(){
-	                            $("#review-insert-btn").click(function(){
-	                                
-	                                alert("이미 작성한 후기가 존재합니다.");
-	                                
-	                            });
-	                    });
-	                </script>
+            <% if(reviewList.isEmpty()) { // 주문정보 조건 해당되지만 해당 리뷰 리스트가 비어있을 경우 %> 
+
+                <script>
+                    $(function(){
+                            $("#review-insert-btn").click(function(){
+                                
+                                $("#review-insert-modal").modal({backdrop:false});
+                                $(".review-product input[name=ocode]").val("<%= orderInfo.getoCode() %>");
+                                $(".review-product input[name=mcode]").val("<%= orderInfo.getmCode() %>");
+
+                            });
+                    });
+                
+                </script>
+
+            <% } else { // 주문정보 조건 해당되지만 해당 리뷰 리스트가 있을 경우 %>
+                    
+                <% for(Review r : reviewList) { %>
+                    
+                    <% if(r.getmCode() != loginUser.getmCode()) { // 기존의 리뷰 리스트에 로그인한 회원의 리뷰가 없을 경우 %>
+                        
+                        <script>
+                            $(function(){
+                                    $("#review-insert-btn").click(function(){
+                                        
+                                        $("#review-insert-modal").modal({backdrop:false});
+                                        $(".review-product input[name=ocode]").val("<%= orderInfo.getoCode() %>");
+                                        $(".review-product input[name=mcode]").val("<%= orderInfo.getmCode() %>");
+
+                                    });
+                            });
+                        
+                        </script>
+
+                    <% } else { // 기존의 리뷰리스트에 로그인한 회원의 리뷰가 있을 경우 %>
+                        
+                        <script>
+                            $(function(){
+                                    $("#review-insert-btn").click(function(){
+                                        
+                                        alert("이미 작성한 후기가 존재합니다.");
+                                        
+                                    });
+                            });
+                        </script>
+
+                    <% } %>
+
                 <% } %>
-            <% } %>
-    	<% } else { %>
+
+            <% } %>    
+        
+    	<% } else { // 로그인한 회원 배송 완료 단계의 주문 정보가 없을 경우  %>
             <script>
                 $(function(){
                         $("#review-insert-btn").click(function(){
