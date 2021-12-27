@@ -53,11 +53,18 @@ public class MemberEnrollController extends HttpServlet {
 		
 		Member m = new Member(userName, userId, userPwd, phone, birth, gender, address, subAddress, postcode, email, ad);
 		
-		int result = new MemberService().insertMember(m);
+		// 회원가입
+		int result1 = new MemberService().insertMember(m);
+		
+		// 포인트 테이블에 회원 가입시 포인트 주는 로그 작성
+		int result2 = new MemberService().insertPoint(m.getmCode());
+
+		// member테이블 내 point업데이트
+		int result3 = new MemberService().updatePoint(m.getmCode());
 		
 		HttpSession session = request.getSession();
 		
-		if(result > 0) {
+		if(result1 * result2 * result3 > 0) {
 			session.setAttribute("alertMsg", "회원가입에 성공했습니다.");
 			response.sendRedirect(request.getContextPath());
 		} else {

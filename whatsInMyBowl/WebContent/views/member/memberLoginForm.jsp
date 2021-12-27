@@ -117,8 +117,7 @@
                 </tr>
                 <tr>
                     <td  style="vertical-align:top">                         
-                        <input type="checkbox" name="saveId" id="saveId" style="font-size:small;">
-                        <label for="saveId" style="font-size:small">아이디저장</label>
+                       
                     </td>
                     <td align="right" style="vertical-align: top">
                         <div class="findIdPwd">

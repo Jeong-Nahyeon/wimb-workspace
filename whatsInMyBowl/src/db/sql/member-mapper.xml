@@ -286,4 +286,12 @@
 		 	 , 10
 		 	 , 1000)
 	</entry>
+	
+	<!-- MEMBER 테이블 POINT 업데이트 -->
+	<entry key="updatePoint">
+		UPDATE MEMBER
+		   SET M_POINT = M_POINT + 1000
+		 WHERE M_CODE = ?
+	</entry>
+	
 </properties>

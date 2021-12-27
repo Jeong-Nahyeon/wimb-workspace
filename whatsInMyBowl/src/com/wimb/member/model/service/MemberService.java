@@ -47,20 +47,15 @@ public class MemberService {
 	public int insertMember(Member m) {
 		
 		Connection conn = getConnection();
-		int result1 = new MemberDao().insertMember(conn, m);
-		//int result2 = 0;
-		close(conn);
+		int result = new MemberDao().insertMember(conn, m);
 		
-		if(result1 > 0) {
-			
-			//result2 = new MemberDao().insertPoint(conn, m.getmCode());
+		if(result > 0) {
 			commit(conn);
-			
 		}else {
 			rollback(conn);
 		}
-		return result1;
-		
+		close(conn);
+		return result;
 	}
 	
 	public int pwdCheck(String userId, String checkPwd) {
@@ -230,4 +225,17 @@ public class MemberService {
 		return ttp;
 	}
 	
+	public int insertPoint(int userNo) {
+		Connection conn = getConnection();
+		int result = new MemberDao().insertPoint(conn, userNo);
+		close(conn);
+		return result;
+	}
+	
+	public int updatePoint(int userNo) {
+		Connection conn = getConnection();
+		int result = new MemberDao().updatePoint(conn, userNo);
+		close(conn);
+		return result;
+	}
 }
