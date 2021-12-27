@@ -50,7 +50,7 @@ public class AdminItemUpdateController extends HttpServlet {
 		
 		if(result > 0) {
 			request.getSession().setAttribute("alertMsg", "재료 수정 성공");
-			response.sendRedirect(request.getContextPath() + "aUplist.cu?update=1");
+			response.sendRedirect(request.getContextPath() + "/aUplist.cu?update=1");
 		} else {
 			request.setAttribute("errorMsg", "재료 등록 실패");
 			request.getRequestDispatcher("views/common/adminerrorPage.jsp").forward(request, response);

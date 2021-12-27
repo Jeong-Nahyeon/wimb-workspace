@@ -490,19 +490,19 @@
             <!-- 페이징바 -->
             <div class="paging_area">
             	<% if(currentPage != 1){ %>
-                	<button onclick="location.href='<%= contextPath %>/aitem.cu?cupage=<%= currentPage -1 %>';">&lt;</button>
+                	<button onclick="location.href='<%= contextPath %>/aUplist.cu?update=<%= currentPage -1 %>';">&lt;</button>
                 <% } %>
                 
                 <% for(int p = startPage; p<=endPage; p++){ %>
                 	<% if(p == currentPage) { %>
 	                	<button disabled><%= p %></button>
 	                <% }else { %>
-	                	<button onclick="location.href='<%= contextPath%>/aitem.cu?cupage=<%= p %>';"><%= p %></button>
+	                	<button onclick="location.href='<%= contextPath %>/aUplist.cu?update=<%= p %>';"><%= p %></button>
 	                <% } %>
 	            <% } %>
 	            
 	            <% if(currentPage != maxPage){ %>
-                	<button onclick="location.href='<%= contextPath %>/aitem.cu?cupage=<%= currentPage +1%>'">&gt;</button>
+                	<button onclick="location.href='<%= contextPath %>/aUplist.cu?update=<%= currentPage +1%>'">&gt;</button>
                	<% } %>
             </div>
 
