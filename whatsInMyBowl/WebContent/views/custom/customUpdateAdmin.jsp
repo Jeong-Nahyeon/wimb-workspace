@@ -298,7 +298,7 @@
     
         <div class="menu_categoty">
             <h2 style="color:gray;">상품관리</h2>
-            <h2>&gt; 상품등록</h2>
+            <h2>&gt; 상품 수정/삭제</h2>
         </div>
 
         <div class="custom_admin">

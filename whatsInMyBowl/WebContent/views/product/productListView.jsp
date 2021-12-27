@@ -314,8 +314,10 @@
 							<h6><%=  p.getpName() %></h6>
 							<% if(p.getDiscountPrice() != 0) { %>
 								<!-- case1. 할인가 -->
-								<span name="cost" style="text-decoration: line-through; color:lightgray; margin:0;" class="discount"><%= p.getpPrice() %>원</span>
-								<h4 name="discount" style="color:salmon; display:inline-block; margin:0;"><%= p.getDiscountPrice() %>원</h4>
+								<span name="cost" style="text-decoration: line-through; color:lightgray; margin:0;" ><%= p.getpPrice() %>원</span>
+								<h4 name="discount" style="color:salmon; display:inline-block; margin:0;">
+									<span style="color:salmon; display:inline-block; margin:0;" class="discount"><%= p.getDiscountPrice() %></span>원
+								</h4>
 							<% } else {%>
 								<!-- case2. 원가 -->
 								<h4 style="margin:0;"><%= p.getpPrice() %>원</h4>
@@ -401,7 +403,7 @@
 						<div class="cart-product">
 							<input type="hidden" name="cart-pCode">
 							<div class="cart-product-img">
-								<img src="" style="width:100%; height:100%;">
+								<img src="" style="width:100%; height:100%;" class="productImg">
 						   </div>
 
 						   <div class="cart-product-content">
@@ -418,7 +420,10 @@
 								<hr>
 
 								<h2 id="cart-pPrice" style="font-weight: bolder; color:#9BD5BD;" align="right"></h2>
-								<h2 style="font-weight: bolder; color:#9BD5BD;" align="right" class="productPrice">원</h2>
+								<h2 style="font-weight: bolder; color:#9BD5BD;" align="right">
+									<span style="font-weight: bolder; color:#9BD5BD;" align="right" class="productPrice"></span>원	
+								</h2>
+								
 						   
 							</div>
 
@@ -442,16 +447,11 @@
 									$("#amount").val($number);
 
 									// 합계금액 표시
-									let $discount = $("#discount").text(); // 할인가
-									let $cost = $("#cost").text(); // 원가
+									//let $discount = $("#discount").text(); // 할인가
+									let $cost = $(".productPrice").text(); // 원가
 									let $num = $("#amount").val(); // 수량
 
-									if($discount != 0){
-										$("#total-discount").text($discount * $num);
-									} else {
-										$("#total-cost").text($cost * $num);
-									}
-
+									$(".productPrice").text($cost * $num);
 								}
 
 							</script>
@@ -479,16 +479,19 @@
 		$(document).on("click", ".add_cart", function(){
 			var productName = $(this).siblings("input[name='pName']").val()
 			var productCode = $(this).siblings("input[name='pcode']").val()
+			var productimg = $(this).siblings("img").attr("src");
+			console.log(productimg)
 			var productPrice = 0;
-			if($(this).parent().siblings(".discount").length > 0){
-				productPrice = $(this).parent().siblings("h4").text()
+			if($(this).parent().siblings().children(".discount").length > 0){
+				productPrice = $(this).parent().siblings().children("span").text()
 				console.log(productPrice)
 			}else{
 				productPrice = $(this).siblings("input[name='pPrice']").val()
 			}
 			$(".modal-body .productName").text(productName);
 			$(".modal-body .productPrice").text(productPrice);
-			$(".modal-body .productCode").val(productCode);
+			$(".modal-body .productCode").val(productCode); 
+			$(".modal-body .productImg").attr('src', productimg);
 		})
 
 		function addCartProduct(){

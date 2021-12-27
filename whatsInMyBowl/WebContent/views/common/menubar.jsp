@@ -293,7 +293,7 @@
                     <a href="<%= contextPath %>/heartList.my"><i class="fas fa-heart"></i></a>
                 </div>
                 <div style="border-bottom:1px solid lightgrey">
-                    <a href=""><i class="fas fa-cart-plus"></i></a>
+                    <a href="<%= contextPath %>/cartlist.cart"><i class="fas fa-cart-plus"></i></a>
                 </div>
                 <div style="border-bottom:1px solid lightgrey">
                     <a href="#wrap"><i class="fas fa-chevron-up"></i></a>

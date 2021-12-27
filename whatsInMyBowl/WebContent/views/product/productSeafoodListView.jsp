@@ -314,8 +314,10 @@
 							<h6><%=  p.getpName() %></h6>
 							<% if(p.getDiscountPrice() != 0) { %>
 								<!-- case1. 할인가 -->
-								<span style="text-decoration: line-through; color:lightgray; margin:0;" class="discount"><%= p.getpPrice() %>원</span>
-								<h4 style="color:salmon; display:inline-block; margin:0;"><%= p.getDiscountPrice() %>원</h4>
+								<span name="cost" style="text-decoration: line-through; color:lightgray; margin:0;" ><%= p.getpPrice() %>원</span>
+								<h4 name="discount" style="color:salmon; display:inline-block; margin:0;">
+									<span style="color:salmon; display:inline-block; margin:0;" class="discount"><%= p.getDiscountPrice() %></span>원
+								</h4>
 							<% } else {%>
 								<!-- case2. 원가 -->
 								<h4 style="margin:0;"><%= p.getpPrice() %>원</h4>
@@ -398,16 +400,16 @@
                     <!--<form action="" id="cart-insert-form" method="get">-->
                       
 						<div class="cart-product">
-						   
+							<input type="hidden" name="cart-pCode">
 							<div class="cart-product-img">
-								<img src="" style="width:100%; height:100%;">
+								<img src="" style="width:100%; height:100%;" class="productImg">
 						   </div>
 
 						   <div class="cart-product-content">
 								
-								<h4 style="font-weight:bolder; margin-bottom: 30px;" align="left" class="productName"></h4>
+								<h4 id="cart-pName" style="font-weight:bolder; margin-bottom: 30px;" align="left" class="productName"></h4>
 								<input type="hidden" class="productCode">
-								
+
 								<span>수량 선택</span>
 								<span style="margin-left:50px;">
 									<i class="fas fa-minus" onclick='count("minus")' value="-" style="cursor:pointer" style="color:lightgray;"></i>
@@ -416,34 +418,41 @@
 								</span>
 								<hr>
 
-								<h2 style="font-weight: bolder; color:#9BD5BD;" align="right" class="productPrice"></h2>
+								<h2 id="cart-pPrice" style="font-weight: bolder; color:#9BD5BD;" align="right"></h2>
+								<h2 style="font-weight: bolder; color:#9BD5BD;" align="right">
+									<span style="font-weight: bolder; color:#9BD5BD;" align="right" class="productPrice"></span>원	
+								</h2>
+								
 						   
 							</div>
 
-							<!-- 수량 표시 영역 기능 -->
+							<!-- 수량 및 합계금액 표시 -->
 							<script>
 								function count(type)  {
-									// 결과를 표시할 element
-									const amount = document.getElementById('amount');
 									
-									// 현재 화면에 표시된 값
-									let number = amount.value;
+									// 수량 표시
+									let $number = $("#amount").val(); // 수량 표시될 input 
 									
-									// 더하기/빼기
-									if(type === 'plus') {
-										number = parseInt(number) + 1;
-									}else if(type === 'minus')  {
-										if(number != '1'){
-											number = parseInt(number) - 1;
+									if(type == 'plus') {
+										$number = parseInt($number) + 1;
+									}else if(type == 'minus')  {
+										if($number != '1'){
+											$number = parseInt($number) - 1;
 										} else{
-											number = 1;
+											$number = 1;
 										}
-										
 									}
-									
-									// 결과 출력
-									amount.value = number;
+
+									$("#amount").val($number);
+
+									// 합계금액 표시
+									//let $discount = $("#discount").text(); // 할인가
+									let $cost = $(".productPrice").text(); // 원가
+									let $num = $("#amount").val(); // 수량
+
+									$(".productPrice").text($cost * $num);
 								}
+
 							</script>
 
 					   </div>
@@ -469,16 +478,19 @@
 		$(document).on("click", ".add_cart", function(){
 			var productName = $(this).siblings("input[name='pName']").val()
 			var productCode = $(this).siblings("input[name='pcode']").val()
+			var productimg = $(this).siblings("img").attr("src");
+			console.log(productimg)
 			var productPrice = 0;
-			if($(this).parent().siblings(".discount").length > 0){
-				productPrice = $(this).parent().siblings("h4").text()
+			if($(this).parent().siblings().children(".discount").length > 0){
+				productPrice = $(this).parent().siblings().children("span").text()
 				console.log(productPrice)
 			}else{
 				productPrice = $(this).siblings("input[name='pPrice']").val()
 			}
 			$(".modal-body .productName").text(productName);
 			$(".modal-body .productPrice").text(productPrice);
-			$(".modal-body .productCode").val(productCode);
+			$(".modal-body .productCode").val(productCode); 
+			$(".modal-body .productImg").attr('src', productimg);
 		})
 
 		function addCartProduct(){
@@ -545,7 +557,7 @@
 
 			</div>
 		</div>
-	</div>	
+	</div>
 	
 	<!-- 찜하기 기능 (지은)-->
 	<script>
