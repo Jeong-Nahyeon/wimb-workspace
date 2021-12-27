@@ -1014,6 +1014,8 @@ public class ProductDao {
 			close(pstmt);
 		}
 		
+		//System.out.println(p);
+		
 		return p;
 		
 	}

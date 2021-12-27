@@ -4,6 +4,8 @@
 <%
 	Product p = (Product)(request.getAttribute("p"));
 
+	System.out.println(p);
+
 %>    
     
 <!DOCTYPE html>
@@ -691,7 +693,7 @@
 			var pCode = $("#productCode").val();
 			console.log(pCode);
 			
-			if(<%= loginUser.getmCode() %> == null) {
+			if(<%= loginUser %> == null) {
 				alert('로그인 후 이용가능합니다.');
 			}else {
 				console.log("실행확인");

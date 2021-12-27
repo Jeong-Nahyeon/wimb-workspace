@@ -329,7 +329,7 @@
 					// 상품 이미지 클릭 시 상세 페이지로 이동
 					$(".product-img").on("click", "img", function(){
 						//console.log($("input:hidden", this).val());
-						location.href="<%= contextPath %>/detail.pr?pcode=" + $(this).prev().val();
+						location.href="<%= contextPath %>/detail.pr?pcode=" + $(this).parent().find("input[name=pcode]").val();
 					});
 
 					// 카트 아이콘 클릭 테스트용
