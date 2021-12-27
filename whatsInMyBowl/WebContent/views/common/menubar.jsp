@@ -212,21 +212,37 @@
                 <a href="">장바구니</a>
             </div> 
             <%}else { %>
-            <!-- 로그인 후-->
-            <div class="logined-area">
-                <div id="user-area">
-                    <a href="">
-                        <i class="fas fa-user fa" style="color:rgb(155, 213, 189)"></i>
-                        <b><%= loginUser.getmName() %></b>님
-                    </a>
-                </div>
-                <div id="logout-area">
-                    <a href="<%= contextPath %>/logout.me">로그아웃</a>
-                    <a href="<%= contextPath %>/myPage.my">마이페이지</a>
-                    <a href="<%= contextPath %>/userView.no?cpage=1">고객센터</a>
-                    <a href="<%= contextPath %>/cartlist.cart">장바구니</a>
-                </div>                
-            </div>
+                <!-- 로그인 후-->
+                <%if(loginUser.getStatus().equals("A")){%>
+                    <div class="logined-area">
+                        <div id="user-area">
+                            <a href="">
+                                <i class="fas fa-user fa" style="color:rgb(155, 213, 189)"></i>
+                                <b><%= loginUser.getmName() %></b>님
+                            </a>
+                        </div>
+                        <div id="logout-area">
+                            <a href="<%= contextPath %>/logout.me">로그아웃</a>
+                            <a href="<%=contextPath %>/views/common/adminBar.jsp">관리자페이지</a>
+                       
+                        </div>                
+                    </div>
+                <%} else{%>
+                    <div class="logined-area">
+                        <div id="user-area">
+                            <a href="">
+                                <i class="fas fa-user fa" style="color:rgb(155, 213, 189)"></i>
+                                <b><%= loginUser.getmName() %></b>님
+                            </a>
+                        </div>
+                        <div id="logout-area">
+                            <a href="<%= contextPath %>/logout.me">로그아웃</a>
+                            <a href="<%= contextPath %>/myPage.my">마이페이지</a>
+                            <a href="<%= contextPath %>/userView.no?cpage=1">고객센터</a>
+                            <a href="<%= contextPath %>/cartlist.cart">장바구니</a>
+                        </div>                
+                    </div>
+                <%} %>
             <%} %>
         </div>
         <div id="outer">

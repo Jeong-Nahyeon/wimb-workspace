@@ -118,10 +118,10 @@
             </td>
             <td style="width: 8%;" id="adminWithIcon">
                 <i class="fas fa-user-circle" id="adminIcon"></i>
-                <span><b style="font-size: 20px;">관리자</b>님</span>
+                <a href="<%= contextPath %>/views/common/adminBar.jsp"><b style="font-size: 20px;">관리자</b>님</a>
             </td>
             <td style="width: 7%;">
-                <a href=""><b style="font-size: 20px;">로그아웃</b></a>
+                <a href="<%= contextPath %>/logout.me"><b style="font-size: 20px;">로그아웃</b></a>
             </td>
             <td style="width: 7%;">
                 <a href="<%= contextPath %>"><b style="font-size: 20px;">홈페이지</b></a>
