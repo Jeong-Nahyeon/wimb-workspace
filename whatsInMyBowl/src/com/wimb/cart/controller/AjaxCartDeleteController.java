@@ -41,11 +41,11 @@ public class AjaxCartDeleteController extends HttpServlet {
 		Cart c = new Cart();
 		c.setmCode(mCode);
 		
-		System.out.println(mCode);
-		System.out.println(saladCode);
+		//System.out.println(mCode);
+		//System.out.println(saladCode[0]);
 		
 		int result = 0;
-		for(int i=0; i<saladCode.length; i++) {
+			for(int i=0; i<saladCode.length; i++) {
 			if(saladCode[i].startsWith("CU")) {
 				c.setCuCode(saladCode[i]);
 				result = new CartService().deleteCartCustom(c);

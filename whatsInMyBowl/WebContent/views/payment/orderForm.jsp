@@ -359,7 +359,7 @@
                                 <td>
                                     <div class="point-sub">
                                         <span style="font-size: 13px; margin-bottom: 7px;">
-                                            보유적립금 : <label id="allPoint"><%= loginUser.getmPoint() %></label>원
+                                            보유적립금 : <label id="allPoint">2000</label>원
                                         </span>
                                         <span>* 보유적립금 1천원 이상부터 사용가능</span>
                                         <span>* 적립금내역 : 마이페이지 - 적립금조회</span>

@@ -198,7 +198,7 @@ public class CartDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, c.getmCode());
-			pstmt.setString(2, c.getCuCode());
+			pstmt.setString(2, c.getpCode());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -164,10 +164,13 @@
         float: left;
         margin: 20px 10px 20px 34px; 
     }
-    #custom_image{
+    #custom_image #custom_image img{
         width: 120px; 
         height: 120px; 
         border: 1px solid black;
+    }
+    #custom_image img{
+        object-fit: cover;
     }
     #custom_guide{
         width: 210px;
@@ -278,7 +281,9 @@
                 <!-- 왼쪽 데이터 영역-->
                 <div id="custom_left">
                     <div class="custom_head">
-                        <div id="custom_image">이미지 자리</div>
+                        <div id="custom_image">
+                            <img src="<%= contextPath %>/resources/images/LOGO.png" style="width: 120px; height: 120px;">
+                        </div>
                         <div id="custom_guide">
                             <span>채소, 토핑의 구성은 변경될 수 있습니다.</span> <br>
                             <span>채소, 토핑의 구성은 변경될 수 있습니다.</span> <br>
@@ -347,7 +352,7 @@
                             </div>
 
                             <div class="customlist_btn" align="right">
-                                <button type="reset" id="customlist_btn_reset"><i class="fas fa-times fa-lg"></i></button>
+                                <button type="reset" id="customlist_btn_reset" onclick="deleteCustom();"><i class="fas fa-times fa-lg"></i></button>
                                 <button type="submit" id="customlist_btn_submit" onclick="insertCustomOrder();">샐러드 추가</button>
                             </div>
 
@@ -929,6 +934,20 @@
                         
                     }
 
+                    function deleteCustom(){
+                        $(".count_text").val(0);
+                        $("#saladName").val("");
+                        $("#vagetable_name").html("");
+                        $("#vagetable_price").html("");
+                        $("#maintopping_name").html("");
+                        $("#maintopping_price").html("");
+                        $("#sidetopping_name").html("");
+                        $("#sidetopping_price").html("");
+                        $("#dressing_name").html("");
+                        $("#dressing_price").html("");
+                        $("#total_sum").text("");
+
+                    }
                     
                 </script>
                 

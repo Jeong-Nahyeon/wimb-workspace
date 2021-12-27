@@ -306,7 +306,7 @@
             <div class="product_category">
                 <div id="left">
                     <div id="product-button">
-                        <a href="<%= contextPath %>/list.apr?cpage=1"><b>완제품</b></a>
+                        <a href="<%= contextPath %>/updateDeleteList.apr?cpage=1"><b>완제품</b></a>
                     </div>
                 </div>
                 <div id="right" align="right">

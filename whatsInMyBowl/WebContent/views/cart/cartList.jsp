@@ -287,37 +287,20 @@
 
     <!-- 삭제 -->
     <script>
-        $(".xdelete").click(function(){
-            var checkArr = new Array();
-            checkArr.push($(this).parent().siblings().children(".saladCode").val())
-            //var saladCode = $(this).parent().siblings().children(".saladCode").val();
-            console.log(checkArr)
-            var mCode = $("input[name='mCode']").val();
-            $.ajax({
-                url:"deletecart.cart",
-                type:"post",
-                dataType:"json",
-                traditional:true,
-                data:{
-                    mCode:mCode,
-                    saladCode:checkArr
-                },
-                success:function(result){
-                    location.reload();
-                },
-                error:function(){
-                    console.log("ajax 통신 실패");
-                }
-            })
+        
+        $(document).on('click', ".xdelete", function(){
+            $(this).parent().siblings().children("input[name='check']").prop("checked", true)
         })
 
-        $(".chooseDelete").click(function(){
+        $(".chooseDelete, .xdelete").click(function(){
             var mCode = $("input[name='mCode']").val();
             var count = $("input[name='check']:checked").length;
             var checkArr = new Array();
             $("input[name='check']:checked").each(function(){
                 checkArr.push($(this).parent().siblings().children(".saladCode").val())
             }); 
+            console.log(checkArr)
+            
             $.ajax({
                 url:"deletecart.cart",
                 type:"post",

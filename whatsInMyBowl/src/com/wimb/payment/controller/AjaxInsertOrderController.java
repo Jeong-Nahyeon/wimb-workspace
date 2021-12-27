@@ -82,6 +82,9 @@ public class AjaxInsertOrderController extends HttpServlet {
 		}
 		
 		if(result2 > 0) {
+			
+			
+			
 			response.setContentType("application/json; charset=UTF-8");
 			new Gson().toJson(orderCode, response.getWriter());
 		}else {
