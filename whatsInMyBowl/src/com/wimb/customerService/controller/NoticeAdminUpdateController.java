@@ -55,6 +55,7 @@ public class NoticeAdminUpdateController extends HttpServlet {
 			int nCode = Integer.parseInt(multi.getParameter("nno"));
 			String noticeTitle = multi.getParameter("title");
 			String noticeContent = multi.getParameter("content");
+			noticeContent = noticeContent.replace("\r\n","<br>");
 			
 			Notice n = new Notice(nCode, noticeTitle, noticeContent);
 			

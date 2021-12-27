@@ -36,7 +36,7 @@ public class FAQAdminUpdateController extends HttpServlet {
 		int faqCode = Integer.parseInt(request.getParameter("fCode"));
 		String faqTitle = request.getParameter("title");
 		String faqContent = request.getParameter("FAQ_Box_question_answer");
-	
+		faqContent = faqContent.replace("\r\n","<br>");
 		int result = new FAQService().updateFAQ(faqCode, faqTitle, faqContent);
 		
 		if(result > 0) {

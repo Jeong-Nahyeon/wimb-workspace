@@ -116,7 +116,7 @@
 	            </table>
 	
 	            <div class="two_btn" align="center">
-	                <button type="button" id="back">목록으로</button>
+	                <button type="button" id="back" onclick="history.back();">목록으로</button>
 	                <button type="submit" id="insert">등록하기</button>
 	            </div>
         	

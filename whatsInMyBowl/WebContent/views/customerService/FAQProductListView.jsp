@@ -311,7 +311,10 @@
 		        	<% } %>
 		        </div>
            </div>
-
+			
+	    <footer>
+	    	<%@ include file="../common/footer.jsp" %>
+	    </footer>			
            <script>
            
            		// 자주묻는질문 아코디언 메뉴 함수

@@ -230,6 +230,7 @@
 		  , FAQ_CATEGORY
 		  , FAQ_TITLE
           , FAQ_CONTENT
+          , FAQ_SHOW
 		  )
 		  VALUES
 		  (
@@ -237,6 +238,7 @@
 		  , ?
 		  , ?
           , ?
+          , 'Y'
 		  )
 	</entry>
 	

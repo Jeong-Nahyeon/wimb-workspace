@@ -101,7 +101,7 @@
 
         <div class="outer">
 
-            <div class="noticeSideBar">
+            <div class="noticeSideBar" style="margin-bottom:100px;">
 
                 <div class="noticeSideBar-Top">
                     <h2>고객센터</h2>
@@ -177,6 +177,9 @@
             </div>
 
         </div>
+	    <footer>
+	    	<%@ include file="../common/footer.jsp" %>
+	    </footer>	
 		<script>
 		
 		// 상세보기 시 필요한 게시판 번호를 넘기는 함수 ------------------------------------------

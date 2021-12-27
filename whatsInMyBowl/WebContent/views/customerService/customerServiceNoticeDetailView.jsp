@@ -95,7 +95,7 @@
 
     <div class="outer">
 
-        <div class="noticeSideBar">
+        <div class="noticeSideBar" style="margin-bottom:100px;">
 
             <div class="noticeSideBar-Top">
                 <h2>고객센터</h2>
@@ -168,5 +168,9 @@
 
 
     </div>
+    
+	    <footer>
+	    	<%@ include file="../common/footer.jsp" %>
+	    </footer>	
 </body>
 </html>

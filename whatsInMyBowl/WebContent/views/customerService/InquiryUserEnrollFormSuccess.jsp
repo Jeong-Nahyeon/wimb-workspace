@@ -272,7 +272,7 @@
     
             </form>
 			
-			
+			<%@ include file="../common/footer.jsp" %>
 			
 
         </div>
@@ -295,7 +295,7 @@
                     </div>
                     <div class="modal_btn" style="margin-top: 50px;">
                         <button type="button" class="modal_btn_top" style="margin-bottom: 5px;" onclick="location.href='';">1:1 문의글 조회</button>
-                        <button type="button" class="modal_btn_bottom" onclick="location.href='';">메인화면</button>
+                        <button type="button" class="modal_btn_bottom" onclick="location.href='<%= contextPath %>';">메인화면</button>
                     </div>
                 <!-- </form>  -->
             </div>

@@ -311,7 +311,9 @@
 		        	<% } %>
 		        </div>
            </div>
-
+	     <footer>
+	    	<%@ include file="../common/footer.jsp" %>
+	    </footer>
            <script>
                $(".FAQ_List_que").click(function() {
                     $(this).next(".FAQ_List_anw").stop().slideToggle(300);
