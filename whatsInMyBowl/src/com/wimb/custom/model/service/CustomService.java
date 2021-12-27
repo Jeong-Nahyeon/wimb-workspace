@@ -52,6 +52,7 @@ public class CustomService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
 		return result;
 	}
 	
@@ -65,6 +66,7 @@ public class CustomService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
 		return result;
 	}
 	
@@ -87,6 +89,7 @@ public class CustomService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
 		return result;
 	}
 	
@@ -100,6 +103,7 @@ public class CustomService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
 		return result;
 	}
 	
@@ -131,6 +135,7 @@ public class CustomService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
 		return result;
 	}
 
@@ -151,7 +156,7 @@ public class CustomService {
 		}else {
 			rollback(conn);
 		}
-		
+		close(conn);
 		return ciCode;
 	}
 
@@ -164,6 +169,7 @@ public class CustomService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
 		return result;
 	}
 

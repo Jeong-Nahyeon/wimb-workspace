@@ -183,7 +183,7 @@
                                         <input type="hidden" name="productPrice" class="productPrice" value="<%= c.getCuPrice() %>">
                                     </td>
                                     <td>
-                                        <a href="" class="xdelete">
+                                        <a class="xdelete">
                                             <i class="fas fa-times" style="font-size:25px; color:black;" ></i>
                                         </a>
                                     </td>
@@ -208,7 +208,7 @@
                                         <input type="hidden" name="productPrice" class="productPrice" value="<%= c.getpPrice() %>">
                                     </td>
                                     <td>
-                                        <a href="" class="xdelete">
+                                        <a class="xdelete">
                                             <i class="fas fa-times" style="font-size:25px; color:black;" ></i>
                                         </a>
                                     </td>
@@ -288,8 +288,27 @@
     <!-- 삭제 -->
     <script>
         $(".xdelete").click(function(){
-            var saladCode = $(this).parent().siblings().children(".saladCode").val();
-            
+            var checkArr = new Array();
+            checkArr.push($(this).parent().siblings().children(".saladCode").val())
+            //var saladCode = $(this).parent().siblings().children(".saladCode").val();
+            console.log(checkArr)
+            var mCode = $("input[name='mCode']").val();
+            $.ajax({
+                url:"deletecart.cart",
+                type:"post",
+                dataType:"json",
+                traditional:true,
+                data:{
+                    mCode:mCode,
+                    saladCode:checkArr
+                },
+                success:function(result){
+                    location.reload();
+                },
+                error:function(){
+                    console.log("ajax 통신 실패");
+                }
+            })
         })
 
         $(".chooseDelete").click(function(){
