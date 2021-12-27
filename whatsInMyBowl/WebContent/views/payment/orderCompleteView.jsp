@@ -279,7 +279,7 @@
                             <td>
                                 <div id="end-price">
                                     <span id="price" style="font-size: 15px;"><%= p.getPmFinalPrice() %></span>
-                                    <span style="font-size: 10px;">적립 예정금 : 1600원</span>
+                                    
                                 </div>
                                 
                             </td>

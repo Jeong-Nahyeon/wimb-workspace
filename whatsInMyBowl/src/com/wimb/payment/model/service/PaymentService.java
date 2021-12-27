@@ -154,8 +154,33 @@ public class PaymentService {
 		return cash;
 	}
 
+	// 포인트 적립
+	public int insertPointPlus(int mCode, String orderCode) {
+		Connection conn = getConnection();
+		int result = new PaymentDao().insertPointPlus(conn, mCode, orderCode);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return 0;
+	}
 	
+	// 포인트 차감
+	public int insertPointMinus(int mCode, String orderCode) {
+		Connection conn = getConnection();
+		int result = new PaymentDao().insertPointMinus(conn, mCode, orderCode);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
 
+	
+	
+	
 	
 	
 	

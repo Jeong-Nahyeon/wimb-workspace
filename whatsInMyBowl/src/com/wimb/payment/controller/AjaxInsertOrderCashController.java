@@ -59,7 +59,9 @@ public class AjaxInsertOrderCashController extends HttpServlet {
 		// 상품 코드 분류
 			PaymentCustom custom = new PaymentCustom();
 			PaymentProduct product = new PaymentProduct(); 
-			int result2 = 0;
+			int result2 = 0;	// 서브오더 관련 쿼리문 실행결과
+			int result3 = 0;	// 포인트 관련 쿼리문 실행결과
+			
 			Order order = new Order(mCode, pmCode, totalCount, oName, oAddress, oSubAddress, zipCode, oPhone, oEmail, oRequest, oPoint, oState);
 			String orderCode = new PaymentService().insertOrder(order);
 			if(orderCode != null) {
@@ -77,6 +79,15 @@ public class AjaxInsertOrderCashController extends HttpServlet {
 			}
 			
 			if(result2 > 0) {
+				result3 = new PaymentService().insertPointPlus(mCode, orderCode);
+				if(oPoint > 0) {
+					result3 = new PaymentService().insertPointMinus(mCode, orderCode);
+				}
+			}else {
+				
+			}
+			
+			if(result3 > 0) {
 				response.setContentType("application/json; charset=UTF-8");
 				new Gson().toJson(orderCode, response.getWriter());
 			}else {

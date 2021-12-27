@@ -97,10 +97,10 @@ public class PaymentDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, p.getPmTotalPrice());
 			pstmt.setInt(2, p.getPmFinalPrice());
-			pstmt.setString(3, c.getCardApproval());
-			pstmt.setString(4, c.getCardCompany());
-			pstmt.setInt(5, c.getCardInstalment());
-			pstmt.setString(6, c.getCardId());
+			pstmt.setString(3, c.getCardId());
+			pstmt.setString(4, c.getCardApproval());
+			pstmt.setString(5, c.getCardCompany());
+			pstmt.setInt(6, c.getCardInstalment());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -415,6 +415,48 @@ public class PaymentDao {
 			close(pstmt);
 		}
 		return cash;
+	}
+
+	// 포인트 적립
+	public int insertPointPlus(Connection conn, int mCode, String orderCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertPointPlus");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mCode);
+			pstmt.setString(2, orderCode);
+			pstmt.setString(3, orderCode);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	// 포인트 차감
+	public int insertPointMinus(Connection conn, int mCode, String orderCode) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertPointMinus");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mCode);
+			pstmt.setString(2, orderCode);
+			pstmt.setString(3, orderCode);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	

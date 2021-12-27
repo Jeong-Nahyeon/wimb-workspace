@@ -31,10 +31,10 @@
 		  VALUES
 		  (
 		    'PAY' || SEQ_PAYMENT.NEXTVAL
+		  , '카드'
 		  , SYSDATE
 		  , ?
 		  , ?
-		  , '카드'
 		  )
 		 INTO CARD  
 		  VALUES
@@ -133,10 +133,10 @@
 		      VALUES
 		      (
 		        'PAY' || SEQ_PAYMENT.NEXTVAL
-		      , SYSDATE
-		      , ?
-		      , ?
-		      , '입금'
+			  , '입금'
+			  , SYSDATE
+			  , ?
+			  , ?
 		      )
 		     INTO CASH 
 		     (
@@ -192,5 +192,48 @@
 		 WHERE PM_CODE = ?
 	</entry>
 	
+	<entry key="insertPointPlus">
+		INSERT
+		  INTO POINT
+		  (
+		    POINT_CODE
+		  , M_CODE
+		  , ORDER_CODE
+		  , POINT_TYPECODE
+		  , POINT
+		  )
+		  VALUES
+		  (
+		    SEQ_POINT.NEXTVAL
+		  , ?
+		  , ?
+		  , 30
+		  , (SELECT PM_FINALCOST * 0.01 * 1
+		     FROM PAYMENT
+		     WHERE PM_CODE IN ( SELECT PM_CODE FROM "ORDER" WHERE ORDER_CODE = ?))
+		  )
+	</entry>
+	
+	<entry key="insertPointMinus">
+		INSERT
+		  INTO POINT
+		  (
+		    POINT_CODE
+		  , M_CODE
+		  , ORDER_CODE
+		  , POINT_TYPECODE
+		  , POINT
+		  )
+		  VALUES
+		  (
+		    SEQ_POINT.NEXTVAL
+		  , ?
+		  , ?
+		  , 40
+		  , (SELECT ORDER_POINT * -1
+		     FROM "ORDER"
+		     WHERE ORDER_CODE = ?)
+		  )
+	</entry>
 	
 </properties>
