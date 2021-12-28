@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import com.wimb.member.model.service.MemberService;
 import com.wimb.member.model.vo.Member;
+import com.wimb.member.model.vo.Point;
 
 /**
  * Servlet implementation class MemberEnrollController
@@ -45,26 +46,31 @@ public class MemberEnrollController extends HttpServlet {
 		String postcode = request.getParameter("postcode");
 		String email = request.getParameter("userEmail");
 		String[] adArr = request.getParameterValues("ad");
+		int point = 0;
+		int pointCode = 0;
+		int pointTypecode = 0;
 		
 		String ad = "";
 		if(adArr != null) {
 			ad = String.join(",", adArr);
 		}
 		
-		Member m = new Member(userName, userId, userPwd, phone, birth, gender, address, subAddress, postcode, email, ad);
+		Member m = new Member(userName, userId, userPwd, phone, birth, gender, address, subAddress, postcode, email, ad, point);
 		
 		// 회원가입
-		int result1 = new MemberService().insertMember(m);
+		Member insertMem = new MemberService().insertMember(m);
 		
 		// 포인트 테이블에 회원 가입시 포인트 주는 로그 작성
-		int result2 = new MemberService().insertPoint(m.getmCode());
+		int userNo = insertMem.getmCode();
+		Point p = new Point(pointCode, userNo, pointTypecode, point);
+		int result2 = new MemberService().insertPoint(p);
 
 		// member테이블 내 point업데이트
-		int result3 = new MemberService().updatePoint(m.getmCode());
+		int result3 = new MemberService().updatePoint(userNo);
 		
 		HttpSession session = request.getSession();
 		
-		if(result1 * result2 * result3 > 0) {
+		if(insertMem != null && result2 * result3 > 0 ) {
 			session.setAttribute("alertMsg", "회원가입에 성공했습니다.");
 			response.sendRedirect(request.getContextPath());
 		} else {
