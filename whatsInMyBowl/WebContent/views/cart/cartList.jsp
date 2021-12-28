@@ -193,7 +193,7 @@
                                     <td colspan="2"> 
                                         <input type="checkbox" name="check">
                                         <div id="img-area">
-                                            <img src ="<%=contextPath%>/resources/images/LOGO.png">
+                                            <img src ="<%=contextPath%>/resources/images/product_images/<%= c.getpMainImg() %>">
                                         </div>
                                     </td>
                                     <td colspan="6" width="350" align="left">

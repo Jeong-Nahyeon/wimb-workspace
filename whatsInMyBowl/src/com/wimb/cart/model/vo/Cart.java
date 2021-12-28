@@ -11,11 +11,12 @@ public class Cart {
 	private String pName;
 	private int cuPrice;
 	private int pPrice;
+	private String pMainImg;
 	
 	public Cart() {}
 
 	public Cart(int mCode, String cuCode, String pCode, int caAmount, String caDate, String cuName, String pName,
-			int cuPrice, int pPrice) {
+			int cuPrice, int pPrice, String pMainImg) {
 		super();
 		this.mCode = mCode;
 		this.cuCode = cuCode;
@@ -26,10 +27,11 @@ public class Cart {
 		this.pName = pName;
 		this.cuPrice = cuPrice;
 		this.pPrice = pPrice;
+		this.pMainImg = pMainImg;
 	}
 
 	public Cart(int mCode, String cuCode, String pCode, int caAmount, String cuName, String pName, int cuPrice,
-			int pPrice) {
+			int pPrice, String pMainImg) {
 		super();
 		this.mCode = mCode;
 		this.cuCode = cuCode;
@@ -39,6 +41,7 @@ public class Cart {
 		this.pName = pName;
 		this.cuPrice = cuPrice;
 		this.pPrice = pPrice;
+		this.pMainImg = pMainImg;
 	}
 
 	public int getmCode() {
@@ -112,6 +115,14 @@ public class Cart {
 
 	public void setpPrice(int pPrice) {
 		this.pPrice = pPrice;
+	}
+	
+	public String getpMainImg() {
+		return pMainImg;
+	}
+
+	public void setpMainImg(String pMainImg) {
+		this.pMainImg = pMainImg;
 	}
 
 	@Override

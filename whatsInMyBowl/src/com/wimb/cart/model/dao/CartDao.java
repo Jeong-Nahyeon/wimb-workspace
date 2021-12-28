@@ -41,7 +41,8 @@ public class CartDao {
 								  rset.getString("cu_name"),
 								  rset.getString("p_name"),
 								  rset.getInt("cu_price"),
-								  rset.getInt("p_price")
+								  rset.getInt("p_price"),
+								  rset.getString("p_mainimg")
 								  ));
 			}
 		} catch (SQLException e) {
