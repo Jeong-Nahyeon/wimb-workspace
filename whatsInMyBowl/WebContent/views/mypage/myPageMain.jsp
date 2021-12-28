@@ -69,6 +69,10 @@
         text-align: center;
         border-spacing: 0px;
     }
+    .orderList a:link {
+    	text-decoration:none;
+    	color:black;
+    }
 
     /* 은지 */
     .outer{
@@ -214,7 +218,7 @@
 	                        <% }else { // 완제품일시 %>
 	                        	<td><a href="상품상세페이지"><img src=""><%= mo.getpName() %></a></td>
                         	<% } %>
-	                        <td><%= mo.getPmTotalCost() %>/<%= mo.getOrderAmount() %></td>
+	                        <td><%= mo.getPmTotalCost() %>원/<%= mo.getOrderAmount() %></td>
 	                        <td><a href="주문목록/배송조회 이동"><%= mo.getOrderStatus() %></a></td>
 	                    </tr>
 	                </tbody>
