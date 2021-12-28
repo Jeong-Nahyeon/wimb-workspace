@@ -409,6 +409,30 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
         });
 
         // 전체 체크버튼 클릭시 전체 체크박스 선택
+	    // 전체선택 클릭시 전부 선택
+        $("#checkAll").on('click', function(){
+   			
+   			if($("#checkAll").is(':checked')) {
+   				$("input[type=checkbox]").prop("checked", true);
+   			}else {
+   				$("input[type=checkbox]").prop("checked", false);
+   			}
+   			
+   		})
+   		
+   		// 전부 선택시 전체선택 checked
+		$("input[type=checkbox]").on('click', function(){
+			var total = $(".checkArea").length;
+			var checked = $(".checkArea:checked").length;
+			
+			if(total != checked) {
+				$("#checkAll").prop("checked", false);
+			}else {
+				$("#checkAll").prop("checked", true);
+			}
+		})   
+
+        /*
         $(function(){
             $("#checkAll").click(function(){
                 var chk = $(this).is(":checked");
@@ -421,7 +445,7 @@ java.util.ArrayList, com.wimb.member.model.vo.Member"
             })
 
         });
-
+        */
         // 회원 id클릭시 정보 및 수정창 뜨도록
         $(document).on('click', ".atag", function(){
 
