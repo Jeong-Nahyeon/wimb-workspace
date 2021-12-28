@@ -367,9 +367,10 @@
             $(".itemAmount").each(function(){
                 arrSaladCount.push($(this).val());
             })
-            $(".price_num").each(function(){
-                arrSaladPrice.push($(this).text());
+            $("input[name='productPrice']").each(function(){
+                arrSaladPrice.push($(this).val());
             })
+            console.log(arrSaladPrice)
             var form = $('<form></form>');
             form.attr('action', '<%= contextPath %>/order.pay');
             form.attr('method', 'post');
