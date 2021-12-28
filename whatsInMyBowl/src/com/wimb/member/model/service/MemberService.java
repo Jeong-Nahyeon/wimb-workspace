@@ -44,18 +44,20 @@ public class MemberService {
 		return count;
 	}
 	
-	public int insertMember(Member m) {
+	public Member insertMember(Member m) {
 		
 		Connection conn = getConnection();
 		int result = new MemberDao().insertMember(conn, m);
+		Member updateMem = null;
 		
 		if(result > 0) {
 			commit(conn);
+			updateMem = new MemberDao().selectMember(conn, m.getmId());
 		}else {
 			rollback(conn);
 		}
 		close(conn);
-		return result;
+		return updateMem;
 	}
 	
 	public int pwdCheck(String userId, String checkPwd) {
@@ -225,14 +227,21 @@ public class MemberService {
 		return ttp;
 	}
 	
-	public int insertPoint(int userNo) {
+	public int insertPoint(Point p) {
 		Connection conn = getConnection();
-		int result = new MemberDao().insertPoint(conn, userNo);
+		int result = new MemberDao().insertPoint(conn, p.getmCode());
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
 		close(conn);
 		return result;
 	}
 	
 	public int updatePoint(int userNo) {
+		
 		Connection conn = getConnection();
 		int result = new MemberDao().updatePoint(conn, userNo);
 		close(conn);

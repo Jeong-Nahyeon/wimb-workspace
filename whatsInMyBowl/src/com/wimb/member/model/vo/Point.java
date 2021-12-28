@@ -51,6 +51,14 @@ public class Point {
 
 	
 	
+	public Point(int pointCode, int mCode, int pointTypeCode, int point) {
+		super();
+		this.pointCode = pointCode;
+		this.mCode = mCode;
+		this.pointTypeCode = pointTypeCode;
+		this.point = point;
+	}
+
 	public int getTtlPoint() {
 		return ttlPoint;
 	}

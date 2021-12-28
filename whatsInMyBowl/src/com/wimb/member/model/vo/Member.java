@@ -87,7 +87,7 @@ public class Member {
 	}
 
 	public Member(String mName, String mId, String mPwd, String mPhone, String mBirth, String mGender, String mAddress,
-			String subAddress, String postcode, String mEmail, String mAd) {
+			String subAddress, String postcode, String mEmail, String mAd, int mPoint) {
 		super();
 		this.mName = mName;
 		this.mId = mId;
@@ -100,6 +100,7 @@ public class Member {
 		this.postcode = postcode;
 		this.mEmail = mEmail;
 		this.mAd = mAd;
+		this.mPoint = mPoint;
 	}
 	
 	

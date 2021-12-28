@@ -295,10 +295,16 @@
                     type:"post",
                     success:function(userId){
 
-                        console.log("ajax통신성공");
 
-                      
-                        alert("요청하신 아이디는 " + userId + "입니다.");
+                        console.log("ajax통신성공");
+                            if(userId == 'NNNNN'){
+                                alert("아이디를 찾을 수 없습니다. 다시 입력해주세요");   
+                            }else{
+                                
+                                userId2 = userId.substr(0, userId.length-3)
+                                       + '**';
+                                alert("요청하신 아이디는 "  + userId2  + " 입니다.");
+                            }
                        
                             
                     },error:function(){
@@ -340,8 +346,14 @@
                     success:function(userId){
 
                         console.log("ajax통신성공");
+                            if(userId == 'NNNNN'){
+                                alert("아이디를 찾을 수 없습니다. 다시 입력해주세요");   
+                            }else{
+                                userId2 = userId.substr(0, userId.length-3)
+                                       + '**';
+                                alert("요청하신 아이디는 "  + userId2  + " 입니다.");
+                            }
                             
-                            alert("요청하신 아이디는 " + userId + "입니다.");
                     },error:function(){
                         console.log("ajax통신실패");
                         alert("아이디를 찾을 수 없습니다.");
