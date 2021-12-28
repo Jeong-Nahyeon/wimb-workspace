@@ -110,7 +110,7 @@
             <h3><b>장 바 구 니</b></h3>
         </div>
         <!-- 장바구니 상품 있을 때-->
-        <% if(cartlist == null){ %>
+        <% if(cartlist.isEmpty()){ %>
 	        <div class="list-area">
 	            <table id="list-table" align="center">
 	                <tr id="head-area">
