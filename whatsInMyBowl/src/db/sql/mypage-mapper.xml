@@ -196,6 +196,7 @@
 		     , ORDER_DATE
 		     , CU_NAME
 		     , CU_MAINIMG
+		     , P_CODE
 		     , P_NAME
 		     , P_MAINIMG
 		     , PM_TOTALCOST

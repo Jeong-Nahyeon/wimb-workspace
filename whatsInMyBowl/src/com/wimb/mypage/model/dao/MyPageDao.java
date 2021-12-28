@@ -514,6 +514,7 @@ public class MyPageDao {
 									   rset.getString("p_mainimg"),
 									   rset.getInt("pm_totalcost"),
 									   filePath,
+									   rset.getString("p_code"),
 									   rset.getInt("pm_finalcost"),
 									   rset.getString("cancel_code"),
 									   rset.getString("cancel_status"),

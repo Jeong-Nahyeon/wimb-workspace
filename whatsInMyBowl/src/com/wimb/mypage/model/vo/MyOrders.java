@@ -131,6 +131,33 @@ public class MyOrders {
 	
 	
 	
+	
+	
+	public MyOrders(String orderCode, int orderAmount, String orderStatus, Date orderDate, String cuName,
+			String cuMainImg, String pName, String pMainImg, int pmTotalCost, String filePath, String pCode,
+			int pmFinalCost, String cancelCode, String cancelStatus, Date cancelCompDate, String reCode, String rStatus,
+			Date rcompDate) {
+		super();
+		this.orderCode = orderCode;
+		this.orderAmount = orderAmount;
+		this.orderStatus = orderStatus;
+		this.orderDate = orderDate;
+		this.cuName = cuName;
+		this.cuMainImg = cuMainImg;
+		this.pName = pName;
+		this.pMainImg = pMainImg;
+		this.pmTotalCost = pmTotalCost;
+		this.filePath = filePath;
+		this.pCode = pCode;
+		this.pmFinalCost = pmFinalCost;
+		this.cancelCode = cancelCode;
+		this.cancelStatus = cancelStatus;
+		this.cancelCompDate = cancelCompDate;
+		this.reCode = reCode;
+		this.rStatus = rStatus;
+		this.rcompDate = rcompDate;
+	}
+
 	public MyOrders(String orderCode, int orderAmount, String orderCompany, String orderInvoice, String orderStatus,
 			Date orderDate, String cuName, String cuMainImg, String pName, String pMainImg, int pmTotalCost,
 			String pmCode, String filePath, String pCode) {

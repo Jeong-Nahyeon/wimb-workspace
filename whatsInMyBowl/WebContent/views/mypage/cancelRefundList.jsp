@@ -5,7 +5,6 @@
 %>
 <%
 	ArrayList<MyOrders> clist = (ArrayList<MyOrders>)request.getAttribute("clist");
-    System.out.println(clist);
  %>    
 
 <!DOCTYPE html>
@@ -160,6 +159,14 @@
         height: 35px;
         text-align: center;
     }
+    .listView a{ 
+    	text-decoration:none;
+    	color:black;
+    }
+    .listView a:link { 
+    	text-decoration:none;
+    	color:black;
+    }
 </style>
 
 </head>
@@ -233,35 +240,34 @@
 	                             </td>
 	                            
 	                            <% if(od.getpName() == null) {  // 커스텀상품%>
-	                            	<td width="80"><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"></a></td>
-	                            	<td><a href="상품상세페이지"><%= od.getCuName() %></a></td>
+	                            	<td width="80"><a href="<%= contextPath %>/item.cu"><img src="<%= contextPath %>/<%= od.getCuMainImg() %>"></a></td>
+	                            	<td><a href="<%= contextPath %>/item.cu"><%= od.getCuName() %></a></td>
 	                            <% }else {  // 완제품%>
-									<td width="80"><a href="상품상세페이지"><img src="<%= contextPath %>/<%= od.getFilePath() + od.getpMainImg() %>"></a></td>                            
-	                            	<td><a href="상품상세페이지"><%= od.getpName() %></a></td>
+									<td width="80"><a href="<%= contextPath %>/detail.pr?pcode=<%= od.getpCode() %>"><img src="<%= contextPath %>/<%= od.getFilePath() + od.getpMainImg() %>"></a></td>                            
+	                            	<td><a href="<%= contextPath %>/detail.pr?pcode=<%= od.getpCode() %>"><%= od.getpName() %></a></td>
 	                            <% } %>
 	                            
 	                            <td><%= od.getPmTotalCost() %>원<br>[<%= od.getOrderAmount() %>개]</td>
 	                            
 	                             <% if(od.getCancelCode() == null) { %>
-	                            	
-	                            	<!-- 환불일경우 -->
-	                            	<% if(od.getrStatus().equals("N")) { %>
-	                            		<td>환불<br>진행중</td>
-	                            	<% } else if(od.getrStatus().equals("Y")) { %>
-	                            		<td>환불<br>처리완료</td>
-	                            		<td><%= od.getRcompDate() %></td>
-	                            	<% } %>
-	                            	
+	                            		
+										<% if(od.getrStatus().equals("Y")) { %>	                            			
+	                            			<td>환불<br>처리완료</td>
+	                            			<td><%= od.getRcompDate() %></td>
+	                            		<% } else if(od.getrStatus().equals("N")) { %>
+	                            			<td>환불<br>진행중</td>
+	                            			<td>-</td>
+	                            		<% } %>
+	                            		
 	                            <% }else { %>
 	                            	
-	                            	<!-- 취소일경우 -->
-	                            	<% if(od.getCancelStatus().equals("N")) { %>
-	                            		<td>취소<br>진행중</td>
-	                            		<td>-</td>
-	                            	<% }else { %>
-	                            		<td>취소<br>처리완료</td>
-	                            		<td><%= od.getCancelCompDate() %></td>
-	                            	<% } %>
+	                            		<% if(od.getCancelStatus().equals("Y")) { %>	                            			
+	                            			<td>취소<br>처리완료</td>
+	                            			<td><%= od.getCancelCompDate() %></td>
+	                            		<% } else if(od.getCancelStatus().equals("N")) { %>
+	                            			<td>취소<br>진행중</td>
+	                            			<td>-</td>
+	                            		<% } %>
 	                            
 	                            <% } %>
 	                            <td><button id="detailBtn" type="button" data-toggle="modal" data-target="#this-modal">상세보기</button></td>

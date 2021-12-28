@@ -388,7 +388,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer" style="border:0px;">
                     	
-                        	<button type="button" id="submit" style="background-color: #ffee58;">등록</button>
+                        	<button type="button" id="submit" style="background-color: #ffee58;" data-dismiss="modal">등록</button>
                         	<button type="reset" data-dismiss="modal">취소</button>
                     	
                     </div>
@@ -535,9 +535,11 @@
 				, success:function(result) {
 					console.log(result);
 					if(result > 0) {
-						alert("배송정보를 입력하였습니다.");						
+						alert("배송정보를 입력하였습니다.");		
+						location.reload();
 					}else{
-						alert("요청에 실패하였습니다.\n관리자에게 문의하세요.")
+						alert("요청에 실패하였습니다.\n관리자에게 문의하세요.");
+						location.reload();
 					}
 				}, error:function() {
 					console.log("통신에러")
