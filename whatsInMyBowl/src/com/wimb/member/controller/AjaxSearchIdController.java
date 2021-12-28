@@ -37,23 +37,41 @@ public class AjaxSearchIdController extends HttpServlet {
 		String userEmail = request.getParameter("userEmail");
 		String userPhone = request.getParameter("userPhone");
 		String userName = request.getParameter("userName");
-		String userId = "";
+		String userId = null;
 		
-		System.out.println(userId);
 		
+		//System.out.println(userEmail);
+		//System.out.println(userPhone);
+		//System.out.println(userName);
+
 		if(userPhone == null) {
 			 
 			userId = new MemberService().searchIdEmail(userEmail, userName);
-			System.out.println(userId);
-			new Gson().toJson(userId, response.getWriter());
+			//System.out.println(userId);
+			
+			if(!userId.equals("")) {
+				
+				new Gson().toJson(userId, response.getWriter());
+			}else {
+				
+				response.getWriter().print("NNNNN");
+			}
+			
 			
 		}
 		
 		if(userEmail == null){
 			
 			userId = new MemberService().searchIdPhone(userPhone, userName);
-			System.out.println(userId);
-			new Gson().toJson(userId, response.getWriter());
+			//System.out.println(userId);
+			
+			if(!userId.equals("")) {
+				
+				new Gson().toJson(userId, response.getWriter());
+			}else {
+				
+				response.getWriter().print("NNNNN");
+			}
 			
 		}
 		
