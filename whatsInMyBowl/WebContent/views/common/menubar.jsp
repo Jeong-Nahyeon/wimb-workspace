@@ -223,6 +223,8 @@
                         </div>
                         <div id="logout-area">
                             <a href="<%= contextPath %>/logout.me">로그아웃</a>
+                            <a href="<%= contextPath %>/myPage.my">마이페이지</a>
+                            <a href="<%= contextPath %>/userView.no?cpage=1">고객센터</a>
                             <a href="<%=contextPath %>/views/common/adminBar.jsp">관리자페이지</a>
                        
                         </div>                

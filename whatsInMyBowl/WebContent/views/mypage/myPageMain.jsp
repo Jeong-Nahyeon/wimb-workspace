@@ -86,20 +86,23 @@
             height: 50px;
             border-radius: 50%;
     }
-    #like{
+    #point{
+        border-right: 2px solid lightgray;
         border-left: 2px solid lightgray;
+        text-align: center;
+    }
+    #like{
         text-align: center;
     }
     #usertable{
         border: 1px solid gray;
-       
         border-top: 2px solid black ;
     }
     #usertable a:hover, #plus a:hover { 
     	text-decoration:none;
     	color:lightgrey;
     }
-    #like{text-align: center;}
+  
     #userImage #userName{
         display: inline-block;
     }
@@ -125,11 +128,15 @@
         <!-- 사용자 적립금/찜하기 테이블 시작-->
         <table id="usertable"  width="700" height="100">
             <tr>
-                <td rowspan="2" colspan="2" align="right" width="150">
+                <td rowspan="2" colspan="2" align="right" width="200">
                    <div id="userImage"><img src="https://www.w3schools.com/howto/img_avatar.png" alt="userImg" class="userImg"></div>
                     <div id="userName"><h5><a href=""><b><%= loginUser.getmName() %>님</b></a></h5></div>
                 </td>
-               
+                <td colspan="2" rowspan="2" width="80px" >
+                    <div id="point">적립금<br><br>
+                        <a ><b><%= loginUser.getmPoint() %>원</b></a>
+                    </div>
+                </td>
                 <td colspan="2"  rowspan="2" width="80px">
                     <div id="like">찜하기<br><br>
                         <a href=""><b>0원</b></a>
