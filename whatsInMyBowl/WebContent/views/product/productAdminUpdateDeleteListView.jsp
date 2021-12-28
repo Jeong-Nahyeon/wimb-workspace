@@ -397,7 +397,7 @@
                     	} else{ // 상품 체크 후 클릭했을 경우 => 상품 삭제 모달창 => 관리자 비밀번호 확인 모달창
 
                             // 상품 삭제 모달창 열기
-                    		$("#delete-product-modal").modal("show");
+                    		$("#delete-product-modal").modal({backdrop: "static"});
                             
                             // 상품 삭제 모달창  => 취소 버튼 클릭 시
                             $("#delete-cancel-btn").click(function(){
@@ -412,7 +412,7 @@
                                 $("#delete-product-modal").modal("hide");
                                 
                                 // 관리자 비밀번호 확인 모달창 열기
-                                $("#delete-checkPwd-modal").modal("show");
+                                $("#delete-checkPwd-modal").modal({backdrop: "static"});
 
                                 // 관리자 비밀번호 확인 모달창  => 취소 버튼 클릭 시
                                 $("#checkPwd-cancel-btn").click(function(){
@@ -441,7 +441,7 @@
                                                     $("#delete-checkPwd-modal").modal("hide");
 
                                                     // 요청처리 성공 모달창 열기
-                                                    $("#request-success-modal").modal("show");
+                                                    $("#request-success-modal").modal({backdrop: "static"});
                                                     $("#request-success-modal b").text("성공적으로 삭제되었습니다");
 
                                                     $("#reload-btn").click(function(){
@@ -803,7 +803,7 @@
                                     console.log(p);
 
                                     $("#product-detail-modal").modal("hide");
-                                    $("#update-product-modal").modal("show");
+                                    $("#update-product-modal").modal({backdrop: "static"});
                                     
                                     $("#update-form input[name=productCode]").val(p.pCode);
                                     $("#update-form input[name=existingMainImg]").val(p.pMainImg);
@@ -855,7 +855,7 @@
 
     <!-- 상품 수정 모달창 -->
 
-    <div class="modal fade" id="update-product-modal">
+    <div class="modal" id="update-product-modal">
         <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content product-update-modal">
                 
@@ -1030,7 +1030,7 @@
                         $("#button-left-area button").click(function(){
                             
                             $("#update-product-modal").modal("hide");
-                            $("#product-detail-modal").modal("show");
+                            $("#product-detail-modal").modal({backdrop: "static"});
 
                         });
 
@@ -1073,7 +1073,7 @@
 
     <!-- 상품 삭제 관리자 비밀번호 확인 모달창 -->
 
-    <div class="modal fade" id="delete-checkPwd-modal">
+    <div class="modal" id="delete-checkPwd-modal">
 		<div class="modal-dialog modal-dialog-centered" role="document" >
 			<div class="modal-content checkPwd-delete-modal" style="width:500px; height:200px; border-radius: 0;">
 				
@@ -1102,7 +1102,7 @@
 
     <!-- 요청처리 성공 모달창 -->
 
-	<div class="modal fade" id="request-success-modal">
+	<div class="modal" id="request-success-modal">
 		<div class="modal-dialog modal-dialog-centered" role="document" >
 			<div class="modal-content success-request-modal" style="width:500px; height:200px; border-radius: 0;">
 				
@@ -1132,7 +1132,7 @@
 
     <!-- 요청처리 실패 모달창 -->
 
-	<div class="modal fade" id="request-fail-modal">
+	<div class="modal" id="request-fail-modal">
 		<div class="modal-dialog modal-dialog-centered" role="document" >
 			<div class="modal-content fail-request-modal" style="width:500px; height:200px; border-radius: 0;">
 				

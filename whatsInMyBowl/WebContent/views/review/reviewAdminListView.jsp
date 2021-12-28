@@ -309,7 +309,7 @@
 
                                 if(result > 0){
                                     
-                                    $("#request-success-modal").modal('show');
+                                    $("#request-success-modal").modal("show");
                                     $("#request-success-modal b").text("성공적으로 포인트가 지급되었습니다");
                                     
                                     $("#success-btn").click(function(){
