@@ -286,8 +286,8 @@
                         </div>
                         <div id="custom_guide">
                             <span>채소, 토핑의 구성은 변경될 수 있습니다.</span> <br>
-                            <span>채소, 토핑의 구성은 변경될 수 있습니다.</span> <br>
-                            <span>채소, 토핑의 구성은 변경될 수 있습니다.</span> <br>
+                            <span>메인토핑, 사이드토핑은 기본중량 5g 입니다.</span> <br>
+                            <span>추가적인 문의사항은 고객센터를 이용해주세요.</span> <br>
                         </div>
                     </div>
 
@@ -529,7 +529,7 @@
                     <div id="topping_main">
                         <div class="custom_text" >
                             <div class="text_main" >메인 토핑 선택</div>
-                            <div class="text_sub">가나다 가나다</div>
+                            <div class="text_sub">토핑은 기본 중량 5g 입니다.</div>
                         </div>
 
                         <div class="menu_list">
@@ -563,7 +563,7 @@
                     <div id="topping_side">
                         <div class="custom_text">
                             <div class="text_main">사이드 토핑 선택</div>
-                            <div class="text_sub">최대 5개 선택 가능</div>
+                            <div class="text_sub">토핑은 기본 중량 5g 입니다.</div>
                         </div>
 
                         <div class="menu_list">
@@ -597,7 +597,7 @@
                     <div id="dressing">
                         <div class="custom_text">
                             <div class="text_main">드레싱 선택</div>
-                            <div class="text_sub">최대 5개 선택 가능</div>
+                            <div class="text_sub"></div>
                         </div>
 
                         <div class="menu_list">
