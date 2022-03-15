@@ -25,6 +25,7 @@
 - 메뉴 선택이 어려운 분들을 위한 맛 보장 완제품 샐러드 제공
 
 ## :hammer:사용기술 및 개발환경
+![wimb_사용기술](https://user-images.githubusercontent.com/93471500/158435997-8d102211-a881-4eea-9f45-e743ca9b7fde.png)
 
 ## :heavy_check_mark:프로젝트 기능 구현
 + 공통
