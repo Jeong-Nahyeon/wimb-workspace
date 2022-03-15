@@ -89,7 +89,7 @@
   + 상품 배송 관리
 
 ## :computer:주요기능
-
+[wimb_주요기능.pdf](https://github.com/Yun-Nakyung/wimb-workspace/files/8255829/211229_wimb_.pdf)
 ## :clipboard:Document
 ![유스케이스(사용자)](https://user-images.githubusercontent.com/93471500/158436523-b8602521-08b6-4fc2-bc51-2df8c2b45291.png)
 ![유스케이스(관리자)](https://user-images.githubusercontent.com/93471500/158436515-3ac4e2b4-72cd-461c-aed2-1c46cf2aaffb.png)
