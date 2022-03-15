@@ -1,5 +1,8 @@
 # :tea:What's In My Bowl
 > 커스텀 샐러드 제작, 완제품 샐러드를 구매할 수 있는 샐러드 이커머스 플랫폼
+
+
+
 ![메인이미지](https://user-images.githubusercontent.com/93471500/158436490-b2f31e9e-bd9c-427a-912e-66cbf21e95c2.png)
 
 
@@ -90,3 +93,4 @@
 ## :clipboard:Document
 ![유스케이스(사용자)](https://user-images.githubusercontent.com/93471500/158436523-b8602521-08b6-4fc2-bc51-2df8c2b45291.png)
 ![유스케이스(관리자)](https://user-images.githubusercontent.com/93471500/158436515-3ac4e2b4-72cd-461c-aed2-1c46cf2aaffb.png)
+![ERD](https://user-images.githubusercontent.com/93471500/158436927-28533b00-619b-4104-bbfe-ef2395e303d5.png)
