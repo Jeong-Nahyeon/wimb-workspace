@@ -72,10 +72,13 @@
 
 
 + 정나현
-  + 메인 베스트 메뉴 / 리뷰
-  + 완제품 샐러드(목록, 상세)
+  + 메인 페이지 베스트 메뉴 / 리뷰 조회
+  + 완제품 샐러드 목록(전체 / 카테고리 / 베스트 / 세일 상품)  조회
+  + 완제품 샐러드 상세
+  + 완제품 리뷰 등록, 수정, 삭제, 조회
   + 완제품 샐러드 관리
-  + 리뷰 작성 및 신고
+  + 리뷰 관리
+  + 리뷰 신고 관리 
   + 블랙리스트 관리
 <br><br>
 
@@ -90,7 +93,13 @@
 
 ## :computer:주요기능
 [wimb_주요기능.pdf](https://github.com/Yun-Nakyung/wimb-workspace/files/8255829/211229_wimb_.pdf)
+
+
 ## :clipboard:Document
++ Usecase Diagram
 ![유스케이스(사용자)](https://user-images.githubusercontent.com/93471500/158436523-b8602521-08b6-4fc2-bc51-2df8c2b45291.png)
 ![유스케이스(관리자)](https://user-images.githubusercontent.com/93471500/158436515-3ac4e2b4-72cd-461c-aed2-1c46cf2aaffb.png)
+
+
++ ER Diagram
 ![ERD](https://user-images.githubusercontent.com/93471500/158436927-28533b00-619b-4104-bbfe-ef2395e303d5.png)
