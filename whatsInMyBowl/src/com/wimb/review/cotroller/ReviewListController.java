@@ -68,16 +68,18 @@ public class ReviewListController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
+		// 해당 상품 리뷰 목록 조회
 		ArrayList<Review> reviewList = new ReviewService().selectReviewList(pi, pCode);
 		
+		// 해당 상품 정보 조회
 		Product p = new ReviewService().selectProduct(pCode);
 		
-		// 해당 상품 후기 작성 가능 확인용
+		// 로그인한 회원의 해당 상품 후기 작성 가능 확인용 주문 정보 조회
 		Member m = (Member)(request.getSession().getAttribute("loginUser")); // 현재 로그인한 회원 정보
 		
 		if(m != null) {
 			
-			Order orderInfo = new ReviewService().selectOrderList(pCode, m.getmCode());
+			Order orderInfo = new ReviewService().selectOrderList(pCode, m.getmCode()); // 로그인한 회원의 해당 상품 주문 정보
 			request.setAttribute("orderInfo", orderInfo);
 			
 		}

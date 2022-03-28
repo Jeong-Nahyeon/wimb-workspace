@@ -183,10 +183,6 @@
                 </div>
                 <!-- 블랙리스트 추가 및 신고내역 삭제 버튼 -->
                 <div align="right">
-                    <!-- [고려사항]
-                        체크박스로 블랙리스트 추가용이랑 삭제용을 둘 다 쓸 수 없을 것 같음...?
-                        블랙리스트 등록 시 로그인 안되게 해야 함
-                    -->
                     <button type="button" id="insert-blackList-btn" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);">블랙리스트추가</button>
                     <button type="button" id="delete-report-btn" class="btn btn-sm btn-warning" style="background:salmon;">완전삭제</button>
                 </div>
@@ -291,8 +287,6 @@
                         
                         const reviewmCodeArr = checkboxArr.join(",");
 
-                        console.log(reviewmCodeArr);
-
                     	if(checkboxArr.length == 0){ // 체크 안 하고 클릭했을 경우 => 경고 알람창
 
                     		alert("삭제할 신고글이 선택되지 않았습니다");
@@ -303,12 +297,12 @@
                             // 블랙리스트 등록 모달창 열기
                     		$("#insert-blackList-modal").modal("show");
                             
-                            // 블랙리스트 등록 모달창 모달창  => 취소 버튼 클릭 시
+                            // 블랙리스트 등록 모달창 => 취소 버튼 클릭 시
                             $("#insert-cancel-btn").click(function(){
                                 location.reload();
                             });
                             
-                            // 블랙리스트 등록 모달창 모달창  => 등록 버튼 클릭 시
+                            // 블랙리스트 등록 모달창 => 등록 버튼 클릭 시
                             $("#insert-btn").click(function(){
                                 
                                 $.ajax({
@@ -321,8 +315,8 @@
                                     success:function(result){ // 매개변수 result로 처리된 행수를 담은 응답 데이터 받아주기
                                     
                                     if(result > 0){ // 등록 성공
-                                        console.log(result);
-                                        // 블랙리스트 등록 모달창 모달창 모달창 닫기
+                                        
+                                        // 블랙리스트 등록 모달창 닫기
                                         $("#insert-blackList-modal").modal("hide");
 
                                         // 요청처리 성공 모달창 열기
@@ -365,15 +359,12 @@
                         
                         const reportCodeArr = checkboxArr.join(",");
 
-                        console.log(reportCodeArr);
-
                     	if(checkboxArr.length == 0){ // 체크 안 하고 클릭했을 경우 => 경고 알람창
 
                     		alert("삭제할 신고글이 선택되지 않았습니다");
 
                     	} else{ // 체크 후 클릭했을 경우 => 신고글 삭제 모달창 
 
-                            
                             // 신고글 삭제 모달창 열기
                     		$("#delete-report-modal").modal("show");
                             
@@ -392,8 +383,8 @@
                                     success:function(result){ // 매개변수 result로 처리된 행수를 담은 응답 데이터 받아주기
                                     
                                     if(result > 0){ // 삭제 성공
-                                        console.log(result);
-                                        // 신고글 삭제 모달창 모달창 닫기
+                                        
+                                        // 신고글 삭제 모달창 닫기
                                         $("#delete-report-modal").modal("hide");
 
                                         // 요청처리 성공 모달창 열기
@@ -435,7 +426,7 @@
                 
                 <% for(int p=startPage; p<=endPage; p++ ) { %>
                     <% if(p == currentPage) { %>
-                        <a  class ="btn btn-sm" disabled><%= p %></a>
+                        <a  class ="btn btn-sm" href="#"><%= p %></a>
                     <% } else { %>
                         <a class ="btn btn-sm" href="<%= contextPath %>/list.arep?cpage=<%= p %>"><%= p %></a>
                     <% } %>
@@ -527,7 +518,7 @@
           
             <!-- Modal Header -->
             <div class="modal-header">
-                <h6 class="modal-title" style="margin-left:330px; font-weight:bolder;">리뷰 상세 조회</h6>
+                <h6 class="modal-title" style="margin-left:330px; font-weight:bolder;">신고 상세 조회</h6>
             </div>
             
             <!-- Modal body -->
@@ -594,7 +585,6 @@
           </div>
         </div>
       </div>
-    </div>
 
 
 

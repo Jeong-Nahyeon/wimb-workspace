@@ -378,13 +378,14 @@
                     <button type="button" id="insert-product-btn" class="btn btn-sm" style="background:rgb(255, 225, 90);">상품등록</button>
                 </div>
             </div>
+            <!-- 상품 등록 모달창 오픈 -->
             <script>
 					$(function(){
 						$("#insert-product-btn").click(function(){
-						$("#insert-product-modal").modal({backdrop: "static"});
+							$("#insert-product-modal").modal({backdrop: "static"});
 						});
 					});
-				</script>
+			</script>
 
 
             <!-- 완제품 목록 -->
@@ -409,17 +410,6 @@
                     <% } else { %>
                     	<% for(int i=0; i<totalList.size(); i++) { %>
 	                    <tr>
-	                        <!-- 노출여부 수정 창 => 기본 안 보이게 설정 -->
-	                        <%-- >
-	                        <div class="extra-fee" style="border:1px solid black; background:white; width:100px; height:130px; padding:5px; position:relative; z-index:2; top:260px; left:330px; display: none;">
-	                            <h6 style="font-weight: bolder; margin-top: 10px;">노출여부</h6>
-	                            <select name="productStatus" style="width:65px; margin-top:5px; margin-bottom:10px;">
-	                                <option>Y</option>
-	                                <option>N</option>
-	                            </select>
-	                            <button class="btn btn-sm" style="background:rgb(255, 225, 90); width:65px;">수정</button>
-	                        </div>
-	                        --%>
 	                        <td>
 	                            <input type="checkbox" name="" id="" disabled>
 	                        </td>
@@ -443,7 +433,6 @@
             
             	$(function(){
             		
-            		// 카테고리 옵션별 조회 시 해당 요소가 동적으로 새로 만들어지기 때문에 on메소드 3번 방법으로 작성해야 함!!!
             		$("#product-list").on("click", ".product-name", (function(){
             			$.ajax({
                             url:"detailAjax.apr",
@@ -497,7 +486,7 @@
                 
                 <% for(int p=startPage; p<=endPage; p++ ) { %>
                     <% if(p == currentPage) { %>
-                        <a  class ="btn btn-sm" disabled><%= p %></a>
+                        <a  class ="btn btn-sm" href="#"><%= p %></a>
                     <% } else { %>
                         <a class ="btn btn-sm" href="<%= contextPath %>/list.apr?cpage=<%= p %>"><%= p %></a>
                     <% } %>
@@ -697,9 +686,9 @@
                                 </div>
                         </form>
                     </div>
-
+					
+					<!-- 상품 등록 시 대표 및 상세 이미지 미리보기 -->
                     <script>
-
                         function loadImg(inputFile, num){
                             if(inputFile.files.length == 1){ // 파일 선택된 경우 => 파일 읽어들여서 미리보기
 
@@ -726,10 +715,10 @@
                             }
         
                         }
-
                     </script>
                     
                     <!-- Modal footer -->
+                    <!-- 상품 등록 모달창 버튼 영역 -->
                     <div class="modal-footer button-area">
                         <div id="button-left-area">
                             <button type="reset" class="btn btn-sm btn-outline-dark" form="insert-form">초기화</button>
@@ -878,9 +867,7 @@
             <div class="modal-footer">
                 <div class="footer-area" style="width:100%; height:100%; text-align:center;">
                     <div align="left">
-                        <span>
-                            최종등록일 : <span id="detailDate"></span>
-                        </span>
+                        <span>최종등록일 : <span id="detailDate"></span></span>
                     </div>
                     <div align="right">
                         <button type="submit" class="btn btn-sm" style="background:rgb(255, 225, 90); margin:0px 5px;" data-dismiss="modal">확인</button>

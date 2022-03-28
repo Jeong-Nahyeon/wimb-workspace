@@ -38,7 +38,7 @@ public class ReviewDao {
 	
 	
 	
-	/** 메인 베스트 리뷰 조회 해주는 메소드
+	/** 메인 베스트 리뷰 조회
 	 * @param conn
 	 * @return
 	 */
@@ -81,17 +81,12 @@ public class ReviewDao {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	/** 리뷰 목록 조회 시  해당 상품 리뷰 총 개수 조회
+	 * @param conn
+	 * @param pCode  :  완제품 상품 번호
+	 * @return
+	 */
 	public int selectReviewListCount(Connection conn, String pCode) {
 		
 		int listCount = 0;
@@ -124,6 +119,12 @@ public class ReviewDao {
 	}
 	
 	
+	/** 리뷰 목록 조회
+	 * @param conn
+	 * @param pi  :  페이징 정보
+	 * @param pCode  :  완제품 상품 번호
+	 * @return
+	 */
 	public ArrayList<Review> selectReviewList(Connection conn, PageInfo pi, String pCode) {
 
 		ArrayList<Review> reviewList = new ArrayList<>();
@@ -167,6 +168,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 리뷰 목록 조회 시  리뷰 해당 상품 정보 조회
+	 * @param conn
+	 * @param pCode  :  완제품 상품 번호
+	 * @return
+	 */
 	public Product selectProduct(Connection conn, String pCode) {
 
 		Product p = new Product();
@@ -205,6 +211,12 @@ public class ReviewDao {
 	}
 	
 	
+	/** 리뷰 목록 조회 시 로그인한 회원의 해당 상품 후기 작성 가능 확인용 주문 정보 조회
+	 * @param conn
+	 * @param pCode  :  완제품 상품 번호
+	 * @param mCode  :  로그인한 회원 번호
+	 * @return
+	 */
 	public Order selectOrderList(Connection conn, String pCode, int mCode) {
 
 		Order orderInfo = new Order();
@@ -241,6 +253,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 리뷰 등록
+	 * @param conn
+	 * @param r  :  리뷰 정보
+	 * @return
+	 */
 	public int insertReview(Connection conn, Review r) {
 		
 		int result = 0;
@@ -274,6 +291,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 리뷰 등록 시 첨부파일 등록
+	 * @param conn
+	 * @param list  :  첨부파일 목록
+	 * @return
+	 */
 	public int insertFileList(Connection conn, ArrayList<File> list) {
 		
 		int result = 0;
@@ -307,6 +329,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 리뷰 수정 폼 요청 시 해당 리뷰 정보 조회
+	 * @param conn
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public Review selectReview(Connection conn, int rCode) {
 
 		Review r = new Review();
@@ -343,6 +370,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 리뷰 수정 폼 요청 시 해당 리뷰 첨부파일 조회
+	 * @param conn
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public ArrayList<File> selectFileList(Connection conn, int rCode) {
 
 		ArrayList<File> list = new ArrayList<>();
@@ -385,6 +417,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 리뷰 삭제
+	 * @param conn
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public int deleteReview(Connection conn, int rCode) {
 		
 		int result = 0;
@@ -410,6 +447,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 타회원 리뷰 신고
+	 * @param conn
+	 * @param report  :  신고 정보
+	 * @return
+	 */
 	public int insertReportReview(Connection conn, Report report) {
 
 		int result = 0;
@@ -439,6 +481,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 리뷰 상세 조회
+	 * @param conn
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public Review selectReviewDetail(Connection conn, int rCode) {
 
 		Review r = new Review();
@@ -477,6 +524,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 리뷰 상세 조회 시 첨부파일 목록 조회
+	 * @param conn
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public ArrayList<File> selectReviewDetailFileList(Connection conn, int rCode) {
 
 		ArrayList<File> list = new ArrayList<>();
@@ -515,8 +567,13 @@ public class ReviewDao {
 		return list;
 		
 	}
+
 	
-	
+	/** 포토 리뷰 목록 조회 시 해당 상품 리뷰 총 개 수
+	 * @param conn
+	 * @param pCode  :  완제품 상품 번호
+	 * @return
+	 */
 	public int selectReviewPhotoListCount(Connection conn, String pCode) {
 		
 		int listCount = 0;
@@ -549,6 +606,12 @@ public class ReviewDao {
 	}
 	
 	
+	/** 포토 리뷰 목록 조회
+	 * @param conn
+	 * @param pi  :  페이징 정보
+	 * @param pCode  :  완제품 상품 번호
+	 * @return
+	 */
 	public ArrayList<Review> selectReviewPhotoList(Connection conn, PageInfo pi, String pCode) {
 
 		ArrayList<Review> photoList = new ArrayList<>();
@@ -591,7 +654,7 @@ public class ReviewDao {
 		
 	}
 	
-	
+	/*
 	public int updateReview(Connection conn, int rCode, String rContent) {
 
 		int result = 0;
@@ -617,8 +680,13 @@ public class ReviewDao {
 		return result;
 		
 	}
+	*/
 	
-	
+	/** 리뷰만 수정
+	 * @param conn
+	 * @param r  :  수정한 리뷰 정보
+	 * @return
+	 */
 	public int updateReviewOnly(Connection conn, Review r) {
 		
 		int result = 0;
@@ -644,6 +712,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 리뷰 수정 시 대표 이미지 수정할 경우의 리뷰 수정
+	 * @param conn
+	 * @param r  :  수정한 리뷰 정보
+	 * @return
+	 */
 	public int updateReview(Connection conn, Review r) {
 		
 		int result = 0;
@@ -676,6 +749,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 리뷰 수정 시 기존 파일 O, 새로운 파일 O 경우 첨부파일 수정
+	 * @param conn
+	 * @param fileList1  :  첨부파일 목록
+	 * @return
+	 */
 	public int updateReviewUpdateFile(Connection conn, ArrayList<File> fileList1) {
 		
 		int result = 0;
@@ -710,6 +788,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 리뷰 수정 시 기존 첨부파일 X, 새로운 첨부파일 O 경우 첨부파일 등록
+	 * @param conn
+	 * @param fileList2  : 첨부파일 목록
+	 * @return
+	 */
 	public int updateReviewInsertFile(Connection conn, ArrayList<File> fileList2) {
 		
 		int result = 0;
@@ -750,21 +833,13 @@ public class ReviewDao {
 	
 	
 	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
 	// 관리자
 	
 	
+	/** 관리자 리뷰 목록 조회 시 리뷰 총 개수
+	 * @param conn
+	 * @return
+	 */
 	public int selectAdminReviewListCount(Connection conn) {
 		
 		int listCount = 0;
@@ -795,6 +870,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 관리자 리뷰 목록 조회
+	 * @param conn
+	 * @param pi  :  페이징 정보
+	 * @return
+	 */
 	public ArrayList<Review> selectAdminReviewList(Connection conn, PageInfo pi) {
 		
 
@@ -847,6 +927,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 관리자 리뷰 상세 조회
+	 * @param conn
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public Review selectAdminReviewDetail(Connection conn, int rCode) {
 
 		Review r = new Review();
@@ -888,6 +973,12 @@ public class ReviewDao {
 	}
 	
 	
+	/** 관리자 리뷰 메인 노출 상태 수정
+	 * @param conn
+	 * @param rCode  :  리뷰 번호
+	 * @param rMainStatus  :  메인 노출 상태
+	 * @return
+	 */
 	public int updateAdminReviewMainStatus(Connection conn, int rCode, String rMainStatus) {
 
 		int result = 0;
@@ -916,6 +1007,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 관리자 회원 리뷰 포인트 지급 시 포인트 적립 상태 수정
+	 * @param conn
+	 * @param rCode rCode  :  리뷰 번호
+	 * @return
+	 */
 	public int updateAdminPointStatus(Connection conn, int rCode) {
 
 		int result = 0;
@@ -943,6 +1039,12 @@ public class ReviewDao {
 	}
 	
 	
+	/** 관리자 회원 리뷰 포인트 지급 시 해당 회원 포인트 적립
+	 * @param conn
+	 * @param orderCode  :  주문 번호
+	 * @param mCode  :  회원 번호
+	 * @return
+	 */
 	public int insertAdminReviewPoint(Connection conn, String orderCode, int mCode) {
 
 		int result = 0;
@@ -971,6 +1073,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 관리자 회원 리뷰 완전 삭제
+	 * @param conn
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public int deleteAdminReview(Connection conn, String[] rCode) {
 
 		int result = 0;
@@ -1000,6 +1107,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 관리자 회원 리뷰 비노출
+	 * @param conn
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public int updateAdminReviewStatus(Connection conn, String[] rCode) {
 		
 		int result = 0;
@@ -1029,6 +1141,11 @@ public class ReviewDao {
 	}
 	
 	
+	/** 관리자 상품명으로 회원 리뷰 검색
+	 * @param conn
+	 * @param searchKeyword  :  검색 키워드
+	 * @return
+	 */
 	public ArrayList<Review> selectAdminReviewSearchList(Connection conn, String searchKeyword) {
 		
 		ArrayList<Review> searchList = new ArrayList<>();
@@ -1074,11 +1191,5 @@ public class ReviewDao {
 		return searchList;
 		
 	}
-	
-	
-	
-	
-	
-	
 	
 }

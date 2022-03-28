@@ -38,8 +38,8 @@ public class AjaxReviewDetailController extends HttpServlet {
 		
 		ArrayList detailList = new ArrayList();
 		
-		Review r = new ReviewService().selectReviewDetail(rCode);
-		ArrayList<File> list = new ReviewService().selectReviewDetailFileList(rCode);
+		Review r = new ReviewService().selectReviewDetail(rCode); // 리뷰 상세 조회
+		ArrayList<File> list = new ReviewService().selectReviewDetailFileList(rCode); // 첨부파일 조회
 		
 		detailList.add(r);
 		detailList.add(list);

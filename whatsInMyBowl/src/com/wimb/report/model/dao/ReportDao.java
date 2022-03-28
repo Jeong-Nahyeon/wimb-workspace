@@ -37,6 +37,10 @@ private Properties prop = new Properties();
 	}
 	
 	
+	/** 리뷰 신고 목록 조회 시 신고글 총 개수
+	 * @param conn
+	 * @return
+	 */
 	public int selectAdminReportListCount(Connection conn) {
 		
 		int listCount = 0;
@@ -67,6 +71,11 @@ private Properties prop = new Properties();
 	}
 	
 	
+	/** 리뷰 신고 목록 조회
+	 * @param conn
+	 * @param pi  :  페이징 정보
+	 * @return
+	 */
 	public ArrayList<Report> selectAdminReportList(Connection conn, PageInfo pi) {
 
 		ArrayList<Report> reportList = new ArrayList<>();
@@ -111,6 +120,11 @@ private Properties prop = new Properties();
 	}
 	
 	
+	/** 리뷰 신고글 상세 조회 시 해당 리뷰 상세 조회
+	 * @param conn
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public Review selectAdminReviewDetail(Connection conn, int rCode) {
 
 		Review rev = new Review();
@@ -149,6 +163,11 @@ private Properties prop = new Properties();
 	}
 	
 	
+	/** 리뷰 신고글 상세 조회
+	 * @param conn
+	 * @param reportCode  :  신고글 번호
+	 * @return
+	 */
 	public Report selectAdminReportDetail(Connection conn, int reportCode) {
 
 		Report rep = new Report();
@@ -188,6 +207,11 @@ private Properties prop = new Properties();
 	}
 	
 	
+	/** 신고 작성 회원번호로 신고글 검색
+	 * @param conn
+	 * @param searchKeyword  :  검색 키워드
+	 * @return
+	 */
 	public ArrayList<Report> selectAdminReportSearchList(Connection conn, String searchKeyword) {
 		
 		ArrayList<Report> searchList = new ArrayList<>();
@@ -231,6 +255,11 @@ private Properties prop = new Properties();
 	}
 	
 	
+	/** 리뷰 신고글 삭제
+	 * @param conn
+	 * @param reportCode  :  신고글 번호
+	 * @return
+	 */
 	public int deleteAdminReport(Connection conn, String[] reportCode) {
 
 		int result = 0;
@@ -260,6 +289,12 @@ private Properties prop = new Properties();
 	}
 	
 	
+	/** 신고 대상 회원 블랙리스트 추가
+	 * @param conn
+	 * @param reportedMemberCode  :  신고 대상 회원 번호
+	 * @param blackReason  :  등록 사유
+	 * @return
+	 */
 	public int insertAdminBlackList(Connection conn, String[] reportedMemberCode, String blackReason) {
 		
 		int result = 0;
@@ -290,6 +325,10 @@ private Properties prop = new Properties();
 	}
 	
 	
+	/** 블랙리스트 목록 조회 시 총 블랙리스트 회원 수
+	 * @param conn
+	 * @return
+	 */
 	public int selectAdminBlackListCount(Connection conn) {
 		
 		int listCount = 0;
@@ -320,6 +359,11 @@ private Properties prop = new Properties();
 	}
 	
 	
+	/** 블랙리스트 목록 조회 시
+	 * @param conn
+	 * @param pi  :  페이징 정보
+	 * @return
+	 */
 	public ArrayList<Member> selectAdminBlackList(Connection conn, PageInfo pi) {
 
 		ArrayList<Member> blackList = new ArrayList<>();
@@ -366,6 +410,11 @@ private Properties prop = new Properties();
 	}
 	
 	
+	/** 회원 아이디로 블랙리스트 검색
+	 * @param conn
+	 * @param searchKeyword  :  검색 키워드
+	 * @return
+	 */
 	public ArrayList<Member> selectAdminSearchBlackList(Connection conn, String searchKeyword) {
 		
 		ArrayList<Member> searchList = new ArrayList<>();
@@ -411,6 +460,11 @@ private Properties prop = new Properties();
 	}
 	
 	
+	/** 블랙리스트 해제
+	 * @param conn
+	 * @param mCode  :  회원 번호
+	 * @return
+	 */
 	public int deleteAdminBlackList(Connection conn, String[] mCode) {
 
 		int result = 0;

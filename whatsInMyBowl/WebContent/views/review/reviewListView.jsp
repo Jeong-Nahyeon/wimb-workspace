@@ -422,17 +422,14 @@
 						url:"updateForm.rev",
 						data:{rcode:$(this).parent().parent().prev().children().eq(0).val()},
 						success:function(updateFormList){
-							console.log(updateFormList);
 							
                             // 리뷰내용
 							const $updateModal = $("#review-update-modal");
 
 		        			const $review = updateFormList[0];
-                           console.log(updateFormList[0]);
-		        			
+                           
 		        			const $fileList = updateFormList[1];
-                            console.log(updateFormList[1]);
-		        			
+                            
                             $updateModal.find("input[name=rcode]").val($review.rCode);
                             $updateModal.find("textarea").text($review.rContent);
 		        			
@@ -516,13 +513,9 @@
 
                     const $rCode = $(this).parent().parent().prev().children().eq(0).val();
 					
-                    console.log($rCode);
-
                     $("#report-review-modal").modal({backdrop:false});
                     $("#report-review-form input[name=rcode]").val($rCode);
                     
-                    console.log($("#report-review-form input[name=rcode]").val($rCode));
-
                 });
 
 
@@ -569,6 +562,7 @@
 	            <% } %>    
             </div>
             <% if(loginUser != null) { %>
+            	<!-- 후기 등록 버튼 영역 -->
 	            <div class="review-btn2-right">
 	                <button class="btn" id="review-insert-btn">후기등록</button>
 	            </div>
@@ -578,9 +572,7 @@
 
     <!-- 리뷰등록 모달창 열기 기능 -->
     	<% if(orderInfo != null && orderInfo.getoCode() != null) { // 로그인한 회원의 배송 완료 단계의 주문 정보가 있을 경우 %>
-            <% System.out.println(orderInfo); %>
-            <% System.out.println(reviewList); %>
-
+           
             <% if(reviewList.isEmpty()) { // 주문정보 조건 해당되지만 해당 리뷰 리스트가 비어있을 경우 %> 
 
                 <script>

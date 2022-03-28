@@ -433,8 +433,6 @@
                                                data:{pCodeArr:pCodeArr},
                                                success:function(result){ // 매개변수 result로 처리된 행수를 담은 응답 데이터 받아주기
                                                 
-                                                
-
                                                 if(result > 0){ // 삭제 성공
                                                     console.log(result);
                                                     // 관리자 비밀번호 확인 모달창 닫기
@@ -503,17 +501,6 @@
                     <% } else { %>
                         <% for(int i=0; i<totalList.size(); i++) { %>
                         <tr>
-                            <!-- 노출여부 수정 창 => 기본 안 보이게 설정 -->
-                            <%-- >
-                            <div class="extra-fee" style="border:1px solid black; background:white; width:100px; height:130px; padding:5px; position:relative; z-index:2; top:260px; left:330px; display: none;">
-                                <h6 style="font-weight: bolder; margin-top: 10px;">노출여부</h6>
-                                <select name="productStatus" style="width:65px; margin-top:5px; margin-bottom:10px;">
-                                    <option>Y</option>
-                                    <option>N</option>
-                                </select>
-                                <button class="btn btn-sm" style="background:rgb(255, 225, 90); width:65px;">수정</button>
-                            </div>
-                            --%>
                             <td>
                                 <!-- 상품 삭제용 체크박스 -->
                                 <input type="checkbox" class="check-delete" name="checkpCode"  value="<%= totalList.get(i).getpCode() %>">
@@ -533,12 +520,11 @@
                 </tbody>
             </table>
 
-                <!-- 완제품 상세 조회용 ajax -->
+            <!-- 완제품 상세 조회용 ajax -->
             <script>
             
                 $(function(){
                     
-                    // 카테고리 옵션별 조회 시 해당 요소가 동적으로 새로 만들어지기 때문에 on메소드 3번 방법으로 작성해야 함!!!
                     $("#product-list").on("click", ".product-name", (function(){
                         $.ajax({
                             url:"detailAjax.apr",
@@ -594,7 +580,7 @@
                 
                 <% for(int p=startPage; p<=endPage; p++ ) { %>
                     <% if(p == currentPage) { %>
-                        <a  class ="btn btn-sm" disabled><%= p %></a>
+                        <a  class ="btn btn-sm" href="#"><%= p %></a>
                     <% } else { %>
                         <a class ="btn btn-sm" href="<%= contextPath %>/updateDeleteList.apr?cpage=<%= p %>"><%= p %></a>
                     <% } %>
@@ -778,9 +764,7 @@
                 <div class="modal-footer">
                     <div class="footer-area" style="width:100%; height:100%; text-align:center;">
                         <div align="left">
-                            <span>
-                                최종등록일 : <span id="detailDate"></span>
-                            </span>
+                            <span>최종등록일 : <span id="detailDate"></span></span>
                         </div>
                         <div align="right">
                             <button type="submit" class="btn btn-sm" style="background:white; margin:0px 5px;" data-dismiss="modal">확인</button>
@@ -799,8 +783,6 @@
                                 url:"<%= contextPath %>/updateForm.apr",
                                 data:{productCode:$("#product-detail-modal input:hidden").val()},
                                 success:function(p){
-
-                                    console.log(p);
 
                                     $("#product-detail-modal").modal("hide");
                                     $("#update-product-modal").modal({backdrop: "static"});
@@ -890,8 +872,9 @@
                                                     <option>육류</option>
                                                     <option>해산물</option>
                                                 </select>
-                                                <th style="text-align:right;">* 필수입력사항</th>
                                             </td>
+                                            <th style="text-align:right;">* 필수입력사항</th>
+                                            
                                         </tr>
                                         <tr>
                                             <th>* 사진등록</th>
@@ -983,9 +966,9 @@
                             </div>
                     </form>
                 </div>
-
+				
+				<!-- 상품 수정 시 대표 및 상세 이미지 미기보기 -->
                 <script>
-
                     function loadImg(inputFile, num){
                         if(inputFile.files.length == 1){ // 파일 선택된 경우 => 파일 읽어들여서 미리보기
 
@@ -1012,10 +995,10 @@
                         }
     
                     }
-
                 </script>
                 
                 <!-- Modal footer -->
+                <!-- 상품 수정 모달창 버튼 영역 -->
                 <div class="modal-footer button-area">
                     <div id="button-left-area">
                         <button type="reset" class="btn btn-sm btn-outline-dark">취소</button>
@@ -1024,6 +1007,7 @@
                         <button type="submit" class="btn btn-sm btn-warning" style="background:rgb(255, 225, 90);" form="update-form">수정</button>
                     </div>
                 </div>
+                <!-- 상품 수정 모달창 취소 버튼 클릭 시 상세 모달창 오픈 -->
                 <script>
                     $(function(){
                         

@@ -209,8 +209,6 @@
                         
                         const mCodeArr = checkboxArr.join(",");
 
-                        console.log(mCodeArr);
-
                     	if(checkboxArr.length == 0){ // 체크 안 하고 클릭했을 경우 => 경고 알람창
 
                     		alert("블랙리스트에서 삭제할 회원이 선택되지 않았습니다");
@@ -236,8 +234,8 @@
                                     success:function(result){ // 매개변수 result로 처리된 행수를 담은 응답 데이터 받아주기
                                     
                                     if(result > 0){ // 삭제 성공
-                                        console.log(result);
-                                        // 블랙리스트 삭제 모달창 모달창 닫기
+                                        
+                                        // 블랙리스트 삭제 모달창  닫기
                                         $("#delete-blackList-modal").modal("hide");
 
                                         // 블랙리스트 삭제 성공 모달창 열기
@@ -278,7 +276,7 @@
                 
                 <% for(int p=startPage; p<=endPage; p++ ) { %>
                     <% if(p == currentPage) { %>
-                        <a  class ="btn btn-sm" disabled><%= p %></a>
+                        <a  class ="btn btn-sm" href="#"><%= p %></a>
                     <% } else { %>
                         <a class ="btn btn-sm" href="<%= contextPath %>/list.black?cpage=<%= p %>"><%= p %></a>
                     <% } %>

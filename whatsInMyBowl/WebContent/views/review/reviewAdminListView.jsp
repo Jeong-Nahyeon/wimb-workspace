@@ -234,8 +234,7 @@
                                         
                                         <% }%>    
 		                            <% } else { %>
-                                        <!-- 적립금 지급 후 -->
-                                        지급완료
+                                        <!-- 적립금 지급 후 -->지급완료
 		                   		    <% } %>    
 		                        </td>
 		                        <td><%= r.getrMainstatus() %></td>
@@ -262,7 +261,7 @@
                             },
                             success:function(r){
 
-                                console.log(r);
+                                
 
                                 $("#rCode").val(r.rCode);
 
@@ -368,8 +367,8 @@
                                     success:function(result){ // 매개변수 result로 처리된 행수를 담은 응답 데이터 받아주기
                                     
                                     if(result > 0){ // 노출수정 성공
-                                        console.log(result);
-                                        // 리뷰 비노출 모달창 모달창 닫기
+                                        
+                                        // 리뷰 비노출 모달창 닫기
                                         $("#delete-review-modal").modal("hide");
 
                                         // 요청처리 성공 모달창 열기
@@ -437,8 +436,8 @@
                                     success:function(result){ // 매개변수 result로 처리된 행수를 담은 응답 데이터 받아주기
                                     
                                     if(result > 0){ // 삭제 성공
-                                        console.log(result);
-                                        // 리뷰 삭제 모달창 모달창 닫기
+                                        
+                                        // 리뷰 삭제 모달창 닫기
                                         $("#delete-review-modal").modal("hide");
 
                                         // 요청처리 성공 모달창 열기
@@ -479,7 +478,7 @@
                 
                 <% for(int p=startPage; p<=endPage; p++ ) { %>
                     <% if(p == currentPage) { %>
-                        <a  class ="btn btn-sm" disabled><%= p %></a>
+                        <a  class ="btn btn-sm" href="#"><%= p %></a>
                     <% } else { %>
                         <a class ="btn btn-sm" href="<%= contextPath %>/list.arev?cpage=<%= p %>"><%= p %></a>
                     <% } %>

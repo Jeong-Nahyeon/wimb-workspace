@@ -361,43 +361,10 @@
 		height:600px;
 	}
 
-
-	/* 모달창 스타일 */
-
-
-
-
-
-	/* 모달창 배경 스타일 */
-
-	/* .modal-backdrop {
-		position: fixed;
-		top: 0;
-		left: 0;
-		z-index: 1040;
-		width: 100vw;
-		height: 100vh;
-		background-color: white !important;
-	} */
-
 </style>
 </head>
 <body>
-<%--	
-	<script>
-		$(function(){
-			$.ajax({
-				url:"reviewList.re?cpage=1",
-				data:{pcode:"<%= p.getpCode() %>"},
-				success:function(review){
-					console.log(review);
-				}, error:function(){
-					console.log("ajax 통신 실패");
-				} 
-			});
-		});
-	</script>
---%>
+
 	<%@ include file="../common/menubar.jsp" %>
 	
 	<div class="outer">
@@ -441,6 +408,7 @@
 								<li>제주특별자치도 제주시 3000원</li>
 							</ul>
 						</div>
+						<!-- 지역별 추가 배송비 표시 -->
 						<script>
 							$(function(){
 
@@ -468,7 +436,7 @@
 					</div>
 					<!-- 수량 및 합계금액 표시 -->
 					<script>
-						function count(type)  {
+						function count(type) {
 							
 							// 수량 표시
 							let $number = $("#amount").val(); // 수량 표시될 input 

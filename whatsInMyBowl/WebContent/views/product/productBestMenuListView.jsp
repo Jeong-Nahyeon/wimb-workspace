@@ -310,7 +310,7 @@
 				$(function(){
 					// 상품 이미지 클릭 시 상세 페이지로 이동
 					$(".product-img").on("click", "img", function(){
-						//console.log($("input:hidden", this).val());
+						
 						location.href="<%= contextPath %>/detail.pr?pcode=" + $(this).parent().find("input[name=pcode]").val();
 					});
 
@@ -376,7 +376,7 @@
 
 							<!-- 수량 및 합계금액 표시 -->
 							<script>
-								function count(type)  {
+								function count(type) {
 									
 									// 수량 표시
 									let $number = $("#amount").val(); // 수량 표시될 input 

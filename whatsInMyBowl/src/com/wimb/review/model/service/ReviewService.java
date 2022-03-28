@@ -21,7 +21,7 @@ import com.wimb.review.model.vo.Review;
 public class ReviewService {
 	
 	
-	/** 메인 베스트 리뷰 조회 해주는 메소드
+	/** 메인 베스트 리뷰 조회
 	 * @return
 	 */
 	public ArrayList<Review> selectMainBestReviewList(){
@@ -37,11 +37,10 @@ public class ReviewService {
 	}
 	
 	
-	
-	
-	
-	
-	
+	/** 리뷰 목록 조회 시 해당 상품 리뷰 총 개수 조회
+	 * @param pCode  :  완제품 상품 번호
+	 * @return
+	 */
 	public int selectReviewListCount(String pCode) {
 		
 		Connection conn = getConnection();
@@ -55,6 +54,11 @@ public class ReviewService {
 	}
 	
 	
+	/** 리뷰 목록 조회
+	 * @param pi  :  페이징 정보
+	 * @param pCode  :  완제품 상품 번호
+	 * @return
+	 */
 	public ArrayList<Review> selectReviewList(PageInfo pi, String pCode) {
 		
 		Connection conn = getConnection();
@@ -68,6 +72,10 @@ public class ReviewService {
 	}
 	
 	
+	/** 리뷰 목록 조회 시 리뷰 해당 상품 정보 조회
+	 * @param pCode  :  완제품 상품 번호
+	 * @return
+	 */
 	public Product selectProduct(String pCode) {
 		
 		Connection conn = getConnection();
@@ -81,6 +89,11 @@ public class ReviewService {
 	}
 
 	
+	/** 리뷰 목록 조회 시 로그인한 회원의 해당 상품 후기 작성 가능 확인용 주문 정보 조회
+	 * @param pCode  :  완제품 상품 번호
+	 * @param mCode  :  로그인한 회원 번호
+	 * @return
+	 */
 	public Order selectOrderList(String pCode, int mCode) {
 		
 		Connection conn = getConnection();
@@ -94,6 +107,11 @@ public class ReviewService {
 	}
 	
 	
+	/** 리뷰 등록
+	 * @param r  :  리뷰 정보
+	 * @param list  :  첨부파일 목록
+	 * @return
+	 */
 	public int insertReview(Review r, ArrayList<File> list) {
 		
 		Connection conn = getConnection();
@@ -122,6 +140,10 @@ public class ReviewService {
 	}
 	
 	
+	/** 리뷰 수정 폼 요청 시 해당 리뷰 정보 조회
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public Review selectReview(int rCode) {
 
 		Connection conn = getConnection();
@@ -135,6 +157,10 @@ public class ReviewService {
 	}
 	
 	
+	/** 리뷰 수정 폼 요청 시 해당 리뷰 첨부파일 조회
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public ArrayList<File> selectFileList(int rCode) {
 		
 		Connection conn = getConnection();
@@ -148,6 +174,10 @@ public class ReviewService {
 	}	
 	
 	
+	/** 리뷰 삭제
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public int deleteReview(int rCode) {
 		
 		Connection conn = getConnection();
@@ -167,6 +197,10 @@ public class ReviewService {
 	}
 	
 	
+	/** 타회원 리뷰 신고
+	 * @param report  :  신고 정보
+	 * @return
+	 */
 	public int insertReportReview(Report report) {
 		
 		Connection conn = getConnection();
@@ -187,6 +221,10 @@ public class ReviewService {
 	
 	
 	
+	/** 리뷰 상세 조회
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public Review selectReviewDetail(int rCode) {
 		
 		Connection conn = getConnection();
@@ -200,6 +238,10 @@ public class ReviewService {
 	}
 	
 	
+	/** 리뷰 상세 조회 시 첨부파일 목록 조회
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public ArrayList<File> selectReviewDetailFileList(int rCode) {
 		
 		Connection conn = getConnection();
@@ -213,6 +255,10 @@ public class ReviewService {
 	}
 	
 	
+	/** 포토 리뷰 목록 조회 시 해당 상품 리뷰 총 개 수
+	 * @param pCode  :  완제품 상품 번호
+	 * @return
+	 */
 	public int selectReviewPhotoListCount(String pCode) {
 		
 		Connection conn = getConnection();
@@ -226,6 +272,11 @@ public class ReviewService {
 	}
 	
 	
+	/** 포토 리뷰 목록 조회
+	 * @param pi  :  페이징 정보
+	 * @param pCode  :  완제품 상품 번호
+	 * @return
+	 */
 	public ArrayList<Review> selectReviewPhotoList(PageInfo pi, String pCode) {
 		
 		Connection conn = getConnection();
@@ -239,6 +290,10 @@ public class ReviewService {
 	}
 	
 	
+	/** 리뷰만 수정
+	 * @param r  :  수정한 리뷰 정보
+	 * @return
+	 */
 	public int updateReviewOnly(Review r) {
 		
 		Connection conn = getConnection();
@@ -258,6 +313,11 @@ public class ReviewService {
 	}
 	
 	
+	/** 리뷰 수정 시 기존 파일 O, 새로운 파일 O 경우 첨부파일 수정
+	 * @param r  :  수정한 리뷰 정보
+	 * @param fileList1  :  첨부파일 목록
+	 * @return
+	 */
 	public int updateReviewUpdateFile(Review r, ArrayList<File> fileList1) {
 		
 		Connection conn = getConnection();
@@ -285,6 +345,11 @@ public class ReviewService {
 	}
 	
 	
+	/** 리뷰 수정 시 기존 첨부파일 X, 새로운 첨부파일 O 경우 첨부파일 등록
+	 * @param r  :  수정한 리뷰 정보
+	 * @param fileList2  : 첨부파일 목록
+	 * @return
+	 */
 	public int updateReviewInsertFile(Review r, ArrayList<File> fileList2) {
 		
 		Connection conn = getConnection();
@@ -317,11 +382,12 @@ public class ReviewService {
 	
 	
 	
-	
-	
 	// 관리자
 	
 	
+	/** 관리자 리뷰 목록 조회 시 리뷰 총 개수
+	 * @return
+	 */
 	public int selectAdminReviewListCount() {
 		
 		Connection conn = getConnection();
@@ -335,6 +401,10 @@ public class ReviewService {
 	}
 	
 	
+	/** 관리자 리뷰 목록 조회
+	 * @param pi  :  페이징 정보
+	 * @return
+	 */
 	public ArrayList<Review> selectAdminReviewList(PageInfo pi) {
 		
 		Connection conn = getConnection();
@@ -348,6 +418,10 @@ public class ReviewService {
 	}
 	
 	
+	/** 관리자 리뷰 상세 조회
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public Review selectAdminReviewDetail(int rCode) {
 
 		Connection conn = getConnection();
@@ -361,6 +435,11 @@ public class ReviewService {
 	}
 	
 	
+	/** 관리자 리뷰 메인 노출 상태 수정
+	 * @param rCode  :  리뷰 번호
+	 * @param rMainStatus  :  메인 노출 상태
+	 * @return
+	 */
 	public int updateAdminReviewMainStatus(int rCode, String rMainStatus) {
 		
 		Connection conn = getConnection();
@@ -380,6 +459,12 @@ public class ReviewService {
 	}
 	
 	
+	/** 관리자 회원 리뷰 포인트 지급
+	 * @param rCode  :  리뷰 번호
+	 * @param orderCode  :  주문 번호
+	 * @param mCode  :  회원 번호
+	 * @return
+	 */
 	public int insertUpdateAdminReviewPoint(int rCode, String orderCode, int mCode) {
 		
 		Connection conn = getConnection();
@@ -401,6 +486,10 @@ public class ReviewService {
 	}
 	
 	
+	/** 관리자 회원 리뷰 완전 삭제
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public int deleteAdminReview(String[] rCode) {
 
 		Connection conn = getConnection();
@@ -420,6 +509,10 @@ public class ReviewService {
 	}
 	
 	
+	/** 관리자 회원 리뷰 비노출
+	 * @param rCode  :  리뷰 번호
+	 * @return
+	 */
 	public int updateAdminReviewStatus(String[] rCode) {
 		
 		Connection conn = getConnection();
@@ -439,6 +532,10 @@ public class ReviewService {
 	}
 	
 	
+	/** 관리자 상품명으로 회원 리뷰 검색
+	 * @param searchKeyword  :  검색 키워드
+	 * @return
+	 */
 	public ArrayList<Review> selectAdminReviewSearchList(String searchKeyword) {
 		
 		Connection conn = getConnection();
